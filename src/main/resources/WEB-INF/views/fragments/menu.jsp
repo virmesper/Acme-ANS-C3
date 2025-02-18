@@ -19,7 +19,8 @@
 <acme:menu-bar>
 	<acme:menu-left>
 		<acme:menu-option code="master.menu.anonymous" access="isAnonymous()">
-			<acme:menu-suboption code="master.menu.anonymous.favourite-link" action="https://premierpadel.com"/>
+			<acme:menu-suboption code="master.menu.anonymous.favourite-link-1" action="https://premierpadel.com"/>
+			<acme:menu-suboption code="master.menu.anonymous.favourite-link-2" action="https://favoley.es"/>
 		</acme:menu-option>
 
 		<acme:menu-option code="master.menu.administrator" access="hasRealm('Administrator')">
