@@ -8,7 +8,6 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-- Rafael Corchuelo (corchu@us.es)
 - Virginia Mesa Pérez (virmesper@alum.us.es)
 - Paula Sánchez Gómez (pausagom1@alum.us.es)
 - Mario Reyes Apresa (marreyapr@alum.us.es)
