@@ -1,5 +1,5 @@
 
-package acme.entities;
+package acme.entities.S2;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
