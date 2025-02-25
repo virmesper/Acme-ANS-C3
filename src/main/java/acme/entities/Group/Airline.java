@@ -38,9 +38,8 @@ public class Airline extends AbstractEntity {
 	private String				iataCode;
 
 	// Tipo de aerolínea: "LUXURY", "STANDARD", "LOW-COST" 
-	@NotBlank
 	@Column(length = 50, nullable = false)
-	private String				type;
+	private AirlineType			type;
 
 	@Past
 	@Column(nullable = false)
