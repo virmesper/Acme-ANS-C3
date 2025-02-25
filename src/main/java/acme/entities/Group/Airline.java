@@ -1,24 +1,28 @@
 
 package acme.entities.Group;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.validation.Mandatory;
+import acme.client.components.validation.Optional;
+import acme.client.components.validation.ValidEmail;
+import acme.client.components.validation.ValidMoment;
+import acme.client.components.validation.ValidString;
+import acme.client.components.validation.ValidUrl;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "airlines")
 public class Airline extends AbstractEntity {
 
 	// Serialisation identifier -----------------------------------------------
@@ -27,35 +31,41 @@ public class Airline extends AbstractEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	@NotBlank
-	@Size(max = 50)
-	@Column(length = 50, unique = true, nullable = false)
+	@Mandatory
+	@ValidString(max = 50)
+	@Column(nullable = false)
 	private String				name;
 
-	@NotBlank
-	@Pattern(regexp = "^[A-Z]{2}[A-ZX]$", message = "Invalid IATA code format")
-	@Column(length = 3, unique = true, nullable = false)
+	@Mandatory
+	@ValidString(pattern = "^[A-Z]{2}X$", min = 3, max = 3)
+	@Column(unique = true, nullable = false)
 	private String				iataCode;
 
-	// Tipo de aerolínea: "LUXURY", "STANDARD", "LOW-COST" 
-	@Column(length = 50, nullable = false)
-	private AirlineType			type;
-
-	@Past
+	@Mandatory
+	@ValidUrl
 	@Column(nullable = false)
-	private LocalDate			foundationMoment;
-
-	@Size(max = 255)
-	@Column(length = 255, nullable = true)
 	private String				website;
 
-	@Pattern(regexp = "^[+]?\\d{6,15}$", message = "Invalid phone number format")
-	@Column(length = 15, nullable = true)
-	private String				phoneNumber;
+	@Mandatory
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 10)
+	private AirlineType			type;
 
-	@Size(max = 255)
-	@Column(length = 255, nullable = true)
+	@Mandatory
+	@ValidMoment(past = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false)
+	private Date				foundationMoment;
+
+	@Optional
+	@ValidEmail
+	@Column(length = 320)
 	private String				email;
+
+	@Optional
+	@ValidString(pattern = "^\\+?\\d{6,15}$")
+	@Column(length = 15)
+	private String				phoneNumber;
 
 	// Derived attributes -----------------------------------------------------
 
