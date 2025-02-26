@@ -9,8 +9,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.Past;
 
@@ -45,7 +43,6 @@ public class Booking extends AbstractEntity {
 
 	@Mandatory
 	@Past
-	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime		purchaseMoment;
 
 	@Mandatory
