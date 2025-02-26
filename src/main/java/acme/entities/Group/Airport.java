@@ -3,12 +3,10 @@ package acme.entities.Group;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidEmail;
@@ -29,6 +27,7 @@ public class Airport extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 	@Mandatory
 	@ValidString(max = 50)
+	@Automapped
 	private String				name;
 
 	@Mandatory
@@ -38,41 +37,36 @@ public class Airport extends AbstractEntity {
 
 	@Mandatory
 	@Valid
-	@Enumerated(EnumType.STRING)
+	@Automapped
 	private OperationalScope	operationalScope;
 
 	@Mandatory
 	@ValidString(max = 50)
+	@Automapped
 	private String				city;
 
 	@Mandatory
 	@ValidString(max = 50)
+	@Automapped
 	private String				country;
 
 	@Optional
 	@ValidUrl
+	@Automapped
 	private String				website;
 
 	@Optional
 	@ValidEmail
+	@Automapped
 	private String				email;
 
 	@Optional
 	@ValidString(pattern = "^+?\\d{6,15}$")
+	@Automapped
 	private String				phoneNumber;
 
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------
-
-	//@Mandatory
-	//@Valid
-	//@OneToMany
-	// private Aircraft			aircraft;
-
-	@Mandatory
-	@Valid
-	@OneToMany
-	private Airline				Airline;
 
 }
