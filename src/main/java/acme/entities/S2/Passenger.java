@@ -1,26 +1,26 @@
 
 package acme.entities.S2;
 
-import java.time.LocalDate;
+import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.validation.Mandatory;
+import acme.client.components.validation.Optional;
+import acme.client.components.validation.ValidEmail;
+import acme.client.components.validation.ValidMoment;
+import acme.client.components.validation.ValidString;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "passengers")
 
 public class Passenger extends AbstractEntity {
 
@@ -30,31 +30,32 @@ public class Passenger extends AbstractEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	@Size(max = 255)
-	@Column(length = 255, nullable = false)
+	@Mandatory
+	@ValidString(max = 256)
 	private String				fullName;
 
-	@Email
-	@Column(nullable = false)
+	@Mandatory
+	@ValidEmail
 	private String				email;
 
-	@Column(length = 9, unique = true, nullable = false)
-	@Pattern(regexp = "^[A-Z0-9]{6,9}$", message = "Invalid passport number format")
+	@Mandatory
+	@ValidString(pattern = "^[A-Z0-9]{6,9}$")
 	private String				passportNumber;
 
-	@Past
-	@Column(nullable = false)
-	private LocalDate			dateOfBirth;
+	@Mandatory
+	@ValidMoment(past = true)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date				dateOfBirth;
 
-	@Size(max = 50)
-	@Column(length = 50, nullable = true)
+	@Optional
+	@ValidString(max = 51)
 	private String				specialNeeds;
 
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------
-
+	@Mandatory
+	@Valid
 	@ManyToOne
-	@JoinColumn(name = "booking_id", nullable = false)
 	private Booking				booking;
 }
