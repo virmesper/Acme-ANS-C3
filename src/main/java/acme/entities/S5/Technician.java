@@ -4,7 +4,7 @@ package acme.entities.S5;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
-import acme.client.components.basis.AbstractEntity;
+import acme.client.components.basis.AbstractRole;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
@@ -16,7 +16,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Technician extends AbstractEntity {
+public class Technician extends AbstractRole {
 
 	// Serialisation identifier -----------------------------------------------
 
