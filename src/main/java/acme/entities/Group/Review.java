@@ -7,13 +7,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
+import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,18 +31,17 @@ public class Review extends AbstractEntity {
 	// Nombre o alias de la persona que lo publica
 	@Mandatory
 	@ValidString(max = 50)
-	@Column(nullable = false, length = 50)
+	@Automapped
 	private String				author;
 
 	@Mandatory
 	@ValidMoment(past = true)
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
 	private Date				postedMoment;
 
 	@Mandatory
 	@ValidString(max = 50)
-	@Column(nullable = false, length = 50)
+	@Automapped
 	private String				subject;
 
 	@Mandatory
@@ -51,14 +50,13 @@ public class Review extends AbstractEntity {
 	private String				text;
 
 	@Optional
-	@Min(0)
-	@Max(10)
-	@Column
+	@ValidNumber(min = 0, max = 10)
+	@Automapped
 	private Double				score;
 
 	// Indica si la experiencia es recomendada o no
 	@Optional
-	@Column
+	@Automapped
 	private Boolean				recommended;
 
 	// Derived attributes -----------------------------------------------------
