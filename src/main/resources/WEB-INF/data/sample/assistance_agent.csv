@@ -1,3 +1,4 @@
 key,key:userAccount,employeeCode,spokenLanguages,startDate,bio,salary,photoUrl,key:airline
 agent1,user-account-agent-01,AG123456,"English,Spanish",2015/01/01 08:00,"Experienced in customer service","EUR 35000.00",https://example.com/agent1.jpg,airline-01
 agent2,user-account-agent-02,BG654321,"French,English",2018/03/15 06:00,"Expert in luggage issues","USD 32000.00",https://example.com/agent2.jpg,airline-02
+manager3,user-account-manager-03,MG000001,"English",2022/02/15 10:00,"","","",airline-03
