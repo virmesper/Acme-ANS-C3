@@ -1,0 +1,6 @@
+employeeCode,phoneNumber,languageSkills,availabilityStatus,airline,salary,yearsOfExperience,username,password
+AB123456,+1234567890,"English, Spanish",AVAILABLE,AirlineA,50000,5,member1,member1
+CD234567,+2345678901,"English, French",ON_LEAVE,AirlineB,52000,10,member2,member2
+EF345678,+3456789012,"English, German",AVAILABLE,AirlineA,51000,7,member3,member3
+GH456789,+4567890123,"English, Italian",TRAINING,AirlineC,53000,8,member4,member4
+IJ567890,+5678901234,English,AVAILABLE,AirlineD,48000,0,member,member
