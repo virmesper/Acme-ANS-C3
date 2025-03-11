@@ -1,5 +1,5 @@
 
-package acme.entities.S1;
+package acme.entities.S3;
 
 public enum AvailabilityStatus {
 	AVAILABLE, ON_VACATION, ON_LEAVE
