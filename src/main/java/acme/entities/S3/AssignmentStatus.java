@@ -1,5 +1,5 @@
 
-package acme.entities.S1;
+package acme.entities.S3;
 
 public enum AssignmentStatus {
 	CONFIRMEND, PENDING, CANCELLED
