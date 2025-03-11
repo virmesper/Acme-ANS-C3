@@ -1,5 +1,5 @@
 
-package acme.entities.S4;
+package acme.realms;
 
 import java.util.Date;
 
