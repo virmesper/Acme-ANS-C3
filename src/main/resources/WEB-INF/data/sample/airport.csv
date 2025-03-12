@@ -1,0 +1,9 @@
+key,name,iataCode,operationalScope,city,country,website,email,phoneNumber
+airport-01,"Aeropuerto San Pablo",SVQ,INTERNATIONAL,"Sevilla","España","https://sanpabloairport.com","contacto@sanpablo.com","+34123456789"
+airport-02,"Aeropuerto Internacional Costa del Sol",AGP,INTERNATIONAL,"Málaga","España","https://costadelsolairport.com","info@costadelsol.com","+34123456789"
+airport-03,"Aeropuerto El Prat",BCN,INTERNATIONAL,"Barcelona","España","https://elpratairport.com","atencion@elprat.com","+34123456789"
+airport-04,"Aeropuerto Adolfo Suárez Madrid-Barajas",MAD,INTERNATIONAL,"Madrid","España","https://madrid-barajas.com","soporte@madrid-barajas.com","+34123456789"
+airport-05,"Aeropuerto de Valencia",VLC,INTERNATIONAL,"Valencia","España","https://valenciaairport.com","contacto@valenciaairport.com","+34123456789"
+airport-06,"Aeropuerto de Bilbao",BIO,INTERNATIONAL,"Bilbao","España","https://bilbaoairport.com","info@bilbaoairport.com","+34123456789"
+airport-07,"Aeropuerto de Palma de Mallorca",PMI,INTERNATIONAL,"Palma de Mallorca","España","https://palmaairport.com","reservas@palmaairport.com","+34123456789"
+airport-08,"Aeropuerto de Gran Canaria",LPA,INTERNATIONAL,"Las Palmas","España","https://grancanariaairport.com","atencioncliente@grancanaria.com","+34123456789"

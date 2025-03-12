@@ -1,24 +1,25 @@
 
 package acme.entities.Group;
 
-import javax.persistence.Column;
+import java.util.Date;
+
 import javax.persistence.Entity;
-import javax.validation.Valid;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
-import acme.client.components.validation.ValidEmail;
+import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
-import acme.client.components.validation.ValidUrl;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class Airport extends AbstractEntity {
+public class BannedPassenger extends AbstractEntity {
 
 	// Serialisation identifier -----------------------------------------------
 
@@ -28,45 +29,38 @@ public class Airport extends AbstractEntity {
 	@Mandatory
 	@ValidString(max = 50)
 	@Automapped
-	private String				name;
+	private String				fullName;
 
 	@Mandatory
-	@ValidString(pattern = "^[A-Z]{3}$")
-	@Column(unique = true)
-	private String				iataCode;
-
-	@Mandatory
-	@Valid
+	@ValidMoment(past = true)
+	@Temporal(TemporalType.DATE)
 	@Automapped
-	private OperationalScope	operationalScope;
+	private Date				dateOfBirth;
 
 	@Mandatory
-	@ValidString(max = 50)
+	@ValidString(pattern = "^[A-Z0-9]{6,9}$")
 	@Automapped
-	private String				city;
+	private String				passportNumber;
 
 	@Mandatory
 	@ValidString(max = 50)
 	@Automapped
-	private String				country;
+	private String				nationality;
+
+	@Mandatory
+	@ValidString(max = 255)
+	@Automapped
+	private String				reasonForBan;
+
+	@Mandatory
+	@ValidMoment(past = true)
+	@Temporal(TemporalType.DATE)
+	@Automapped
+	private Date				banIssuedDate; //fecha prohibicion
 
 	@Optional
-	@ValidUrl
+	@ValidMoment(past = true)
+	@Temporal(TemporalType.DATE)
 	@Automapped
-	private String				website;
-
-	@Optional
-	@ValidEmail
-	@Automapped
-	private String				email;
-
-	@Optional
-	@ValidString(pattern = "^\\+?\\d{6,15}$")
-	@Automapped
-	private String				phoneNumber;
-
-	// Derived attributes -----------------------------------------------------
-
-	// Relationships ----------------------------------------------------------
-
+	private Date				liftDate; //fehca de levantamiento de la prohibicion
 }
