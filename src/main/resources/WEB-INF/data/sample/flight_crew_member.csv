@@ -1,6 +1,6 @@
-key,employeeCode,phoneNumber,languageSkills,availabilityStatus,airline,salary,yearsOfExperience,username,password
-1,AB123456,+1234567890,"English, Spanish",AVAILABLE,AirlineA,50000,5,member1,member1
-2,CD234567,+2345678901,"English, French",ON_LEAVE,AirlineB,52000,10,member2,member2
-3,EF345678,+3456789012,"English, German",AVAILABLE,AirlineA,51000,7,member3,member3
-4,GH456789,+4567890123,"English, Italian",TRAINING,AirlineC,53000,8,member4,member4
-5,IJ567890,+5678901234,English,AVAILABLE,AirlineD,48000,0,member,member
+key,employeeCode,phoneNumber,languageSkills,availabilityStatus,salary,yearsOfExperience,key:airline
+flight-crew-1,AB123456,+1234567890,"English, Spanish",AVAILABLE,EUR 35000.00,5,airline-01
+flight-crew-2,CD234567,+2345678901,"English, French",ON_LEAVE,EUR 30000.00,10,airline-03
+flight-crew-3,EF345678,+3456789012,"English, German",AVAILABLE,EUR 35555.00,7,airline-01
+flight-crew-4,GH456789,+4567890123,"English, Italian",ON_VACATION,EUR 35000.01,8,airline-02
+flight-crew-5,IJ567890,+5678901234,English,AVAILABLE,EUR 50000.00,0,airline-01
