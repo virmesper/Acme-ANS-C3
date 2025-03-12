@@ -6,12 +6,13 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.mappings.Automapped;
+import acme.client.components.validation.Mandatory;
+import acme.client.components.validation.ValidMoment;
+import acme.client.components.validation.ValidString;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,30 +21,35 @@ import lombok.Setter;
 @Setter
 public class ActivityLog extends AbstractEntity {
 
-	// Serialisation version
-	private static final long serialVersionUID = 1L;
+	// Serialisation version-------------------------------------------------------------
 
-	// Registration moment (must be in the past)
-	@Past
+	private static final long	serialVersionUID	= 1L;
+
+	// Attributes -------------------------------------------------------------
+
+	@Mandatory
+	@ValidMoment(past = true)
 	@Column(nullable = false)
-	private LocalDateTime registrationMoment;
+	private LocalDateTime		registrationMoment;
 
-	// Type of incident (up to 50 characters)
-	@Size(max = 50)
+	@Mandatory
+	@ValidString(max = 50)
 	@Column(nullable = false)
-	private String incidentType;
+	private String				incidentType;
 
-	// Description (up to 255 characters)
-	@Size(max = 255)
-	private String description;
+	@Mandatory
+	@ValidString(max = 255)
+	@Automapped
+	private String				description;
 
-	// Severity level (0 to 10)
-	@Min(0)
-	@Max(10)
+	@ValidString(max = 10, min = 0)
+	@Automapped
 	@Column(nullable = false)
-	private Integer severityLevel;
+	private Integer				severityLevel;
 
 	// Relationships
+	@Mandatory
+	@Valid
 	@ManyToOne(optional = false)
-	private FlightAssignment flightAssignment;
+	private FlightCrewMember	flightCrewMember;
 }
