@@ -3,6 +3,7 @@ package acme.entities.S2;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -10,6 +11,7 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidEmail;
@@ -32,14 +34,17 @@ public class Passenger extends AbstractEntity {
 
 	@Mandatory
 	@ValidString(max = 256)
+	@Column(unique = true)
 	private String				fullName;
 
 	@Mandatory
 	@ValidEmail
+	@Automapped
 	private String				email;
 
 	@Mandatory
 	@ValidString(pattern = "^[A-Z0-9]{6,9}$")
+	@Automapped
 	private String				passportNumber;
 
 	@Mandatory
@@ -48,7 +53,8 @@ public class Passenger extends AbstractEntity {
 	private Date				dateOfBirth;
 
 	@Optional
-	@ValidString(max = 51)
+	@ValidString(max = 50)
+	@Automapped
 	private String				specialNeeds;
 
 	// Derived attributes -----------------------------------------------------

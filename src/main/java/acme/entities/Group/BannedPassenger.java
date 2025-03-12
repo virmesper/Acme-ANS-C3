@@ -34,6 +34,10 @@ public class BannedPassenger extends AbstractEntity {
 	@Mandatory
 	@ValidMoment(past = true)
 	@Temporal(TemporalType.DATE)
+<<<<<<< HEAD
+=======
+	@Automapped
+>>>>>>> master
 	private Date				dateOfBirth;
 
 	@Mandatory
@@ -54,10 +58,18 @@ public class BannedPassenger extends AbstractEntity {
 	@Mandatory
 	@ValidMoment(past = true)
 	@Temporal(TemporalType.DATE)
+<<<<<<< HEAD
+=======
+	@Automapped
+>>>>>>> master
 	private Date				banIssuedDate; //fecha prohibicion
 
 	@Optional
 	@ValidMoment(past = true)
 	@Temporal(TemporalType.DATE)
+<<<<<<< HEAD
+=======
+	@Automapped
+>>>>>>> master
 	private Date				liftDate; //fehca de levantamiento de la prohibicion
 }

@@ -3,18 +3,17 @@ package acme.entities.S4;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidMoment;
+import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,35 +29,35 @@ public class TrackingLog extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidMoment(past = true)
+	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
 	private Date				lastUpdateMoment;
 
+	// Paso actual del procedimiento
 	@Mandatory
 	@ValidString(max = 50)
-	@Column(nullable = false, length = 50)
+	@Automapped
 	private String				currentStep;
 
 	@Mandatory
-	@Min(0)
-	@Max(100)
-	@Column(nullable = false)
+	@ValidNumber(min = 0, max = 100)
+	@Automapped
 	private Integer				resolutionPercentage;
 
 	@Mandatory
-	@Column(nullable = false)
+	@Valid
+	@Automapped
 	private Boolean				finalDecision;
 
 	@Mandatory
 	@ValidString(max = 255)
-	@Column(nullable = false, length = 255)
+	@Automapped
 	private String				resolutionDetails;
 
 	// Relationships ----------------------------------------------------------
 
 	@Mandatory
 	@Valid
-	@ManyToOne(optional = false)
+	@ManyToOne
 	private Claim				claim; // Relación con la reclamación a la que pertenece
 }

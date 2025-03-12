@@ -5,3 +5,16 @@ user-account-consumer-03,true,"UserIdentity{name: 'Manolo', surname: '之乎路�
 user-account-provider-01,true,"UserIdentity{name: 'Laurel', surname: 'Provider', email: 'laurel@acme.com'}",provider1,provider1
 user-account-provider-02,true,"UserIdentity{name: 'Martina', surname: 'коза თხა', email: 'martina@acme.com'}",provider2,provider2
 user-account-provider-03,true,"UserIdentity{name: 'Antonia', surname: 'אבטיח Æløzå', email: 'antonia@acme.com'}",provider3,provider3
+user-account-customer-01,true,"UserIdentity{name: 'Customer1', surname: 'customer1', email: 'customer1@acme.com'}",customer1,customer1
+user-account-customer-02,true,"UserIdentity{name: 'Customer2', surname: 'customer2', email: 'customer2@acme.com'}",customer2,customer2
+user-account-customer-03,true,"UserIdentity{name: 'Customer3', surname: 'customer3', email: 'customer3@acme.com'}",customer3,customer3
+user-account-technician-01,true,"UserIdentity{name: 'Technician1', surname: 'Technician1', email: 'technician1@acme.com'}",technician1,technician1
+user-account-technician-02,true,"UserIdentity{name: 'Technician2', surname: 'Technician2', email: 'technician2@acme.com'}",technician2,technician2
+user-account-technician-03,true,"UserIdentity{name: 'Technician3', surname: 'Technician3', email: 'technician3@acme.com'}",technician3,technician3
+user-account-agent-01,true,"UserIdentity{name: 'Agent1', surname: 'Assistance', email: 'agent1@acme.com'}",agent1,agent1
+user-account-agent-02,true,"UserIdentity{name: 'Agent2', surname: 'Assistance', email: 'agent2@acme.com'}",agent2,agent2
+user-account-agent-03,true,"UserIdentity{name: 'Agent3', surname: 'Assistance', email: 'agent3@acme.com'}",agent3,agent3
+user-account-manager-01,true,"UserIdentity{name: 'Manager1', surname: 'Manager1', email: 'manager1@acme.com'}",manager1,manager1
+user-account-manager-02,true,"UserIdentity{name: 'Manager2', surname: 'Manager2', email: 'manager2@acme.com'}",manager2,manager2
+user-account-manager-03,true,"UserIdentity{name: 'Manager3', surname: 'Manager3', email: 'manager3@acme.com'}",manager3,manager3
+

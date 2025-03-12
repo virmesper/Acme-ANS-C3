@@ -1,15 +1,17 @@
 
 package acme.entities.Group;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.datatypes.Money;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
-import acme.client.components.validation.ValidEmail;
+import acme.client.components.validation.ValidMoney;
+import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.client.components.validation.ValidUrl;
 import lombok.Getter;
@@ -18,10 +20,9 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Airport extends AbstractEntity {
+public class Service extends AbstractEntity {
 
 	// Serialisation identifier -----------------------------------------------
-
 	private static final long	serialVersionUID	= 1L;
 
 	// Attributes -------------------------------------------------------------
@@ -31,42 +32,29 @@ public class Airport extends AbstractEntity {
 	private String				name;
 
 	@Mandatory
-	@ValidString(pattern = "^[A-Z]{3}$")
-	@Column(unique = true)
-	private String				iataCode;
-
-	@Mandatory
-	@Valid
-	@Automapped
-	private OperationalScope	operationalScope;
-
-	@Mandatory
-	@ValidString(max = 50)
-	@Automapped
-	private String				city;
-
-	@Mandatory
-	@ValidString(max = 50)
-	@Automapped
-	private String				country;
-
-	@Optional
 	@ValidUrl
 	@Automapped
-	private String				website;
+	private String				pictureUrl;
+
+	@Mandatory
+	@ValidNumber(min = 0)
+	@Automapped
+	private Double				averageDwellTime; //timepo promedio q se pasa en un servicio
 
 	@Optional
-	@ValidEmail
+	@ValidString(pattern = "^[A-Z]{4}-[0-9]{2}$")
 	@Automapped
-	private String				email;
+	private String				promotionCode; //los ultimos dos digitos corresponden al año actusl
 
 	@Optional
-	@ValidString(pattern = "^\\+?\\d{6,15}$")
+	@ValidMoney
 	@Automapped
-	private String				phoneNumber;
+	private Money				discountAmount; //cantidad de dinero descontada
 
-	// Derived attributes -----------------------------------------------------
-
-	// Relationships ----------------------------------------------------------
+	//un aeropuerto ofrece muchos servicios
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Airport				airport;
 
 }
