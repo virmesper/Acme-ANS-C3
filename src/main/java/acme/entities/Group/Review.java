@@ -3,10 +3,10 @@ package acme.entities.Group;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
@@ -46,7 +46,7 @@ public class Review extends AbstractEntity {
 
 	@Mandatory
 	@ValidString(min = 1, max = 255)
-	@Column(nullable = false, length = 255)
+	@Automapped
 	private String				text;
 
 	@Optional
@@ -54,8 +54,8 @@ public class Review extends AbstractEntity {
 	@Automapped
 	private Double				score;
 
-	// Indica si la experiencia es recomendada o no
 	@Optional
+	@Valid
 	@Automapped
 	private Boolean				recommended;
 

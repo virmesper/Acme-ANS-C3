@@ -2,8 +2,6 @@
 package acme.entities.Group;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Money;
@@ -27,7 +25,7 @@ public class Service extends AbstractEntity {
 
 	// Attributes -------------------------------------------------------------
 	@Mandatory
-	@ValidString(max = 50)
+	@ValidString(min = 1, max = 50)
 	@Automapped
 	private String				name;
 
@@ -50,11 +48,5 @@ public class Service extends AbstractEntity {
 	@ValidMoney
 	@Automapped
 	private Money				discountAmount; //cantidad de dinero descontada
-
-	//un aeropuerto ofrece muchos servicios
-	@Mandatory
-	@Valid
-	@ManyToOne(optional = false)
-	private Airport				airport;
 
 }
