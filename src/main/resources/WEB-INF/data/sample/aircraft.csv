@@ -1,4 +1,3 @@
 key,model,registrationnumber,capacity,cargoweight,status,details,key:airline
-aircraft-01,Boeing 737,REG12345,180,20000.0,ACTIVE,Used for domestic flights,airline-01
-aircraft-02,Airbus A320,REG67890,150,18000.0,MAINTENANCE,Under maintenance,airline-02
-aircraft-03,Boeing 777,REG54321,396,50000.0,ACTIVE,Long-haul aircraft,airline-03
+aircraft-01,"Prueba","AAAAA",100,2500,ACTIVE,"Pruebaaaaaaaaaaaaaaaaaaaaaaaa",airline-01
+aircraft-02,"Prueba2","BBBBB",100,2500,ACTIVE,"Pruebaaaaaaaaaaaaaaaaaaaaaaaa",airline-01

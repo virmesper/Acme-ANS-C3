@@ -62,6 +62,11 @@ public class Booking extends AbstractEntity {
 	@Automapped
 	private String				lastCardDigits;
 
+	@Mandatory
+	@Valid
+	@Automapped
+	private Boolean				published;
+
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------

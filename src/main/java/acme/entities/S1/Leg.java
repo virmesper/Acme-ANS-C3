@@ -18,6 +18,7 @@ import acme.client.components.validation.ValidMoment;
 import acme.constraints.ValidFlightNumber;
 import acme.entities.Group.Aircraft;
 import acme.entities.Group.Airport;
+import acme.realms.Manager;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,11 +27,11 @@ import lombok.Setter;
 @Setter
 public class Leg extends AbstractEntity {
 
-	// Serialisation version --------------------------------------------------
+	// Serialisation version --------------------------------------------
 
 	private static final long	serialVersionUID	= 1L;
 
-	// Attributes -------------------------------------------------------------
+	// Attributes -------------------------------------------------------
 
 	@Mandatory
 	@ValidFlightNumber
@@ -40,45 +41,40 @@ public class Leg extends AbstractEntity {
 	@Mandatory
 	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date				scheduledDeparture;
+	private Date				departure;
 
 	@Mandatory
 	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date				scheduledArrival;
+	private Date				arrival;
 
 	@Mandatory
 	@Valid
 	@Automapped
 	private LegStatus			status;
 
-
-	// Derived attributes -----------------------------------------------------
-	@Transient
-	private Double getDuration() {
-		Double durationHours;
-		durationHours = (this.getScheduledArrival().getTime() - this.getScheduledDeparture().getTime()) / (1000.0 * 60 * 60);
-		return durationHours;
-	}
-
-	@Transient
-	public boolean isAvailable() {
-		boolean result;
-		result = this.scheduledArrival.after(this.scheduledDeparture);
-		return result;
-	}
-
-
-	// Relationships ----------------------------------------------------------
 	@Mandatory
-	@Valid
-	@ManyToOne(optional = false)
-	private Flight		flight;
+	//@Valid
+	@Automapped
+	private boolean				publish; // Attribute needed for future deliverables
+
+	//Derived attributes-------------------------------------------------
+
+
+	@Transient // javax.persistence
+	public Double getDurationInHours() {
+		double durationInMs = this.getArrival().getTime() - this.getDeparture().getTime();
+		double durationInH = durationInMs / (1000 * 60 * 60);
+		return durationInH;
+	}
+
+	// Relationships -----------------------------------------------------
+
 
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	private Aircraft	aircraft;
+	private Aircraft	deployedAircraft;
 
 	@Mandatory
 	@Valid
@@ -90,4 +86,13 @@ public class Leg extends AbstractEntity {
 	@ManyToOne(optional = false)
 	private Airport		arrivalAirport;
 
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Flight		flight;
+
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Manager		manager;
 }

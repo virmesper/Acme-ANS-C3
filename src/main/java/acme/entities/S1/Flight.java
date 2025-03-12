@@ -78,6 +78,11 @@ public class Flight extends AbstractEntity {
 	private Integer				layovers;
 
 	@Mandatory
+	//@Valid
+	@Automapped
+	private boolean				publish;
+
+	@Mandatory
 	@Valid
 	@ManyToOne(optional = true)
 	private Manager				manager;
