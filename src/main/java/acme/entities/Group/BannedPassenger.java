@@ -27,14 +27,13 @@ public class BannedPassenger extends AbstractEntity {
 
 	// Attributes -------------------------------------------------------------
 	@Mandatory
-	@ValidString(max = 50)
+	@ValidString(max = 50, min = 1)
 	@Automapped
 	private String				fullName;
 
 	@Mandatory
 	@ValidMoment(past = true)
-	@Temporal(TemporalType.DATE)
-	@Automapped
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date				dateOfBirth;
 
 	@Mandatory
@@ -43,24 +42,22 @@ public class BannedPassenger extends AbstractEntity {
 	private String				passportNumber;
 
 	@Mandatory
-	@ValidString(max = 50)
+	@ValidString(max = 50, min = 1)
 	@Automapped
 	private String				nationality;
 
 	@Mandatory
-	@ValidString(max = 255)
+	@ValidString(max = 255, min = 1)
 	@Automapped
 	private String				reasonForBan;
 
 	@Mandatory
 	@ValidMoment(past = true)
-	@Temporal(TemporalType.DATE)
-	@Automapped
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date				banIssuedDate; //fecha prohibicion
 
 	@Optional
 	@ValidMoment(past = true)
-	@Temporal(TemporalType.DATE)
-	@Automapped
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date				liftDate; //fehca de levantamiento de la prohibicion
 }
