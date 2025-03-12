@@ -1,5 +1,5 @@
 
-package acme.entities.S1;
+package acme.entities.S3;
 
 import java.time.LocalDateTime;
 
@@ -46,4 +46,6 @@ public class ActivityLog extends AbstractEntity {
 	// Relationships
 	@ManyToOne(optional = false)
 	private FlightAssignment flightAssignment;
+
+	//ispublish boolean ¿?
 }
