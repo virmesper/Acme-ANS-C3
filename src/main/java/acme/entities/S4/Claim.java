@@ -4,8 +4,6 @@ package acme.entities.S4;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,6 +15,7 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidEmail;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
+import acme.entities.S1.Leg;
 import acme.realms.AssistanceAgent;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,19 +42,18 @@ public class Claim extends AbstractEntity {
 	private String				passengerEmail;
 
 	@Mandatory
-	@ValidString(max = 255)
+	@ValidString(min = 1, max = 255)
 	@Automapped
 	private String				description;
 
 	@Mandatory
-	@Enumerated(EnumType.STRING)
+	@Valid
 	@Automapped
 	private ClaimType			type;
 
 	@Mandatory
-	@Valid
 	@Automapped
-	private Boolean				isAccepted;
+	private boolean				isAccepted; //indica si la reclamación fue aceptada o no
 
 	// Derived attributes -----------------------------------------------------
 
@@ -63,6 +61,11 @@ public class Claim extends AbstractEntity {
 
 	@Mandatory
 	@Valid
-	@ManyToOne
-	private AssistanceAgent		registeredBy; // Agente que registra la reclamación
+	@ManyToOne(optional = false)
+	private AssistanceAgent		assistanceAgent; // Agente que registra la reclamación
+
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Leg					leg;
 }
