@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class BookingPassanger extends AbstractEntity {
+public class BookingRecord extends AbstractEntity {
 	// Serialisation version --------------------------------------------
 
 	private static final long	serialVersionUID	= 1L;
