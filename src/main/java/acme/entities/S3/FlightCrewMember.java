@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.datatypes.Money;
+import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidNumber;
@@ -22,35 +24,48 @@ import lombok.Setter;
 @Setter
 public class FlightCrewMember extends AbstractEntity {
 
+	// Serialisation identifier -----------------------------------------------
+
 	private static final long	serialVersionUID	= 1L;
+
+	// Attributes -------------------------------------------------------------
 
 	@Mandatory
 	@ValidString(pattern = "^[A-Z]{2,3}\\d{6}$", max = 10)
 	@Column(unique = true, nullable = false)
 	private String				employeeCode;
 
+	@Automapped
 	@Mandatory
 	@ValidString(pattern = "^\\+?\\d{6,15}$", max = 16)
 	private String				phoneNumber;
 
+	@Automapped
 	@Mandatory
 	@ValidString(max = 255)
 	private String				languageSkills;
 
+	@Automapped
 	@Mandatory
 	@Enumerated(EnumType.STRING)
 	private AvailabilityStatus	availabilityStatus;
 
+	@Automapped
+	@Mandatory
+	private Money				salary;
+
+	@Automapped
+	@Optional
+	@ValidNumber(min = 0, max = 90)
+	private Integer				yearsOfExperience;
+
+	// Derived attributes -----------------------------------------------------
+
+	// Relationships ----------------------------------------------------------
+
+	@Automapped
 	@Mandatory
 	@Valid
 	@ManyToOne
 	private Airline				airline;
-
-	@Mandatory
-	@ValidNumber(min = 0)
-	private Double				salary;
-
-	@Optional
-	@ValidNumber(min = 0)
-	private Integer				yearsOfExperience;
 }
