@@ -13,6 +13,7 @@ import acme.client.components.datatypes.Money;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
+import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.entities.Group.Airline;
@@ -50,8 +51,9 @@ public class FlightCrewMember extends AbstractEntity {
 	@Enumerated(EnumType.STRING)
 	private AvailabilityStatus	availabilityStatus;
 
-	@Automapped
 	@Mandatory
+	@ValidMoney(min = 0)
+	@Automapped
 	private Money				salary;
 
 	@Automapped
@@ -63,7 +65,6 @@ public class FlightCrewMember extends AbstractEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	@Automapped
 	@Mandatory
 	@Valid
 	@ManyToOne
