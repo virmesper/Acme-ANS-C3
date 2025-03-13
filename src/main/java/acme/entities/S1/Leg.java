@@ -18,7 +18,6 @@ import acme.client.components.validation.ValidMoment;
 import acme.constraints.ValidFlightNumber;
 import acme.entities.Group.Aircraft;
 import acme.entities.Group.Airport;
-import acme.realms.Manager;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,31 +40,28 @@ public class Leg extends AbstractEntity {
 	@Mandatory
 	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date				departure;
+	private Date				scheduledDeparture;
 
 	@Mandatory
 	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date				arrival;
+	private Date				scheduledArrival;
 
 	@Mandatory
 	@Valid
 	@Automapped
 	private LegStatus			status;
 
-	@Mandatory
-	//@Valid
-	@Automapped
-	private boolean				publish; // Attribute needed for future deliverables
-
 	//Derived attributes-------------------------------------------------
 
 
-	@Transient // javax.persistence
-	public Double getDurationInHours() {
-		double durationInMs = this.getArrival().getTime() - this.getDeparture().getTime();
-		double durationInH = durationInMs / (1000 * 60 * 60);
-		return durationInH;
+	@Transient()
+	public Double getDuration() {
+
+		long departureMilieconds = this.getScheduledDeparture().getTime();
+		long arrivalMilieconds = this.getScheduledArrival().getTime();
+		return (arrivalMilieconds - departureMilieconds) / 3600000.0;
+
 	}
 
 	// Relationships -----------------------------------------------------
@@ -74,7 +70,7 @@ public class Leg extends AbstractEntity {
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	private Aircraft	deployedAircraft;
+	private Flight		flight;
 
 	@Mandatory
 	@Valid
@@ -89,10 +85,5 @@ public class Leg extends AbstractEntity {
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
-	private Flight		flight;
-
-	@Mandatory
-	@Valid
-	@ManyToOne(optional = false)
-	private Manager		manager;
+	private Aircraft	aircraft;
 }

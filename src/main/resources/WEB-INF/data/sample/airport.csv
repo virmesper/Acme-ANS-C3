@@ -1,67 +1,46 @@
-key,name,iataCode,operationalScope,city,country,website,email,phoneNumber
-airport-01,"nombre1",SEV,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-02,"Lorem ipsum dolor sit ame",AAA,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-03,"L",AAB,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-04,"Lo",AAC,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-05,"Lorem ipsum dolor sit ameta consectetur adipiscin",AAD,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-06,"Lorem ipsum dolor sit ameta consectetur adipiscing",AAE,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-07,"โลเร็ม อิปซัม",AAF,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-08,"لوريم إيبسوم",AAG,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-09,"لوريم إيبسوم",AAH,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-10,"洛伦·伊普森",AAI,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-11,"<marquee>Hacked</marquee>",AAJ,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-12,"<script>alert(‘Hacked!’);</script>",AAK,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-13,"' or 'A' = 'A ",AAM,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-14,"nombre1",BBB,DOMESTIC,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-15,"nombre1",CCC,REGIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-16,"nombre1",DDD,REGIONAL,"Lorem ipsum dolor sit ame","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-17,"nombre1",EEE,REGIONAL,"L","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-18,"nombre1",FFF,REGIONAL,"Lo","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-19,"nombre1",GGG,REGIONAL,"Lorem ipsum dolor sit ameta consectetur adipiscin","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-20,"nombre1",HHH,REGIONAL,"Lorem ipsum dolor sit ameta consectetur adipiscing","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-21,"nombre1",QQQ,REGIONAL,"โลเร็ม อิปซัม","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-22,"nombre1",WWW,REGIONAL,"لوريم إيبسوم","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-23,"nombre1",TTT,REGIONAL,"洛伦·伊普森","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-24,"nombre1",YYY,REGIONAL,"<marquee>Hacked</marquee>","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-25,"nombre1",UUU,REGIONAL,"<script>alert(‘Hacked!’);</script>","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-26,"nombre1",III,REGIONAL,"' or 'A' = 'A ","España","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-27,"nombre1",OOO,REGIONAL,"sevilla","Lorem ipsum dolor sit ame","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-28,"nombre1",PPP,REGIONAL,"sevilla","L","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-29,"nombre1",SSS,REGIONAL,"sevilla","Lo","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-30,"nombre1",TUT,REGIONAL,"sevilla","Lorem ipsum dolor sit ameta consectetur adipiscin","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-31,"nombre1",UUN,REGIONAL,"sevilla","Lorem ipsum dolor sit ameta consectetur adipiscing","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-32,"nombre1",VVV,REGIONAL,"sevilla","โลเร็ม อิปซัม","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-33,"nombre1",ZZZ,REGIONAL,"sevilla","لوريم إيبسوم","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-34,"nombre1",XXX,REGIONAL,"sevilla","洛伦·伊普森","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-35,"nombre1",CRC,REGIONAL,"sevilla","<marquee>Hacked</marquee>","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-36,"nombre1",QBB,REGIONAL,"sevilla","<script>alert(‘Hacked!’);</script>","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-37,"nombre1",NNN,REGIONAL,"sevilla","' or 'A' = 'A ","https://airportteam.com","airportteam@acme.com","+34123456789"
-airport-38,"nombre1",MMM,REGIONAL,"sevilla","España","http://lorem.com/ipsum","airportteam@acme.com","+34123456789"
-airport-39,"nombre1",LLL,REGIONAL,"sevilla","España","ftp://a","airportteam@acme.com","+34123456789"
-airport-40,"nombre1",KLF,REGIONAL,"sevilla","España","ftp://a.b","airportteam@acme.com","+34123456789"
-airport-41,"nombre1",GFS,REGIONAL,"sevilla","España","http://www.lorem-ipsum.org/dolor/sit/ameta/consectetur/adipiscing/elita","airportteam@acme.com","+34123456789"
-airport-42,"nombre1",HRS,REGIONAL,"sevilla","España","http://www.lorem-ipsum.org/dolor/sit/ameta/consectetur/adipisciet/dolore/magna/aliqua/Ut/enim/ad/minim/veniam/consequat/duis/aute/X","airportteam@acme.com","+34123456789"
-airport-43,"nombre1",HRW,REGIONAL,"sevilla","España","https://www.lorem-ipsum.org","airportteam@acme.com","+34123456789"
-airport-44,"nombre1",NSD,REGIONAL,"sevilla","España","ftp://www.lorem-ipsum.org","airportteam@acme.com","+34123456789"
-airport-45,"nombre1",LHK,REGIONAL,"sevilla","España","http://www.lorem-ipsum.org/dolor/sit.html","airportteam@acme.com","+34123456789"
-airport-46,"nombre1",OYG,REGIONAL,"sevilla","España","http://www.lorem-ipsum.org/dolor/sit.html#dolor","airportteam@acme.com","+34123456789"
-airport-47,"nombre1",BIF,REGIONAL,"sevilla","España","http://example.org?a=1&b=2","airportteam@acme.com","+34123456789"
-airport-48,"nombre1",HLR,REGIONAL,"sevilla","España","http://example.org?","airportteam@acme.com","+34123456789"
-airport-49,"nombre1",HOF,REGIONAL,"sevilla","España","http://example.org?a","airportteam@acme.com","+34123456789"
-airport-50,"nombre1",ULY,REGIONAL,"sevilla","España","http://example.org?a&b","airportteam@acme.com","+34123456789"
-airport-51,"nombre1",RIW,REGIONAL,"sevilla","España","http://example.org/","airportteam@acme.com","+34123456789"
-airport-52,"nombre1",GOT,REGIONAL,"sevilla","España","http://example.org/a","airportteam@acme.com","+34123456789"
-airport-53,"nombre1",ETA,REGIONAL,"sevilla","España","http://example.org/a/b","airportteam@acme.com","+34123456789"
-airport-54,"nombre1",ASC,REGIONAL,"sevilla","España","http://example.org/a/b?","airportteam@acme.com","+34123456789"
-airport-55,"nombre1",ASR,REGIONAL,"sevilla","España","http://example.org/a/b?a&b","airportteam@acme.com","+34123456789"
-airport-56,"nombre1",EGC,INTERNATIONAL,"sevilla","España","https://airportteam.com","acme@lorem-ipsum.org","+34123456789"
-airport-57,"nombre1",ISI,INTERNATIONAL,"sevilla","España","https://airportteam.com","a@b.e","+34123456789"
-airport-59,"nombre1",TEL,INTERNATIONAL,"sevilla","España","https://airportteam.com","a@b.es","+34123456789"
-airport-60,"nombre1",AAP,INTERNATIONAL,"sevilla","España","https://airportteam.com","a@b.esx","+34123456789"
-airport-61,"nombre1",PDE,INTERNATIONAL,"sevilla","España","https://airportteam.com","lorem-ipsum@dolor.sit.amet.consectetur.adipiscing.elit.sed.do.eiusmod.tempor.incididunt.ut.labore.et.dolore.magna.aliqua.Ut.enim.ad.minim.veniam.quis.nostrud.exercitation.ullamco.laboris.nisi.ut.aliquip.ex.ea.commodo.consequat.duis.aute.irure.doloris.edu","+34123456789"
-airport-62,"nombre1",QQW,INTERNATIONAL,"sevilla","España","https://airportteam.com","lorem-ipsum@dolor.sit.amet.consectetur.adipiscing.elit.sed.do.eiusmod.tempor.incididunt.ut.labore.et.dolore.magna.aliqua.Ut.enim.ad.minim.veniam.quis.nostrud.exercitation.ullamco.laboris.nisi.ut.aliquip.ex.ea.commodo.consequat.duis.aute.irure.dolor.es.org","+34123456789"
-airport-63,"nombre1",NGR,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","123456"
-airport-64,"nombre1",BVC,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","999999999999999"
-airport-65,"nombre1",NGD,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+123456"
-airport-66,"nombre1",DSL,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+987654321012345"
-airport-67,"nombre1",YOF,INTERNATIONAL,"sevilla","España","https://airportteam.com","airportteam@acme.com","+1000000"
+key,name,iataCode,operationalScope,country,city,website,email,phoneNumber
+#name
+Airport-01,Lorem ipsum dolor sit ame,AAA,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-02,L,BBB,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-03,Lo,CCC,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-04,"Lorem ipsum dolor sit amet, consectetur adipiscin",DDD,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-05,"Lorem ipsum dolor sit amet, consectetur adipiscin",EEE,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-06,โลเร็ม อิปซัม,FFF,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+#operationalScope
+Airport-07,Lorem ipsum dolor sit ame,GGG,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-08,Lorem ipsum dolor sit ame,HHH,DOMESTIC,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-09,Lorem ipsum dolor sit ame,III,INTERNATIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+#country
+Airport-10,Lorem ipsum dolor sit ame,JJJ,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-11,Lorem ipsum dolor sit ame,KKK,REGIONAL,L,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-12,Lorem ipsum dolor sit ame,LLL,REGIONAL,Lo,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-13,Lorem ipsum dolor sit ame,MMM,REGIONAL,"Lorem ipsum dolor sit amet, consectetur adipiscin",Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-14,Lorem ipsum dolor sit ame,NNN,REGIONAL,"Lorem ipsum dolor sit amet, consectetur adipiscing",Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-15,Lorem ipsum dolor sit ame,OOO,REGIONAL,لوريم إيبسوم,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+#city
+Airport-16,Lorem ipsum dolor sit ame,PPP,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-17,Lorem ipsum dolor sit ame,QQQ,REGIONAL,Lorem ipsum dolor sit ame,L,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-18,Lorem ipsum dolor sit ame,RRR,REGIONAL,Lorem ipsum dolor sit ame,Lo,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-19,Lorem ipsum dolor sit ame,SSS,REGIONAL,Lorem ipsum dolor sit ame,"Lorem ipsum dolor sit amet, consectetur adipiscin",http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-20,Lorem ipsum dolor sit ame,TTT,REGIONAL,Lorem ipsum dolor sit ame,"Lorem ipsum dolor sit amet, consectetur adipiscing",http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-21,Lorem ipsum dolor sit ame,UUU,REGIONAL,Lorem ipsum dolor sit ame,لوريم إيبسوم,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+#website
+Airport-22,Lorem ipsum dolor sit ame,VVV,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-23,Lorem ipsum dolor sit ame,WWW,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,ftp://a,acme@lorem-ipsum.org,123456754
+Airport-24,Lorem ipsum dolor sit ame,XXX,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://example.org/a/b?a&b,acme@lorem-ipsum.org,123456754
+Airport-25,Lorem ipsum dolor sit ame,YYY,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://example.org?a=1&b=2,acme@lorem-ipsum.org,123456754
+Airport-26,Lorem ipsum dolor sit ame,ZZZ,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://www.lorem-ipsum.org/dolor/sit.html#dolor,acme@lorem-ipsum.org,123456754
+Airport-27,Lorem ipsum dolor sit ame,ABB,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,"",acme@lorem-ipsum.org,123456754
+#email
+Airport-28,Lorem ipsum dolor sit ame,ACC,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456754
+Airport-29,Lorem ipsum dolor sit ame,ADD,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,a@b.es,123456754
+Airport-30,Lorem ipsum dolor sit ame,AEE,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,a@b.e,123456754
+Airport-31,Lorem ipsum dolor sit ame,AFF,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/iphttp://lorem.com/ipsumsum,null,123456754
+Airport-32,Lorem ipsum dolor sit ame,AGG,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,lorem-ipsum@dolor.sit.amet.consectetur.adipiscing.elit.sed.do.eiusmod.tempor.incididunt.ut.labore.et.dolore.magna.aliqua.Ut.enim.ad.minim.veniam.quis.nostrud.exercitation.ullamco.laboris.nisi.ut.aliquip.ex.ea.commodo.consequat.duis.aute.irure.doloris.edu,123456754
+Airport-33,Lorem ipsum dolor sit ame,AHH,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,a@b.esx,123456754
+#phoneNumber,"","","","","","",""
+Airport-34,Lorem ipsum dolor sit ame,AII,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456
+Airport-35,Lorem ipsum dolor sit ame,AJJ,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,+123456
+Airport-36,Lorem ipsum dolor sit ame,AKK,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,12345678
+Airport-37,Lorem ipsum dolor sit ame,ALL,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,123456789098765
+Airport-38,Lorem ipsum dolor sit ame,AMM,REGIONAL,Lorem ipsum dolor sit ame,Lorem ipsum dolor sit ame,http://lorem.com/ipsum,acme@lorem-ipsum.org,+123456789098765
