@@ -1,22 +1,21 @@
 
 package acme.entities.S1;
 
+import java.beans.Transient;
 import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Money;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
-import acme.client.components.validation.ValidMoment;
+import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoney;
-import acme.client.components.validation.ValidScore;
 import acme.client.components.validation.ValidString;
+import acme.client.helpers.SpringHelper;
 import acme.realms.Manager;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,57 +32,64 @@ public class Flight extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidString(max = 50)
+	@ValidString(min = 1, max = 50)
 	@Automapped
 	private String				tag;
 
 	@Mandatory
 	@Valid
 	@Automapped
-	private Boolean				requiresSelfTransfer;
+	private FlightIndication	requiresSelfTransfer;
 
 	@Mandatory
-	@ValidMoney(min = 0)
+	@ValidMoney(min = 0.00, max = 1000000.00)
 	@Automapped
 	private Money				cost;
 
-	@Mandatory
-	@ValidString(max = 255)
+	@Optional
+	@ValidString(min = 0, max = 255)
 	@Automapped
 	private String				description;
 
-	@Mandatory
-	@ValidMoment(past = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date				scheduledDeparture;
+	// Derived atributes
 
-	@Mandatory
-	@ValidMoment(past = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date				scheduledArrival;
 
-	@Mandatory
-	@ValidString()
-	@Automapped
-	private String				originCity;
+	@Transient
+	public Date getScheduledDeparture() {
+		LegRepository repository = SpringHelper.getBean(LegRepository.class);
+		return repository.findFirstScheduledDeparture(this.getId()).orElse(null);
+	}
 
-	@Mandatory
-	@ValidString()
-	@Automapped
-	private String				destinationCity;
+	@Transient
+	public Date getScheduledArrival() {
+		LegRepository repository = SpringHelper.getBean(LegRepository.class);
+		return repository.findLastScheduledArrival(this.getId()).orElse(null);
+	}
 
-	@Mandatory
-	@ValidScore()
-	@Automapped
-	private Integer				layovers;
+	@Transient
+	public String getOriginCity() {
+		LegRepository repository = SpringHelper.getBean(LegRepository.class);
+		return repository.findFirstOriginCity(this.getId()).orElse("");
+	}
 
-	@Mandatory
-	//@Valid
-	@Automapped
-	private boolean				publish;
+	@Transient
+	public String getDestinationCity() {
+		LegRepository repository = SpringHelper.getBean(LegRepository.class);
+		return repository.findLastDestinationCity(this.getId()).orElse("");
+	}
 
-	@Mandatory
-	@Valid
-	@ManyToOne(optional = true)
-	private Manager				manager;
+	@Transient
+	public Integer getNumberOfLayovers() {
+		LegRepository repository = SpringHelper.getBean(LegRepository.class);
+		return repository.numberOfLayovers(this.getId());
+	}
+
+	// Relationships
+
+
+	@Mandatory()
+	@Valid()
+	@ManyToOne(optional = false)
+	private Manager manager;
+
 }
