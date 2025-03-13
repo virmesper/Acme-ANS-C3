@@ -36,7 +36,7 @@ public class MaintenanceRecord extends AbstractEntity {
 	// Attributes -------------------------------------------------------------	
 
 	@Mandatory
-	@ValidMoment
+	@ValidMoment(past = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date				maintenanceMoment;
 
@@ -66,6 +66,7 @@ public class MaintenanceRecord extends AbstractEntity {
 	private Technician			technician; //un tecnico puede realizar varios registros de mantenimiento
 
 	@Mandatory
+	@Valid
 	@ManyToOne(optional = false)
-	private Aircraft			about; //una aeronave puede tener multiples registros de mantenimineto
+	private Aircraft			aircraft; //una aeronave puede tener multiples registros de mantenimineto
 }

@@ -4,12 +4,15 @@ package acme.entities.S5;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
+import acme.realms.Technician;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -35,7 +38,7 @@ public class Task extends AbstractEntity {
 	private String				description;
 
 	@Mandatory
-	@ValidNumber(min = 0, max = 10, integer = 2, fraction = 0)
+	@ValidNumber(min = 0, max = 10)
 	@Automapped
 	private Integer				priority;
 
@@ -44,4 +47,8 @@ public class Task extends AbstractEntity {
 	@Automapped
 	private Integer				estimatedDuration; //duracion en horas
 
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Technician			technician;
 }
