@@ -1,0 +1,36 @@
+key,lastUpdateMoment,step,resolutionPercentage,indicator,resolution,key:claim
+trackingLog-00,2012/07/02 0:00,Lorem ipsum dolor sit ame,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+# lastUpdateMoment 
+trackingLog-01,2000/01/01 0:00,Lorem ipsum dolor sit ame,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-02,2000/01/01 0:01,Lorem ipsum dolor sit ame,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-03,2024/12/31 23:59,Lorem ipsum dolor sit ame,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-04,2025/01/01 0:00,Lorem ipsum dolor sit ame,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+# step
+trackingLog-05,2012/07/02 0:00,L,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-06,2012/07/02 0:00,Lo,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-07,2012/07/02 0:00,"Lorem ipsum dolor sit amet, consectetur adipiscin",50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-08,2012/07/02 0:00,"Lorem ipsum dolor sit amet, consectetur adipiscing",50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-09,2012/07/02 0:00,โลเร็ม อิปซัม,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-10,2012/07/02 0:00,لوريم إيبسوم,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-11,2012/07/02 0:00,洛伦·伊普森,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-12,2012/07/02 0:00,<marquee>Hacked</marquee>,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-13,2012/07/02 0:00,<script>alert(‘Hacked!’);</script>,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-14,2012/07/02 0:00,'' or 'A' = 'A ,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+# resolutionPercentage 
+trackingLog-15,2012/07/02 0:00,Lorem ipsum dolor sit ame,0.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-16,2012/07/02 0:00,Lorem ipsum dolor sit ame,0.01,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-17,2012/07/02 0:00,Lorem ipsum dolor sit ame,99.99,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+trackingLog-18,2012/07/02 0:00,Lorem ipsum dolor sit ame,100.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+# accepted 
+trackingLog-19,2012/07/02 0:00,Lorem ipsum dolor sit ame,50.00,true,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",claim-00
+# resolution
+trackingLog-20,2012/07/02 0:00,Lorem ipsum dolor sit ame,50.00,false,"L",claim-00
+trackingLog-21,2012/07/02 0:00,Lorem ipsum dolor sit ame,50.00,false,"Lo",claim-00
+trackingLog-22,2012/07/02 0:00,Lorem ipsum dolor sit ame,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labor",claim-00
+trackingLog-23,2012/07/02 0:00,Lorem ipsum dolor sit ame,50.00,false,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore",claim-00
+trackingLog-24,2012/07/02 0:00,Lorem ipsum dolor sit ame,50.00,false,"โลเร็ม อิปซัม",claim-00
+trackingLog-25,2012/07/02 0:00,Lorem ipsum dolor sit ame,50.00,false,"لوريم إيبسوم",claim-00
+trackingLog-26,2012/07/02 0:00,Lorem ipsum dolor sit ame,50.00,false,"洛伦·伊普森",claim-00
+trackingLog-27,2012/07/02 0:00,Lorem ipsum dolor sit ame,50.00,false,"<marquee>Hacked</marquee>",claim-00
+trackingLog-28,2012/07/02 0:00,Lorem ipsum dolor sit ame,50.00,false,"<script>alert(‘Hacked!’);</script>",claim-00
+trackingLog-29,2012/07/02 0:00,Lorem ipsum dolor sit ame,50.00,false,"'' or 'A' = 'A ",claim-00

@@ -17,6 +17,7 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidScore;
 import acme.client.components.validation.ValidString;
+import acme.constraints.ValidShortText;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,7 +38,7 @@ public class TrackingLog extends AbstractEntity {
 
 	// Paso actual del procedimiento
 	@Mandatory
-	@ValidString(min = 1, max = 50)
+	@ValidShortText
 	@Automapped
 	private String				step;
 
@@ -47,21 +48,20 @@ public class TrackingLog extends AbstractEntity {
 	private Double				resolutionPercentage;
 
 	@Mandatory
-	@Valid
 	@Automapped
-	private ClaimStatus			accepted;
+	private boolean				indicator; //isAccepted
 
 	@Optional
 	@ValidString(max = 255)
 	@Automapped
 	private String				resolution;
 
+	// Derived attributes -----------------------------------------------------
+
 
 	@Transient
-	public boolean isResolutionValid() {
-		if (this.accepted == ClaimStatus.ACCEPTED || this.accepted == ClaimStatus.REJECTED)
-			return this.resolution != null && !this.resolution.isBlank();
-		return this.resolution == null || this.resolution.isBlank();
+	public boolean validResolution() {
+		return this.resolution != null && !this.resolution.trim().isEmpty();
 	}
 
 	// Relationships ----------------------------------------------------------

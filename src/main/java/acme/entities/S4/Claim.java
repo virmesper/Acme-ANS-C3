@@ -53,7 +53,7 @@ public class Claim extends AbstractEntity {
 
 	@Mandatory
 	@Automapped
-	private boolean				isAccepted; //indica si la reclamación fue aceptada o no
+	private boolean				accepted; //indica si la reclamación fue aceptada o no
 
 	// Derived attributes -----------------------------------------------------
 
