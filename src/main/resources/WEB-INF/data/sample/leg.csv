@@ -1,4 +1,33 @@
-key,flightNumber,scheduledDeparture,scheduledArrival,status,key:flight,key:aircraft,key:departureAirport,key:arrivalAirport
-leg1,AAX1234,2025/04/10 14:00,2025/04/10 18:30,ON_TIME,flight-01,aircraft-01,airport-01,airport-02
-leg2,DLX9876,2025/04/11 09:00,2025/04/11 13:45,DELAYED,flight-02,aircraft-02,airport-02,airport-03
-leg3,IBX5678,2025/04/12 16:15,2025/04/12 21:10,CANCELLED,flight-03,aircraft-03,airport-03,airport-04
+key,flightNumber,departure,arrival,status,publish,key:deployedAircraft,key:departureAirport,key:arrivalAirport,key:flight,key:manager
+leg-01,"ABC1234",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-01,manager-01
+leg-02,"ABC1111",2022/09/01 10:02,2022/09/01 10:03,ON_TIME,true,aircraft-01,airport-02,airport-01,flight-01,manager-01
+leg-03,"ABC2222",2022/09/01 10:04,2022/09/01 10:05,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-01,manager-01
+leg-04,"ABC3333",2022/09/01 10:06,2022/09/01 10:07,ON_TIME,true,aircraft-01,airport-02,airport-01,flight-01,manager-01
+leg-05,"ABC0000",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-02,manager-01
+leg-06,"ABC9866",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-03,manager-01
+leg-07,"ABC5910",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-04,manager-01
+leg-08,"ABC3495",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-05,manager-01
+leg-09,"ABC4411",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-06,manager-01
+leg-10,"ABC9999",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-07,manager-01
+leg-11,"ABC1235",2022/07/30 0:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-08,manager-01
+leg-12,"ABC1236",2022/07/30 0:01,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-09,manager-01
+leg-13,"ABC1237",2200/12/30 23:58,2022/12/30 00:00,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-10,manager-01
+leg-14,"ABC1238",2200/12/30 23:59,2022/12/30 00:00,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-11,manager-01
+leg-15,"ABC1239",2022/07/30 0:00,2022/07/30 00:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-12,manager-01
+leg-16,"ABC2340",2022/07/30 0:00,2022/07/30 00:02,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-13,manager-01
+leg-17,"ABC2341",2200/12/30 23:58,2022/12/30 23:59,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-14,manager-01
+leg-18,"ABC2342",2200/12/30 23:59,2022/12/30 00:00,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-15,manager-01
+leg-19,"ABC2343",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-16,manager-01
+leg-20,"ABC2344",2022/09/01 10:00,2022/09/01 10:01,DELAYED,true,aircraft-01,airport-01,airport-02,flight-17,manager-01
+leg-21,"ABC2345",2022/09/01 10:00,2022/09/01 10:01,CANCELLED,true,aircraft-01,airport-01,airport-02,flight-18,manager-01
+leg-22,"ABC2346",2022/09/01 10:00,2022/09/01 10:01,LANDED,true,aircraft-01,airport-01,airport-02,flight-19,manager-01
+leg-23,"ABC2347",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-28,manager-01
+leg-24,"ABC2348",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-20,manager-01
+leg-25,"ABC2349",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-21,manager-01
+leg-26,"ABC2350",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-22,manager-01
+leg-27,"ABC2351",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-23,manager-01
+leg-28,"ABC2352",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-24,manager-01
+leg-29,"ABC2353",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-25,manager-01
+leg-30,"ABC2354",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-26,manager-01
+leg-31,"ABC2355",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-27,manager-01
+leg-32,"ABC2356",2022/09/01 10:00,2022/09/01 10:01,ON_TIME,true,aircraft-01,airport-01,airport-02,flight-29,manager-01

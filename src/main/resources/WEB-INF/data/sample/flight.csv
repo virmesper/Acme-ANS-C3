@@ -1,12 +1,30 @@
-key,tag,requiresSelfTransfer,cost,description,scheduledDeparture,scheduledArrival,originCity,destinationCity,layovers,key:manager
-flight-01,"IB123",true,EUR 150.0,"Direct flight from Madrid to Barcelona",2025/06/10 08:00,2025/06/10 09:30,"Madrid","Barcelona",0,manager-01
-flight-02,"VY456",false,EUR 90.0,"Non-stop flight from Valencia to Seville",2025/06/15 12:45,2025/06/15 14:00,"Valencia","Seville",0,manager-02
-flight-03,"UX789",true,EUR 180.0,"One layover flight from Bilbao to Málaga via Madrid",2025/06/20 15:20,2025/06/20 18:45,"Bilbao","Málaga",1,manager-02
-flight-04,"FR101",false,EUR 75.0,"Direct flight from Palma de Mallorca to Alicante",2025/06/25 10:10,2025/06/25 11:20,"Palma de Mallorca","Alicante",0,manager-01
-flight-05,"BA205",true,EUR 320.0,"Flight from London to Tenerife with one layover in Madrid",2025/07/01 06:30,2025/07/01 12:15,"London","Tenerife",1,manager-02
-flight-06,"LH330",false,EUR 450.0,"Non-stop business class flight from Frankfurt to Madrid",2025/07/05 14:00,2025/07/05 17:30,"Frankfurt","Madrid",0,manager-01
-flight-07,"EK777",true,EUR 600.0,"Luxury flight from Dubai to Barcelona with layover in Paris",2025/07/10 23:50,2025/07/11 10:15,"Dubai","Barcelona",1,manager-01
-flight-08,"AF202",false,EUR 250.0,"Direct flight from Paris to Madrid",2025/07/15 09:00,2025/07/15 11:20,"Paris","Madrid",0,manager-02
-flight-09,"QR890",true,EUR 700.0,"Flight from Doha to Málaga with layover in Barcelona",2025/07/20 03:30,2025/07/20 14:15,"Doha","Málaga",1,manager-01
-flight-10,"AA321",false,EUR 850.0,"Non-stop flight from New York to Madrid",2025/07/25 17:45,2025/07/26 06:30,"New York","Madrid",0,manager-01
-flight-11,"TK444",true,EUR 500.0,"Flight from Istanbul to Valencia via Rome",2025/07/30 20:10,2025/07/31 03:45,"Istanbul","Valencia",1,manager-02
+key,tag,requires-self-transfer,cost,description,publish,key:manager
+flight-01,"Lorem ipsum dolor sit ame",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-02,"L",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-03,"Lo",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-04,"Lorem ipsum dolor sit amet consectetur adipiscing",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-05,"Lorem ipsum dolor sit amet consectetur adipiscinge",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-06,"โลเร็ม อิปซัม",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-07,"при",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-08,"洛伦·伊普森",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-09,"<marquee>Hacked</marquee>",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-10,"<script>alert(‘Hacked!’);</script>",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-11,"' or 'A' = 'A ",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-12,"Lorem ipsum dolor sit ame",true,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-13,"Lorem ipsum dolor sit ame",false,EUR 0.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-14,"Lorem ipsum dolor sit ame",false,EUR 0.01,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-15,"Lorem ipsum dolor sit ame",false,EUR 999999.99,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-16,"Lorem ipsum dolor sit ame",false,EUR 1000000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-17,"Lorem ipsum dolor sit ame",false,USD 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-01
+flight-18,"Lorem ipsum dolor sit ame",false,EUR 500000.00,"",true,manager-01
+flight-19,"Lorem ipsum dolor sit ame",false,EUR 500000.00,"L",true,manager-01
+flight-20,"Lorem ipsum dolor sit ame",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",true,manager-01
+flight-21,"Lorem ipsum dolor sit ame",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",true,manager-01
+flight-22,"Lorem ipsum dolor sit ame",false,EUR 500000.00,"โลเร็ม อิปซัม",true,manager-01
+flight-23,"Lorem ipsum dolor sit ame",false,EUR 500000.00,"при",true,manager-01
+flight-24,"Lorem ipsum dolor sit ame",false,EUR 500000.00,"洛伦·伊普森",true,manager-01
+flight-25,"Lorem ipsum dolor sit ame",false,EUR 500000.00,"<marquee>Hacked</marquee>",true,manager-01
+flight-26,"Lorem ipsum dolor sit ame",false,EUR 500000.00,"<script>alert(‘Hacked!’);</script>",true,manager-01
+flight-27,"Lorem ipsum dolor sit ame",false,EUR 500000.00,"' or 'A' = 'A ",true,manager-01
+flight-28,"Lorem ipsum dolor sit ame",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",false,manager-01
+flight-29,"Lorem ipsum dolor sit ame",false,EUR 500000.00,"Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true,manager-02
