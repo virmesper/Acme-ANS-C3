@@ -43,7 +43,7 @@ public class MaintenanceRecord extends AbstractEntity {
 	@Mandatory
 	@Enumerated(EnumType.STRING)
 	@Automapped
-	private Status				status;
+	private StatusMR				status;
 
 	@Mandatory
 	@ValidMoment
