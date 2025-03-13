@@ -3,7 +3,6 @@ package acme.entities.S2;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,8 +30,8 @@ public class Passenger extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidString(max = 256)
-	@Column(unique = true)
+	@ValidString(min = 1, max = 255)
+	@Automapped
 	private String				fullName;
 
 	@Mandatory
@@ -51,14 +50,9 @@ public class Passenger extends AbstractEntity {
 	private Date				dateOfBirth;
 
 	@Optional
-	@ValidString(max = 50)
+	@ValidString(min = 0, max = 50)
 	@Automapped
 	private String				specialNeeds;
-
-	@Mandatory
-	//@Valid
-	@Automapped
-	private boolean				publish;
 
 	// Derived attributes -----------------------------------------------------
 
