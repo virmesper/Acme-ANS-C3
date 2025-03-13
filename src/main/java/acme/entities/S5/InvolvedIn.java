@@ -3,8 +3,10 @@ package acme.entities.S5;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
+import acme.client.components.validation.Mandatory;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +35,8 @@ public class InvolvedIn extends AbstractEntity {
 	 * registro de mantenimiento. Permite rastrear en qué mantenimiento se incluye
 	 * la tarea referenciada.
 	 */
+	@Mandatory
+	@Valid
 	@ManyToOne(optional = false)
 	private MaintenanceRecord	maintenanceRecord;
 
@@ -43,6 +47,8 @@ public class InvolvedIn extends AbstractEntity {
 	 * tarea específica. Permite saber qué tarea fue realizada como parte del
 	 * mantenimiento referenciado.
 	 */
+	@Mandatory
+	@Valid
 	@ManyToOne(optional = false)
 	private Task				task;
 }
