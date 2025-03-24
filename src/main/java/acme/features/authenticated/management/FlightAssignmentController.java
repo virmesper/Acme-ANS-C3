@@ -22,8 +22,10 @@ public class FlightAssignmentController extends AbstractGuiController<Authentica
 
 
 	@PostConstruct
+
 	protected void initialise() {
-		super.addBasicCommand("listCompleted", this.listService);
-		super.addBasicCommand("listPlanned", this.listService);
+
+		super.addBasicCommand("list", this.listService);
+
 	}
 }

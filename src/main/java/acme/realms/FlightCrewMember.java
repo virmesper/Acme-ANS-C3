@@ -1,5 +1,5 @@
 
-package acme.entities.S3;
+package acme.realms;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +17,7 @@ import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.entities.Group.Airline;
+import acme.entities.S3.AvailabilityStatus;
 import lombok.Getter;
 import lombok.Setter;
 
