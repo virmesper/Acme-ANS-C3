@@ -1,4 +1,4 @@
-key,locatorCode,purchaseMoment,travelClass,price,lastCardDigits,published,key:flightId,key:customer
+key,locatorCode,purchaseMoment,travelClass,price,lastCardDigits,draftMode,key:flightId,key:customer
 booking-01,"ABCD123",2022/02/02 00:00,ECONOMY,EUR 100.00,"1234",true,flight-01,customer-01
 booking-02,"123456",2022/02/02 00:00,ECONOMY,EUR 100.00,"1234",true,flight-01,customer-01
 booking-03,"12345678",2022/02/02 00:00,ECONOMY,EUR 100.00,"1234",true,flight-01,customer-01
