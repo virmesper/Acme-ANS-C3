@@ -20,5 +20,3 @@ user-account-manager-03,true,"UserIdentity{name: 'Manager3', surname: 'Manager3'
 user-account-flight-crew-1,true,"UserIdentity{name: 'AB123456', surname: 'AB123456', email: 'flightcrew1@acme.com'}",password123,flightCrew1
 user-account-flight-crew-2,true,"UserIdentity{name: 'CD234567', surname: 'CD234567', email: 'flightcrew2@acme.com'}",password123,flightCrew2
 user-account-flight-crew-3,true,"UserIdentity{name: 'EF345678', surname: 'EF345678', email: 'flightcrew3@acme.com'}",password123,flightCrew3
-user-account-administrator-1,true,"UserIdentity{name: 'administrator1', surname: 'administrator1', email: 'administrator1@acme.com'}",administrator1,administrator1
-user-account-administrator-2,true,"UserIdentity{name: 'administrator2', surname: 'administrator2', email: 'administrator2@acme.com'}",administrator2,administrator2
