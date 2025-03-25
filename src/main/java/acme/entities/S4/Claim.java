@@ -9,7 +9,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 
-import acme.client.components.basis.AbstractEntity;
+import org.dom4j.tree.AbstractEntity;
+
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidEmail;
@@ -52,8 +53,9 @@ public class Claim extends AbstractEntity {
 	private ClaimType			type;
 
 	@Mandatory
+	@Valid
 	@Automapped
-	private boolean				accepted; //indica si la reclamación fue aceptada o no
+	private ClaimStatus			indicator;
 
 	// Derived attributes -----------------------------------------------------
 

@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
@@ -48,8 +47,9 @@ public class TrackingLog extends AbstractEntity {
 	private Double				resolutionPercentage;
 
 	@Mandatory
+	@Valid
 	@Automapped
-	private boolean				indicator; //isAccepted
+	private ClaimStatus			indicator;
 
 	@Optional
 	@ValidString(max = 255)
@@ -58,17 +58,10 @@ public class TrackingLog extends AbstractEntity {
 
 	// Derived attributes -----------------------------------------------------
 
-
-	@Transient
-	public boolean validResolution() {
-		return this.resolution != null && !this.resolution.trim().isEmpty();
-	}
-
 	// Relationships ----------------------------------------------------------
-
 
 	@Mandatory
 	@Valid
 	@ManyToOne
-	private Claim claim; // Relación con la reclamación a la que pertenece
+	private Claim				claim; // Relación con la reclamación a la que pertenece
 }
