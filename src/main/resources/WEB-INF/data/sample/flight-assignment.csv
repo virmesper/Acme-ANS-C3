@@ -5,7 +5,7 @@ flight-assignment-01,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet
 flight-assignment-02,CO_PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-1
 flight-assignment-03,CABIN_ATTENDANT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-2
 flight-assignment-04,LEAD_ATTENDANT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-3
-flight-assignment-05,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-4
+flight-assignment-05,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-3
 # lastUpdate - standard variations
 flight-assignment-06,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-1
 flight-assignment-07,PILOT,2023/05/20 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-1
