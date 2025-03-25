@@ -25,6 +25,9 @@
 			<acme:menu-suboption code="master.menu.anonymous.favourite-link-4" action="https://www.netflix.com"/>
 			
 		</acme:menu-option>
+		
+		<acme:menu-option code="master.menu.customer" access="hasRealm('Customer')" action="/authenticated/booking/list">
+		</acme:menu-option>
 
 		<acme:menu-option code="master.menu.administrator" access="hasRealm('Administrator')">
 			<acme:menu-suboption code="master.menu.administrator.list-user-accounts" action="/administrator/user-account/list"/>
