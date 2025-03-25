@@ -50,7 +50,8 @@ public class AuthenticatedBookingUpdateService extends AbstractGuiService<Authen
 
 	@Override
 	public void validate(final Booking booking) {
-		;
+		if (!booking.isDraftMode())
+			super.state(false, "draftMode", "acme.validation.booking.update-published");
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 
-package acme.entities.S3;
+package acme.realms;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
-import acme.client.components.basis.AbstractEntity;
+import acme.client.components.basis.AbstractRole;
 import acme.client.components.datatypes.Money;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
@@ -17,13 +17,14 @@ import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.entities.Group.Airline;
+import acme.entities.S3.AvailabilityStatus;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class FlightCrewMember extends AbstractEntity {
+public class FlightCrewMember extends AbstractRole {
 
 	// Serialisation identifier -----------------------------------------------
 

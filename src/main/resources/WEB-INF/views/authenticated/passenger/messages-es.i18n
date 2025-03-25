@@ -1,0 +1,22 @@
+# messages-es.i18n
+#
+# Copyright (C) 2012-2025 Rafael Corchuelo.
+#
+# En consonancia con el propósito tradicional de fomentar la educación y la investigación,
+# es política del titular de los derechos de autor permitir el uso y la redistribución
+# no comercial de este software. Se ha probado cuidadosamente, pero no se garantiza
+# para fines particulares. El titular de los derechos de autor no ofrece garantías ni
+# asume responsabilidades con respecto a ello.
+
+authenticated.passenger.list.title = Lista de Pasajeros
+authenticated.passenger.form.title = Lista de Pasajeros
+
+authenticated.passenger.list.label.fullName=Nombre completo
+authenticated.passenger.list.label.email=Correo electrónico
+authenticated.passenger.list.label.passportNumber=Número de pasaporte
+authenticated.passenger.list.label.dateOfBirth=Fecha de nacimiento
+authenticated.passenger.list.label.specialNeeds=Necesidades especiales
+authenticated.passenger.list.label.draftMode=Modo borrador
+
+authenticated.passenger.form.button.create=Crear pasajero
+authenticated.passenger.form.button.update=Actualizar pasajero

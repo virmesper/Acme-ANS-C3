@@ -26,11 +26,16 @@
 			
 		</acme:menu-option>
 		
-		<acme:menu-option code="master.menu.customer" access="hasRealm('Customer')" action="/authenticated/booking/list">
+		<acme:menu-option code="master.menu.customer" access="hasRealm('Customer')">
+		    <acme:menu-suboption code="master.menu.customer.booking" action="/authenticated/booking/list"/>
+		    <acme:menu-suboption code="master.menu.customer.passenger" action="/authenticated/passenger/list"/>
 		</acme:menu-option>
+
 
 		<acme:menu-option code="master.menu.administrator" access="hasRealm('Administrator')">
 			<acme:menu-suboption code="master.menu.administrator.list-user-accounts" action="/administrator/user-account/list"/>
+			<acme:menu-separator/>
+			<acme:menu-suboption code="master.menu.administrator.list-airport" action="/administrator/airport/list"/>
 			<acme:menu-separator/>
 			<acme:menu-suboption code="master.menu.administrator.populate-db-initial" action="/administrator/system/populate-initial"/>
 			<acme:menu-suboption code="master.menu.administrator.populate-db-sample" action="/administrator/system/populate-sample"/>			

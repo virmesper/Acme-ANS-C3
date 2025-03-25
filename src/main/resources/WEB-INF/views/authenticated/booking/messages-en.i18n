@@ -24,3 +24,4 @@ authenticated.booking.form.button.update = Update booking
 authenticated.booking.form.button.publish = Publish booking
 
 acme.validation.confirmation.message.lastCardDigits = The lastCardDigits must be filled if the booking is published
+acme.validation.booking.update-published=You cannot update a published booking.
