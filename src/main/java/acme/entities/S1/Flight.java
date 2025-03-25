@@ -37,9 +37,8 @@ public class Flight extends AbstractEntity {
 	private String				tag;
 
 	@Mandatory
-	@Valid
 	@Automapped
-	private FlightIndication	requiresSelfTransfer;
+	private Boolean				requiresSelfTransfer;
 
 	@Mandatory
 	@ValidMoney(min = 0.00, max = 1000000.00)
