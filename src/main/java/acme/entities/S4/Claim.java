@@ -57,6 +57,10 @@ public class Claim extends AbstractEntity {
 	@Automapped
 	private ClaimStatus			indicator;
 
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
+
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------

@@ -36,7 +36,7 @@ fg=BLACK</panel_attributes>
       <h>200</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Entity&gt;&gt;
-Assistance Agent
+Assistance Agent {ValidAssistanceAgent}
 --
 + employeeCode: String {Mandatory, ValidString(min=8, 
 max=9, pattern="^[A-Z]{2,3}\\d{6}$"), 
@@ -45,8 +45,8 @@ Column(unique=true)}
 ValidString(min=1, max=255), Automapped}
 + moment: Date {Mandatory, ValidMoment(past=true), 
 Temporal(TemporalType.TIMESTAP)}
-+ briefBio: String {Optional, ValidString(max=255), 
-Automapped}
++ briefBio: String {Optional, ValidString(min=0,
+max=255), Automapped}
 + salary: Money {Optional, ValidMoney(min=0, 
 max=1000000), Automapped}
 + photoUrl: String {Optional, ValidUrl, Automapped}
@@ -60,7 +60,7 @@ bg=PINK</panel_attributes>
       <x>576</x>
       <y>296</y>
       <w>264</w>
-      <h>168</h>
+      <h>176</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Entity&gt;&gt;
 Claim
@@ -75,6 +75,7 @@ max=255), Automapped}
 + type: ClaimType {Mandatory, Valid, Automapped}
 + indicator: ClaimStatus {Mandatory, Valid,
 Automapped}
++ draftMode: boolean {Mandatory, Automapped}
 bg=GREEN</panel_attributes>
     <additional_attributes/>
   </element>
@@ -151,7 +152,7 @@ records</panel_attributes>
     <id>UMLClass</id>
     <coordinates>
       <x>576</x>
-      <y>536</y>
+      <y>552</y>
       <w>280</w>
       <h>168</h>
     </coordinates>
@@ -165,7 +166,7 @@ Temporal(TemporalType.TIMESTAP)}
 + scheduledArrival:  Date {Mandatory, ValidMoment, 
 Temporal(TemporalType.TIMESTAP)}
 + status: LegStatus {Mandatory, Valid, Automapped}
-+ draftMode: boolean {Mandatory, Boolean}
++ draftMode: boolean {Mandatory, Automapped}
 --
 + getDuration():Double
 + isAvailable():boolean
@@ -176,15 +177,15 @@ bg=GREEN</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>696</x>
-      <y>456</y>
+      <y>464</y>
       <w>72</w>
-      <h>96</h>
+      <h>104</h>
     </coordinates>
     <panel_attributes>lt=&lt;-x
 m1=1
 m2=*
 belongs to</panel_attributes>
-    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
