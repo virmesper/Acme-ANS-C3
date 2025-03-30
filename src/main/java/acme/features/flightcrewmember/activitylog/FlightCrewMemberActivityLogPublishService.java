@@ -1,12 +1,16 @@
 
 package acme.features.flightcrewmember.activitylog;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.client.components.models.Dataset;
+import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.entities.S3.ActivityLog;
+import acme.entities.S3.FlightAssignment;
 import acme.realms.FlightCrewMember;
 
 @Service
@@ -53,9 +57,15 @@ public class FlightCrewMemberActivityLogPublishService extends AbstractGuiServic
 
 	@Override
 	public void unbind(final ActivityLog object) {
-		Dataset dataset = super.unbindObject(object, "registrationMoment", "incidentType", "description", "severityLevel");
-		dataset.put("confirmation", false);
-		dataset.put("readonly", false);
+		Dataset dataset = super.unbindObject(object, "registrationMoment", "incidentType", "description", "severityLevel", "flightAssignment");
+
+		FlightCrewMember crew = (FlightCrewMember) super.getRequest().getPrincipal().getActiveRealm();
+		Collection<FlightAssignment> assignments = this.repository.findAssignmentsByCrewMemberId(crew.getId());
+
+		SelectChoices choices = SelectChoices.from(assignments, "remarks", object.getFlightAssignment());
+		dataset.put("flightAssignments", choices);
+
 		super.getResponse().addData(dataset);
 	}
+
 }

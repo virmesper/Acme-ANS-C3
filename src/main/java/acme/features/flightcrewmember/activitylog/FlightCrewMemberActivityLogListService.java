@@ -6,7 +6,6 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.client.components.basis.AbstractRealm;
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.entities.S3.ActivityLog;
@@ -26,7 +25,8 @@ public class FlightCrewMemberActivityLogListService extends AbstractGuiService<F
 
 	@Override
 	public void load() {
-		AbstractRealm userId = super.getRequest().getPrincipal().getActiveRealm();
+		FlightCrewMember crew = (FlightCrewMember) super.getRequest().getPrincipal().getActiveRealm();
+		int userId = crew.getId();
 		Collection<ActivityLog> logs = this.repository.findActivityLogsByCrewMemberId(userId);
 		super.getBuffer().addData(logs);
 	}
