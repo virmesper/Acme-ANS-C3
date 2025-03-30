@@ -1,29 +1,29 @@
 key,flight_crew_duty,last_update,assignment_status,remarks,key:leg,key:flight_crew_member
 # base entity
-flight-assignment-01,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-member-AB123456
+flight-assignment-01,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-1
 # flightCrewDuty - variations
-flight-assignment-02,CO_PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-member-BC234567
-flight-assignment-03,CABIN_ATTENDANT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-member-CD345678
-flight-assignment-04,LEAD_ATTENDANT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-member-DE456789
-flight-assignment-05,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-member-AB123456
+flight-assignment-02,CO_PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-1
+flight-assignment-03,CABIN_ATTENDANT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-2
+flight-assignment-04,LEAD_ATTENDANT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-3
+flight-assignment-05,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-3
 # lastUpdate - standard variations
-flight-assignment-06,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-member-AB123456
-flight-assignment-07,PILOT,2025/05/20 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-member-AB123456
-flight-assignment-08,PILOT,2026/03/10 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-member-AB123456
-flight-assignment-09,PILOT,2018/04/25 00:01,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-member-AB123456
-flight-assignment-10,PILOT,2018/04/25 12:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-member-AB123456
+flight-assignment-06,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-1
+flight-assignment-07,PILOT,2023/05/20 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-1
+flight-assignment-08,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-1
+flight-assignment-09,PILOT,2018/04/25 00:01,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-1
+flight-assignment-10,PILOT,2018/04/25 12:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-1
 # assignmentStatus - variations
-flight-assignment-11,PILOT,2023/03/15 00:00,PENDING,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-member-AB123456
-flight-assignment-12,PILOT,2023/03/15 00:00,CANCELLED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-member-AB123456
+flight-assignment-11,PILOT,2023/03/15 00:00,PENDING,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-1
+flight-assignment-12,PILOT,2023/03/15 00:00,CANCELLED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,leg-01,flight-crew-1
 # remarks - standard variations
-flight-assignment-13,PILOT,2023/03/15 00:00,CONFIRMED,,leg-01,flight-crew-member-AB123456
-flight-assignment-14,PILOT,2023/03/15 00:00,CONFIRMED,L,leg-01,flight-crew-member-AB123456
-flight-assignment-15,PILOT,2023/03/15 00:00,CONFIRMED,Lo,leg-01,flight-crew-member-AB123456
-flight-assignment-16,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor,leg-01,flight-crew-member-AB123456
-flight-assignment-17,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*,leg-01,flight-crew-member-AB123456
-flight-assignment-18,PILOT,2023/03/15 00:00,CONFIRMED,<marquee>Hacked</marquee>,leg-01,flight-crew-member-AB123456
-flight-assignment-19,PILOT,2023/03/15 00:00,CONFIRMED,<script>alert("Hacked!");</script>,leg-01,flight-crew-member-AB123456
-flight-assignment-20,PILOT,2023/03/15 00:00,CONFIRMED,洛伦·伊普森,leg-01,flight-crew-member-AB123456
-flight-assignment-21,PILOT,2023/03/15 00:00,CONFIRMED,لوريم إيبسوم,leg-01,flight-crew-member-AB123456
-flight-assignment-22,PILOT,2023/03/15 00:00,CONFIRMED,โลเร็ม อิปซัม,leg-01,flight-crew-member-AB123456
-flight-assignment-23,PILOT,2023/03/15 00:00,CONFIRMED,' or 'A' = 'A ,leg-01,flight-crew-member-AB123456
+flight-assignment-13,PILOT,2023/03/15 00:00,CONFIRMED,,leg-01,flight-crew-1
+flight-assignment-14,PILOT,2023/03/15 00:00,CONFIRMED,L,leg-01,flight-crew-1
+flight-assignment-15,PILOT,2023/03/15 00:00,CONFIRMED,Lo,leg-01,flight-crew-1
+flight-assignment-16,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor,leg-01,flight-crew-1
+flight-assignment-17,PILOT,2023/03/15 00:00,CONFIRMED,Lorem ipsum dolor sit amet consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*,leg-01,flight-crew-1
+flight-assignment-18,PILOT,2023/03/15 00:00,CONFIRMED,<marquee>Hacked</marquee>,leg-01,flight-crew-1
+flight-assignment-19,PILOT,2023/03/15 00:00,CONFIRMED,"<script>alert(""Hacked!"");</script>",leg-01,flight-crew-1
+flight-assignment-20,PILOT,2023/03/15 00:00,CONFIRMED,洛伦·伊普森,leg-01,flight-crew-1
+flight-assignment-21,PILOT,2023/03/15 00:00,CONFIRMED,لوريم إيبسوم,leg-01,flight-crew-1
+flight-assignment-22,PILOT,2023/03/15 00:00,CONFIRMED,โลเร็ม อิปซัม,leg-01,flight-crew-1
+flight-assignment-23,PILOT,2023/03/15 00:00,CONFIRMED,' or 'A' = 'A,leg-01,flight-crew-1
