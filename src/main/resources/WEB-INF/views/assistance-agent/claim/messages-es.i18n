@@ -1,0 +1,34 @@
+# messages-en.i18n
+#
+# Copyright (C) 2012-2025 Rafael Corchuelo.
+#
+# In keeping with the traditional purpose of furthering education and research, it is
+# the policy of the copyright owner to permit non-commercial use and redistribution of
+# this software. It has been tested carefully, but it is not guaranteed for any particular
+# purposes.  The copyright owner does not offer any warranties or representations, nor do
+# they accept any liabilities with respect to them.
+
+assistanceAgent.claim.form.error.registration-more-time = La fecha de registro no puede ser posterior a la fecha actual.
+
+assistance-agent.claim.list.title = Lista de Reclamos
+assistance-agent.claim.form.title = Detalles del Reclamo
+
+assistanceAgent.claim.list.label.type = Tipo de Reclamo
+assistanceAgent.claim.list.label.leg = Tramo del Vuelo
+assistanceAgent.claim.list.label.indicator = Situación Actual
+assistanceAgent.claim.list.label.published = ¿Está Publicado?
+
+assistanceAgent.claim.list.button.create = Crear
+
+assistanceAgent.claim.form.button.create = Crear
+assistanceAgent.claim.form.button.update = Actualizar
+assistanceAgent.claim.form.button.publish = Publicar
+assistanceAgent.claim.form.button.delete = Eliminar
+
+assistanceAgent.claim.form.label.registrationMoment = Momento de Registro
+assistanceAgent.claim.form.label.passengerEmail = Correo Electrónico del Pasajero
+assistanceAgent.claim.form.label.description = Descripción
+assistanceAgent.claim.form.label.type = Tipo de Reclamo
+assistanceAgent.claim.form.label.indicator = Indicador
+assistanceAgent.claim.form.label.assistanceAgent = Agente de Asistencia
+assistanceAgent.claim.form.label.leg = Tramo del Vuelo

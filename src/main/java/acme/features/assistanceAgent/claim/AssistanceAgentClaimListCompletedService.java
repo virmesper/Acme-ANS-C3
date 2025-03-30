@@ -51,7 +51,7 @@ public class AssistanceAgentClaimListCompletedService extends AbstractGuiService
 		String published;
 		Dataset dataset;
 
-		dataset = super.unbindObject(object, "type", "leg", "indicator");
+		dataset = super.unbindObject(object, "registrationMoment", "type", "indicator", "leg");
 		published = !object.isDraftMode() ? "✓" : "x";
 		dataset.put("published", published);
 

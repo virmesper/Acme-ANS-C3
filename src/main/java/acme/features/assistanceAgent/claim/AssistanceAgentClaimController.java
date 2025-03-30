@@ -44,10 +44,10 @@ public class AssistanceAgentClaimController extends AbstractGuiController<Assist
 
 	@PostConstruct
 	protected void initialise() {
-		super.addBasicCommand("list", this.listUndergoingService);
-		super.addBasicCommand("show", this.undergoingClaimShowService);
-		super.addBasicCommand("list", this.listCompletedService);
-		super.addBasicCommand("show", this.completedClaimShowService);
+		super.addCustomCommand("list-undergoing", "list", this.listUndergoingService);
+		super.addCustomCommand("show-undergoing", "show", this.undergoingClaimShowService);
+		super.addCustomCommand("list-completed", "list", this.listCompletedService);
+		super.addCustomCommand("show-completed", "show", this.completedClaimShowService);
 		super.addBasicCommand("create", this.createService);
 		super.addBasicCommand("update", this.updateService);
 		super.addBasicCommand("delete", this.deleteService);

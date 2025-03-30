@@ -26,6 +26,12 @@
 			
 		</acme:menu-option>
 		
+		<acme:menu-option code="master.menu.assistance-agent" access="hasRealm('AssistanceAgent')">
+			<acme:menu-suboption code="master.menu.assistance-agent.claim" action="/assistance-agent/claim/list-undergoing"/>
+			<acme:menu-suboption code="master.menu.assistance-agent.claims-completed" action="/assistance-agent/claim/list-completed"/>
+			<acme:menu-suboption code="master.menu.assistance-agent.dashboard" action="/assistance-agent/assistance-agent-form/show"/>
+	  	</acme:menu-option>
+		
 		<acme:menu-option code="master.menu.customer" access="hasRealm('Customer')">
 		    <acme:menu-suboption code="master.menu.customer.booking" action="/authenticated/booking/list"/>
 		    <acme:menu-suboption code="master.menu.customer.passenger" action="/authenticated/passenger/list"/>
