@@ -1,0 +1,24 @@
+master.menu.technician=Técnico
+technician.maintenance-record.menu.title=Registros de mantenimiento
+
+technician.maintenance-record.list.title = Registros de Mantenimiento
+technician.maintenance-record.form.title = Detalles del Registro de Mantenimiento
+
+technician.maintenance-record.list.label.maintenanceMoment = Fecha del Mantenimiento
+technician.maintenance-record.list.label.status = Estado
+technician.maintenance-record.list.label.nextInspectionDate = Próxima Inspección
+technician.maintenance-record.list.label.estimatedCost = Coste Estimado
+technician.maintenance-record.list.label.notes = Notas
+
+technician.maintenance-record.form.label.maintenanceMoment = Fecha del Mantenimiento
+technician.maintenance-record.form.label.status = Estado
+technician.maintenance-record.form.label.nextInspectionDate = Próxima Inspección
+technician.maintenance-record.form.label.estimatedCost = Coste Estimado
+technician.maintenance-record.form.label.notes = Notas
+
+technician.maintenance-record.form.button.create = Crear registro
+technician.maintenance-record.form.button.update = Actualizar registro
+technician.maintenance-record.form.button.publish = Publicar registro
+
+acme.validation.maintenanceRecord.must-have-one-task-published = Debe haber al menos una tarea publicada para poder publicar el registro.
+acme.validation.maintenanceRecord.cannot-have-unpublished-tasks = No se puede publicar un registro si contiene tareas no publicadas.

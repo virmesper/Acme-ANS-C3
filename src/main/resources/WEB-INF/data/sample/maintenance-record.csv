@@ -1,0 +1,4 @@
+key,maintenanceMoment,status,nextInspectionDate,estimatedCost,notes,key:technician,key:aircraft
+maintenance-record-01,2024/10/01 10:00,PENDING,2025/10/01 10:00,EUR 1000.00,Hydraulic system check,technician1,Aircraft-01
+maintenance-record-02,2024/11/05 14:30,IN_PROGRESS,2025/11/05 14:30,EUR 1500.00,Electrical inspection,technician1,Aircraft-02
+maintenance-record-03,2024/09/15 09:00,COMPLETED,2025/09/15 09:00,EUR 800.00,Landing gear repair,technician2,Aircraft-03

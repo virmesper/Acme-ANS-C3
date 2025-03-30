@@ -41,6 +41,11 @@ master.menu.customer = Customer
 master.menu.customer.booking = My bookings
 master.menu.customer.passenger = My passengers
 
+# master.menu.technician ######################################################
+
+master.menu.technician = Technician
+technician.maintenance-record.menu.title = Maintenance records
+
 
 # master.menu.user-account ####################################################
 

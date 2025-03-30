@@ -48,6 +48,10 @@ public class Task extends AbstractEntity {
 	private Integer				estimatedDuration; //duracion en horas
 
 	@Mandatory
+	@Automapped
+	private boolean				published; //  Indica si la tarea está publicada o no
+
+	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
 	private Technician			technician;
