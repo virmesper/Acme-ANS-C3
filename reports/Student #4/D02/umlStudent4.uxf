@@ -85,7 +85,7 @@ bg=GREEN</panel_attributes>
       <x>192</x>
       <y>264</y>
       <w>224</w>
-      <h>184</h>
+      <h>192</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Entity&gt;&gt;
 Tracking Log
@@ -101,6 +101,7 @@ ValidScore, Automapped}
 Valid, Automapped}
 + resolution: String {Optional, 
 ValidString(max = 255), Automapped}
++ draftMode: boolean {Mandatory, Automapped}
 
 
 bg=GREEN</panel_attributes>
