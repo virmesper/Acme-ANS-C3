@@ -1,0 +1,9 @@
+flight-crewmember.activity-log.list.label.duty=Función
+flight-crewmember.activity-log.list.label.startTime=Hora de inicio
+flight-crewmember.activity-log.list.label.endTime=Hora de fin
+flight-crewmember.activity-log.list.label.extraInfo=Información adicional
+
+flight-crewmember.activity-log.form.label.duty=Función
+flight-crewmember.activity-log.form.label.startTime=Hora de inicio
+flight-crewmember.activity-log.form.label.endTime=Hora de fin
+flight-crewmember.activity-log.form.label.extraInfo=Información adicional

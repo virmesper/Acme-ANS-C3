@@ -18,3 +18,7 @@ authenticated.flightcrewmembers.list.label.currentStatus = Current status
 authenticated.flightcrewmembers.list.label.remarks = Remarks
 
 employer.job.list.button.create = Create
+
+master.menu.flight-crew-member=Flight Crew
+master.menu.flight-crew-member.activity-logs=My Activity Logs
+master.menu.flight-crew-member.create-log=Create Activity Log

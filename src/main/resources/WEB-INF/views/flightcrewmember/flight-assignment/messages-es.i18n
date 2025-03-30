@@ -18,3 +18,7 @@ authenticated.flightcrewmembers.list.label.currentStatus = Estado actual
 authenticated.flightcrewmembers.list.label.remarks = Observaciones
 
 employer.job.list.button.create = Crear
+
+master.menu.flight-crew-member=Tripulación de Vuelo
+master.menu.flight-crew-member.activity-logs=Mis Registros de Actividad
+master.menu.flight-crew-member.create-log=Crear Registro de Actividad

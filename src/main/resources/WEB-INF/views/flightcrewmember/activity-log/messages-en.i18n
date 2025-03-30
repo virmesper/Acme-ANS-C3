@@ -1,0 +1,9 @@
+flight-crewmember.activity-log.list.label.duty=Duty
+flight-crewmember.activity-log.list.label.startTime=Start Time
+flight-crewmember.activity-log.list.label.endTime=End Time
+flight-crewmember.activity-log.list.label.extraInfo=Extra Information
+
+flight-crewmember.activity-log.form.label.duty=Duty
+flight-crewmember.activity-log.form.label.startTime=Start Time
+flight-crewmember.activity-log.form.label.endTime=End Time
+flight-crewmember.activity-log.form.label.extraInfo=Extra Information
