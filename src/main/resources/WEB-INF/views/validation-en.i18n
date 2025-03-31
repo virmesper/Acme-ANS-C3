@@ -15,3 +15,9 @@ acme.validation.employeeCode.unique.message = The employee code must be unique.
 acme.validation.employeeCode.initials.message=The employee code must begin with your initials extracted from your full name.
 acme.validation.draftMode.message = Validation cannot proceed while the claim is in draft mode.
 acme.validation.confirmation.message.update = The claim cannot be updated while it is in draft mode.
+acme.validation.trackinglog.no-trackinglogs = No tracking logs found.
+acme.validation.trackinglog.status.not-pending = The status cannot be PENDING when the resolution percentage is 100%.
+acme.validation.trackinglog.status.pending-required = The status must be PENDING when the resolution percentage is less than 100%.
+acme.validation.trackinglog.resolution.incorrect = The resolution field is incorrect based on the current status.
+acme.validation.trackinglog.resolution.monotony = The resolution percentage must be monotonically increasing.
+
