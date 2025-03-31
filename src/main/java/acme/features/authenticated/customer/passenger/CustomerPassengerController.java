@@ -1,34 +1,36 @@
 
-package acme.features.authenticated.customer;
+package acme.features.authenticated.customer.passenger;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
-import acme.client.components.principals.Authenticated;
 import acme.client.controllers.AbstractGuiController;
-import acme.entities.S2.Booking;
+import acme.client.controllers.GuiController;
+import acme.entities.S2.Passenger;
+import acme.realms.Customer;
 
-@Controller
-public class AuthenticatedBookingController extends AbstractGuiController<Authenticated, Booking> {
-
+@GuiController
+public class CustomerPassengerController extends AbstractGuiController<Customer, Passenger> {
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected AuthenticatedBookingListService	listService;
+	private CustomerPassengerListService	listService;
 
 	@Autowired
-	protected AutehnticatedBookingShowService	showService;
+	private CustomerPassengerShowService	showService;
 
 	@Autowired
-	protected AuthenticatedBookingCreateService	createService;
+	private CustomerPassengerCreateService	createService;
 
 	@Autowired
-	protected AuthenticatedBookingUpdateService	updateService;
+	private CustomerPassengerUpdateService	updateService;
 
 	@Autowired
-	protected AuthenticatedBookingPublishedService	publishService;
+	private CustomerPassengerPublishService	publishService;
+
+	@Autowired
+	private CustomerPassengerDeleteService	deleteService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -39,6 +41,7 @@ public class AuthenticatedBookingController extends AbstractGuiController<Authen
 		super.addBasicCommand("show", this.showService);
 		super.addBasicCommand("create", this.createService);
 		super.addBasicCommand("update", this.updateService);
+		super.addBasicCommand("delete", this.deleteService);
 		super.addCustomCommand("publish", "update", this.publishService);
 	}
 }
