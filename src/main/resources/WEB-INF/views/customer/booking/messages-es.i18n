@@ -24,4 +24,5 @@ authenticated.booking.form.button.update = Actualizar reserva
 authenticated.booking.form.button.publish = Publicar reserva
 
 acme.validation.confirmation.message.lastCardDigits = Los últimos digitos de la tarjeta de crédito deberán ser rellenados si la reserva es publicada
-acme.validation.booking.update-published=No puedes actualizar una resserva publicada
+acme.validation.confirmation.message.update = Una reserva no puede ser actualizada si está publicada
+acme.validation.confirmation.message.booking.locator-code = Ya existe otra reserva con este código de localizador

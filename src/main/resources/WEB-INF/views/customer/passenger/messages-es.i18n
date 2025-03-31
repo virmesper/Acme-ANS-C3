@@ -18,5 +18,7 @@ authenticated.passenger.list.label.dateOfBirth=Fecha de nacimiento
 authenticated.passenger.list.label.specialNeeds=Necesidades especiales
 authenticated.passenger.list.label.draftMode=Modo borrador
 
-authenticated.passenger.form.button.create=Crear pasajero
-authenticated.passenger.form.button.update=Actualizar pasajero
+customer.passenger.form.button.create = Crear un pasajero
+customer.passenger.form.button.update = Actualizar pasajero
+customer.passenger.form.button.publish = Publicar pasajero
+customer.passenger.form.button.delete = Eliminar pasajero

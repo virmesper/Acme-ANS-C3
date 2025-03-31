@@ -9,4 +9,5 @@
 	<acme:list-column code="authenticated.booking.list.label.travelClass" path="travelClass" width="20%"/>
 </acme:list>
 
-<acme:button code="authenticated.booking.form.button.create" action="/authenticated/booking/create"/>
+<acme:button code="authenticated.booking.form.button.create" action="/customer/booking/create"/>
+<acme:button code="authenticated.booking-record.form.button.create" action="/customer/booking-record/create"/>
