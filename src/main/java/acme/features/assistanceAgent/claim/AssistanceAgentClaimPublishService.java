@@ -10,8 +10,8 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S4.Claim;
 import acme.entities.S4.Indicator;
+import acme.realms.assistanceAgent.AssistanceAgent;
 import acme.entities.S4.ClaimType;
-import acme.realms.AssistanceAgent;
 
 @GuiService
 public class AssistanceAgentClaimPublishService extends AbstractGuiService<AssistanceAgent, Claim> {

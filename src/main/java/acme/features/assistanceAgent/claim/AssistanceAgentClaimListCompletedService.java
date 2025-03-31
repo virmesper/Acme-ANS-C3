@@ -9,7 +9,7 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S4.Claim;
-import acme.realms.AssistanceAgent;
+import acme.realms.assistanceAgent.AssistanceAgent;
 
 @GuiService
 public class AssistanceAgentClaimListCompletedService extends AbstractGuiService<AssistanceAgent, Claim> {

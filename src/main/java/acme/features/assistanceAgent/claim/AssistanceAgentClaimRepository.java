@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import acme.client.repositories.AbstractRepository;
 import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
-import acme.realms.AssistanceAgent;
+import acme.realms.assistanceAgent.AssistanceAgent;
 
 @Repository
 public interface AssistanceAgentClaimRepository extends AbstractRepository {
