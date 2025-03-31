@@ -53,7 +53,7 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 		draftModeChoices.add("true", "True", claim.isDraftMode());
 		draftModeChoices.add("false", "False", !claim.isDraftMode());
 
-		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode");
+		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode", "leg");
 		dataset.put("type", claimTypeChoices);
 		dataset.put("indicator", indicatorChoices);
 		dataset.put("draftMode", draftModeChoices);

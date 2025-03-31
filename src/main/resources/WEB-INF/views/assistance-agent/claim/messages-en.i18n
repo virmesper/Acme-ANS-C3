@@ -24,7 +24,7 @@ assistance-agent.claim.form.label.registrationMoment = Registration Moment
 assistance-agent.claim.form.label.passengerEmail = Passenger Email
 assistance-agent.claim.form.label.description = Description
 assistance-agent.claim.form.label.type = Type
-assistance-agent.claim.form.label.indicator = Is Accepted
+assistance-agent.claim.form.label.indicator = Indicator
 assistance-agent.claim.form.label.leg = Leg
 assistance-agent.claim.form.label.draftMode = DraftMode
 
