@@ -2,53 +2,73 @@
 package acme.features.flightcrewmember.activitylog;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
+import acme.client.services.GuiService;
 import acme.entities.S3.ActivityLog;
 import acme.realms.FlightCrewMember;
 
-@Service
+@GuiService
 public class FlightCrewMemberActivityLogDeleteService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
+
+	// Internal state ---------------------------------------------------------
 
 	@Autowired
 	private FlightCrewMemberActivityLogRepository repository;
 
+	// AbstractGuiService interface -------------------------------------------
+
 
 	@Override
 	public void authorise() {
-		int id = super.getRequest().getData("id", int.class);
-		ActivityLog log = this.repository.findOneActivityLogById(id);
-		boolean isOwner = log != null && super.getRequest().getPrincipal().hasRealm(log.getFlightCrewMember());
-		boolean isDeletable = this.repository.findConfirmedAssignmentsByCrewMemberId(log.getFlightCrewMember().getId()).isEmpty();
+		boolean status;
+		ActivityLog activityLog;
+		int id;
+		FlightCrewMember flightCrewMember;
 
-		super.getResponse().setAuthorised(isOwner && isDeletable);
+		id = super.getRequest().getData("id", int.class);
+		activityLog = this.repository.findActivityLogById(id);
+		flightCrewMember = activityLog == null ? null : activityLog.getFlightCrewMember();
+		status = super.getRequest().getPrincipal().hasRealm(flightCrewMember) && activityLog == null;
+		super.getResponse().setAuthorised(true);
 	}
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("id", int.class);
-		ActivityLog log = this.repository.findOneActivityLogById(id);
-		super.getBuffer().addData(log);
+		ActivityLog activityLog;
+		int id;
+
+		id = super.getRequest().getData("id", int.class);
+		activityLog = this.repository.findActivityLogById(id);
+
+		super.getBuffer().addData(activityLog);
 	}
 
 	@Override
-	public void bind(final ActivityLog object) {
-		// No binding needed for delete
+	public void bind(final ActivityLog activityLog) {
+		super.bindObject(activityLog, "registrationMoment", "incidentType", "description", "severityLevel");
 	}
 
 	@Override
-	public void validate(final ActivityLog object) {
-		// No validation needed for delete
+	public void validate(final ActivityLog activityLog) {
+		;
 	}
 
 	@Override
-	public void perform(final ActivityLog object) {
-		this.repository.delete(object);
+	public void perform(final ActivityLog activityLog) {
+
+		this.repository.delete(activityLog);
 	}
 
 	@Override
-	public void unbind(final ActivityLog object) {
-		// No unbinding needed for delete
+	public void unbind(final ActivityLog activityLog) {
+
+		Dataset dataset;
+
+		dataset = super.unbindObject(activityLog, "registrationMoment", "incidentType", "description", "severityLevel");
+
+		super.getResponse().addData(dataset);
 	}
+
 }

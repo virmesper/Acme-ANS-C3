@@ -4,18 +4,22 @@ package acme.features.flightcrewmember.activitylog;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
+import acme.client.services.GuiService;
 import acme.entities.S3.ActivityLog;
 import acme.realms.FlightCrewMember;
 
-@Service
+@GuiService
 public class FlightCrewMemberActivityLogListService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
+
+	// Internal state ---------------------------------------------------------
 
 	@Autowired
 	private FlightCrewMemberActivityLogRepository repository;
+
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
@@ -25,15 +29,24 @@ public class FlightCrewMemberActivityLogListService extends AbstractGuiService<F
 
 	@Override
 	public void load() {
-		FlightCrewMember crew = (FlightCrewMember) super.getRequest().getPrincipal().getActiveRealm();
-		int userId = crew.getId();
-		Collection<ActivityLog> logs = this.repository.findActivityLogsByCrewMemberId(userId);
-		super.getBuffer().addData(logs);
+		Collection<ActivityLog> activityLogs;
+		int flightCrewMemberId;
+
+		flightCrewMemberId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		activityLogs = this.repository.findAllActivityLogs(flightCrewMemberId);
+
+		super.getBuffer().addData(activityLogs);
+
 	}
 
 	@Override
-	public void unbind(final ActivityLog object) {
-		Dataset dataset = super.unbindObject(object, "registrationMoment", "incidentType", "description", "severityLevel");
+	public void unbind(final ActivityLog activityLog) {
+		Dataset dataset;
+
+		dataset = super.unbindObject(activityLog, "registrationMoment", "incidentType", "severityLevel");
+		super.addPayload(dataset, activityLog, "description");
+
 		super.getResponse().addData(dataset);
 	}
+
 }

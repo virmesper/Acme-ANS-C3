@@ -1,13 +1,14 @@
 
 package acme.entities.S3;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
-import acme.client.components.datatypes.Moment;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidMoment;
@@ -31,7 +32,7 @@ public class ActivityLog extends AbstractEntity {
 	@Mandatory
 	@ValidMoment(past = true)
 	@Automapped
-	private Moment				registrationMoment;
+	private Date				registrationMoment;
 
 	@Mandatory
 	@ValidString(max = 50)
