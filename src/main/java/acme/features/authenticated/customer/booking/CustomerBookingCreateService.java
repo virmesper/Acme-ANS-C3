@@ -10,6 +10,7 @@ import acme.client.components.views.SelectChoices;
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S1.Flight;
 import acme.entities.S2.Booking;
 import acme.entities.S2.TravelClass;
 import acme.realms.Customer;
@@ -40,7 +41,17 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	@Override
 	public void bind(final Booking object) {
 		assert object != null;
-		super.bindObject(object, "travelClass", "price", "locatorCode", "flightId", "purchaseMoment", "lastCardDigits");
+
+		// Verificar si estamos creando una reserva nueva
+		if (super.getRequest().getMethod().equalsIgnoreCase("POST"))
+			object.setPurchaseMoment(new Date());
+
+		super.bindObject(object, "travelClass", "price", "locatorCode", "lastCardDigits");
+
+		// Obtener el ID del vuelo desde el formulario
+		int flightId = super.getRequest().getData("flightId", int.class);
+		Flight flight = this.repository.findFlightById(flightId);
+		object.setFlightId(flight);
 	}
 
 	@Override
@@ -71,7 +82,7 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 		Date purchaseMoment = new Date();
 
-		Dataset dataset = super.unbindObject(object, "travelClass", "price", "locatorCode", "lastNibble");
+		Dataset dataset = super.unbindObject(object, "travelClass", "price", "locatorCode", "lastCardDigits");
 		dataset.put("flights", flights);
 		dataset.put("travelClasses", travelClasses);
 		dataset.put("purchaseMoment", purchaseMoment);

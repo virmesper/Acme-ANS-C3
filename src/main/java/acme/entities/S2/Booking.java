@@ -38,6 +38,11 @@ public class Booking extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Flight				flightId;
+
+	@Mandatory
 	@ValidString(pattern = "^[A-Z0-9]{6,8}$")
 	@Column(unique = true)
 	private String				locatorCode;
@@ -66,26 +71,44 @@ public class Booking extends AbstractEntity {
 
 	@Transient
 	public Money getPrice() {
-		Money result;
-		FlightRepository flightRepository = SpringHelper.getBean(FlightRepository.class);
-		BookingRepository bookingRepository = SpringHelper.getBean(BookingRepository.class);
-		result = flightRepository.findCostByFlight(this.flightId.getId());
-		Collection<Passenger> pg = bookingRepository.findPassengersByBooking(this.getId());
-		Double amount = result.getAmount() * pg.size();
-		result.setAmount(amount);
+		Money result = new Money();
+		try {
+			if (this.flightId == null) {
+				result.setAmount(0.0);
+				result.setCurrency("EUR");  // O la moneda predeterminada
+				return result;
+			}
+
+			FlightRepository flightRepository = SpringHelper.getBean(FlightRepository.class);
+			BookingRepository bookingRepository = SpringHelper.getBean(BookingRepository.class);
+
+			// Buscar el coste del vuelo asociado
+			result = flightRepository.findCostByFlight(this.flightId.getId());
+			if (result == null) {
+				result = new Money();
+				result.setAmount(0.0);
+				result.setCurrency("EUR");  // O la moneda predeterminada
+				return result;
+			}
+
+			// Calcular el precio según el número de pasajeros
+			Collection<Passenger> pg = bookingRepository.findPassengersByBooking(this.getId());
+			Double amount = result.getAmount() * pg.size();
+			result.setAmount(amount);
+		} catch (Exception e) {
+			// Manejar cualquier excepción inesperada
+			result.setAmount(0.0);
+			result.setCurrency("EUR");  // O la moneda predeterminada
+		}
 		return result;
 	}
+
 	// Relationships ----------------------------------------------------------
 
 
 	@Mandatory
 	@Valid
-	@ManyToOne(optional = false)
-	private Flight		flightId;
-
-	@Mandatory
-	@Valid
 	@ManyToOne
-	private Customer	customer;
+	private Customer customer;
 
 }
