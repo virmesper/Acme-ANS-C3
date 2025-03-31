@@ -8,27 +8,31 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-assistanceAgent.claim.form.error.registration-more-time = La fecha de registro no puede ser posterior a la fecha actual.
+assistanceAgent.claim.form.error.registration-more-time = La fecha de registro no puede ser posterior a la fecha actual
 
-assistance-agent.claim.list.title = Lista de Reclamos
-assistance-agent.claim.form.title = Detalles del Reclamo
+assistance-agent.claim.list.title = Lista de reclamaciones
+assistance-agent.claim.form.title = Detalles de reclamaciones
 
-assistanceAgent.claim.list.label.type = Tipo de Reclamo
-assistanceAgent.claim.list.label.leg = Tramo del Vuelo
-assistanceAgent.claim.list.label.indicator = Situación Actual
-assistanceAgent.claim.list.label.published = ¿Está Publicado?
+assistance-agent.claim.list.label.registrationMoment = Fecha de registro
+assistance-agent.claim.list.label.passengerEmail = Email del pasajero
+assistance-agent.claim.list.label.description = Descripción
+assistance-agent.claim.list.label.type = Tipo
+assistance-agent.claim.list.label.indicator = Indicador
+assistance-agent.claim.list.label.published = ¿Publicado?
 
-assistanceAgent.claim.list.button.create = Crear
+assistance-agent.claim.form.label.registrationMoment = Fecha de registro
+assistance-agent.claim.form.label.passengerEmail = Email del pasajero
+assistance-agent.claim.form.label.description = Descripción
+assistance-agent.claim.form.label.type = Tipo
+assistance-agent.claim.form.label.indicator = Es Aceptada
+assistance-agent.claim.form.label.leg = Escala
+assistance-agent.claim.form.label.draftMode = Borrador
 
-assistanceAgent.claim.form.button.create = Crear
-assistanceAgent.claim.form.button.update = Actualizar
-assistanceAgent.claim.form.button.publish = Publicar
-assistanceAgent.claim.form.button.delete = Eliminar
-
-assistanceAgent.claim.form.label.registrationMoment = Momento de Registro
-assistanceAgent.claim.form.label.passengerEmail = Correo Electrónico del Pasajero
-assistanceAgent.claim.form.label.description = Descripción
-assistanceAgent.claim.form.label.type = Tipo de Reclamo
-assistanceAgent.claim.form.label.indicator = Indicador
-assistanceAgent.claim.form.label.assistanceAgent = Agente de Asistencia
-assistanceAgent.claim.form.label.leg = Tramo del Vuelo
+assistance-agent.claim.list.button.create = Crear reclamación
+assistance-agent.claim.list.button.listAll = Lista de reclamaciones
+assistance-agent.claim.list.button.listCompleted = Reclamaciones completas
+assistance-agent.claim.list.button.listPending = Reclamaciones pendientes
+assistance-agent.claim.form.button.create = Crear reclamación
+assistance-agent.claim.form.button.update = Actualizar reclamación
+assistance-agent.claim.form.button.delete = Borrar reclamación
+assistance-agent.claim.form.button.publish = Publicar reclamación

@@ -9,35 +9,36 @@ import org.springframework.stereotype.Repository;
 import acme.client.repositories.AbstractRepository;
 import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
-import acme.entities.S4.ClaimStatus;
-import acme.entities.S4.TrackingLog;
 import acme.realms.AssistanceAgent;
 
 @Repository
 public interface AssistanceAgentClaimRepository extends AbstractRepository {
 
-	@Query("select c from Claim c where c.assistanceAgent.id = :id and c.indicator <> :type")
-	public Collection<Claim> findManyClaimsCompletedByMasterId(int id, ClaimStatus type);
+	@Query("SELECT a FROM AssistanceAgent a WHERE a.id = :agentId")
+	AssistanceAgent findAssistanceAgentById(int agentId);
 
-	@Query("select l from Leg l")
-	public Collection<Leg> findAllLegs();
+	@Query("SELECT c FROM Claim c WHERE c.id = :claimId")
+	Claim findClaimById(int claimId);
 
-	@Query("select c from Claim c where c.assistanceAgent.id = :id")
-	public Collection<Claim> findManyClaimsByMasterId(int id);
+	@Query("SELECT l FROM Leg l WHERE l.id = :legId")
+	Leg findLegById(int legId);
 
-	@Query("select c from Claim c where c.id = :id")
-	public Claim findOneClaimById(int id);
+	@Query("SELECT c FROM Claim c WHERE c.assistanceAgent.id = :agentId")
+	Collection<Claim> findAllClaimsByAssistanceAgentId(int agentId);
 
-	@Query("select a from AssistanceAgent a where a.id = :id")
-	public AssistanceAgent findOneAssitanceAgentById(int id);
+	@Query("SELECT c FROM Claim c WHERE c.indicator <> acme.entities.S4.ClaimStatus.PENDING AND c.assistanceAgent.id = :agentId")
+	Collection<Claim> findCompletedClaims(int agentId);
 
-	@Query("select l from Leg l where l.id = :id")
-	public Leg findOneLegById(int id);
+	@Query("SELECT c FROM Claim c WHERE c.indicator = acme.entities.S4.ClaimStatus.PENDING AND c.assistanceAgent.id = :agentId")
+	Collection<Claim> findUndergoingClaims(int agentId);
 
-	@Query("select t from TrackingLog t where t.claim.id = :id")
-	public Collection<TrackingLog> findManyTrackingLogsByClaimId(int id);
+	@Query("SELECT c FROM Claim c WHERE c.indicator = 'PENDING' AND c.leg.id = :legId")
+	Collection<Claim> findUndergoingClaimsByLegId(int legId);
 
-	@Query("select count(t) = 0 from TrackingLog t where t.draftMode = true and t.claim.id = :id")
-	public boolean allTrackingLogsPublishedByClaimId(int id);
+	@Query("SELECT l FROM Leg l WHERE l.status IN ('ON_TIME', 'DELAYED', 'LANDED')")
+	Collection<Leg> findAvailableLegs();
+
+	@Query("SELECT c.leg FROM Claim c WHERE c.id = :claimId")
+	Leg findLegByClaimId(int claimId);
 
 }

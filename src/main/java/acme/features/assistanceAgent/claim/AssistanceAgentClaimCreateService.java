@@ -1,14 +1,15 @@
 
 package acme.features.assistanceAgent.claim;
 
-import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import acme.client.components.basis.AbstractRealm;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
+import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Leg;
@@ -30,49 +31,41 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean isAgent = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
+		super.getResponse().setAuthorised(isAgent);
 	}
 
 	@Override
 	public void load() {
-		Claim object;
-		AssistanceAgent assistanceAgent;
+		Claim claim = new Claim();
+		AbstractRealm principal = super.getRequest().getPrincipal().getActiveRealm();
+		int agentId = principal.getId();
+		AssistanceAgent agent = this.repository.findAssistanceAgentById(agentId);
+		Date today = MomentHelper.getCurrentMoment();
 
-		assistanceAgent = (AssistanceAgent) super.getRequest().getPrincipal().getActiveRealm();
+		claim.setAssistanceAgent(agent);
+		claim.setRegistrationMoment(today);
+		claim.setIndicator(ClaimStatus.PENDING);
+		claim.setDraftMode(true);
 
-		object = new Claim();
-		object.setDraftMode(true);
-		object.setAssistanceAgent(assistanceAgent);
-
-		super.getBuffer().addData(object);
+		super.getBuffer().addData(claim);
 	}
 
 	@Override
-	public void bind(final Claim object) {
-		assert object != null;
-
+	public void bind(final Claim claim) {
 		int legId;
 		Leg leg;
 
 		legId = super.getRequest().getData("leg", int.class);
-		leg = this.repository.findOneLegById(legId);
+		leg = this.repository.findLegById(legId);
 
-		super.bindObject(object, "registrationMoment", "passengerEmail", "description", "type", "indicator", "leg");
-		object.setLeg(leg);
+		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "type", "indicator", "draftMode");
+		claim.setLeg(leg);
 	}
 
 	@Override
 	public void validate(final Claim object) {
-		assert object != null;
-		if (!super.getBuffer().getErrors().hasErrors("registrationMoment")) {
-			Date minimumDeadline;
-
-			minimumDeadline = MomentHelper.getCurrentMoment();
-			super.state(MomentHelper.isBefore(object.getRegistrationMoment(), minimumDeadline), "registrationMoment", "assistanceAgent.claim.form.error.registration-more-time");
-		}
-
-		// TODO
-
+		;
 	}
 
 	@Override
@@ -85,24 +78,27 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 	@Override
 	public void unbind(final Claim object) {
 		Dataset dataset;
+		SelectChoices claimTypeChoices = SelectChoices.from(ClaimType.class, object.getType());
+		SelectChoices indicatorChoices = SelectChoices.from(ClaimStatus.class, object.getIndicator());
+		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", object.getLeg());
+		SelectChoices draftModeChoices = new SelectChoices();
+		draftModeChoices.add("true", "True", object.isDraftMode());
+		draftModeChoices.add("false", "False", !object.isDraftMode());
 
-		Collection<Leg> legs;
-		SelectChoices choices;
-		SelectChoices choicesIndicator;
-		SelectChoices choicesType;
-
-		legs = this.repository.findAllLegs();
-
-		choices = SelectChoices.from(legs, "flightNumber", object.getLeg());
-		choicesType = SelectChoices.from(ClaimType.class, object.getType());
-		choicesIndicator = SelectChoices.from(ClaimStatus.class, object.getIndicator());
-
-		dataset = super.unbindObject(object, "registrationMoment", "passengerEmail", "description", "type", "indicator", "leg");
-		dataset.put("legs", choices);
-		dataset.put("indicators", choicesIndicator);
-		dataset.put("types", choicesType);
+		dataset = super.unbindObject(object, "registrationMoment", "passengerEmail", "description", "draftMode");
+		dataset.put("type", claimTypeChoices);
+		dataset.put("indicator", indicatorChoices);
+		dataset.put("draftMode", draftModeChoices);
+		dataset.put("leg", legChoices.getSelected().getKey());
+		dataset.put("legs", legChoices);
 
 		super.getResponse().addData(dataset);
+	}
+
+	@Override
+	public void onSuccess() {
+		if (super.getRequest().getMethod().equals("POST"))
+			PrincipalHelper.handleUpdate();
 	}
 
 }

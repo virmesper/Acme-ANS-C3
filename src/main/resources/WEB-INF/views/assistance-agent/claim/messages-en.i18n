@@ -8,29 +8,36 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-assistanceAgent.claim.form.error.registration-more-time = The registration date cannot be later than the current date.
+assistanceAgent.claim.form.error.registration-more-time = The registration date cannot be later than the current date
 
-assistanceAgent.claim.list.button.create = Create
-
-assistance-agent.claim.list.title = Claims List
+assistance-agent.claim.list.title = Claim list
 assistance-agent.claim.form.title = Claim Details
+
+assistance-agent.claim.list.label.registrationMoment = Registration Moment
+assistance-agent.claim.list.label.passengerEmail = Passenger Email
+assistance-agent.claim.list.label.description = Description
+assistance-agent.claim.list.label.type = Type
+assistance-agent.claim.list.label.indicator = Indicator
+assistance-agent.claim.list.label.published = Is published?
+
+assistance-agent.claim.form.label.registrationMoment = Registration Moment
+assistance-agent.claim.form.label.passengerEmail = Passenger Email
+assistance-agent.claim.form.label.description = Description
+assistance-agent.claim.form.label.type = Type
+assistance-agent.claim.form.label.indicator = Is Accepted
+assistance-agent.claim.form.label.leg = Leg
+assistance-agent.claim.form.label.draftMode = DraftMode
 
 assistanceAgent.claim.list.label.type = Claim Type
 assistanceAgent.claim.list.label.leg = Leg
 assistanceAgent.claim.list.label.indicator = Actual Situation
 assistanceAgent.claim.list.label.published = Is Published?
 
-assistanceAgent.claim.list.button.create = Create
-
-assistanceAgent.claim.form.button.create = Create
-assistanceAgent.claim.form.button.update = Update
-assistanceAgent.claim.form.button.publish = Publish
-assistanceAgent.claim.form.button.delete = Delete
-
-assistanceAgent.claim.form.label.registrationMoment = Registration Moment
-assistanceAgent.claim.form.label.passengerEmail = Passenger Email
-assistanceAgent.claim.form.label.description = Description
-assistanceAgent.claim.form.label.type = Type of Claim
-assistanceAgent.claim.form.label.indicator = Indicator
-assistanceAgent.claim.form.label.assistanceAgent = Assistance Agent
-assistanceAgent.claim.form.label.leg = Leg
+assistance-agent.claim.list.button.create = Create claim
+assistance-agent.claim.list.button.list = List All Claims
+assistance-agent.claim.list.button.list-completed = List Completed Claims
+assistance-agent.claim.list.button.list-undergoing = List Pending Claims
+assistance-agent.claim.form.button.create = Create claim
+assistance-agent.claim.form.button.update = Update claim
+assistance-agent.claim.form.button.delete = Delete claim
+assistance-agent.claim.form.button.publish = Publish claim

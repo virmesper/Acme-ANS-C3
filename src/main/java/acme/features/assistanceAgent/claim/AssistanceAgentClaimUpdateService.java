@@ -1,15 +1,12 @@
 
 package acme.features.assistanceAgent.claim;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
 import acme.entities.S4.ClaimStatus;
 import acme.entities.S4.ClaimType;
@@ -29,75 +26,51 @@ public class AssistanceAgentClaimUpdateService extends AbstractGuiService<Assist
 	@Override
 	public void authorise() {
 		boolean status;
-		int masterId;
-		Claim claim;
-
-		masterId = super.getRequest().getData("id", int.class);
-		claim = this.repository.findOneClaimById(masterId);
-		status = claim != null && claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
-
+		int claimId = super.getRequest().getData("id", int.class);
+		Claim claim = this.repository.findClaimById(claimId);
+		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null && super.getRequest().getPrincipal().getActiveRealm().getId() == claim.getAssistanceAgent().getId();
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		int masterId;
-		Claim object;
+		Claim claim;
+		int id;
 
-		masterId = super.getRequest().getData("id", int.class);
-		object = this.repository.findOneClaimById(masterId);
+		id = super.getRequest().getData("id", int.class);
+		claim = this.repository.findClaimById(id);
 
-		super.getBuffer().addData(object);
+		super.getBuffer().addData(claim);
 	}
 
 	@Override
-	public void bind(final Claim object) {
-		assert object != null;
-
-		int legId;
-		Leg leg;
-
-		legId = super.getRequest().getData("leg", int.class);
-		leg = this.repository.findOneLegById(legId);
-
-		super.bindObject(object, "registrationMoment", "passengerEmail", "description", "type", "indicator", "leg");
-		object.setLeg(leg);
+	public void bind(final Claim claim) {
+		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "type", "indicator");
 	}
 
 	@Override
-	public void validate(final Claim object) {
-		assert object != null;
-
-		// TODO
-
+	public void validate(final Claim claim) {
+		if (claim.isDraftMode() != false)
+			super.state(false, "draftMode", "acme.validation.confirmation.message.update");
 	}
 
 	@Override
-	public void perform(final Claim object) {
-		assert object != null;
-
-		this.repository.save(object);
+	public void perform(final Claim claim) {
+		this.repository.save(claim);
 	}
 
 	@Override
-	public void unbind(final Claim object) {
+	public void unbind(final Claim claim) {
 		Dataset dataset;
+		SelectChoices claimTypeChoices = SelectChoices.from(ClaimType.class, claim.getType());
+		SelectChoices indicatorChoices = SelectChoices.from(ClaimStatus.class, claim.getIndicator());
+		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", claim.getLeg());
 
-		Collection<Leg> legs;
-		SelectChoices choices;
-		SelectChoices choicesIndicator;
-		SelectChoices choicesType;
-
-		legs = this.repository.findAllLegs();
-
-		choices = SelectChoices.from(legs, "flightNumber", object.getLeg());
-		choicesType = SelectChoices.from(ClaimType.class, object.getType());
-		choicesIndicator = SelectChoices.from(ClaimStatus.class, object.getIndicator());
-
-		dataset = super.unbindObject(object, "registrationMoment", "passengerEmail", "description", "type", "indicator", "leg");
-		dataset.put("legs", choices);
-		dataset.put("indicators", choicesIndicator);
-		dataset.put("types", choicesType);
+		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode");
+		dataset.put("type", claimTypeChoices);
+		dataset.put("indicator", indicatorChoices);
+		dataset.put("leg", legChoices.getSelected().getKey());
+		dataset.put("legs", legChoices);
 
 		super.getResponse().addData(dataset);
 	}

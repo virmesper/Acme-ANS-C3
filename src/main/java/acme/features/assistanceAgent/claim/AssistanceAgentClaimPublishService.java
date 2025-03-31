@@ -1,15 +1,13 @@
 
 package acme.features.assistanceAgent.claim;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
+import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
 import acme.entities.S4.ClaimStatus;
 import acme.entities.S4.ClaimType;
@@ -29,79 +27,60 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 	@Override
 	public void authorise() {
 		boolean status;
-		int masterId;
-		Claim claim;
-
-		masterId = super.getRequest().getData("id", int.class);
-		claim = this.repository.findOneClaimById(masterId);
-		status = claim != null && claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
-
+		int claimId = super.getRequest().getData("id", int.class);
+		Claim claim = this.repository.findClaimById(claimId);
+		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null && super.getRequest().getPrincipal().getActiveRealm().getId() == claim.getAssistanceAgent().getId();
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		int masterId;
-		Claim object;
+		Claim claim;
+		int claimId;
 
-		masterId = super.getRequest().getData("id", int.class);
-		object = this.repository.findOneClaimById(masterId);
+		claimId = super.getRequest().getData("id", int.class);
+		claim = this.repository.findClaimById(claimId);
 
-		super.getBuffer().addData(object);
+		super.getBuffer().addData(claim);
 	}
 
 	@Override
-	public void bind(final Claim object) {
-		assert object != null;
-
-		int legId;
-		Leg leg;
-
-		legId = super.getRequest().getData("leg", int.class);
-		leg = this.repository.findOneLegById(legId);
-
-		super.bindObject(object, "registrationMoment", "passengerEmail", "description", "type", "indicator", "leg");
-		object.setLeg(leg);
-	}
-
-	@Override
-	public void validate(final Claim object) {
-		assert object != null;
-
-		// TODO
+	public void bind(final Claim claim) {
+		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "type", "indicator", "leg", "draftMode");
 
 	}
 
 	@Override
-	public void perform(final Claim object) {
-		assert object != null;
-
-		object.setDraftMode(false);
-
-		this.repository.save(object);
+	public void validate(final Claim claim) {
+		;
 	}
 
 	@Override
-	public void unbind(final Claim object) {
+	public void perform(final Claim claim) {
+		claim.setDraftMode(false);
+		this.repository.save(claim);
+	}
+
+	@Override
+	public void unbind(final Claim claim) {
 		Dataset dataset;
+		SelectChoices claimTypeChoices = SelectChoices.from(ClaimType.class, claim.getType());
+		SelectChoices indicatorChoices = SelectChoices.from(ClaimStatus.class, claim.getIndicator());
+		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", claim.getLeg());
 
-		Collection<Leg> legs;
-		SelectChoices choices;
-		SelectChoices choicesIndicator;
-		SelectChoices choicesType;
-
-		legs = this.repository.findAllLegs();
-
-		choices = SelectChoices.from(legs, "flightNumber", object.getLeg());
-		choicesType = SelectChoices.from(ClaimType.class, object.getType());
-		choicesIndicator = SelectChoices.from(ClaimStatus.class, object.getIndicator());
-
-		dataset = super.unbindObject(object, "registrationMoment", "passengerEmail", "description", "type", "indicator", "leg");
-		dataset.put("legs", choices);
-		dataset.put("indicators", choicesIndicator);
-		dataset.put("types", choicesType);
+		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode");
+		dataset.put("type", claimTypeChoices);
+		dataset.put("indicator", indicatorChoices);
+		dataset.put("leg", legChoices.getSelected().getKey());
+		dataset.put("legs", legChoices);
 
 		super.getResponse().addData(dataset);
+	}
+
+	@Override
+	public void onSuccess() {
+		if (super.getRequest().getMethod().equals("POST"))
+			PrincipalHelper.handleUpdate();
 	}
 
 }

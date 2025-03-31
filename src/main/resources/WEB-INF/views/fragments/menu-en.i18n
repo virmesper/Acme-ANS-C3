@@ -20,9 +20,9 @@ master.menu.anonymous.favourite-link-4 = 2682*****: Mesa Pérez, Virginia
 # master.menu.assistanceAgent ##########################################################
  
 master.menu.assistance-agent = Assistance Agent
-master.menu.assistance-agent.claim = My claims
-master.menu.assistance-agent.claims-completed = My Completed Claims
-master.menu.assistance-agent.dashboard = Dashboard
+master.menu.assistance-agent.claim.list = Claim list
+master.menu.assistance-agent.claim.list-completed = Completed Claim list
+master.menu.assistance-agent.claim.list-undergoing = Pending Claim list
 
 # master.menu.administrator ###################################################
 

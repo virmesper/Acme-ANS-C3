@@ -7,56 +7,40 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
 import acme.entities.S4.ClaimStatus;
 import acme.entities.S4.ClaimType;
 import acme.realms.AssistanceAgent;
 
 @GuiService
-public class AssistanceAgentClaimDeleteService extends AbstractGuiService<AssistanceAgent, Claim> {
+public class AssistanceAgentClaimShowService extends AbstractGuiService<AssistanceAgent, Claim> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
 	private AssistanceAgentClaimRepository repository;
 
-	// AbstractService interface ----------------------------------------------
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int claimId = super.getRequest().getData("id", int.class);
-		Claim claim = this.repository.findClaimById(claimId);
-		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null && super.getRequest().getPrincipal().getActiveRealm().getId() == claim.getAssistanceAgent().getId();
-		super.getResponse().setAuthorised(status);
+		boolean isAgent = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
+		super.getResponse().setAuthorised(isAgent);
 	}
 
 	@Override
 	public void load() {
 		Claim claim;
-		int claimId;
+		int id;
 
-		claimId = super.getRequest().getData("id", int.class);
-		claim = this.repository.findClaimById(claimId);
+		id = super.getRequest().getData("id", int.class);
+		Leg leg = this.repository.findLegByClaimId(id);
+		claim = this.repository.findClaimById(id);
+		claim.setLeg(leg);
 
 		super.getBuffer().addData(claim);
-	}
-
-	@Override
-	public void bind(final Claim claim) {
-		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "type", "indicator", "leg", "draftMode");
-	}
-
-	@Override
-	public void validate(final Claim claim) {
-		if (claim.isDraftMode() != false)
-			super.state(false, "draftMode", "acme.validation.draftMode.message");
-	}
-
-	@Override
-	public void perform(final Claim claim) {
-		this.repository.delete(claim);
 	}
 
 	@Override
@@ -65,10 +49,14 @@ public class AssistanceAgentClaimDeleteService extends AbstractGuiService<Assist
 		SelectChoices claimTypeChoices = SelectChoices.from(ClaimType.class, claim.getType());
 		SelectChoices indicatorChoices = SelectChoices.from(ClaimStatus.class, claim.getIndicator());
 		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", claim.getLeg());
+		SelectChoices draftModeChoices = new SelectChoices();
+		draftModeChoices.add("true", "True", claim.isDraftMode());
+		draftModeChoices.add("false", "False", !claim.isDraftMode());
 
 		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode");
 		dataset.put("type", claimTypeChoices);
 		dataset.put("indicator", indicatorChoices);
+		dataset.put("draftMode", draftModeChoices);
 		dataset.put("leg", legChoices.getSelected().getKey());
 		dataset.put("legs", legChoices);
 
