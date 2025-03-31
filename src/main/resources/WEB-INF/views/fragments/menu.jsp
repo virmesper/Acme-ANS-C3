@@ -60,13 +60,11 @@
 				action="/administrator/system/shut-down" />
 		</acme:menu-option>
 
-		<acme:menu-option code="master.menu.flightcrewmember"
-			access="hasRole('FlightCrewMember')">
+		<acme:menu-option code="master.menu.flightCrewMember"
+			access="hasRealm('FlightCrewMember')">
 			<acme:menu-suboption
-				code="master.menu.flightcrewmember.flight-assignment"
-				action="/flightcrewmember/flight-assignment/list?completed=true" />
-			<acme:menu-suboption code="master.menu.flightcrewmember.activity-log"
-				action="/flightcrewmember/activity-log/list" />
+				code="master.menu.flightCrewMember.list-activityLog"
+				action="/flight-crew-member/activity-log/list" />
 		</acme:menu-option>
 
 		<acme:menu-option code="master.menu.provider"
