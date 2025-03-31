@@ -1,28 +1,23 @@
-# messages-en.i18n
-#
-# Copyright (C) 2012-2025 Rafael Corchuelo.
-#
-# In keeping with the traditional purpose of furthering education and research, it is
-# the policy of the copyright owner to permit non-commercial use and redistribution of
-# this software. It has been tested carefully, but it is not guaranteed for any particular
-# purposes.  The copyright owner does not offer any warranties or representations, nor do
-# they accept any liabilities with respect to them.
+customer.booking.form.title = Details of booking
+customer.booking.list.title = List of bookings
 
-authenticated.booking.list.title = List of bookings
-authenticated.booking.form.title = List of bookings
+customer.booking.form.button.create = Create 
+customer.booking.form.button.update = Update
+customer.booking.form.button.publish= Publish
+customer.booking.form.button.return = Return
+customer.booking.form.show.passengers = Show passengers
+customer.booking.form.add.passenger = Add Passenger
+customer.booking.list.button.create = Create
 
-authenticated.booking.list.label.locatorCode = locator Code
-authenticated.booking.list.label.purchaseMoment = Purchase Moment
-authenticated.booking.list.label.travelClass = Travel Class
-authenticated.booking.list.label.lastCardDigits = Last Card Digits
-authenticated.booking.list.label.price = Price
-authenticated.booking.list.label.passenger = Passengers
-authenticated.booking.list.label.draftMode = draftMode
+customer.booking.list.label.flightId=Flight
+customer.booking.list.label.purchaseMoment=Purchase Moment
+customer.booking.list.label.price=Price
+customer.booking.list.label.draftmode=Draft Mode
+customer.booking.list.label.locatorCode= Locator Code
 
-authenticated.booking.form.button.create = Create booking
-authenticated.booking.form.button.update = Update booking
-authenticated.booking.form.button.publish = Publish booking
+customer.booking.list.label.lastCardDigits= Last 4 digits of payment card
+customer.booking.list.label.travelClass= Travel Class
 
-acme.validation.confirmation.message.lastCardDigits = The lastCardDigits must be filled if the booking is published
+acme.validation.confirmation.message.lastCardDigits = The lastNibble must be filled if the booking is published
 acme.validation.confirmation.message.update = A booking can not be updated if it is published
 acme.validation.confirmation.message.booking.locator-code = There is already another booking with this locator code

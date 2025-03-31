@@ -4,10 +4,10 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:list>
-	<acme:list-column code="authenticated.booking.list.label.locatorCode" path="locatorCode" width="10%"/>
-	<acme:list-column code="authenticated.booking.list.label.purchaseMoment" path="purchaseMoment" width="20%"/>
-	<acme:list-column code="authenticated.booking.list.label.travelClass" path="travelClass" width="20%"/>
+    <acme:list-column code="customer.booking.list.label.locatorCode" path="locatorCode" />
+	<acme:list-column code="customer.booking.list.label.purchaseMoment" path="purchaseMoment" />
+	<acme:list-column code="customer.booking.list.label.travelClass" path="travelClass" />
+    <acme:list-payload path="payload"/>	
 </acme:list>
 
-<acme:button code="authenticated.booking.form.button.create" action="/customer/booking/create"/>
-<acme:button code="authenticated.booking-record.form.button.create" action="/customer/booking-record/create"/>
+<acme:button code="customer.booking.list.button.create" action="/customer/booking/create"/>

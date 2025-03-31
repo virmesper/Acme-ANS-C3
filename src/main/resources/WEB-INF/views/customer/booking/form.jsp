@@ -1,32 +1,40 @@
-<%@page%>
+<%--
+- Mostrar o editar una reserva
+--%>
 
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
-<acme:form>
-		<acme:input-select code="authenticated.booking.list.label.flight" path="flight" choices="${flights}"/>
-		<acme:input-textbox code="authenticated.booking.list.label.locatorCode" path="locatorCode"/>
-		<acme:input-moment code="authenticated.booking.list.label.purchaseMoment" path="purchaseMoment" readonly="true"/>
-		<acme:input-select code="authenticated.booking.list.label.travelClass" path="travelClass" choices="${travelClass}"/>
-		<acme:input-money code="authenticated.booking.list.label.price" path="price" readonly="true"/>
-		<acme:input-textbox code="authenticated.booking.list.label.lastNibble" path="lastNibble"/>
-		<acme:input-checkbox code="authenticated.booking.list.label.draftMode" path="draftMode" readonly="true"/>
-		<acme:input-textarea code="authenticated.booking.list.label.passenger" path="passengers" readonly="true"/>
-	<jstl:choose>
-			<jstl:when test="${(_command == 'update' || _command == 'show' || _command == 'publish') && draftMode == true}">
-				<acme:submit code="authenticated.booking.form.button.update" action="/customer/booking/update"/>
-				<acme:submit code="authenticated.booking.form.button.publish" action="/customer/booking/publish"/>
-				<acme:submit code="authenticated.booking.form.button.delete" action="/customer/booking/delete"/>
-				
-			</jstl:when>
-			<jstl:when test="${_command == 'create'}">
-				<acme:submit code="authenticated.booking.form.button.create" action="/customer/booking/create"/>
-			</jstl:when>
-					
-	</jstl:choose>	
+<acme:form readonly="${!draftMode}">
+    <acme:input-select code="customer.booking.list.label.flightId" path="flight" choices="${flights}"/>
+    <acme:input-textbox code="customer.booking.list.label.locatorCode" path="locatorCode"/>
+    <acme:input-textbox code="customer.booking.list.label.lastCardDigits" path="lastCardDigits"/>
+    <acme:input-select code="customer.booking.list.label.travelClass" path="travelClass" choices="${travelClasses}"/>
+    <acme:input-double code="customer.booking.list.label.price" path="price" readonly="true"/>
+
 	
-	<jstl:if test="${passengers.size() != 0 && (_command == 'update' || _command == 'show' || _command == 'publish')}">
-			<acme:button code="authenticated.booking.form.button.passenger" action="/customer/passenger/list?bookingId=${bookingId}"/>
+	
+	<jstl:choose>
+		<jstl:when test="${acme:anyOf(_command, 'show|update|publish')}">
+		<jstl:if test="${draftMode}">
+			<acme:submit code="customer.booking.form.button.update" action="/customer/booking/update"/>
+			<acme:submit code="customer.booking.form.button.publish" action="/customer/booking/publish"/>
+			<jstl:if test="${_command != 'create'}">
+				<acme:button code="customer.booking.form.add.passenger" action="/customer/booking-record/create?bookingId=${id}"/>
+			</jstl:if>
+		</jstl:if>
+
+		</jstl:when>
+		<jstl:when test="${_command == 'create'}">
+			<acme:submit code="customer.booking.form.button.create" action="/customer/booking/create"/>
+		</jstl:when>		
+	</jstl:choose>	
+	<jstl:if test="${_command != 'create'}">
+		<acme:button code="customer.booking.form.show.passengers" action="/customer/passenger/list?bookingId=${id}"/>
 	</jstl:if>
-		
+	
+
+
+	
+	
 </acme:form>
