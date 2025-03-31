@@ -9,7 +9,6 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Passenger;
-import acme.features.authenticated.customer.booking.CustomerBookingRepository;
 import acme.realms.Customer;
 
 @GuiService
@@ -17,10 +16,7 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRepository	bookingRepository;
-
-	@Autowired
-	private CustomerPassengerRepository	repository;
+	private CustomerPassengerRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -28,32 +24,29 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 	@Override
 	public void authorise() {
 		boolean status;
-		int customerId;
-		Collection<Passenger> passengers;
-
-		customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
-		passengers = this.repository.findPassengerByCustomer(customerId);
-		status = passengers.stream().allMatch(b -> b.getCustomer().getUserAccount().getId() == customerId) && super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
+		status = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Collection<Passenger> passengers;
-		int id;
+		Collection<Passenger> data;
+		int bookingId = super.getRequest().getData("bookingId", int.class);
 
-		id = super.getRequest().getData("bookingId", int.class);
-		passengers = this.bookingRepository.findPassengersByBooking(id);
+		data = this.repository.findPassengersByBookingId(bookingId);
 
-		super.getBuffer().addData(passengers);
+		super.getBuffer().addData(data);
 	}
 
 	@Override
 	public void unbind(final Passenger passenger) {
-		Dataset dataset;
 
-		dataset = super.unbindObject(passenger, "fullName", "email");
+		assert passenger != null;
+
+		Dataset dataset;
+		dataset = super.unbindObject(passenger, "fullName", "passportNumber", "specialNeeds", "email");
 
 		super.getResponse().addData(dataset);
+		;
 	}
 }

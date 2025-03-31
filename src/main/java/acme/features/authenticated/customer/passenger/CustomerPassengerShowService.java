@@ -21,31 +21,40 @@ public class CustomerPassengerShowService extends AbstractGuiService<Customer, P
 
 	@Override
 	public void authorise() {
-		int id;
+		boolean status;
+		int passengerId;
+		int userId;
+		int customerId;
 		Passenger passenger;
-		int customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
 
-		id = super.getRequest().getData("id", int.class);
-		passenger = this.repository.findPassengerById(id);
-		boolean status = passenger.getCustomer().getUserAccount().getId() == customerId && super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
+		userId = super.getRequest().getPrincipal().getAccountId();
+		customerId = this.repository.findCustomerIdByUserId(userId);
+		passengerId = super.getRequest().getData("id", int.class);
+		passenger = this.repository.findById(passengerId);
+
+		status = passenger != null && customerId == passenger.getCustomer().getId();
 		super.getResponse().setAuthorised(status);
+
 	}
 
 	@Override
 	public void load() {
-		int id;
+		int passengerId;
 		Passenger passenger;
 
-		id = super.getRequest().getData("id", int.class);
-		passenger = this.repository.findPassengerById(id);
+		passengerId = super.getRequest().getData("id", int.class);
+		passenger = this.repository.findById(passengerId);
+
 		super.getBuffer().addData(passenger);
 	}
 
 	@Override
 	public void unbind(final Passenger passenger) {
-		Dataset dataset;
 
-		dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "draftMode", "specialNeeds");
+		assert passenger != null;
+
+		Dataset dataset;
+		dataset = super.unbindObject(passenger, "fullName", "passportNumber", "specialNeeds", "email", "dateOfBirth");
 
 		super.getResponse().addData(dataset);
 	}

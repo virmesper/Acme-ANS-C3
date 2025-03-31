@@ -23,33 +23,35 @@ public class CustomerBookingListService extends AbstractGuiService<Customer, Boo
 
 	@Override
 	public void authorise() {
-
 		boolean status;
-		int customerId;
-		Collection<Booking> bookings;
-
-		customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
-		bookings = this.repository.findBookingByCustomer(customerId);
-		status = bookings.stream().allMatch(b -> b.getCustomer().getUserAccount().getId() == customerId) && super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
-
+		status = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Collection<Booking> bookings;
-		int customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
-		bookings = this.repository.findBookingByCustomer(customerId);
+		Collection<Booking> data;
+		int userId;
+		int customerId;
 
-		super.getBuffer().addData(bookings);
+		userId = super.getRequest().getPrincipal().getAccountId();
+		customerId = this.repository.findCustomerIdByUserId(userId);
+		data = this.repository.findAllByCustomer(customerId);
+
+		super.getBuffer().addData(data);
 	}
 
 	@Override
 	public void unbind(final Booking booking) {
+
+		assert booking != null;
+		boolean showCreate;
+
 		Dataset dataset;
+		dataset = super.unbindObject(booking, "travelClass", "price", "locatorCode", "flightId");
+		showCreate = super.getRequest().getPrincipal().hasRealm(booking.getCustomer());
 
-		dataset = super.unbindObject(booking, "flightId", "purchaseMoment", "price", "draftMode", "locatorCode", "travelClass");
-
+		super.getResponse().addGlobal("showCreate", showCreate);
 		super.getResponse().addData(dataset);
 	}
 }
