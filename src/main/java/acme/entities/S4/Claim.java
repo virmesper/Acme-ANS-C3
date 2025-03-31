@@ -54,7 +54,7 @@ public class Claim extends AbstractEntity {
 	@Mandatory
 	@Valid
 	@Automapped
-	private ClaimStatus			indicator;
+	private Indicator			indicator;
 
 	@Mandatory
 	@Automapped

@@ -8,7 +8,7 @@ import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S4.Claim;
-import acme.entities.S4.ClaimStatus;
+import acme.entities.S4.Indicator;
 import acme.entities.S4.ClaimType;
 import acme.realms.AssistanceAgent;
 
@@ -63,7 +63,7 @@ public class AssistanceAgentClaimUpdateService extends AbstractGuiService<Assist
 	public void unbind(final Claim claim) {
 		Dataset dataset;
 		SelectChoices claimTypeChoices = SelectChoices.from(ClaimType.class, claim.getType());
-		SelectChoices indicatorChoices = SelectChoices.from(ClaimStatus.class, claim.getIndicator());
+		SelectChoices indicatorChoices = SelectChoices.from(Indicator.class, claim.getIndicator());
 		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", claim.getLeg());
 
 		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode");

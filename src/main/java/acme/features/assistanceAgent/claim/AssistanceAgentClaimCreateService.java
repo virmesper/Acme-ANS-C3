@@ -14,7 +14,7 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
-import acme.entities.S4.ClaimStatus;
+import acme.entities.S4.Indicator;
 import acme.entities.S4.ClaimType;
 import acme.realms.AssistanceAgent;
 
@@ -45,7 +45,7 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 
 		claim.setAssistanceAgent(agent);
 		claim.setRegistrationMoment(today);
-		claim.setIndicator(ClaimStatus.PENDING);
+		claim.setIndicator(Indicator.PENDING);
 		claim.setDraftMode(true);
 
 		super.getBuffer().addData(claim);
@@ -79,7 +79,7 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 	public void unbind(final Claim object) {
 		Dataset dataset;
 		SelectChoices claimTypeChoices = SelectChoices.from(ClaimType.class, object.getType());
-		SelectChoices indicatorChoices = SelectChoices.from(ClaimStatus.class, object.getIndicator());
+		SelectChoices indicatorChoices = SelectChoices.from(Indicator.class, object.getIndicator());
 		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", object.getLeg());
 		SelectChoices draftModeChoices = new SelectChoices();
 		draftModeChoices.add("true", "True", object.isDraftMode());
