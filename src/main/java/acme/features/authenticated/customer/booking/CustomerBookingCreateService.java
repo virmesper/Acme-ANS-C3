@@ -76,16 +76,15 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void unbind(final Booking object) {
+		assert object != null;
 
 		SelectChoices flights = SelectChoices.from(this.repository.findAllFlights(), "id", object.getFlightId());
 		SelectChoices travelClasses = SelectChoices.from(TravelClass.class, object.getTravelClass());
 
-		Date purchaseMoment = new Date();
-
 		Dataset dataset = super.unbindObject(object, "travelClass", "price", "locatorCode", "lastCardDigits");
 		dataset.put("flights", flights);
 		dataset.put("travelClasses", travelClasses);
-		dataset.put("purchaseMoment", purchaseMoment);
+		dataset.put("bookingId", object.getId());  // Aseguramos el ID en el dataset
 		super.getResponse().addData(dataset);
 	}
 

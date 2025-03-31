@@ -29,5 +29,10 @@
 			<acme:submit code="customer.booking.create.submit" action="/customer/booking/create"/>
 		</jstl:when>	
 	</jstl:choose>	
+	
+	<jstl:if test="${_command == 'show' || _command == 'update' || _command == 'publish'}">
+    <acme:button code="customer.booking.form.button.passenger" 
+                 action="/customer/passenger/list?bookingId=${bookingId}" />
+</jstl:if>
 
 </acme:form>>

@@ -20,3 +20,5 @@ customer.passenger.list.label.dateOfBirth=Fecha de Nacimiento
 
 customer.passenger.list = Ver Pasajeros
 customer.passenger.list.title = Lista de Pasajeros
+
+customer.booking.form.button.passenger = Ver Pasajeros

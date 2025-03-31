@@ -52,6 +52,8 @@ public class CustomerBookingListService extends AbstractGuiService<Customer, Boo
 		showCreate = super.getRequest().getPrincipal().hasRealm(booking.getCustomer());
 
 		super.getResponse().addGlobal("showCreate", showCreate);
+		dataset.put("bookingId", booking.getId());
+
 		super.getResponse().addData(dataset);
 	}
 }
