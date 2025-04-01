@@ -14,14 +14,16 @@ customer.booking.list.title = Listing of Bookings
 customer.booking.list.label.travelClass=Travel Class
 customer.booking.list.label.locatorCode=Locator Code
 customer.booking.list.label.price=Price
-customer.booking.list.label.flightId=Flight
+customer.booking.list.label.flightTag=Flight Tag
 customer.booking.list.label.draftMode = Published
+customer.booking.list.label.flightId = Flight
 
 customer.booking.list.label.purchaseMoment=Purchase Moment
 customer.booking.list.label.lastCardDigits=Credit Card Last Nibble
 
 customer.booking.form.button.update = Update
 customer.booking.form.button.return = Return
+customer.booking.form.button.passenger = View Passengers
 
 customer.booking.create = Create Booking
 customer.booking.create.submit = Create Booking
@@ -32,3 +34,6 @@ customer.booking.update.submit = Update Booking
 customer.booking.publish = Publish Booking
 
 customer.booking.publish.error.lastCardDigits = There is no Credit Card last Nibble
+customer.booking.form.error.alreadyPublished=This booking is already published and cannot be updated.
+customer.booking.form.error.locatorCode.unique=The locator code must be unique. Please enter a different one.
+

@@ -49,8 +49,10 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 	public void validate(final Booking booking) {
 		assert booking != null;
 
-	}
+		boolean Notpublished = !booking.isDraftMode();
+		super.state(Notpublished, "draftMode", "customer.booking.form.error.alreadyPublished");
 
+	}
 	@Override
 	public void perform(final Booking booking) {
 		assert booking != null;

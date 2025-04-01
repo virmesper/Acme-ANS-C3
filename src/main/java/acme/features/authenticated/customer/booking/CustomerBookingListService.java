@@ -48,7 +48,13 @@ public class CustomerBookingListService extends AbstractGuiService<Customer, Boo
 		boolean showCreate;
 
 		Dataset dataset;
-		dataset = super.unbindObject(booking, "travelClass", "price", "locatorCode", "flightId");
+
+		// Obtener el tag del vuelo asociado al booking
+		String flightTag = "";
+		if (booking.getFlightId() != null)
+			flightTag = booking.getFlightId().getTag();
+		dataset = super.unbindObject(booking, "travelClass", "price", "locatorCode");
+		dataset.put("flightTag", flightTag); // Usar el tag en lugar del ID
 		showCreate = super.getRequest().getPrincipal().hasRealm(booking.getCustomer());
 
 		super.getResponse().addGlobal("showCreate", showCreate);

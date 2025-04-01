@@ -4,14 +4,23 @@ package acme.features.authenticated.customer.booking;
 import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
 import acme.entities.S1.Flight;
 import acme.entities.S2.Booking;
+import acme.entities.S2.Passenger;
+import acme.realms.Customer;
 
 @Repository
 public interface CustomerBookingRepository extends AbstractRepository {
+
+	@Query("select bk.passenger from BookingRecord bk where bk.booking.id = :bookingId")
+	Collection<Passenger> findPassengersByBooking(@Param("bookingId") Integer bookingId);
+
+	@Query("select b from Booking b WHERE b.locatorCode = :locatorCode")
+	Booking findBookingByLocatorCode(@Param("locatorCode") String locatorCode);
 
 	@Query("SELECT DISTINCT b FROM Booking b")
 	Collection<Booking> findAllBookings();
@@ -30,4 +39,17 @@ public interface CustomerBookingRepository extends AbstractRepository {
 
 	@Query("SELECT DISTINCT f FROM Flight f")
 	Collection<Flight> findAllFlights();
+
+	@Query("SELECT COUNT(b) > 0 FROM Booking b WHERE b.locatorCode = :locatorCode")
+	boolean existsByLocatorCode(@Param("locatorCode") String locatorCode);
+
+	@Query("select c from Customer c where c.id = :customerId")
+	Customer findCustomerById(@Param("customerId") Integer customerId);
+
+	@Query("select b from Booking b WHERE b.id = :bookingId")
+	Booking findBookingById(@Param("bookingId") int bookingId);
+
+	@Query("select bk from Booking bk where bk.customer.userAccount.id = :customerId")
+	Collection<Booking> findBookingByCustomer(@Param("customerId") Integer customerId);
+
 }
