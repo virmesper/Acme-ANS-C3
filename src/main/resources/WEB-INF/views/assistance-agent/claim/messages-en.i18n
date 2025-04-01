@@ -8,7 +8,9 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-assistanceAgent.claim.form.error.registration-more-time = The registration date cannot be later than the current date
+assistanceAgent.claim.form.error.indicator.pending = The claim must be created with the status PENDING
+assistanceAgent.claim.form.error.all-tracking-logs-published = All tracking logs must be published before proceeding.
+assistanceAgent.claim.form.error.indicator-not-pending = The claim indicator must not be in PENDING state.
 
 assistance-agent.claim.list.title = Claim list
 assistance-agent.claim.form.title = Claim Details

@@ -52,7 +52,13 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 
 	@Override
 	public void validate(final Claim claim) {
-		;
+		// Verificar si hay algún TrackingLog en modo borrador
+		int draftCount = this.repository.countDraftTrackingLogsByClaimId(claim.getId());
+		boolean allPublished = draftCount == 0;
+		super.state(allPublished, "*", "assistanceAgent.claim.form.error.all-tracking-logs-published");
+
+		if (!super.getBuffer().getErrors().hasErrors("indicator"))
+			super.state(claim.getIndicator() != Indicator.PENDING, "indicator", "assistanceAgent.claim.form.error.indicator-not-pending");
 	}
 
 	@Override

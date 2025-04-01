@@ -41,4 +41,7 @@ public interface AssistanceAgentClaimRepository extends AbstractRepository {
 	@Query("SELECT c.leg FROM Claim c WHERE c.id = :claimId")
 	Leg findLegByClaimId(int claimId);
 
+	@Query("SELECT COUNT(t) FROM TrackingLog t WHERE t.draftMode = true AND t.claim.id = :id")
+	int countDraftTrackingLogsByClaimId(int id);
+
 }

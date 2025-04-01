@@ -1,4 +1,4 @@
-# messages-en.i18n
+# messages-es.i18n
 #
 # Copyright (C) 2012-2025 Rafael Corchuelo.
 #
@@ -8,7 +8,9 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-assistanceAgent.claim.form.error.registration-more-time = La fecha de registro no puede ser posterior a la fecha actual
+assistanceAgent.claim.form.error.indicator.pending = El reclamo debe crearse con el estado PENDIENTE
+assistanceAgent.claim.form.error.all-tracking-logs-published = Todos los registros de seguimiento deben publicarse antes de continuar.
+assistanceAgent.claim.form.error.indicator-not-pending = El indicador de reclamación no debe estar en estado PENDIENTE.
 
 assistance-agent.claim.list.title = Lista de reclamaciones
 assistance-agent.claim.form.title = Detalles de reclamaciones

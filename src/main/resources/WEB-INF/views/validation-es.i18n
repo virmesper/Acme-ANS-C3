@@ -18,4 +18,3 @@ acme.validation.trackinglog.status.not-pending = El estado no puede ser PENDING 
 acme.validation.trackinglog.status.pending-required = El estado debe ser PENDING cuando el porcentaje de resolución es menor al 100%
 acme.validation.trackinglog.resolution.incorrect = El campo de resolución es incorrecto según el estado actual
 acme.validation.trackinglog.resolution.monotony = El porcentaje de resolución debe ser creciente
-acme.validation.claim.indicator.pending = El reclamo debe crearse con el estado PENDIENTE
