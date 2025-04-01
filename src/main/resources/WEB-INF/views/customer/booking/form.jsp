@@ -20,7 +20,7 @@
 
 
    	<jstl:choose>
-		<jstl:when test="${acme:anyOf(_command, 'show|update|publish') && !isDraftMode}">
+		<jstl:when test="${acme:anyOf(_command, 'show|update|publish') && !draftMode}">
 			<acme:submit code="customer.booking.update.submit" action="/customer/booking/update"/>
 			<acme:submit code="customer.booking.publish" action="/customer/booking/publish" />	
 		</jstl:when>
