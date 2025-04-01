@@ -52,8 +52,13 @@ public class Claim extends AbstractEntity {
 	private ClaimType			type;
 
 	@Mandatory
+	@Valid
 	@Automapped
-	private boolean				accepted; //indica si la reclamación fue aceptada o no
+	private ClaimStatus			indicator;
+
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
 
 	// Derived attributes -----------------------------------------------------
 
