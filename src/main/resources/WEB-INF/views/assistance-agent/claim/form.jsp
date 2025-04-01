@@ -16,7 +16,7 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:form>
-	<acme:input-moment code="assistance-agent.claim.form.label.registrationMoment" path="registrationMoment"/>
+	<acme:input-moment code="assistance-agent.claim.form.label.registrationMoment" path="registrationMoment" readonly="true"/>
 	<acme:input-email code="assistance-agent.claim.form.label.passengerEmail" path="passengerEmail"/>
 	<acme:input-textbox code="assistance-agent.claim.form.label.description" path="description"/>
 	<acme:input-select code="assistance-agent.claim.form.label.type" path="type"  choices="${types}"/>

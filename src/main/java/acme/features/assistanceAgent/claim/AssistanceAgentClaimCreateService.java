@@ -82,8 +82,6 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 		SelectChoices indicatorChoices = SelectChoices.from(Indicator.class, object.getIndicator());
 		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", object.getLeg());
 		SelectChoices draftModeChoices = new SelectChoices();
-		draftModeChoices.add("true", "True", object.isDraftMode());
-		draftModeChoices.add("false", "False", !object.isDraftMode());
 
 		dataset = super.unbindObject(object, "registrationMoment", "passengerEmail", "description", "draftMode", "leg", "indicator", "type");
 		dataset.put("types", claimTypeChoices);
