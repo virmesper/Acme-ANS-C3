@@ -1,34 +1,34 @@
 
-package acme.features.authenticated.customer;
+package acme.features.authenticated.customer.booking;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
-import acme.client.components.principals.Authenticated;
 import acme.client.controllers.AbstractGuiController;
+import acme.client.controllers.GuiController;
 import acme.entities.S2.Booking;
+import acme.realms.Customer;
 
-@Controller
-public class AuthenticatedBookingController extends AbstractGuiController<Authenticated, Booking> {
+@GuiController
+public class CustomerBookingController extends AbstractGuiController<Customer, Booking> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected AuthenticatedBookingListService	listService;
+	protected CustomerBookingListService		listService;
 
 	@Autowired
-	protected AutehnticatedBookingShowService	showService;
+	protected CustomerBookingShowService		showService;
 
 	@Autowired
-	protected AuthenticatedBookingCreateService	createService;
+	protected CustomerBookingCreateService		createService;
 
 	@Autowired
-	protected AuthenticatedBookingUpdateService	updateService;
+	protected CustomerBookingUpdateService		updateService;
 
 	@Autowired
-	protected AuthenticatedBookingPublishedService	publishService;
+	protected CustomerBookingPublishedService	publishService;
 
 	// Constructors -----------------------------------------------------------
 
