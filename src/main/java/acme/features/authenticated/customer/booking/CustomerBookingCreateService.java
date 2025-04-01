@@ -1,16 +1,19 @@
 
 package acme.features.authenticated.customer.booking;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import acme.client.components.basis.AbstractRealm;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
-import acme.client.helpers.PrincipalHelper;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Flight;
+import acme.entities.S1.FlightRepository;
 import acme.entities.S2.Booking;
 import acme.entities.S2.TravelClass;
 import acme.realms.Customer;
@@ -21,7 +24,10 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRepository repository;
+	private CustomerBookingRepository	repository;
+
+	@Autowired
+	private FlightRepository			flightRepository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -34,66 +40,61 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void load() {
-		Booking object = new Booking();
-		object.setDraftMode(false);
-		super.getBuffer().addData(object);
-	}
-	@Override
-	public void bind(final Booking object) {
-		assert object != null;
+		Booking booking;
+		AbstractRealm principal = super.getRequest().getPrincipal().getActiveRealm();
+		int customerId = principal.getId();
+		Customer customer = this.repository.findCustomerById(customerId);
+		Date today = MomentHelper.getCurrentMoment();
 
-		// Verificar si estamos creando una reserva nueva
-		if (super.getRequest().getMethod().equalsIgnoreCase("POST"))
-			object.setPurchaseMoment(new Date());
+		booking = new Booking();
+		booking.setCustomer(customer);
+		booking.setPurchaseMoment(today);
+		booking.setDraftMode(false);
 
-		super.bindObject(object, "travelClass", "price", "locatorCode", "lastCardDigits");
-
-		// Obtener el ID del vuelo desde el formulario
-		int flightId = super.getRequest().getData("flightId", int.class);
-		Flight flight = this.repository.findFlightById(flightId);
-		object.setFlightId(flight);
+		super.getBuffer().addData(booking);
 	}
 
 	@Override
-	public void validate(final Booking object) {
-		assert object != null;
+	public void bind(final Booking booking) {
+		int flightId;
+		Flight flight;
 
-		// Verificar si el locatorCode ya existe en la base de datos
-		boolean exists = this.repository.existsByLocatorCode(object.getLocatorCode());
-		super.state(!exists, "locatorCode", "customer.booking.form.error.locatorCode.unique");
+		flightId = super.getRequest().getData("flightId", int.class);
+		flight = this.flightRepository.findFlightById(flightId);
+
+		super.bindObject(booking, "locatorCode", "lastCardDigits", "price", "travelClass", "draftMode");
+		booking.setFlightId(flight);
+
 	}
 
 	@Override
-	public void perform(final Booking object) {
-		assert object != null;
-
-		int userAccountId = super.getRequest().getPrincipal().getAccountId();
-		int customerId = this.repository.findCustomerIdByUserId(userAccountId);
-
-		Customer customer = new Customer();
-		customer.setId(customerId);
-
-		object.setCustomer(customer);
-		this.repository.save(object);
+	public void validate(final Booking booking) {
+		Booking b = this.repository.findBookingByLocatorCode(booking.getLocatorCode());
+		if (b != null)
+			super.state(false, "locatorCode", "acme.validation.confirmation.message.booking.locator-code");
 	}
 
 	@Override
-	public void unbind(final Booking object) {
-		assert object != null;
+	public void perform(final Booking booking) {
+		this.repository.save(booking);
+	}
 
-		SelectChoices flights = SelectChoices.from(this.repository.findAllFlights(), "id", object.getFlightId());
-		SelectChoices travelClasses = SelectChoices.from(TravelClass.class, object.getTravelClass());
+	@Override
+	public void unbind(final Booking booking) {
+		Dataset dataset;
+		SelectChoices choices;
+		SelectChoices flightChoices;
 
-		Dataset dataset = super.unbindObject(object, "travelClass", "price", "locatorCode", "lastCardDigits");
-		dataset.put("flights", flights);
-		dataset.put("travelClasses", travelClasses);
-		dataset.put("bookingId", object.getId());  // Aseguramos el ID en el dataset
+		Collection<Flight> flights = this.flightRepository.findAllFlight();
+		flightChoices = SelectChoices.from(flights, "id", booking.getFlightId());
+		choices = SelectChoices.from(TravelClass.class, booking.getTravelClass());
+
+		dataset = super.unbindObject(booking, "locatorCode", "lastCardDigits", "price", "draftMode");
+		dataset.put("travelClass", choices);
+		dataset.put("flightId", flightChoices.getSelected().getKey());
+		dataset.put("flights", flightChoices);
+		dataset.put("purchaseMoment", booking.getPurchaseMoment());
+
 		super.getResponse().addData(dataset);
-	}
-
-	@Override
-	public void onSuccess() {
-		if (super.getRequest().getMethod().equalsIgnoreCase("POST"))
-			PrincipalHelper.handleUpdate();
 	}
 }

@@ -10,9 +10,13 @@ import org.springframework.stereotype.Repository;
 import acme.client.repositories.AbstractRepository;
 import acme.entities.S1.Flight;
 import acme.entities.S2.Booking;
+import acme.realms.Customer;
 
 @Repository
 public interface CustomerBookingRepository extends AbstractRepository {
+
+	@Query("select b from Booking b WHERE b.locatorCode = :locatorCode")
+	Booking findBookingByLocatorCode(@Param("locatorCode") String locatorCode);
 
 	@Query("SELECT DISTINCT b FROM Booking b")
 	Collection<Booking> findAllBookings();
@@ -34,5 +38,8 @@ public interface CustomerBookingRepository extends AbstractRepository {
 
 	@Query("SELECT COUNT(b) > 0 FROM Booking b WHERE b.locatorCode = :locatorCode")
 	boolean existsByLocatorCode(@Param("locatorCode") String locatorCode);
+
+	@Query("select c from Customer c where c.id = :customerId")
+	Customer findCustomerById(@Param("customerId") Integer customerId);
 
 }
