@@ -4,6 +4,7 @@ package acme.features.authenticated.customer.booking;
 import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
@@ -30,4 +31,8 @@ public interface CustomerBookingRepository extends AbstractRepository {
 
 	@Query("SELECT DISTINCT f FROM Flight f")
 	Collection<Flight> findAllFlights();
+
+	@Query("SELECT COUNT(b) > 0 FROM Booking b WHERE b.locatorCode = :locatorCode")
+	boolean existsByLocatorCode(@Param("locatorCode") String locatorCode);
+
 }

@@ -57,7 +57,10 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	@Override
 	public void validate(final Booking object) {
 		assert object != null;
-		// Puedes dejarlo vacío por ahora
+
+		// Verificar si el locatorCode ya existe en la base de datos
+		boolean exists = this.repository.existsByLocatorCode(object.getLocatorCode());
+		super.state(!exists, "locatorCode", "customer.booking.form.error.locatorCode.unique");
 	}
 
 	@Override
