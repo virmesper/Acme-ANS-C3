@@ -2,6 +2,7 @@
 package acme.features.authenticated.customer.bookingRecord;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -54,7 +55,7 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		int PassengerId;
 		Passenger passenger;
 
-		BookingId = super.getRequest().getData("booking", int.class);
+		BookingId = super.getRequest().getData("bookingId", int.class);
 		booking = this.bookingRepository.findBookingById(BookingId);
 
 		PassengerId = super.getRequest().getData("passenger", int.class);
@@ -96,11 +97,23 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		SelectChoices passengerChoices;
 		SelectChoices bookingChoices;
 
+		int bookingId = super.getRequest().getData("bookingId", int.class);
+		Booking booking = this.bookingRepository.findBookingById(bookingId);
+
+		// Crear una lista con la única booking encontrada
+		Collection<Booking> singleBookingList = List.of(booking);
+
 		int customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
-		Collection<Booking> bookings = this.bookingRepository.findBookingByCustomer(customerId);
-		Collection<Passenger> passengers = this.passengerRepository.findPassengerByCustomer(customerId);
-		bookingChoices = SelectChoices.from(bookings, "locatorCode", bookingRecord.getBooking());
-		passengerChoices = SelectChoices.from(passengers, "fullName", bookingRecord.getPassenger());
+		Collection<Passenger> allPassengers = this.passengerRepository.findPassengerByCustomer(customerId);
+		Collection<Passenger> assignedPassengers = this.customerBookingPassengerRepository.getPassengersInBooking(bookingId);
+
+		// Filtrar los pasajeros ya asignados de manera correcta
+		// Filtrar los pasajeros ya asignados de manera correcta
+		Collection<Passenger> availablePassengers = allPassengers.stream().filter(passenger -> assignedPassengers.stream().noneMatch(assigned -> assigned.getId() == passenger.getId())).toList();
+
+		// Crear las opciones de selección
+		bookingChoices = SelectChoices.from(singleBookingList, "locatorCode", bookingRecord.getBooking());
+		passengerChoices = SelectChoices.from(availablePassengers, "fullName", bookingRecord.getPassenger());
 
 		dataset = super.unbindObject(bookingRecord);
 		dataset.put("booking", bookingChoices.getSelected().getKey());
