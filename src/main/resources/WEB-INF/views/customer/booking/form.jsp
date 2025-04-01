@@ -6,15 +6,15 @@
 <acme:form>
 
 		<jstl:if test="${acme:anyOf(_command, 'show|update|publish')}">
-			<acme:input-select code="customer.booking.list.label.flightId" path="flightId" choices="${flights}"/>	
+			<acme:input-select code="customer.booking.list.label.flightId" path="flightId" choices="${flights}"  readonly="${draftMode}"/>	
 		</jstl:if>
-		<acme:input-textbox code="customer.booking.list.label.lastCardDigits" path="lastCardDigits" placeholder="max 4 numbers. Ej: 1234" />
-		<acme:input-textbox code="customer.booking.list.label.locatorCode" path="locatorCode" placeholder="between 6-8 chars. Ej: ABC6789"/>
+		<acme:input-textbox code="customer.booking.list.label.lastCardDigits" path="lastCardDigits" placeholder="max 4 numbers. Ej: 1234"  readonly="${draftMode}"/>
+		<acme:input-textbox code="customer.booking.list.label.locatorCode" path="locatorCode" placeholder="between 6-8 chars. Ej: ABC6789" readonly="${draftMode}"/>
 	    <acme:input-money code="customer.booking.list.label.price" path="price" />
 	    <jstl:if test="${acme:anyOf(_command, 'show|update|publish')}">
 			<acme:input-moment code="customer.booking.list.label.purchaseMoment" path="purchaseMoment" readonly="true"/>
 		</jstl:if>
-	    <acme:input-select code="customer.booking.list.label.travelClass" path="travelClass" choices= "${travelClasses}"/>
+	    <acme:input-select code="customer.booking.list.label.travelClass" path="travelClass" choices= "${travelClasses}" readonly="${draftMode}"/>
 	    <acme:input-checkbox code="customer.booking.list.label.draftMode" path="draftMode" readonly="true"/>
 	    	    
 

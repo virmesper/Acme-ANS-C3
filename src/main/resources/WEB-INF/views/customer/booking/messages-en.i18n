@@ -32,3 +32,4 @@ customer.booking.update.submit = Update Booking
 customer.booking.publish = Publish Booking
 
 customer.booking.publish.error.lastCardDigits = There is no Credit Card last Nibble
+customer.booking.form.error.alreadyPublished=This booking is already published and cannot be updated.
