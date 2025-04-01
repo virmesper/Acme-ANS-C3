@@ -14,7 +14,7 @@ customer.booking.list.title = Listing of Bookings
 customer.booking.list.label.travelClass=Travel Class
 customer.booking.list.label.locatorCode=Locator Code
 customer.booking.list.label.price=Price
-customer.booking.list.label.flightId=Flight
+customer.booking.list.label.flightTag=Flight Tag
 customer.booking.list.label.draftMode = Published
 
 customer.booking.list.label.purchaseMoment=Purchase Moment
