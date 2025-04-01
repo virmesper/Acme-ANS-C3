@@ -1,4 +1,4 @@
-# defaults-es.i18n
+# messages-es.i18n
 #
 # Copyright (C) 2012-2025 Rafael Corchuelo.
 #
@@ -8,17 +8,18 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-customer.passenger.form.title = Detalle de los Pasajeros
-customer.passenger.list.title = Lista de Pasajeros
+customer.passenger.list.title = Listado de pasajeros
+customer.passenger.form.title = Detalles de pasajero
 
-customer.passenger.list.label.fullName=Nombre Completo
-customer.passenger.list.label.passportNumber=Pasaporte
-customer.passenger.list.label.specialNeeds=Necesidades Especiales
-customer.passenger.list.label.email=Email
+customer.passenger.list.label.fullName = Nombre completo
+customer.passenger.list.label.email = Email
+customer.passenger.list.label.passportNumber =Pasaporte
+customer.passenger.list.label.dateOfBirth = Fecha de cumpleaños
+customer.passenger.list.label.draftMode = Modo borrador
+customer.passenger.list.label.specialNeeds = Necesidades especiales
 
-customer.passenger.list.label.dateOfBirth=Fecha de Nacimiento
 
-customer.passenger.list = Ver Pasajeros
-customer.passenger.list.title = Lista de Pasajeros
-
-customer.booking.form.button.passenger = Ver Pasajeros
+customer.passenger.form.button.create = Crear un pasajero
+customer.passenger.form.button.update = Actualizar pasajero
+customer.passenger.form.button.publish = Publicar pasajero
+customer.passenger.form.button.delete = Eliminar pasajero

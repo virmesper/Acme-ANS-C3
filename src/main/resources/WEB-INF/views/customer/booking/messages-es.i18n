@@ -25,6 +25,7 @@ customer.booking.form.error.alreadyPublished=Esta reserva está publicada y no s
 
 customer.booking.form.button.update = Actualizar
 customer.booking.form.button.return = Volver
+customer.booking.form.button.passenger = Ver Pasajeros
 
 customer.booking.create = Crear Reserva
 customer.booking.create.submit = Crear Reserva

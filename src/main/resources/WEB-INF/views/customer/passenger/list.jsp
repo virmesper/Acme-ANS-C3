@@ -10,3 +10,5 @@
 	<acme:list-column code="customer.passenger.list.label.email" path="email" />
     <acme:list-payload path="payload"/>	
 </acme:list>
+
+<acme:button code="customer.passenger.form.button.create" action="/customer/passenger/create"/>

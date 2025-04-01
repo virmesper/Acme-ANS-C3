@@ -9,18 +9,14 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Passenger;
-import acme.features.authenticated.customer.booking.CustomerBookingRepository;
 import acme.realms.Customer;
 
 @GuiService
-public class CustomerPassengerListService extends AbstractGuiService<Customer, Passenger> {
+public class CustomerPassengerListMenuService extends AbstractGuiService<Customer, Passenger> {
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRepository	bookingRepository;
-
-	@Autowired
-	private CustomerPassengerRepository	repository;
+	private CustomerPassengerRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -40,11 +36,8 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 	@Override
 	public void load() {
 		Collection<Passenger> passengers;
-		int id;
 
-		id = super.getRequest().getData("bookingId", int.class);
-		super.getResponse().addGlobal("bookingId", id);
-		passengers = this.bookingRepository.findPassengersByBooking(id);
+		passengers = this.repository.findPassengerByCustomer(super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId());
 
 		super.getBuffer().addData(passengers);
 	}

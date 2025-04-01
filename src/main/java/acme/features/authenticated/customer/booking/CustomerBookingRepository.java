@@ -10,10 +10,14 @@ import org.springframework.stereotype.Repository;
 import acme.client.repositories.AbstractRepository;
 import acme.entities.S1.Flight;
 import acme.entities.S2.Booking;
+import acme.entities.S2.Passenger;
 import acme.realms.Customer;
 
 @Repository
 public interface CustomerBookingRepository extends AbstractRepository {
+
+	@Query("select bk.passenger from BookingRecord bk where bk.booking.id = :bookingId")
+	Collection<Passenger> findPassengersByBooking(@Param("bookingId") Integer bookingId);
 
 	@Query("select b from Booking b WHERE b.locatorCode = :locatorCode")
 	Booking findBookingByLocatorCode(@Param("locatorCode") String locatorCode);
@@ -41,5 +45,11 @@ public interface CustomerBookingRepository extends AbstractRepository {
 
 	@Query("select c from Customer c where c.id = :customerId")
 	Customer findCustomerById(@Param("customerId") Integer customerId);
+
+	@Query("select b from Booking b WHERE b.id = :bookingId")
+	Booking findBookingById(@Param("bookingId") int bookingId);
+
+	@Query("select bk from Booking bk where bk.customer.userAccount.id = :customerId")
+	Collection<Booking> findBookingByCustomer(@Param("customerId") Integer customerId);
 
 }
