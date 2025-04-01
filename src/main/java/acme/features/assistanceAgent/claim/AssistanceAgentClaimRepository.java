@@ -35,7 +35,7 @@ public interface AssistanceAgentClaimRepository extends AbstractRepository {
 	@Query("SELECT c FROM Claim c WHERE c.indicator = 'PENDING' AND c.leg.id = :legId")
 	Collection<Claim> findUndergoingClaimsByLegId(int legId);
 
-	@Query("SELECT l FROM Leg l WHERE l.status IN ('ON_TIME', 'DELAYED', 'LANDED')")
+	@Query("SELECT l FROM Leg l WHERE l.draftMode = false AND l.flight.draftMode = false")
 	Collection<Leg> findAvailableLegs();
 
 	@Query("SELECT c.leg FROM Claim c WHERE c.id = :claimId")
