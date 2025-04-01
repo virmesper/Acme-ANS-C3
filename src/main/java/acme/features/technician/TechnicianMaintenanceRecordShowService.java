@@ -26,7 +26,7 @@ public class TechnicianMaintenanceRecordShowService extends AbstractGuiService<T
 		Technician technician;
 
 		masterId = super.getRequest().getData("id", int.class);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(masterId);
+		maintenanceRecord = this.repository.findOneById(masterId); // CORREGIDO
 		technician = maintenanceRecord == null ? null : maintenanceRecord.getTechnician();
 		status = maintenanceRecord != null && super.getRequest().getPrincipal().hasRealm(technician);
 
@@ -39,7 +39,7 @@ public class TechnicianMaintenanceRecordShowService extends AbstractGuiService<T
 		int id;
 
 		id = super.getRequest().getData("id", int.class);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(id);
+		maintenanceRecord = this.repository.findOneById(id); // CORREGIDO
 
 		super.getBuffer().addData(maintenanceRecord);
 	}
@@ -58,5 +58,4 @@ public class TechnicianMaintenanceRecordShowService extends AbstractGuiService<T
 
 		super.getResponse().addData(dataset);
 	}
-
 }

@@ -38,11 +38,17 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 		int total = this.repository.countAllTasksByRecordId(record.getId());
 		int published = this.repository.countPublishedTasksByRecordId(record.getId());
 
-		if (published == 0)
+		// Validación: Al menos una tarea publicada
+		if (published == 0) {
 			super.state(false, "*", "acme.validation.maintenanceRecord.must-have-one-task-published");
+			return;
+		}
 
-		if (published < total)
+		// Validación: No debe haber tareas no publicadas
+		if (published < total) {
 			super.state(false, "*", "acme.validation.maintenanceRecord.cannot-have-unpublished-tasks");
+			return;
+		}
 	}
 
 	@Override

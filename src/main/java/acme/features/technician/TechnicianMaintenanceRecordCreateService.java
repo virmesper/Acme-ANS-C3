@@ -58,23 +58,53 @@ public class TechnicianMaintenanceRecordCreateService extends AbstractGuiService
 
 	@Override
 	public void validate(final MaintenanceRecord maintenanceRecord) {
-		;
-	}
+		// Validación de que el objeto no sea nulo
+		assert maintenanceRecord != null : "Maintenance record is null";
 
+		// Validación del número de registro de la aeronave
+		if (maintenanceRecord.getAircraft() == null || maintenanceRecord.getAircraft().getRegistrationnumber() == null || maintenanceRecord.getAircraft().getRegistrationnumber().trim().isEmpty())
+			super.state(false, "aircraft", "El número de registro de la aeronave no puede estar vacío");
+
+		// Validación del coste estimado
+		if (maintenanceRecord.getEstimatedCost() == null || maintenanceRecord.getEstimatedCost().getAmount().compareTo(0.0) < 0)
+			super.state(false, "estimatedCost", "El costo estimado no puede ser negativo o nulo");
+
+		// Validación de la fecha de la próxima inspección (debe ser una fecha futura)
+		if (maintenanceRecord.getNextInspectionDate() == null || !MomentHelper.isFuture(maintenanceRecord.getNextInspectionDate()))
+			super.state(false, "nextInspectionDate", "La fecha de la próxima inspección debe ser en el futuro");
+
+		// Si todas las validaciones pasan
+		super.state(true, "valid", "El registro de mantenimiento es válido");
+	}
 	@Override
 	public void perform(final MaintenanceRecord maintenanceRecord) {
-		this.repository.save(maintenanceRecord);
+		try {
+			// Log de información detallada
+			System.out.println("Guardando el registro de mantenimiento:");
+			System.out.println("Aircraft: " + maintenanceRecord.getAircraft().getRegistrationnumber());
+			System.out.println("Next Inspection Date: " + maintenanceRecord.getNextInspectionDate());
+			System.out.println("Estimated Cost: " + maintenanceRecord.getEstimatedCost());
+			System.out.println("Notes: " + maintenanceRecord.getNotes());
+			System.out.println("Draft Mode: " + maintenanceRecord.isDraftMode());
+
+			// Guardar en la base de datos
+			this.repository.save(maintenanceRecord);
+			System.out.println("Registro guardado con ID: " + maintenanceRecord.getId());
+			super.getResponse().setView("/technician/maintenance-record/list");
+		} catch (Exception e) {
+			super.getResponse().setOops(e);
+			System.err.println("Error al guardar el registro: " + e.getMessage());
+		}
 	}
 
 	@Override
 	public void unbind(final MaintenanceRecord maintenanceRecord) {
-		Dataset dataset;
-		//	SelectChoices choices;
+		Dataset dataset = super.unbindObject(maintenanceRecord, "nextInspectionDate", "estimatedCost", "notes", "draftMode");
 
-		//	choices = SelectChoices.from(MaintenanceRecordStatus.class, maintenanceRecord.getStatus());
-
-		dataset = super.unbindObject(maintenanceRecord, "nextInspectionDate", "estimatedCost", "notes", "draftMode");
-		dataset.put("aircraft", "");
+		if (maintenanceRecord.getAircraft() != null && maintenanceRecord.getAircraft().getRegistrationnumber() != null)
+			dataset.put("aircraft", maintenanceRecord.getAircraft().getRegistrationnumber());
+		else
+			dataset.put("aircraft", "N/A");
 
 		super.getResponse().addData(dataset);
 	}

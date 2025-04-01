@@ -16,7 +16,7 @@ import acme.realms.Technician;
 @Repository
 public interface TechnicianMaintenanceRecordRepository extends AbstractRepository {
 
-	// Obtener todos los registros de mantenimiento de un técnico
+	// Obtener todos los registros de mantenimiento de un técnico, incluidos los borradores
 	@Query("select r from MaintenanceRecord r where r.technician.id = :technicianId")
 	Collection<MaintenanceRecord> findManyByTechnicianId(@Param("technicianId") int technicianId);
 
@@ -40,15 +40,7 @@ public interface TechnicianMaintenanceRecordRepository extends AbstractRepositor
 	@Query("select i.task from InvolvedIn i where i.maintenanceRecord.id = :recordId")
 	Collection<Task> findTasksByMaintenanceRecordId(@Param("recordId") int recordId);
 
-	// Obtener registros de mantenimiento por ID de técnico
-	@Query("select m from MaintenanceRecord m where m.technician.id = :id")
-	Collection<MaintenanceRecord> findMaintenanceRecordsByTechnicianId(@Param("id") int id);
-
-	// Obtener un registro de mantenimiento específico
-	@Query("select m from MaintenanceRecord m where m.id = :id")
-	MaintenanceRecord findMaintenanceRecordById(@Param("id") int id);
-
-	// Obtener aeronave por número de registro (corrigiendo el nombre del parámetro)
+	// Obtener aeronave por número de registro
 	@Query("select a from Aircraft a where a.registrationnumber = :registrationnumber")
 	Aircraft findAircraftByRegistrationNumber(@Param("registrationnumber") String registrationnumber);
 }

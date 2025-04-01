@@ -25,48 +25,46 @@ public class TechnicianMaintenanceRecordListService extends AbstractGuiService<T
 
 	@Override
 	public void load() {
-		Collection<MaintenanceRecord> object;
+		Collection<MaintenanceRecord> objects;
 		int technicianId;
 
 		technicianId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		object = this.repository.findMaintenanceRecordsByTechnicianId(technicianId);
+		// Obtener todos los registros, tanto borradores como publicados
+		objects = this.repository.findManyByTechnicianId(technicianId);
 
-		super.getBuffer().addData(object);
+		super.getBuffer().addData(objects);
 	}
 
 	@Override
 	public void unbind(final MaintenanceRecord maintenanceRecord) {
 		Dataset dataset;
 
-		// Usamos el método estándar para obtener el dataset base
-		dataset = super.unbindObject(maintenanceRecord, "maintenanceMoment", "status", "nextInspectionDate");
+		dataset = super.unbindObject(maintenanceRecord, "maintenanceMoment", "status", "nextInspectionDate", "draftMode");
 
-		// Reemplazar el valor del status para asegurar que sea el correcto
+		// Estado del mantenimiento
 		if (maintenanceRecord.getStatus() != null)
 			dataset.put("status", maintenanceRecord.getStatus().name());
 		else
 			dataset.put("status", "UNKNOWN");
 
-		// Formatear correctamente el valor de la fecha de mantenimiento
+		// Manejo del momento del mantenimiento
 		if (maintenanceRecord.getMaintenanceMoment() != null)
 			dataset.put("maintenanceMoment", maintenanceRecord.getMaintenanceMoment().toString());
 		else
 			dataset.put("maintenanceMoment", "N/A");
 
-		// Formatear correctamente la fecha de la próxima inspección
+		// Manejo de la próxima inspección
 		if (maintenanceRecord.getNextInspectionDate() != null)
 			dataset.put("nextInspectionDate", maintenanceRecord.getNextInspectionDate().toString());
 		else
 			dataset.put("nextInspectionDate", "N/A");
 
 		// Verificar si el objeto Aircraft no es nulo antes de acceder al número de registro
-		if (maintenanceRecord.getAircraft() != null && maintenanceRecord.getAircraft().getRegistrationnumber() != null) {
-			String registrationNumber = maintenanceRecord.getAircraft().getRegistrationnumber();
-			dataset.put("aircraft", registrationNumber);
-		} else
+		if (maintenanceRecord.getAircraft() != null && maintenanceRecord.getAircraft().getRegistrationnumber() != null)
+			dataset.put("aircraft", maintenanceRecord.getAircraft().getRegistrationnumber());
+		else
 			dataset.put("aircraft", "N/A");
 
-		// Añadir el dataset al payload y a la respuesta
 		super.addPayload(dataset, maintenanceRecord);
 		super.getResponse().addData(dataset);
 	}

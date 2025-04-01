@@ -30,7 +30,7 @@ public class TechnicianMaintenanceRecordUpdateService extends AbstractGuiService
 		Technician technician;
 
 		masterId = super.getRequest().getData("id", int.class);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(masterId);
+		maintenanceRecord = this.repository.findOneById(masterId); // CORREGIDO
 		technician = maintenanceRecord == null ? null : maintenanceRecord.getTechnician();
 		status = maintenanceRecord != null && maintenanceRecord.isDraftMode() && super.getRequest().getPrincipal().hasRealm(technician);
 
@@ -43,7 +43,7 @@ public class TechnicianMaintenanceRecordUpdateService extends AbstractGuiService
 		int id;
 
 		id = super.getRequest().getData("id", int.class);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(id);
+		maintenanceRecord = this.repository.findOneById(id); // CORREGIDO
 
 		super.getBuffer().addData(maintenanceRecord);
 	}
@@ -65,7 +65,7 @@ public class TechnicianMaintenanceRecordUpdateService extends AbstractGuiService
 
 	@Override
 	public void validate(final MaintenanceRecord maintenanceRecord) {
-		;
+		// Validación adicional si es necesaria
 	}
 
 	@Override
@@ -80,12 +80,11 @@ public class TechnicianMaintenanceRecordUpdateService extends AbstractGuiService
 
 		choices = SelectChoices.from(MaintenanceRecordStatus.class, maintenanceRecord.getStatus());
 
-		dataset = super.unbindObject(maintenanceRecord, "moment", "nextInspectionDate", "estimatedCost", "notes", "draftMode");
+		dataset = super.unbindObject(maintenanceRecord, "maintenanceMoment", "nextInspectionDate", "estimatedCost", "notes", "draftMode");
 		dataset.put("status", choices.getSelected().getKey());
 		dataset.put("statuses", choices);
 		dataset.put("aircraft", maintenanceRecord.getAircraft().getRegistrationnumber());
 
 		super.getResponse().addData(dataset);
 	}
-
 }
