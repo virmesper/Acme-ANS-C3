@@ -4,12 +4,12 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:form>
-		<acme:input-textbox code="customer.passenger.list.label.fullName" path="fullName"/>
-		<acme:input-email code="customer.passenger.list.label.email" path="email"/>
-		<acme:input-textbox code="customer.passenger.list.label.passportNumber" path="passportNumber"/>
-		<acme:input-moment code="customer.passenger.list.label.dateOfBirth" path="dateOfBirth"/>
+		<acme:input-textbox code="customer.passenger.list.label.fullName" path="fullName" readonly="${draftMode}"/>
+		<acme:input-email code="customer.passenger.list.label.email" path="email" readonly="${draftMode}"/>
+		<acme:input-textbox code="customer.passenger.list.label.passportNumber" path="passportNumber" readonly="${draftMode}"/>
+		<acme:input-moment code="customer.passenger.list.label.dateOfBirth" path="dateOfBirth" readonly="${draftMode}"/>
 		<acme:input-checkbox code="customer.passenger.list.label.draftMode" path="draftMode" readonly="true"/>
-		<acme:input-textbox code="customer.passenger.list.label.specialNeeds" path="specialNeeds"/>
+		<acme:input-textbox code="customer.passenger.list.label.specialNeeds" path="specialNeeds" readonly="${draftMode}"/>
 		
 		<jstl:choose>
 		

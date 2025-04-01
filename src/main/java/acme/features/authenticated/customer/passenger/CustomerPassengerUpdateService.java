@@ -51,7 +51,7 @@ public class CustomerPassengerUpdateService extends AbstractGuiService<Customer,
 	@Override
 	public void validate(final Passenger passenger) {
 		if (passenger.isDraftMode())
-			super.state(false, "draftMode", "El pasajero está en modo borrador y no puede actualizarse.");
+			super.state(true, "draftMode", "El pasajero está en modo borrador y no puede actualizarse.");
 	}
 
 	@Override
