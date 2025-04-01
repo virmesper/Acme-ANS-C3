@@ -43,7 +43,6 @@ public class CustomerBookingListService extends AbstractGuiService<Customer, Boo
 
 	@Override
 	public void unbind(final Booking booking) {
-
 		assert booking != null;
 		boolean showCreate;
 
@@ -53,13 +52,18 @@ public class CustomerBookingListService extends AbstractGuiService<Customer, Boo
 		String flightTag = "";
 		if (booking.getFlightId() != null)
 			flightTag = booking.getFlightId().getTag();
+
+		boolean isPublished = booking.isDraftMode();
+
 		dataset = super.unbindObject(booking, "travelClass", "price", "locatorCode");
-		dataset.put("flightTag", flightTag); // Usar el tag en lugar del ID
-		showCreate = super.getRequest().getPrincipal().hasRealm(booking.getCustomer());
+		dataset.put("flightTag", flightTag);
+
+		showCreate = super.getRequest().getPrincipal().hasRealm(booking.getCustomer()) && !isPublished;
 
 		super.getResponse().addGlobal("showCreate", showCreate);
 		dataset.put("bookingId", booking.getId());
 
 		super.getResponse().addData(dataset);
 	}
+
 }
