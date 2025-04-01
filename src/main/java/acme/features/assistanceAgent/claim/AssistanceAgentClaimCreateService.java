@@ -76,6 +76,8 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 	public void perform(final Claim object) {
 		assert object != null;
 
+		object.setRegistrationMoment(MomentHelper.getCurrentMoment());
+
 		this.repository.save(object);
 	}
 
