@@ -1,7 +1,7 @@
 key,registrationMoment,passengerEmail,description,type,indicator,key:assistanceAgent,key:leg,draft-mode
 claim-00,2015/07/02 0:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
 # registrationMoment
-claim-01,2000/01/01 0:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
+claim-01,2000/01/01 0:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,true
 claim-02,2000/01/01 0:01,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
 claim-03,2024/12/31 23:59,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
 claim-04,2025/01/01 0:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false

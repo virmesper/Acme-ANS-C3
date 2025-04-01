@@ -1,8 +1,6 @@
 
 package acme.constraints;
 
-import java.util.List;
-
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,16 +42,6 @@ public class TrackingLogValidator extends AbstractValidator<ValidTrackingLog, Tr
 				super.state(context, trackingLog.getResolution() == null, "Resolution", "acme.validation.trackinglog.resolution.incorrect");
 			else
 				super.state(context, trackingLog.getResolution() != null, "Resolution", "acme.validation.trackinglog.resolution.incorrect");
-
-			// Verificación de monotonía creciente del porcentaje
-			List<TrackingLog> trackingLogs = this.repository.findOrderTrackingLog(trackingLog.getClaim().getId()).get();
-			Integer pos = trackingLogs.indexOf(trackingLog);
-
-			if (pos > 0) { // Verificar solo si hay un log anterior
-				TrackingLog previousLog = trackingLogs.get(pos - 1);
-				if (previousLog.getResolutionPercentage() > trackingLog.getResolutionPercentage())
-					super.state(context, false, "ResolutionPercentage", "acme.validation.trackinglog.resolution.monotony");
-			}
 		}
 
 		result = !super.hasErrors(context);
