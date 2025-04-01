@@ -20,7 +20,7 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 	private CustomerBookingRepository	bookingRepository;
 
 	@Autowired
-	private CustomerPassengerRepository	repository;
+	private CustomerPassengerRepository	passengerRepository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -32,7 +32,7 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 		Collection<Passenger> passengers;
 
 		customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
-		passengers = this.repository.findPassengerByCustomer(customerId);
+		passengers = this.passengerRepository.findPassengerByCustomer(customerId);
 		status = passengers.stream().allMatch(b -> b.getCustomer().getUserAccount().getId() == customerId) && super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
 		super.getResponse().setAuthorised(status);
 	}

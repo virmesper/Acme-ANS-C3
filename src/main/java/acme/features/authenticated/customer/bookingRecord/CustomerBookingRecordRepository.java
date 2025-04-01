@@ -15,6 +15,9 @@ import acme.entities.S2.Passenger;
 @Repository
 public interface CustomerBookingRecordRepository extends AbstractRepository {
 
+	@Query("SELECT DISTINCT p FROM Passenger p WHERE p.customer.id = :customerId")
+	Collection<Passenger> findAllByCustomer(int customerId);
+
 	@Query("SELECT b FROM Booking b WHERE b.id=:bookingId")
 	Booking getBookingById(Integer bookingId);
 

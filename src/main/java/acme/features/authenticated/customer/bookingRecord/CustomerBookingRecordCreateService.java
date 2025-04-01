@@ -2,6 +2,7 @@
 package acme.features.authenticated.customer.bookingRecord;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -48,22 +49,33 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 
 	@Override
 	public void bind(final BookingRecord bookingRecord) {
-		int BookingId;
+		Integer bookingId;
+		Integer passengerId;
 		Booking booking;
-
-		int PassengerId;
 		Passenger passenger;
 
-		BookingId = super.getRequest().getData("bookingId", int.class);
-		booking = this.bookingRepository.findBookingById(BookingId);
+		// Los nombres deben coincidir con los campos del formulario: booking y passenger
+		bookingId = super.getRequest().getData("booking", Integer.class);
+		passengerId = super.getRequest().getData("passenger", Integer.class);
 
-		PassengerId = super.getRequest().getData("passenger", int.class);
-		passenger = this.passengerRepository.findById(PassengerId);
+		// Verificar que los valores obtenidos no sean nulos
+		System.out.println("Booking ID recibido: " + bookingId);
+		System.out.println("Passenger ID recibido: " + passengerId);
 
+		// Recuperar las entidades desde la base de datos
+		booking = this.bookingRepository.findBookingById(bookingId);
+		passenger = this.passengerRepository.findPassengerById(passengerId);
+
+		// Comprobación adicional para asegurar que no sean nulos
+		if (booking == null)
+			System.out.println("Error: No se encontró la reserva con ID: " + bookingId);
+		if (passenger == null)
+			System.out.println("Error: No se encontró el pasajero con ID: " + passengerId);
+
+		// Realizar la vinculación habitual
 		super.bindObject(bookingRecord);
 		bookingRecord.setBooking(booking);
 		bookingRecord.setPassenger(passenger);
-
 	}
 
 	@Override
@@ -91,28 +103,41 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 	}
 
 	@Override
-	public void unbind(final BookingRecord bookingPassenger) {
-		assert bookingPassenger != null;
+	public void unbind(final BookingRecord bookingRecord) {
+		Dataset dataset;
+		SelectChoices passengerChoices;
+		SelectChoices bookingChoices;
 
-		Integer customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		Integer bookingId = super.getRequest().getData("bookingId", int.class);
+		int bookingId = super.getRequest().getData("bookingId", int.class);
+		Booking booking = this.bookingRepository.findBookingById(bookingId);
 
-		// Obtener los pasajeros ya añadidos a la reserva
-		Collection<Passenger> alreadyAddedPassengers = this.customerBookingPassengerRepository.getPassengersInBooking(bookingId);
+		// Crear una lista con la única booking encontrada
+		Collection<Booking> singleBookingList = List.of(booking);
+
+		int customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
 		// Obtener todos los pasajeros del cliente
-		Collection<Passenger> allPassengers = this.customerBookingPassengerRepository.getAllPassengersByCustomerId(customerId);
+		Collection<Passenger> allPassengers = this.passengerRepository.findPassengerByCustomer(customerId);
+		// Obtener los pasajeros ya asignados a la reserva
+		Collection<Passenger> assignedPassengers = this.customerBookingPassengerRepository.findPassengersByBookingId(bookingId);
 
-		// Filtrar los pasajeros que aún no están en la reserva
-		// Filtrar los pasajeros ya asignados de manera correcta
-		Collection<Passenger> noAddedPassengers = allPassengers.stream().filter(p -> assignedPassengers.stream().noneMatch(ap -> ap.getId() == p.getId())).toList();
+		// Log para depuración
+		System.out.println("Total pasajeros del cliente: " + allPassengers.size());
+		System.out.println("Total pasajeros asignados: " + assignedPassengers.size());
 
-		// Depuración: Mostrar en consola los pasajeros disponibles
-		System.out.println("🚀 Pasajeros no añadidos: " + noAddedPassengers);
+		// Filtrar los pasajeros disponibles (no asignados a la reserva actual)
+		Collection<Passenger> availablePassengers = allPassengers.stream().filter(passenger -> assignedPassengers.stream().noneMatch(assigned -> assigned.getId() == passenger.getId())).toList();
+
+		// Log para verificar los pasajeros disponibles
+		System.out.println("Pasajeros disponibles: " + availablePassengers.size());
 
 		// Crear las opciones de selección
-		SelectChoices passengerChoices = SelectChoices.from(noAddedPassengers, "fullName", bookingPassenger.getPassenger());
+		bookingChoices = SelectChoices.from(singleBookingList, "locatorCode", bookingRecord.getBooking());
+		passengerChoices = SelectChoices.from(availablePassengers, "fullName", bookingRecord.getPassenger());
 
-		Dataset dataset = super.unbindObject(bookingPassenger, "passenger", "booking");
+		dataset = super.unbindObject(bookingRecord);
+		dataset.put("booking", bookingChoices.getSelected().getKey());
+		dataset.put("bookings", bookingChoices);
+		dataset.put("passenger", passengerChoices.getSelected().getKey());
 		dataset.put("passengers", passengerChoices);
 
 		super.getResponse().addData(dataset);
