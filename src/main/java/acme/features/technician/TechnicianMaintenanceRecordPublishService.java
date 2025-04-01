@@ -1,16 +1,16 @@
 
-package acme.features.authenticated.technician.maintenanceRecord;
+package acme.features.technician;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.client.components.models.Dataset;
 import acme.client.components.principals.Authenticated;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S5.MaintenanceRecord;
+import acme.entities.S5.MaintenanceRecordStatus;
 
 @GuiService
-public class TechnicianMaintenanceRecordUpdateService extends AbstractGuiService<Authenticated, MaintenanceRecord> {
+public class TechnicianMaintenanceRecordPublishService extends AbstractGuiService<Authenticated, MaintenanceRecord> {
 
 	@Autowired
 	private TechnicianMaintenanceRecordRepository repository;
@@ -30,22 +30,29 @@ public class TechnicianMaintenanceRecordUpdateService extends AbstractGuiService
 
 	@Override
 	public void bind(final MaintenanceRecord record) {
-		super.bindObject(record, "status", "nextInspectionDate", "estimatedCost", "notes", "aircraft");
+		// No hay campos que enlazar para publicar
 	}
 
 	@Override
 	public void validate(final MaintenanceRecord record) {
-		// Ejemplo: Validar que no esté publicado (según lógica de tu proyecto)
+		int total = this.repository.countAllTasksByRecordId(record.getId());
+		int published = this.repository.countPublishedTasksByRecordId(record.getId());
+
+		if (published == 0)
+			super.state(false, "*", "acme.validation.maintenanceRecord.must-have-one-task-published");
+
+		if (published < total)
+			super.state(false, "*", "acme.validation.maintenanceRecord.cannot-have-unpublished-tasks");
 	}
 
 	@Override
 	public void perform(final MaintenanceRecord record) {
+		record.setStatus(MaintenanceRecordStatus.COMPLETED); // Ajusta según tus estados
 		this.repository.save(record);
 	}
 
 	@Override
 	public void unbind(final MaintenanceRecord record) {
-		Dataset dataset = super.unbindObject(record, "maintenanceMoment", "status", "nextInspectionDate", "estimatedCost", "notes", "aircraft");
-		super.getResponse().addData(dataset);
+		// No necesitas mostrar datos nuevos
 	}
 }

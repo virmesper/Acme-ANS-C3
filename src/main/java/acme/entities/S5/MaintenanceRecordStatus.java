@@ -1,7 +1,7 @@
 
 package acme.entities.S5;
 
-public enum StatusMR {
+public enum MaintenanceRecordStatus {
 
 	PENDING, IN_PROGRESS, COMPLETED
 }

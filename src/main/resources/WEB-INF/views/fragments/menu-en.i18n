@@ -43,8 +43,8 @@ master.menu.customer.passenger = My passengers
 
 # master.menu.technician ######################################################
 
-master.menu.technician = Technician
-technician.maintenance-record.menu.title = Maintenance records
+ master.menu.technician = Technician
+ master.menu.technician.maintenance-records = Maintenance Records
 
 
 # master.menu.user-account ####################################################

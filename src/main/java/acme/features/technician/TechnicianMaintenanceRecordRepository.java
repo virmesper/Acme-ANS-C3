@@ -1,5 +1,5 @@
 
-package acme.features.authenticated.technician.maintenanceRecord;
+package acme.features.technician;
 
 import java.util.Collection;
 
@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
+import acme.entities.Group.Aircraft;
 import acme.entities.S5.MaintenanceRecord;
 import acme.entities.S5.Task;
 import acme.realms.Technician;
@@ -38,4 +39,16 @@ public interface TechnicianMaintenanceRecordRepository extends AbstractRepositor
 	// Obtener tareas asociadas a un registro de mantenimiento
 	@Query("select i.task from InvolvedIn i where i.maintenanceRecord.id = :recordId")
 	Collection<Task> findTasksByMaintenanceRecordId(@Param("recordId") int recordId);
+
+	// Obtener registros de mantenimiento por ID de técnico
+	@Query("select m from MaintenanceRecord m where m.technician.id = :id")
+	Collection<MaintenanceRecord> findMaintenanceRecordsByTechnicianId(@Param("id") int id);
+
+	// Obtener un registro de mantenimiento específico
+	@Query("select m from MaintenanceRecord m where m.id = :id")
+	MaintenanceRecord findMaintenanceRecordById(@Param("id") int id);
+
+	// Obtener aeronave por número de registro (corrigiendo el nombre del parámetro)
+	@Query("select a from Aircraft a where a.registrationnumber = :registrationnumber")
+	Aircraft findAircraftByRegistrationNumber(@Param("registrationnumber") String registrationnumber);
 }
