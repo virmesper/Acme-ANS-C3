@@ -7,11 +7,10 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
+import acme.entities.S4.ClaimType;
 import acme.entities.S4.Indicator;
 import acme.realms.assistanceAgent.AssistanceAgent;
-import acme.entities.S4.ClaimType;
 
 @GuiService
 public class AssistanceAgentClaimShowService extends AbstractGuiService<AssistanceAgent, Claim> {
@@ -36,9 +35,7 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 		int id;
 
 		id = super.getRequest().getData("id", int.class);
-		Leg leg = this.repository.findLegByClaimId(id);
 		claim = this.repository.findClaimById(id);
-		claim.setLeg(leg);
 
 		super.getBuffer().addData(claim);
 	}
@@ -50,14 +47,11 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 		SelectChoices indicatorChoices = SelectChoices.from(Indicator.class, claim.getIndicator());
 		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", claim.getLeg());
 		SelectChoices draftModeChoices = new SelectChoices();
-		draftModeChoices.add("true", "True", claim.isDraftMode());
-		draftModeChoices.add("false", "False", !claim.isDraftMode());
 
-		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode", "leg");
-		dataset.put("type", claimTypeChoices);
-		dataset.put("indicator", indicatorChoices);
-		dataset.put("draftMode", draftModeChoices);
-		dataset.put("leg", legChoices.getSelected().getKey());
+		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode", "leg", "indicator", "type");
+		dataset.put("types", claimTypeChoices);
+		dataset.put("indicators", indicatorChoices);
+		dataset.put("draftModes", draftModeChoices);
 		dataset.put("legs", legChoices);
 
 		super.getResponse().addData(dataset);

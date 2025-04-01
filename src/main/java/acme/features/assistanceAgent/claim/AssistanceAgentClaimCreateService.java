@@ -14,9 +14,9 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
+import acme.entities.S4.ClaimType;
 import acme.entities.S4.Indicator;
 import acme.realms.assistanceAgent.AssistanceAgent;
-import acme.entities.S4.ClaimType;
 
 @GuiService
 public class AssistanceAgentClaimCreateService extends AbstractGuiService<AssistanceAgent, Claim> {
@@ -85,11 +85,10 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 		draftModeChoices.add("true", "True", object.isDraftMode());
 		draftModeChoices.add("false", "False", !object.isDraftMode());
 
-		dataset = super.unbindObject(object, "registrationMoment", "passengerEmail", "description", "draftMode");
-		dataset.put("type", claimTypeChoices);
-		dataset.put("indicator", indicatorChoices);
-		dataset.put("draftMode", draftModeChoices);
-		dataset.put("leg", legChoices.getSelected().getKey());
+		dataset = super.unbindObject(object, "registrationMoment", "passengerEmail", "description", "draftMode", "leg", "indicator", "type");
+		dataset.put("types", claimTypeChoices);
+		dataset.put("indicators", indicatorChoices);
+		dataset.put("draftModes", draftModeChoices);
 		dataset.put("legs", legChoices);
 
 		super.getResponse().addData(dataset);

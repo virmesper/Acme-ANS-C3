@@ -8,9 +8,9 @@ import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S4.Claim;
+import acme.entities.S4.ClaimType;
 import acme.entities.S4.Indicator;
 import acme.realms.assistanceAgent.AssistanceAgent;
-import acme.entities.S4.ClaimType;
 
 @GuiService
 public class AssistanceAgentClaimDeleteService extends AbstractGuiService<AssistanceAgent, Claim> {
@@ -45,13 +45,12 @@ public class AssistanceAgentClaimDeleteService extends AbstractGuiService<Assist
 
 	@Override
 	public void bind(final Claim claim) {
-		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "type", "indicator", "leg", "draftMode");
+		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "type", "indicator", "leg");
 	}
 
 	@Override
 	public void validate(final Claim claim) {
-		if (claim.isDraftMode() != false)
-			super.state(false, "draftMode", "acme.validation.draftMode.message");
+		;
 	}
 
 	@Override
@@ -66,10 +65,9 @@ public class AssistanceAgentClaimDeleteService extends AbstractGuiService<Assist
 		SelectChoices indicatorChoices = SelectChoices.from(Indicator.class, claim.getIndicator());
 		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", claim.getLeg());
 
-		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode");
-		dataset.put("type", claimTypeChoices);
-		dataset.put("indicator", indicatorChoices);
-		dataset.put("leg", legChoices.getSelected().getKey());
+		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode", "leg", "indicator", "type");
+		dataset.put("types", claimTypeChoices);
+		dataset.put("indicators", indicatorChoices);
 		dataset.put("legs", legChoices);
 
 		super.getResponse().addData(dataset);
