@@ -2,7 +2,6 @@
 package acme.features.authenticated.customer.bookingRecord;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -92,33 +91,28 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 	}
 
 	@Override
-	public void unbind(final BookingRecord bookingRecord) {
-		Dataset dataset;
-		SelectChoices passengerChoices;
-		SelectChoices bookingChoices;
+	public void unbind(final BookingRecord bookingPassenger) {
+		assert bookingPassenger != null;
 
-		int bookingId = super.getRequest().getData("bookingId", int.class);
-		Booking booking = this.bookingRepository.findBookingById(bookingId);
+		Integer customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		Integer bookingId = super.getRequest().getData("bookingId", int.class);
 
-		// Crear una lista con la única booking encontrada
-		Collection<Booking> singleBookingList = List.of(booking);
+		// Obtener los pasajeros ya añadidos a la reserva
+		Collection<Passenger> alreadyAddedPassengers = this.customerBookingPassengerRepository.getPassengersInBooking(bookingId);
+		// Obtener todos los pasajeros del cliente
+		Collection<Passenger> allPassengers = this.customerBookingPassengerRepository.getAllPassengersByCustomerId(customerId);
 
-		int customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
-		Collection<Passenger> allPassengers = this.passengerRepository.findPassengerByCustomer(customerId);
-		Collection<Passenger> assignedPassengers = this.customerBookingPassengerRepository.getPassengersInBooking(bookingId);
-
+		// Filtrar los pasajeros que aún no están en la reserva
 		// Filtrar los pasajeros ya asignados de manera correcta
-		// Filtrar los pasajeros ya asignados de manera correcta
-		Collection<Passenger> availablePassengers = allPassengers.stream().filter(passenger -> assignedPassengers.stream().noneMatch(assigned -> assigned.getId() == passenger.getId())).toList();
+		Collection<Passenger> noAddedPassengers = allPassengers.stream().filter(p -> assignedPassengers.stream().noneMatch(ap -> ap.getId() == p.getId())).toList();
+
+		// Depuración: Mostrar en consola los pasajeros disponibles
+		System.out.println("🚀 Pasajeros no añadidos: " + noAddedPassengers);
 
 		// Crear las opciones de selección
-		bookingChoices = SelectChoices.from(singleBookingList, "locatorCode", bookingRecord.getBooking());
-		passengerChoices = SelectChoices.from(availablePassengers, "fullName", bookingRecord.getPassenger());
+		SelectChoices passengerChoices = SelectChoices.from(noAddedPassengers, "fullName", bookingPassenger.getPassenger());
 
-		dataset = super.unbindObject(bookingRecord);
-		dataset.put("booking", bookingChoices.getSelected().getKey());
-		dataset.put("bookings", bookingChoices);
-		dataset.put("passenger", passengerChoices.getSelected().getKey());
+		Dataset dataset = super.unbindObject(bookingPassenger, "passenger", "booking");
 		dataset.put("passengers", passengerChoices);
 
 		super.getResponse().addData(dataset);
