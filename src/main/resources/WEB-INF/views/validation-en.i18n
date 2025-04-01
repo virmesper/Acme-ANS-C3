@@ -8,14 +8,15 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-acme.validation.shortText.message  	= Must have from 1 to 50 characters.
-acme.validation.flightNumber.message = The flight number must have exactly three uppercase letters followed by four digits (example: ABC1234).
-acme.validation.employeeCode.format.message=The employee code must start with 2 or 3 uppercase letters followed by 6 digits.
-acme.validation.employeeCode.unique.message = The employee code must be unique.
-acme.validation.employeeCode.initials.message=The employee code must begin with your initials extracted from your full name.
-acme.validation.trackinglog.no-trackinglogs = No tracking logs found.
-acme.validation.trackinglog.status.not-pending = The status cannot be PENDING when the resolution percentage is 100%.
-acme.validation.trackinglog.status.pending-required = The status must be PENDING when the resolution percentage is less than 100%.
-acme.validation.trackinglog.resolution.incorrect = The resolution field is incorrect based on the current status.
-acme.validation.trackinglog.resolution.monotony = The resolution percentage must be monotonically increasing.
+acme.validation.shortText.message  	= Must have from 1 to 50 characters
+acme.validation.flightNumber.message = The flight number must have exactly three uppercase letters followed by four digits (example: ABC1234)
+acme.validation.employeeCode.format.message=The employee code must start with 2 or 3 uppercase letters followed by 6 digits
+acme.validation.employeeCode.unique.message = The employee code must be unique
+acme.validation.employeeCode.initials.message=The employee code must begin with your initials extracted from your full name
+acme.validation.trackinglog.no-trackinglogs = No tracking logs found
+acme.validation.trackinglog.status.not-pending = The status cannot be PENDING when the resolution percentage is 100%
+acme.validation.trackinglog.status.pending-required = The status must be PENDING when the resolution percentage is less than 100%
+acme.validation.trackinglog.resolution.incorrect = The resolution field is incorrect based on the current status
+acme.validation.trackinglog.resolution.monotony = The resolution percentage must be monotonically increasing
+acme.validation.claim.indicator.pending = The claim must be created with the status PENDING
 

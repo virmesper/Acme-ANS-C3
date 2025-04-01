@@ -65,7 +65,11 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 
 	@Override
 	public void validate(final Claim object) {
-		;
+		assert object != null;
+
+		// Verificar que el indicador esté en estado PENDING al crear la reclamación
+		if (object.getIndicator() != Indicator.PENDING)
+			super.state(false, "indicator", "acme.validation.claim.indicator.pending");
 	}
 
 	@Override
