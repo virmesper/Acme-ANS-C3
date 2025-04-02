@@ -46,4 +46,4 @@ maintenance-record-30,2024/12/28 12:00,PENDING,2030/01/01 00:00,EUR 2000.00,"Lor
 maintenance-record-31,2024/12/28 12:00,PENDING,2030/01/01 00:00,EUR 2000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",TRUE,Aircraft-21,technician2
 # status - standard variations
 maintenance-record-32,2024/12/28 12:00,IN_PROGRESS,2030/01/01 00:00,EUR 2000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",TRUE,Aircraft-22,technician2
-maintenance-record-33,2024/12/28 12:00,COMPLETED,2030/01/01 00:00,EUR 2000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",TRUE,Aircraft-19,technician2
+maintenance-record-33,2024/12/28 12:00,COMPLETED,2030/01/01 00:00,EUR 7000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",FALSE,Aircraft-19,technician2

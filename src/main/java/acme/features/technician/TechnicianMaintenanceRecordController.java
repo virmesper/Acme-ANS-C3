@@ -25,6 +25,12 @@ public class TechnicianMaintenanceRecordController extends AbstractGuiController
 	@Autowired
 	TechnicianMaintenanceRecordCreateService	createService;
 
+	@Autowired
+	TechnicianMaintenanceRecordDeleteService	deleteService;
+
+	@Autowired
+	TechnicianMaintenanceRecordPublishService	publishService;
+
 
 	@PostConstruct
 	protected void initialise() {
@@ -32,6 +38,9 @@ public class TechnicianMaintenanceRecordController extends AbstractGuiController
 		super.addBasicCommand("show", this.showService);
 		super.addBasicCommand("update", this.updateService);
 		super.addBasicCommand("create", this.createService);
-	}
+		super.addBasicCommand("delete", this.deleteService);
 
+		// El comando "publish" se registra correctamente como "update"
+		super.addCustomCommand("publish", "update", this.publishService);
+	}
 }
