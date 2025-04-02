@@ -13,4 +13,6 @@ acme.validation.flightNumber.message = The flight number must have exactly three
 customer.booking.publish.error.noPassengers=You cannot publish a booking without passengers.
 acme.validation.confirmation.message.booking.locator-code = Locator Code Should be unique.
 acme.validation.airport.notfound.message=IATA code doesn't exists.
-
+acme.validation.confirmation.message.booking-record.create.booking = 
+acme.validation.confirmation.message.booking-record.create.passenger = 
+acme.validation.confirmation.message.booking-record.create = 

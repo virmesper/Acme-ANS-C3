@@ -52,12 +52,17 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 
 	@Override
 	public void unbind(final Booking booking) {
-
 		assert booking != null;
-		SelectChoices flights = SelectChoices.from(this.repository.findAllFlights(), "id", booking.getFlightId());
-		SelectChoices travelClasses = SelectChoices.from(TravelClass.class, booking.getTravelClass());
 
 		Dataset dataset;
+		SelectChoices flights;
+		SelectChoices travelClasses;
+
+		// Mostrar la ciudad de destino en lugar del número de vuelo
+		flights = SelectChoices.from(this.repository.findAllFlights(), "tag", booking.getFlightId());
+		travelClasses = SelectChoices.from(TravelClass.class, booking.getTravelClass());
+
+		// Crear el dataset con los datos de la reserva
 		dataset = super.unbindObject(booking, "travelClass", "price", "locatorCode", "flightId", "purchaseMoment", "lastCardDigits", "draftMode");
 		dataset.put("travelClass", travelClasses);
 		dataset.put("flights", flights);
@@ -65,4 +70,5 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 
 		super.getResponse().addData(dataset);
 	}
+
 }
