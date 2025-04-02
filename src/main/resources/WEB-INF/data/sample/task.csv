@@ -1,0 +1,5 @@
+key,type,description,priority,estimatedDuration,key:technician,published
+task-01,MAINTENANCE,General engine check,5,2,technician1,true
+task-02,INSPECTION,Inspect electrical wiring,7,3,technician1,true
+task-03,REPAIR,Fix hydraulic pump,8,4,technician1,false
+task-04,SYSTEM_CHECK,Test avionics systems,6,3,technician2,true
