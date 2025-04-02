@@ -44,6 +44,11 @@ public class CustomerBookingPublishedService extends AbstractGuiService<Customer
 
 		boolean lastNibbleNotNull = !lastNibble.isBlank();
 
+		int passengerCount = this.repository.countNumberOfPassengersOfBooking(booking.getId());
+		boolean hasPassengers = passengerCount > 0;
+
+		super.state(hasPassengers, "draftMode", "customer.booking.publish.error.noPassengers");
+
 		super.state(lastNibbleNotNull, "draftMode", "customer.booking.publish.error.LastCardDigits");
 	}
 

@@ -9,18 +9,14 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S2.Passenger;
-import acme.features.authenticated.customer.booking.CustomerBookingRepository;
 import acme.realms.Customer;
 
 @GuiService
-public class CustomerPassengerListService extends AbstractGuiService<Customer, Passenger> {
+public class CustomerPassengerListAllService extends AbstractGuiService<Customer, Passenger> {
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRepository	bookingRepository;
-
-	@Autowired
-	private CustomerPassengerRepository	passengerRepository;
+	private CustomerPassengerRepository passengerRepository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -33,18 +29,17 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 
 		customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
 		passengers = this.passengerRepository.findPassengerByCustomer(customerId);
-		status = passengers.stream().allMatch(b -> b.getCustomer().getUserAccount().getId() == customerId) && super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
+		status = passengers.stream().allMatch(p -> p.getCustomer().getUserAccount().getId() == customerId) && super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
 		Collection<Passenger> passengers;
-		int id;
+		int customerId;
 
-		id = super.getRequest().getData("bookingId", int.class);
-		super.getResponse().addGlobal("bookingId", id);
-		passengers = this.bookingRepository.findPassengersByBooking(id);
+		customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
+		passengers = this.passengerRepository.findPassengerByCustomer(customerId);
 
 		super.getBuffer().addData(passengers);
 	}
@@ -52,9 +47,7 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 	@Override
 	public void unbind(final Passenger passenger) {
 		Dataset dataset;
-
-		dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "specialNeeds");
-
+		dataset = super.unbindObject(passenger, "fullName", "passportNumber", "specialNeeds", "email");
 		super.getResponse().addData(dataset);
 	}
 }
