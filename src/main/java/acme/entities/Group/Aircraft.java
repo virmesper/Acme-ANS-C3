@@ -12,6 +12,7 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
+import acme.constraints.ValidUniqueRegistrationNumber;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,6 +35,7 @@ public class Aircraft extends AbstractEntity {
 	@Mandatory
 	@ValidString(min = 1, max = 50)
 	@Column(unique = true)
+	@ValidUniqueRegistrationNumber
 	private String				registrationnumber;
 
 	@Mandatory

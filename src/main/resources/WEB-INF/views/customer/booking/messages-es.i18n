@@ -1,0 +1,38 @@
+# defaults-es.i18n
+#
+# Copyright (C) 2012-2025 Rafael Corchuelo.
+#
+# In keeping with the traditional purpose of furthering education and research, it is
+# the policy of the copyright owner to permit non-commercial use and redistribution of
+# this software. It has been tested carefully, but it is not guaranteed for any particular
+# purposes.  The copyright owner does not offer any warranties or representations, nor do
+# they accept any liabilities with respect to them.
+
+customer.booking.form.title = Detalles de las Reservas
+customer.booking.list.title = Lista de Reservas
+
+customer.booking.list.label.travelClass=Clase de Viaje
+customer.booking.list.label.locatorCode=Localizador
+customer.booking.list.label.price=Precio
+customer.booking.list.label.flightTag=Vuelo
+customer.booking.list.label.draftMode = Publicado
+customer.booking.list.label.flightId = Vuelo
+
+customer.booking.list.label.purchaseMoment=Momento de Compra
+customer.booking.list.label.lastCardDigits=Últimos Digitos de la Tarjeta de Crédito
+customer.booking.form.error.alreadyPublished=Esta reserva está publicada y no se puede actualizar.
+
+
+customer.booking.form.button.update = Actualizar
+customer.booking.form.button.return = Volver
+customer.booking.form.button.passenger = Ver Pasajeros
+
+customer.booking.create = Crear Reserva
+customer.booking.create.submit = Crear Reserva
+
+customer.booking.update = Actualizar Reserva
+customer.booking.update.submit = Actualizar Reserva
+
+customer.booking.publish = Publicar Reserva
+
+customer.booking.publish.error.lastCardDigits = No hay Últimos Digitos de la Tarjeta de Crédito
