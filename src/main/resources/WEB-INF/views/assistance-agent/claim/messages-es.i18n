@@ -9,18 +9,18 @@
 # they accept any liabilities with respect to them.
 
 assistanceAgent.claim.form.error.indicator.pending = El reclamo debe crearse con el estado PENDIENTE
-assistanceAgent.claim.form.error.all-tracking-logs-published = Todos los registros de seguimiento deben publicarse antes de continuar.
-assistanceAgent.claim.form.error.indicator-not-pending = El indicador de reclamación no debe estar en estado PENDIENTE.
+assistanceAgent.claim.form.error.all-tracking-logs-published = Todos los registros de seguimiento deben publicarse antes de continuar
+assistanceAgent.claim.form.error.indicator-pending =  Si el porcentaje máximo de resolución de todos los registros de seguimiento asociados ya ha alcanzado el 100%, el estado no debe ser "PENDIENTE"
 
 assistance-agent.claim.list.title = Lista de reclamaciones
 assistance-agent.claim.form.title = Detalles de reclamaciones
 
 assistance-agent.claim.list.label.registrationMoment = Fecha de registro
 assistance-agent.claim.list.label.passengerEmail = Email del pasajero
-assistance-agent.claim.list.label.description = Descripción
 assistance-agent.claim.list.label.type = Tipo
 assistance-agent.claim.list.label.indicator = Indicador
 assistance-agent.claim.list.label.published = ¿Está Publicado?
+assistanceAgent.claim.list.label.leg = Tramo de vuelo
 
 assistance-agent.claim.form.label.registrationMoment = Fecha de registro
 assistance-agent.claim.form.label.passengerEmail = Email del pasajero
@@ -28,12 +28,8 @@ assistance-agent.claim.form.label.description = Descripción
 assistance-agent.claim.form.label.type = Tipo
 assistance-agent.claim.form.label.indicator = Indicador
 assistance-agent.claim.form.label.leg = Tramo de vuelo
-assistance-agent.claim.form.label.draftMode = Borrador
 
 assistance-agent.claim.list.button.create = Crear reclamación
-assistance-agent.claim.list.button.listAll = Lista de reclamaciones
-assistance-agent.claim.list.button.listCompleted = Reclamaciones completas
-assistance-agent.claim.list.button.listPending = Reclamaciones pendientes
 assistance-agent.claim.form.button.create = Crear reclamación
 assistance-agent.claim.form.button.update = Actualizar reclamación
 assistance-agent.claim.form.button.delete = Borrar reclamación

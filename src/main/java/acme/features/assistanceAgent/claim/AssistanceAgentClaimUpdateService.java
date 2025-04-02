@@ -7,6 +7,7 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
 import acme.entities.S4.ClaimType;
 import acme.entities.S4.Indicator;
@@ -28,7 +29,7 @@ public class AssistanceAgentClaimUpdateService extends AbstractGuiService<Assist
 		boolean status;
 		int claimId = super.getRequest().getData("id", int.class);
 		Claim claim = this.repository.findClaimById(claimId);
-		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null && super.getRequest().getPrincipal().getActiveRealm().getId() == claim.getAssistanceAgent().getId();
+		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null && claim.isDraftMode() && super.getRequest().getPrincipal().getActiveRealm().getId() == claim.getAssistanceAgent().getId();
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -45,12 +46,29 @@ public class AssistanceAgentClaimUpdateService extends AbstractGuiService<Assist
 
 	@Override
 	public void bind(final Claim claim) {
-		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "type", "indicator");
+		assert claim != null;
+
+		int legId;
+		Leg leg;
+
+		legId = super.getRequest().getData("leg", int.class);
+		leg = this.repository.findLegById(legId);
+
+		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "leg", "indicator", "type");
+		claim.setLeg(leg);
 	}
 
 	@Override
 	public void validate(final Claim claim) {
-		;
+		if (!super.getBuffer().getErrors().hasErrors("indicator")) {
+			boolean bool1;
+			boolean bool2;
+
+			bool1 = claim.getIndicator() == Indicator.PENDING && this.repository.findMaxResolutionPercentageByClaimId(claim.getId()) < 100;
+			bool2 = claim.getIndicator() != Indicator.PENDING && this.repository.findMaxResolutionPercentageByClaimId(claim.getId()) == 100;
+
+			super.state(bool1 || bool2, "indicator", "assistanceAgent.claim.form.error.indicator-pending");
+		}
 	}
 
 	@Override

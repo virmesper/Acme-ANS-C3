@@ -19,7 +19,6 @@ master.menu.anonymous.favourite-link-4 = 2682*****: Mesa Pérez, Virginia
 # master.menu.assistanceAgent ##########################################################
  
 master.menu.assistance-agent = Agente de Asistencia
-master.menu.assistance-agent.claim.list = Lista de reclamaciones
 master.menu.assistance-agent.claim.list-completed = Lista de reclamaciones completas
 master.menu.assistance-agent.claim.list-undergoing = Lista de reclamaciones pendientes
 

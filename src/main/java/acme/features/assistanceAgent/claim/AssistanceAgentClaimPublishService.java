@@ -8,6 +8,7 @@ import acme.client.components.views.SelectChoices;
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
 import acme.entities.S4.ClaimType;
 import acme.entities.S4.Indicator;
@@ -29,7 +30,7 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 		boolean status;
 		int claimId = super.getRequest().getData("id", int.class);
 		Claim claim = this.repository.findClaimById(claimId);
-		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null && super.getRequest().getPrincipal().getActiveRealm().getId() == claim.getAssistanceAgent().getId();
+		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null && claim.isDraftMode() && super.getRequest().getPrincipal().getActiveRealm().getId() == claim.getAssistanceAgent().getId();
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -46,23 +47,35 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 
 	@Override
 	public void bind(final Claim claim) {
-		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "type", "indicator", "leg");
+		assert claim != null;
 
+		int legId;
+		Leg leg;
+
+		legId = super.getRequest().getData("leg", int.class);
+		leg = this.repository.findLegById(legId);
+
+		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "leg", "indicator", "type");
+		claim.setLeg(leg);
 	}
 
 	@Override
 	public void validate(final Claim claim) {
-		// Verificar si hay algún TrackingLog en modo borrador
-		int draftCount = this.repository.countDraftTrackingLogsByClaimId(claim.getId());
-		boolean allPublished = draftCount == 0;
-		super.state(allPublished, "*", "assistanceAgent.claim.form.error.all-tracking-logs-published");
+		super.state(this.repository.allTrackingLogsPublishedByClaimId(claim.getId()), "*", "assistanceAgent.claim.form.error.all-tracking-logs-published");
+		if (!super.getBuffer().getErrors().hasErrors("indicator")) {
+			boolean bool1;
+			boolean bool2;
 
-		if (!super.getBuffer().getErrors().hasErrors("indicator"))
-			super.state(claim.getIndicator() != Indicator.PENDING, "indicator", "assistanceAgent.claim.form.error.indicator-not-pending");
+			bool1 = claim.getIndicator() == Indicator.PENDING && this.repository.findMaxResolutionPercentageByClaimId(claim.getId()) < 100;
+			bool2 = claim.getIndicator() != Indicator.PENDING && this.repository.findMaxResolutionPercentageByClaimId(claim.getId()) == 100;
+
+			super.state(bool1 || bool2, "indicator", "assistanceAgent.claim.form.error.indicator-pending");
+		}
 	}
 
 	@Override
 	public void perform(final Claim claim) {
+		assert claim != null;
 		claim.setDraftMode(false);
 		this.repository.save(claim);
 	}

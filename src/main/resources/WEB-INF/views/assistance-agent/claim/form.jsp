@@ -22,17 +22,20 @@
 	<acme:input-select code="assistance-agent.claim.form.label.type" path="type"  choices="${types}"/>
 	<acme:input-select code="assistance-agent.claim.form.label.indicator" path="indicator" choices="${indicators}"/>
 	<acme:input-select code="assistance-agent.claim.form.label.leg" path="leg" choices="${legs}"/>
-	<acme:input-checkbox code="assistance-agent.claim.form.label.draftMode" path="draftMode"/>
 	
 	<jstl:choose>
 			<jstl:when test="${acme:anyOf(_command, 'show|update|delete|publish') && draftMode}">
 				<acme:submit code="assistance-agent.claim.form.button.update" action="/assistance-agent/claim/update"/>
 				<acme:submit code="assistance-agent.claim.form.button.delete" action="/assistance-agent/claim/delete"/>
 				<acme:submit code="assistance-agent.claim.form.button.publish" action="/assistance-agent/claim/publish" method="post"/>
+				<acme:button code="assistance-agent.tracking-log.form.button.list" action="/assistance-agent/tracking-log/list?masterId=${id}"/>
 			</jstl:when>
 			<jstl:when test="${_command == 'create'}">
 				<acme:submit code="assistance-agent.claim.form.button.create" action="/assistance-agent/claim/create"/>
 			</jstl:when>		
+			<jstl:when test="${_command == 'show' && !draftMode}">
+				<acme:button code="assistance-agent.tracking-log.form.button.list" action="/assistance-agent/tracking-log/list?masterId=${id}"/>
+			</jstl:when>
 	</jstl:choose>	
 		
 </acme:form>

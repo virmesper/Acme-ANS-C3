@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import acme.client.repositories.AbstractRepository;
 import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
+import acme.entities.S4.TrackingLog;
 import acme.realms.assistanceAgent.AssistanceAgent;
 
 @Repository
@@ -23,17 +24,11 @@ public interface AssistanceAgentClaimRepository extends AbstractRepository {
 	@Query("SELECT l FROM Leg l WHERE l.id = :legId")
 	Leg findLegById(int legId);
 
-	@Query("SELECT c FROM Claim c WHERE c.assistanceAgent.id = :agentId")
-	Collection<Claim> findAllClaimsByAssistanceAgentId(int agentId);
-
 	@Query("SELECT c FROM Claim c WHERE c.indicator <> acme.entities.S4.Indicator.PENDING AND c.assistanceAgent.id = :agentId")
 	Collection<Claim> findCompletedClaims(int agentId);
 
 	@Query("SELECT c FROM Claim c WHERE c.indicator = acme.entities.S4.Indicator.PENDING AND c.assistanceAgent.id = :agentId")
 	Collection<Claim> findUndergoingClaims(int agentId);
-
-	@Query("SELECT c FROM Claim c WHERE c.indicator = 'PENDING' AND c.leg.id = :legId")
-	Collection<Claim> findUndergoingClaimsByLegId(int legId);
 
 	@Query("SELECT l FROM Leg l WHERE l.draftMode = false AND l.flight.draftMode = false")
 	Collection<Leg> findAvailableLegs();
@@ -41,7 +36,13 @@ public interface AssistanceAgentClaimRepository extends AbstractRepository {
 	@Query("SELECT c.leg FROM Claim c WHERE c.id = :claimId")
 	Leg findLegByClaimId(int claimId);
 
-	@Query("SELECT COUNT(t) FROM TrackingLog t WHERE t.draftMode = true AND t.claim.id = :id")
-	int countDraftTrackingLogsByClaimId(int id);
+	@Query("select count(t) = 0 from TrackingLog t where t.draftMode = true and t.claim.id = :id")
+	boolean allTrackingLogsPublishedByClaimId(int id);
+
+	@Query("select max(t.resolutionPercentage) from TrackingLog t where t.claim.id = :claimId")
+	Double findMaxResolutionPercentageByClaimId(int claimId);
+
+	@Query("select t from TrackingLog t where t.claim.id = :id")
+	public Collection<TrackingLog> findManyTrackingLogsByClaimId(int id);
 
 }

@@ -59,7 +59,7 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 		legId = super.getRequest().getData("leg", int.class);
 		leg = this.repository.findLegById(legId);
 
-		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "type", "indicator", "draftMode");
+		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "type", "indicator", "leg");
 		claim.setLeg(leg);
 	}
 
@@ -67,9 +67,8 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 	public void validate(final Claim object) {
 		assert object != null;
 
-		// Verificar que el indicador esté en estado PENDING al crear la reclamación
-		if (object.getIndicator() != Indicator.PENDING)
-			super.state(false, "indicator", "assistanceAgent.claim.form.error.indicator.pending");
+		if (!super.getBuffer().getErrors().hasErrors("indicator"))
+			super.state(object.getIndicator() == Indicator.PENDING, "indicator", "assistanceAgent.claim.form.error.indicator.pending");
 	}
 
 	@Override
@@ -87,12 +86,10 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 		SelectChoices claimTypeChoices = SelectChoices.from(ClaimType.class, object.getType());
 		SelectChoices indicatorChoices = SelectChoices.from(Indicator.class, object.getIndicator());
 		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", object.getLeg());
-		SelectChoices draftModeChoices = new SelectChoices();
 
-		dataset = super.unbindObject(object, "registrationMoment", "passengerEmail", "description", "draftMode", "leg", "indicator", "type");
+		dataset = super.unbindObject(object, "registrationMoment", "passengerEmail", "description", "leg", "indicator", "type");
 		dataset.put("types", claimTypeChoices);
 		dataset.put("indicators", indicatorChoices);
-		dataset.put("draftModes", draftModeChoices);
 		dataset.put("legs", legChoices);
 
 		super.getResponse().addData(dataset);

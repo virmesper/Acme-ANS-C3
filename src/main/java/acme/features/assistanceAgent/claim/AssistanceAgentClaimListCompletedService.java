@@ -24,8 +24,11 @@ public class AssistanceAgentClaimListCompletedService extends AbstractGuiService
 
 	@Override
 	public void authorise() {
-		boolean isAgent = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
-		super.getResponse().setAuthorised(isAgent);
+		boolean status;
+		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
+
+		super.getResponse().setAuthorised(status);
+
 	}
 
 	@Override
@@ -45,9 +48,10 @@ public class AssistanceAgentClaimListCompletedService extends AbstractGuiService
 		String published;
 		Dataset dataset;
 
-		dataset = super.unbindObject(object, "registrationMoment", "passengerEmail", "type", "indicator", "leg");
+		dataset = super.unbindObject(object, "registrationMoment", "passengerEmail", "type", "indicator");
 		published = !object.isDraftMode() ? "✓" : "x";
 		dataset.put("published", published);
+		dataset.put("leg", object.getLeg().getFlightNumber());
 
 		super.getResponse().addData(dataset);
 	}

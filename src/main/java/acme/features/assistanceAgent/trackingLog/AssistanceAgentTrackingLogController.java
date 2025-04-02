@@ -1,5 +1,5 @@
 
-package acme.features.assistanceAgent.claim;
+package acme.features.assistanceAgent.trackingLog;
 
 import javax.annotation.PostConstruct;
 
@@ -7,48 +7,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.controllers.AbstractGuiController;
 import acme.client.controllers.GuiController;
-import acme.entities.S4.Claim;
+import acme.entities.S4.TrackingLog;
 import acme.realms.assistanceAgent.AssistanceAgent;
 
 @GuiController
-public class AssistanceAgentClaimController extends AbstractGuiController<AssistanceAgent, Claim> {
+public class AssistanceAgentTrackingLogController extends AbstractGuiController<AssistanceAgent, TrackingLog> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AssistanceAgentClaimListUndergoingService	listUndergoingService;
+	private AssistanceAgentTrackingLogListService					listService;
 
 	@Autowired
-	private AssistanceAgentClaimListCompletedService	listCompletedService;
+	private AssistanceAgentTrackingLogShowService					showService;
 
 	@Autowired
-	private AssistanceAgentClaimShowService				showService;
+	private AssistanceAgentTrackingLogCreateService					createService;
 
 	@Autowired
-	private AssistanceAgentClaimCreateService			createService;
+	private AssistanceAgentTrackingLogUpdateService					updateService;
 
 	@Autowired
-	private AssistanceAgentClaimDeleteService			deleteService;
+	private AssistanceAgentTrackingLogDeleteService					deleteService;
 
 	@Autowired
-	private AssistanceAgentClaimUpdateService			updateService;
+	private AssistanceAgentTrackingLogPublishService				publishService;
 
 	@Autowired
-	private AssistanceAgentClaimPublishService			publishService;
+	private AssistanceAgentTrackingLogCreateExceptionalCaseService	createExceptionalCaseService;
 
 	// Constructors -----------------------------------------------------------
 
 
 	@PostConstruct
 	protected void initialise() {
-		super.addCustomCommand("list-undergoing", "list", this.listUndergoingService);
-		super.addCustomCommand("list-completed", "list", this.listCompletedService);
+		super.addBasicCommand("list", this.listService);
 		super.addBasicCommand("show", this.showService);
 		super.addBasicCommand("create", this.createService);
 		super.addBasicCommand("update", this.updateService);
 		super.addBasicCommand("delete", this.deleteService);
-
 		super.addCustomCommand("publish", "update", this.publishService);
+		super.addCustomCommand("exceptional-case", "create", this.createExceptionalCaseService);
 	}
 
 }

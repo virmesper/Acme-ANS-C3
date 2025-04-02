@@ -25,8 +25,11 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 
 	@Override
 	public void authorise() {
-		boolean isAgent = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
-		super.getResponse().setAuthorised(isAgent);
+		boolean status;
+		int claimId = super.getRequest().getData("id", int.class);
+		Claim claim = this.repository.findClaimById(claimId);
+		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null && super.getRequest().getPrincipal().getActiveRealm().getId() == claim.getAssistanceAgent().getId();
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -46,12 +49,10 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 		SelectChoices claimTypeChoices = SelectChoices.from(ClaimType.class, claim.getType());
 		SelectChoices indicatorChoices = SelectChoices.from(Indicator.class, claim.getIndicator());
 		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", claim.getLeg());
-		SelectChoices draftModeChoices = new SelectChoices();
 
 		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode", "leg", "indicator", "type");
 		dataset.put("types", claimTypeChoices);
 		dataset.put("indicators", indicatorChoices);
-		dataset.put("draftModes", draftModeChoices);
 		dataset.put("legs", legChoices);
 
 		super.getResponse().addData(dataset);
