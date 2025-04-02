@@ -1,0 +1,53 @@
+
+package acme.features.technician;
+
+import java.util.Collection;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import acme.client.repositories.AbstractRepository;
+import acme.entities.Group.Aircraft;
+import acme.entities.S5.MaintenanceRecord;
+import acme.entities.S5.Task;
+import acme.realms.Technician;
+
+@Repository
+public interface TechnicianMaintenanceRecordRepository extends AbstractRepository {
+
+	// Obtener todos los registros de mantenimiento de un técnico, incluidos los borradores
+	@Query("select r from MaintenanceRecord r where r.technician.id = :technicianId")
+	Collection<MaintenanceRecord> findManyByTechnicianId(@Param("technicianId") int technicianId);
+
+	// Obtener un registro específico por ID
+	@Query("select r from MaintenanceRecord r where r.id = :id")
+	MaintenanceRecord findOneById(@Param("id") int id);
+
+	// Contar tareas publicadas de un registro
+	@Query("select count(i) from InvolvedIn i where i.maintenanceRecord.id = :recordId and i.task.published = true")
+	int countPublishedTasksByRecordId(@Param("recordId") int recordId);
+
+	// Contar todas las tareas de un registro
+	@Query("select count(i) from InvolvedIn i where i.maintenanceRecord.id = :recordId")
+	int countAllTasksByRecordId(@Param("recordId") int recordId);
+
+	// Obtener técnico por cuenta de usuario
+	@Query("select t from Technician t where t.userAccount.id = :userAccountId")
+	Technician findTechnicianByUserAccountId(@Param("userAccountId") int userAccountId);
+
+	// Obtener tareas asociadas a un registro de mantenimiento
+	@Query("select i.task from InvolvedIn i where i.maintenanceRecord.id = :recordId")
+	Collection<Task> findTasksByMaintenanceRecordId(@Param("recordId") int recordId);
+
+	// Obtener aeronave por número de registro
+	@Query("select a from Aircraft a where a.registrationnumber = :registrationnumber")
+	Aircraft findAircraftByRegistrationNumber(@Param("registrationnumber") String registrationnumber);
+
+	@Query("select t from Task t where t.technician.id = :technicianId")
+	Collection<Task> findTasksByTechnicianId(@Param("technicianId") int technicianId);
+
+	@Query("select t from Task t where t.id = :taskId")
+	Task findTaskById(@Param("taskId") int taskId);
+
+}
