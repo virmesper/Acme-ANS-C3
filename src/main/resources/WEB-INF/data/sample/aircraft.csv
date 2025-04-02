@@ -1,0 +1,41 @@
+key,model,registrationnumber,capacity,cargoweight,status,details,key:airline
+#model,"","","","","","",""
+Aircraft-01,Lorem ipsum dolor sit ame,N12345,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-02,L,ECABC,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-03,Lo,GXYZA,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-04,"Lorem ipsum dolor sit amet, consectetur adipiscin",DABCD,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-05,"Lorem ipsum dolor sit amet, consectetur adipiscing",FHABC,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-06,洛伦·伊普森,B1234,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+#registration,"","","","","","",""
+Aircraft-07,Lorem ipsum dolor sit ame,N67890,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-08,Lorem ipsum dolor sit ame,ECDEF,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-09,Lorem ipsum dolor sit ame,GZYXW,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-10,Lorem ipsum dolor sit ame,DBCDE,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-11,Lorem ipsum dolor sit ame,FGHJK,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-12,Lorem ipsum dolor sit ame,B5678,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+#capacity,"","","","","","",""
+Aircraft-13,Lorem ipsum dolor sit ame,OOABC,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-14,Lorem ipsum dolor sit ame,PHXYZ,1,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-15,Lorem ipsum dolor sit ame,CFABC,2,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-16,Lorem ipsum dolor sit ame,VHDEF,255,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-17,Lorem ipsum dolor sit ame,JAXYZ,254,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+#cargoWeight,"","","","","","",""
+Aircraft-18,Lorem ipsum dolor sit ame,HBABC,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-19,Lorem ipsum dolor sit ame,N9876,50,2000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-20,Lorem ipsum dolor sit ame,CXYZ1,50,2001,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-21,Lorem ipsum dolor sit ame,VH123,50,50000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-22,Lorem ipsum dolor sit ame,PQR12,50,49999,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+#status,"","","","","","",""
+Aircraft-23,Lorem ipsum dolor sit ame,QWERT,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-24,Lorem ipsum dolor sit ame,RTYUI,50,3000,MAINTENANCE,Lorem ipsum dolor sit ame,Airline-01
+#details,"","","","","","",""
+Aircraft-25,Lorem ipsum dolor sit ame,ABCDE,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-26,Lorem ipsum dolor sit ame,LMNOP,50,3000,ACTIVE,L,Airline-01
+Aircraft-27,Lorem ipsum dolor sit ame,ZXCVB1,50,3000,ACTIVE,Lo,Airline-01
+Aircraft-28,Lorem ipsum dolor sit ame,QAZWS,50,3000,ACTIVE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",Airline-01
+Aircraft-29,Lorem ipsum dolor sit ame,EDCFR,50,3000,ACTIVE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",Airline-01
+Aircraft-30,Lorem ipsum dolor sit ame,WSDXF,50,3000,ACTIVE,โลเร็ม อิปซัม,Airline-01
+#airline,"","","","","","",""
+Aircraft-31,Lorem ipsum dolor sit ame,YUIOP,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-32,Lorem ipsum dolor sit ame,ASDFG,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-01
+Aircraft-33,Lorem ipsum dolor sit ame,ZXCVB2,50,3000,ACTIVE,Lorem ipsum dolor sit ame,Airline-02

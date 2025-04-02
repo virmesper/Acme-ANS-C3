@@ -1,0 +1,4 @@
+key,key:userAccount,identifier,phone_number,address,city,country,earned_points
+customer-01,user-account-customer-01,CU123456,+1234567890,123 Main St,New York,USA,10000
+customer-02,user-account-customer-02,CT654321,+9876543210,456 Elm St,Los Angeles,USA,25000
+customer-03,user-account-customer-03,CM987654,+1122334455,789 Pine St,Chicago,USA,
