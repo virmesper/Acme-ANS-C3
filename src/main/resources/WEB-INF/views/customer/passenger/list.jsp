@@ -12,6 +12,7 @@
     <acme:list-payload path="payload"/>   
 </acme:list>
 
+<c:if test="${_command == 'list'}">
 	<acme:button code="customer.booking-record.create" action="/customer/booking-record/create?bookingId=${bookingId}" />
-   	<acme:button code="customer.passenger.form.button.create" action="/customer/passenger/create"/>
-
+</c:if>
+<acme:button code="customer.passenger.form.button.create" action="/customer/passenger/create"/>
