@@ -43,4 +43,11 @@ public interface TechnicianMaintenanceRecordRepository extends AbstractRepositor
 	// Obtener aeronave por número de registro
 	@Query("select a from Aircraft a where a.registrationnumber = :registrationnumber")
 	Aircraft findAircraftByRegistrationNumber(@Param("registrationnumber") String registrationnumber);
+
+	@Query("select t from Task t where t.technician.id = :technicianId")
+	Collection<Task> findTasksByTechnicianId(@Param("technicianId") int technicianId);
+
+	@Query("select t from Task t where t.id = :taskId")
+	Task findTaskById(@Param("taskId") int taskId);
+
 }

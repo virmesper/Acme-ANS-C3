@@ -19,6 +19,7 @@ technician.maintenance-record.form.button.create = Crear
 technician.maintenance-record.form.button.update = Actualizar
 technician.maintenance-record.form.button.delete = Borrar
 technician.maintenance-record.form.button.publish = Publicar
+technician.maintenance-record.form.button.return = Volver
 
 # Mensajes de validación
 acme.validation.maintenanceRecord.moment-required = El momento de mantenimiento debe ser una fecha pasada.

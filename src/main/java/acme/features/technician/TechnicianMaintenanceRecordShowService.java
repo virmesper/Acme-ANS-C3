@@ -55,6 +55,7 @@ public class TechnicianMaintenanceRecordShowService extends AbstractGuiService<T
 		dataset.put("status", choices.getSelected().getKey());
 		dataset.put("statuses", choices);
 		dataset.put("aircraft", maintenanceRecord.getAircraft().getRegistrationnumber());
+		dataset.put("isDraft", maintenanceRecord.isDraftMode());
 
 		super.getResponse().addData(dataset);
 	}

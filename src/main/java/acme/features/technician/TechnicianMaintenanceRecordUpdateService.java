@@ -24,17 +24,23 @@ public class TechnicianMaintenanceRecordUpdateService extends AbstractGuiService
 
 	@Override
 	public void authorise() {
-		boolean status;
 		int masterId;
 		MaintenanceRecord maintenanceRecord;
-		Technician technician;
 
 		masterId = super.getRequest().getData("id", int.class);
 		maintenanceRecord = this.repository.findOneById(masterId);
-		technician = maintenanceRecord == null ? null : maintenanceRecord.getTechnician();
-		status = maintenanceRecord != null && super.getRequest().getPrincipal().hasRealm(technician);
 
-		super.getResponse().setAuthorised(status);
+		boolean isDraft = maintenanceRecord != null && maintenanceRecord.isDraftMode();
+		boolean isOwner = maintenanceRecord != null && super.getRequest().getPrincipal().hasRealm(maintenanceRecord.getTechnician());
+
+		if (!isDraft) {
+			super.getResponse().setAuthorised(false);
+			super.getResponse().setOops(new IllegalStateException("No se puede actualizar un registro ya publicado."));
+		} else if (!isOwner) {
+			super.getResponse().setAuthorised(false);
+			super.getResponse().setOops(new IllegalStateException("Solo el propietario puede modificar el registro."));
+		} else
+			super.getResponse().setAuthorised(true);
 	}
 
 	@Override
@@ -70,7 +76,10 @@ public class TechnicianMaintenanceRecordUpdateService extends AbstractGuiService
 
 	@Override
 	public void perform(final MaintenanceRecord maintenanceRecord) {
-		this.repository.save(maintenanceRecord);
+		if (maintenanceRecord.isDraftMode())
+			this.repository.save(maintenanceRecord);
+		else
+			throw new IllegalStateException("Cannot update a published record");
 	}
 
 	@Override

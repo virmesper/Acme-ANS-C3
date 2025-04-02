@@ -18,19 +18,23 @@ public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService
 
 	@Override
 	public void authorise() {
-		boolean status;
 		int masterId;
 		MaintenanceRecord maintenanceRecord;
-		Technician technician;
 
 		masterId = super.getRequest().getData("id", int.class);
 		maintenanceRecord = this.repository.findOneById(masterId);
-		technician = maintenanceRecord == null ? null : maintenanceRecord.getTechnician();
 
-		// Solo se puede eliminar si el registro está en modo borrador y pertenece al técnico
-		status = maintenanceRecord != null && maintenanceRecord.isDraftMode() && super.getRequest().getPrincipal().hasRealm(technician);
+		boolean isDraft = maintenanceRecord != null && maintenanceRecord.isDraftMode();
+		boolean isOwner = maintenanceRecord != null && super.getRequest().getPrincipal().hasRealm(maintenanceRecord.getTechnician());
 
-		super.getResponse().setAuthorised(status);
+		if (!isDraft) {
+			super.getResponse().setAuthorised(false);
+			super.getResponse().setOops(new IllegalStateException("No se puede borrar un registro ya publicado."));
+		} else if (!isOwner) {
+			super.getResponse().setAuthorised(false);
+			super.getResponse().setOops(new IllegalStateException("Solo el propietario puede borrar el registro."));
+		} else
+			super.getResponse().setAuthorised(true);
 	}
 
 	@Override
@@ -56,7 +60,10 @@ public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService
 
 	@Override
 	public void perform(final MaintenanceRecord maintenanceRecord) {
-		this.repository.delete(maintenanceRecord);
+		if (maintenanceRecord.isDraftMode())
+			this.repository.delete(maintenanceRecord);
+		else
+			throw new IllegalStateException("Cannot delete a published record");
 	}
 
 	@Override
