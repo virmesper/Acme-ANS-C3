@@ -4,8 +4,6 @@ package acme.entities.S3;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,44 +25,40 @@ import lombok.Setter;
 @Setter
 public class FlightAssignment extends AbstractEntity {
 
-	// Serialisation identifier -----------------------------------------------
-
 	private static final long	serialVersionUID	= 1L;
 
-	// Attributes -------------------------------------------------------------
-
-	@Automapped
 	@Mandatory
-	@Enumerated(EnumType.STRING)
-	private DutyRole			flightCrewDuty;
+	@Automapped
+	@Valid
+	private Duty				duty;
 
 	@Mandatory
 	@ValidMoment(past = true)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date				lastUpdate;
+	private Date				moment;
 
-	@Automapped
 	@Mandatory
-	@Enumerated(EnumType.STRING)
-	private AssignmentStatus	assignmentStatus;
-
 	@Automapped
+	@Valid
+	private CurrentStatus		currentStatus;
+
 	@Optional
-	@ValidString(max = 255)
+	@Automapped
+	@ValidString(min = 1, max = 255, message = "{acme.validation.text.lenght.1-255}")
 	private String				remarks;
 
-	// Derived attributes -----------------------------------------------------
-
-	// Relationships ----------------------------------------------------------
-
 	@Mandatory
-	@Valid
-	@ManyToOne(optional = false)
-	private Leg					leg;
+	@Automapped
+	private boolean				draftMode;
 
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)
 	private FlightCrewMember	flightCrewMember;
+
+	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Leg					leg;
 
 }

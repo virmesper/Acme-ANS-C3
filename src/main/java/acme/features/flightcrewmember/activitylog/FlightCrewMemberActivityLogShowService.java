@@ -51,7 +51,7 @@ public class FlightCrewMemberActivityLogShowService extends AbstractGuiService<F
 
 		Dataset dataset;
 
-		dataset = super.unbindObject(activityLog, "registrationMoment", "incidentType", "description", "severityLevel", "flightCrewMember");
+		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode");
 
 		super.getResponse().addData(dataset);
 	}

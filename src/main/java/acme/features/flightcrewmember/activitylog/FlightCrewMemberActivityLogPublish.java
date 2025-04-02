@@ -10,7 +10,7 @@ import acme.entities.S3.ActivityLog;
 import acme.realms.FlightCrewMember;
 
 @GuiService
-public class FlightCrewMemberActivityLogDeleteService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
+public class FlightCrewMemberActivityLogPublish extends AbstractGuiService<FlightCrewMember, ActivityLog> {
 
 	// Internal state ---------------------------------------------------------
 
@@ -22,16 +22,17 @@ public class FlightCrewMemberActivityLogDeleteService extends AbstractGuiService
 
 	@Override
 	public void authorise() {
-		//		boolean status;
-		//		ActivityLog activityLog;
-		//		int id;
-		//		FlightCrewMember flightCrewMember;
-		//
-		//		id = super.getRequest().getData("id", int.class);
-		//		activityLog = this.repository.findActivityLogById(id);
-		//		flightCrewMember = activityLog == null ? null : activityLog.getFlightCrewMember();
-		//		status = super.getRequest().getPrincipal().hasRealm(flightCrewMember) && (activityLog == null || activityLog.isDraftMode());
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		int activityLogId;
+		ActivityLog activityLog;
+		FlightCrewMember flightCrewMember;
+
+		activityLogId = super.getRequest().getData("id", int.class);
+		activityLog = this.repository.findActivityLogById(activityLogId);
+		flightCrewMember = activityLog == null ? null : activityLog.getFlightCrewMember();
+		status = super.getRequest().getPrincipal().hasRealm(flightCrewMember);
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -57,16 +58,16 @@ public class FlightCrewMemberActivityLogDeleteService extends AbstractGuiService
 
 	@Override
 	public void perform(final ActivityLog activityLog) {
-
-		this.repository.delete(activityLog);
+		activityLog.setDraftMode(false);
+		this.repository.save(activityLog);
 	}
 
 	@Override
 	public void unbind(final ActivityLog activityLog) {
-
 		Dataset dataset;
 
-		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel");
+		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode");
+		dataset.put("readonly", false);
 
 		super.getResponse().addData(dataset);
 	}

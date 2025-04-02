@@ -1,7 +1,6 @@
 
 package acme.entities.S3;
 
-public enum AssignmentStatus {
+public enum CurrentStatus {
 	CONFIRMED, PENDING, CANCELLED
-
 }

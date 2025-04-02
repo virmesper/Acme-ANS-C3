@@ -1,24 +1,16 @@
+flight-crew-member.assignments.list.title = Lista de mis asignaciones:
+flight-crew-member.flight-assignment.form.title = Formulario de asignación de vuelos
+flight-crew-member.assignments.list.label.duty = Cargo:
+flight-crew-member.assignments.list.label.moment = Última actualización:
+flight-crew-member.assignments.list.label.status = Estado de la asignación:
 
-authenticated.flightcrewmembers.form.title = Detalles asignaciones de vuelo
-authenticated.flightcrewmembers.list.title = Asignaciones de vuelo
+flight-crew-member.flight-assignment.form.label.moment = Última actualización:
+flight-crew-member.flight-assignment.form.label.duty = Tu cargo:
+flight-crew-member.flight-assignment.form.label.status = Estado:
+flight-crew-member.flight-assignment.form.label.remarks = Incidencias:(Opcional)
+flight-crew-member.assignments.list.label.scheduledArrival = Fecha de llegada
+flight-crew-member.flight-assignment.form.label.crewMember = Miembro de la tripulación asignado
+flight-crew-member.flight-assignment.form.label.leg = Escala(Número de vuelo)
 
-authenticated.flightcrewmembers.form.label.flightCrew = Tripulación de vuelo
-authenticated.flightcrewmembers.form.label.moment = Momento
-authenticated.flightcrewmembers.form.label.currentStatus = Estado actual
-authenticated.flightcrewmembers.form.label.remarks = Observaciones
-
-employer.job.form.button.update = Actualizar
-employer.job.form.button.delete = Borrar
-employer.job.form.button.publish = Publicar
-employer.job.form.button.create = Crear
-
-authenticated.flightcrewmembers.list.label.flightCrew = Tripulación de vuelo
-authenticated.flightcrewmembers.list.label.moment = Momento
-authenticated.flightcrewmembers.list.label.currentStatus = Estado actual
-authenticated.flightcrewmembers.list.label.remarks = Observaciones
-
-employer.job.list.button.create = Crear
-
-master.menu.flight-crew-member=Tripulación de Vuelo
-master.menu.flight-crew-member.activity-logs=Mis Registros de Actividad
-master.menu.flight-crew-member.create-log=Crear Registro de Actividad
+flight-crew-member.assignments.list.button.create = Crear
+flight-crew-member.flight-assignment.form.button.create = Crear

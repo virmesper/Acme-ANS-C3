@@ -1,24 +1,21 @@
+flight-crew-member.flight-assignment.list.title = List of My Assignments:
+flight-crew-member.flight-assignment.form.title = Flight Assignment Form:
 
-authenticated.flightcrewmembers.form.title = Detalles asignaciones de vuelo
-authenticated.flightcrewmembers.list.title = Flight assignments
+flight-crew-member.assignments.list.label.duty = Duty:
+flight-crew-member.assignments.list.label.moment = Last update:
+flight-crew-member.assignments.list.label.status = Status of the assignment:
 
-authenticated.flightcrewmembers.form.label.flightCrew = flight crew
-authenticated.flightcrewmembers.form.label.moment = moment
-authenticated.flightcrewmembers.form.label.currentStatus = Current status 
-authenticated.flightcrewmembers.form.label.remarks = Remarks
+flight-crew-member.flight-assignment.form.label.moment = Last update:
+flight-crew-member.flight-assignment.form.label.duty = Duty:
+flight-crew-member.flight-assignment.form.label.status = Status:
+flight-crew-member.flight-assignment.form.label.remarks = Remarks:(Optional)
+flight-crew-member.assignments.list.label.scheduledArrival = Scheduled Arrival
+flight-crew-member.flight-assignment.form.label.crewMember = Crew Member Assigned
+flight-crew-member.flight-assignment.form.label.leg = Leg(FlightNumber)
 
-employer.job.form.button.update = Update
-employer.job.form.button.delete = Delete
-employer.job.form.button.publish = Publish
-employer.job.form.button.create = Create
+flight-crew-member.assignments.list.button.create = Create
+flight-crew-member.flight-assignment.form.button.create = Create
 
-authenticated.flightcrewmembers.list.label.flightCrew = flight crew
-authenticated.flightcrewmembers.list.label.moment = moment
-authenticated.flightcrewmembers.list.label.currentStatus = Current status 
-authenticated.flightcrewmembers.list.label.remarks = Remarks
-
-employer.job.list.button.create = Create
-
-master.menu.flight-crew-member=Flight Crew
-master.menu.flight-crew-member.activity-logs=My Activity Logs
-master.menu.flight-crew-member.create-log=Create Activity Log
+flight-crew-member.flight-assignment.form.button.publish = Publish
+flight-crew-member.flight-assignment.form.button.delete = Delete
+flight-crew-member.flight-assignment.form.button.update = Update

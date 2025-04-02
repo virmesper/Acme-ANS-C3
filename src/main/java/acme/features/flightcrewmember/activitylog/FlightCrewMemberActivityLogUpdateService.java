@@ -1,64 +1,74 @@
 
 package acme.features.flightcrewmember.activitylog;
 
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
+import acme.client.services.GuiService;
 import acme.entities.S3.ActivityLog;
 import acme.realms.FlightCrewMember;
 
-@Service
+@GuiService
 public class FlightCrewMemberActivityLogUpdateService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
-	/*
-	 * @Autowired
-	 * private FlightCrewMemberActivityLogRepository repository;
-	 * 
-	 * 
-	 * @Override
-	 * public void authorise() {
-	 * int id = super.getRequest().getData("id", int.class);
-	 * ActivityLog log = this.repository.findOneActivityLogById(id);
-	 * boolean isOwner = log != null && super.getRequest().getPrincipal().hasRealm(log.getFlightCrewMember());
-	 * boolean isEditable = this.repository.findConfirmedAssignmentsByCrewMemberId(log.getFlightCrewMember().getId()).isEmpty();
-	 * 
-	 * super.getResponse().setAuthorised(isOwner && isEditable);
-	 * }
-	 * 
-	 * @Override
-	 * public void load() {
-	 * int id = super.getRequest().getData("id", int.class);
-	 * ActivityLog log = this.repository.findOneActivityLogById(id);
-	 * super.getBuffer().addData(log);
-	 * }
-	 * 
-	 * @Override
-	 * public void bind(final ActivityLog object) {
-	 * super.bindObject(object, "registrationMoment", "incidentType", "description", "severityLevel");
-	 * }
-	 * 
-	 * @Override
-	 * public void validate(final ActivityLog object) {
-	 * boolean confirmation = super.getRequest().getData("confirmation", boolean.class);
-	 * super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
-	 * super.state(MomentHelper.isPast(object.getRegistrationMoment()), "registrationMoment", "acme.validation.moment.past");
-	 * }
-	 * 
-	 * @Override
-	 * public void perform(final ActivityLog object) {
-	 * this.repository.save(object);
-	 * }
-	 * 
-	 * @Override
-	 * public void unbind(final ActivityLog object) {
-	 * Dataset dataset = super.unbindObject(object, "registrationMoment", "incidentType", "description", "severityLevel", "flightAssignment");
-	 * 
-	 * FlightCrewMember crew = (FlightCrewMember) super.getRequest().getPrincipal().getActiveRealm();
-	 * Collection<FlightAssignment> assignments = this.repository.findAssignmentsByCrewMemberId(crew.getId());
-	 * 
-	 * SelectChoices choices = SelectChoices.from(assignments, "remarks", object.getFlightAssignment());
-	 * dataset.put("flightAssignments", choices);
-	 * 
-	 * super.getResponse().addData(dataset);
-	 * }
-	 */
+
+	// Internal state ---------------------------------------------------------
+
+	@Autowired
+	private FlightCrewMemberActivityLogRepository repository;
+
+	// AbstractGuiService interface -------------------------------------------
+
+
+	@Override
+	public void authorise() {
+		boolean status;
+		int activityLogId;
+		ActivityLog activityLog;
+		FlightCrewMember flightCrewMember;
+
+		activityLogId = super.getRequest().getData("id", int.class);
+		activityLog = this.repository.findActivityLogById(activityLogId);
+		flightCrewMember = activityLog == null ? null : activityLog.getFlightCrewMember();
+		status = super.getRequest().getPrincipal().hasRealm(flightCrewMember);
+
+		super.getResponse().setAuthorised(status);
+	}
+
+	@Override
+	public void load() {
+		ActivityLog activityLog;
+		int id;
+
+		id = super.getRequest().getData("id", int.class);
+		activityLog = this.repository.findActivityLogById(id);
+
+		super.getBuffer().addData(activityLog);
+	}
+
+	@Override
+	public void bind(final ActivityLog activityLog) {
+		super.bindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel");
+	}
+
+	@Override
+	public void validate(final ActivityLog activityLog) {
+		;
+	}
+
+	@Override
+	public void perform(final ActivityLog activityLog) {
+		this.repository.save(activityLog);
+	}
+
+	@Override
+	public void unbind(final ActivityLog activityLog) {
+		Dataset dataset;
+
+		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode");
+		dataset.put("readonly", false);
+
+		super.getResponse().addData(dataset);
+	}
+
 }

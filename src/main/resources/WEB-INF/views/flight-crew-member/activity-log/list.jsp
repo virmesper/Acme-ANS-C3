@@ -1,9 +1,29 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="acme" uri="http://acme-framework.org/" %>
+# messages-en.i18n
+#
+# Copyright (C) 2012-2025 Rafael Corchuelo.
+#
+# In keeping with the traditional purpose of furthering education and research, it is
+# the policy of the copyright owner to permit non-commercial use and redistribution of
+# this software. It has been tested carefully, but it is not guaranteed for any particular
+# purposes.  The copyright owner does not offer any warranties or representations, nor do
+# they accept any liabilities with respect to them.
 
-<acme:list>
-    <acme:list-column code="Duty" path="duty" width="25%"/>
-    <acme:list-column code="Start Time" path="startTime" width="25%"/>
-    <acme:list-column code="End Time" path="endTime" width="25%"/>
-    <acme:list-column code="Extra Info" path="extraInfo" width="25%"/>
-</acme:list>
+flight-crew-member.activity-log.form.title = Activity log form
+flight-crew-member.activity-log.list.title = Listing of Activity logs
+
+flightCrewMember.activityLog.form.label.registrationMoment = Registration Moment:
+flightCrewMember.activityLog.form.label.typeOfIncident = Type Of Incident:
+flightCrewMember.activityLog.form.label.description = Description:
+flightCrewMember.activityLog.form.label.severityLevel = Severity Level:
+flightCrewMember.activityLog.form.label.confirmation = Do you want to confirm?
+
+flightCrewMember.activityLog.form.button.publish = Publish
+flightCrewMember.activityLog.form.button.create = Create
+flightCrewMember.activityLog.form.button.update = Update
+flightCrewMember.activityLog.form.button.delete = Delete
+ 
+flightCrewMember.activityLog.list.label.registrationMoment = Registration Moment:
+flightCrewMember.activityLog.list.label.typeOfIncident = Type Of Incident:
+flightCrewMember.activityLog.list.label.severityLevel = Severity Level:
+
+flightCrewMember.activityLog.list.button.create = Create
