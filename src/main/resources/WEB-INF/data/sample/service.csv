@@ -1,0 +1,30 @@
+key,name,picture,averageDwellTime,promotionCode,discountAmount
+#service
+service-01,Servicio de prueba 1,"https://images.pexels.com/photos/47044/aircraft-landing-reach-injection-47044.jpeg?cs=srgb&dl=pexels-pixabay-47044.jpg&fm=jpg",18.55,PEUC-25,EUR 210
+#name-variations
+service-02,Lorem ipsum dolor sit ame,"https://s1.elespanol.com/2020/09/25/omicrono/tecnologia/tecnologia-tecnologia_523458626_160908915_1706x1280.jpg",18.55,JMYR-73,EUR 210
+service-03,L,"https://www.oneair.es/wp-content/uploads/2023/06/aviones-airbus-el-diseno-que-conquisto-el-cielo.jpg",18.55,OFUD-90,EUR 210
+service-04,"Lorem ipsum dolor sit amet, consectetur adipiscing","https://www.shutterstock.com/image-photo/commercial-plane-aircraft-600nw-2555149085.jpg",18.55,CIJC-64,EUR 210
+service-05,โลเร็ม อิปซัม,"https://www.preferente.com/wp-content/uploads/2018/07/aviones.jpg",18.55,VDBD-38,EUR 210
+service-06,لوريم إيبسوم,"https://services.meteored.com/img/article/los-aviones-imprescindible-para-las-previsiones-meteorologicas-1649085710428_1280.jpeg",18.55,DGHW-44,EUR 210
+service-07,洛伦·伊普森,"https://easbcn.com/wp-content/uploads/2025/01/1308.jpg",18.55,HIDH-32,EUR 210
+service-08,<marquee>Hacked</marquee>,"https://static.wixstatic.com/media/ad6fec_12e4fd69144840c2b20cc00f90efb243~mv2.png/v1/fill/w_568,h_318,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/ad6fec_12e4fd69144840c2b20cc00f90efb243~mv2.png",18.55,LSDM-77,EUR 210
+service-09,<script>alert(‘Hacked!’);</script>,"https://elceo.com/wp-content/uploads/2023/06/aeromexicooo.jpg",18.55,HGFD-13,EUR 210
+service-10,'' or 'A' = 'A ,"https://www.boeing.es/content/theboeingcompany/es/es/press-releases/2023/boeing-showcases-eco-technologies-defense-capabilities/_jcr_content/root/container_455971095/container/image.coreimg.jpeg/1702095042506/es-737-10.jpeg",18.55,PYKA-55,EUR 210
+#pictureUrl-variations
+service-11,Servicio de prueba 11,"https://cabinaslagos.com/wp-content/uploads/2014/09/1._all_black_plane_exterior-1064x480.jpg",18.55,MDEQ-18,EUR 210
+service-12,Servicio de prueba 12,"https://www.preferente.com/wp-content/uploads/2019/08/airbus-a220-300-2jpg-30176825650556b1.jpg",18.55,DTMF-60,EUR 210
+service-13,Servicio de prueba,"https://actualidadaeroespacial.com/wp-content/uploads/2023/12/EasyJet-amplia-su-flota-con-157-nuevos-aviones-de-la-familia-A320neo-201223.jpg",18.55,EUTD-95,EUR 210
+service-14,Servicio de prueba,"https://www.tcanarios.com/wp-content/uploads/2021/03/modelos-aviones-menos-contaminantes.jpg",18.55,PNTV-84,EUR 210
+#averageDwellTime-variations
+service-15,Servicio de prueba,"https://forbes.es/wp-content/uploads/2023/02/Piloto_Sin_Avion.jpg",12.01,ZOPA-29,EUR 210
+service-16,Servicio de prueba,"https://www.oneair.es/wp-content/uploads/2023/10/aviones-boeing.jpg",0.01,CUBA-04,EUR 210
+service-17,Servicio de prueba,"https://forbes.es/wp-content/uploads/2023/01/avion-boeing.jpg",24.00,AQKA-23,EUR 210
+#promotionCode-variations
+service-18,Servicio de prueba,"https://cdn.agenciasinc.es/var/ezwebin_site/storage/images/_aliases/img_1col/noticias/aviones-de-cola-en-v-para-reducir-las-emisiones/9318412-1-esl-MX/Aviones-de-cola-en-V-para-reducir-las-emisiones.jpg",18.55,VKNY-78,EUR 210
+service-19,Servicio de prueba,"https://www.flightright.es/wp-content/uploads/sites/8/2024/03/los-aviones-mas-grandes-del-mundo.jpg",18.55,GDTR-69,EUR 210
+service-20,Servicio de prueba,"https://s1.elespanol.com/2020/01/07/omicrono/tecnologia/tecnologia-aviones-ejercito_del_aire_457965173_141917219_1706x1280.jpg",18.55,CVFP-12,EUR 210
+#discount-variations
+service-21,Servicio de prueba,"https://actualidadaeroespacial.com/wp-content/uploads/2023/09/Avianca-Aibus-A320neo-080923.jpg",18.55,TFFI-11,EUR 500
+service-22,Servicio de prueba,"https://media.cnn.com/api/v1/images/stellar/prod/cnne-1721873-copia-de-foto-para-wp-2024-07-16t082810-699.jpg",18.55,TFDC-22,EUR 0
+service-23,Servicio de prueba,"https://centralescuelaaeronautica.com/wp-content/uploads/2023/11/avion_aterrizando.jpg",18.55,RBFM-96,EUR 1000
