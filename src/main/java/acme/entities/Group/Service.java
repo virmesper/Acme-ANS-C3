@@ -32,10 +32,10 @@ public class Service extends AbstractEntity {
 	@Mandatory
 	@ValidUrl
 	@Automapped
-	private String				pictureUrl;
+	private String				picture;
 
 	@Mandatory
-	@ValidNumber(min = 0)
+	@ValidNumber(min = 0.01, max = 24.00)
 	@Automapped
 	private Double				averageDwellTime; //timepo promedio q se pasa en un servicio
 
@@ -45,7 +45,7 @@ public class Service extends AbstractEntity {
 	private String				promotionCode; //los ultimos dos digitos corresponden al año actusl
 
 	@Optional
-	@ValidMoney
+	@ValidMoney(min = 0, max = 1000)
 	@Automapped
 	private Money				discountAmount; //cantidad de dinero descontada
 
