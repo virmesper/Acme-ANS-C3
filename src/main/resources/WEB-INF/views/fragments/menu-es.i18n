@@ -62,4 +62,5 @@ master.menu.user-account.consumer-profile = Perfil de consumidor
 
 master.menu.member = Miembro de la Tripulación de Vuelo
 master.menu.member.list-my-assignments = Mis Asignaciones (Tramos Completados)
-master.menu.member.list-my-assignmentsUL = Mis Asignaciones (Tramos No Completados)
+master.menu.flight-crew-member.flight-assignment-uncompleted= Mis Asignaciones (Tramos No Completados)
+master.menu.member.activity-log-list = Mi Listado de Actividades

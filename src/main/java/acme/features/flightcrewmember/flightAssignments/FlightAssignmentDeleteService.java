@@ -28,49 +28,31 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int flightAssignmentId;
-		FlightAssignment fa;
-		FlightCrewMember member;
-
-		flightAssignmentId = super.getRequest().getData("id", int.class);
-		fa = this.repository.findFa(flightAssignmentId);
-		member = fa == null ? null : fa.getFlightCrewMember();
-		status = fa != null && fa.isDraftMode() && super.getRequest().getPrincipal().hasRealm(member) && fa.getDuty() == Duty.LEAD_ATTENDANT;
-
-		super.getResponse().setAuthorised(status);
+		super.getResponse().setAuthorised(true);
 	}
 
 	@Override
 	public void load() {
-		FlightAssignment fa;
-		int id;
-		id = super.getRequest().getData("id", int.class);
-		fa = this.repository.findFa(id);
+		FlightAssignment flightAssignment = new FlightAssignment();
 
-		super.getBuffer().addData(fa);
+		flightAssignment.setMoment(MomentHelper.getCurrentMoment());
+		flightAssignment.setDraftMode(true);
 
+		super.getBuffer().addData(flightAssignment);
 	}
 
 	@Override
-	public void bind(final FlightAssignment fa) {
-
-		int crewMemberId;
-		int legId;
-		crewMemberId = super.getRequest().getData("crewMember", int.class);
-		FlightCrewMember member = this.repository.findMemberById(crewMemberId);
-		legId = super.getRequest().getData("leg", int.class);
-		Leg legAssigned = this.repository.findLegById(legId);
-
-		super.bindObject(fa, "moment", "duty", "currentStatus", "remarks");
-		fa.setFlightCrewMember(member);
-		fa.setLeg(legAssigned);
+	public void bind(final FlightAssignment flightAssignment) {
+		super.bindObject(flightAssignment, "duty", "moment", "currentStatus", "remarks", "leg", "flightCrewMember");
 
 	}
 
 	@Override
 	public void validate(final FlightAssignment flightAssignment) {
-		;
+		boolean confirmation;
+
+		confirmation = super.getRequest().getData("confirmation", boolean.class);
+		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}
 
 	@Override

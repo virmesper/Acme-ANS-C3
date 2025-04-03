@@ -25,7 +25,11 @@ import lombok.Setter;
 @Setter
 public class FlightAssignment extends AbstractEntity {
 
+	// Serialisation identifier -----------------------------------------------
+
 	private static final long	serialVersionUID	= 1L;
+
+	// Attributes -------------------------------------------------------------
 
 	@Mandatory
 	@Automapped
@@ -44,12 +48,14 @@ public class FlightAssignment extends AbstractEntity {
 
 	@Optional
 	@Automapped
-	@ValidString(min = 1, max = 255, message = "{acme.validation.text.lenght.1-255}")
+	@ValidString(min = 1, max = 255)
 	private String				remarks;
 
 	@Mandatory
 	@Automapped
 	private boolean				draftMode;
+
+	// Relationships ----------------------------------------------------------
 
 	@Mandatory
 	@Valid

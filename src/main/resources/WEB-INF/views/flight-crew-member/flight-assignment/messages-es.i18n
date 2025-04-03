@@ -1,16 +1,29 @@
-flight-crew-member.assignments.list.title = Lista de mis asignaciones:
-flight-crew-member.flight-assignment.form.title = Formulario de asignación de vuelos
-flight-crew-member.assignments.list.label.duty = Cargo:
+flight-crew-member.flight-assignment.list.title = Lista de Mis Asignaciones:
+flight-crew-member.flight-assignment.form.title = Formulario de Asignación de Vuelo:
+
+flight-crew-member.assignments.list.label.duty = Rol:
 flight-crew-member.assignments.list.label.moment = Última actualización:
 flight-crew-member.assignments.list.label.status = Estado de la asignación:
 
+flight-crew-member.flight-assignment-uncompleted.list-uncompleted.label.duty = Rol:
+flight-crew-member.flight-assignment-uncompleted.list-uncompleted.label.lastUpdate = Última actualización:
+flight-crew-member.flight-assignment-uncompleted.list-uncompleted.label.assignmentStatus = Estado de la asignación:
+
 flight-crew-member.flight-assignment.form.label.moment = Última actualización:
-flight-crew-member.flight-assignment.form.label.duty = Tu cargo:
+flight-crew-member.flight-assignment.form.label.duty = Rol:
 flight-crew-member.flight-assignment.form.label.status = Estado:
-flight-crew-member.flight-assignment.form.label.remarks = Incidencias:(Opcional)
-flight-crew-member.assignments.list.label.scheduledArrival = Fecha de llegada
-flight-crew-member.flight-assignment.form.label.crewMember = Miembro de la tripulación asignado
-flight-crew-member.flight-assignment.form.label.leg = Escala(Número de vuelo)
+flight-crew-member.flight-assignment.form.label.remarks = Observaciones: (Opcional)
+flight-crew-member.assignments.list.label.scheduledArrival = Llegada Programada
+flight-crew-member.flight-assignment.form.label.crewMember = Tripulante Asignado
+flight-crew-member.flight-assignment.form.label.leg = Tramo (Número de Vuelo)
 
 flight-crew-member.assignments.list.button.create = Crear
 flight-crew-member.flight-assignment.form.button.create = Crear
+
+flight-crew-member.flight-assignment-uncompleted.list.button.create = Crear
+
+flight-crew-member.flight-assignment.form.button.publish = Publicar
+flight-crew-member.flight-assignment.form.button.delete = Eliminar
+flight-crew-member.flight-assignment.form.button.update = Actualizar
+
+flight-crew-member.flight-assignment.form.label.confirmation = Confirmación

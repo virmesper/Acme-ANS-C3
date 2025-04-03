@@ -43,7 +43,7 @@ public class FlightAssignmentsController extends AbstractGuiController<FlightCre
 		super.addBasicCommand("update", this.updateService);
 		super.addBasicCommand("delete", this.deleteService);
 
-		super.addCustomCommand("listUL", "list", this.listServiceUL);
+		super.addCustomCommand("list-uncompleted", "list", this.listServiceUL);
 		super.addCustomCommand("publish", "update", this.publishService);
 	}
 }

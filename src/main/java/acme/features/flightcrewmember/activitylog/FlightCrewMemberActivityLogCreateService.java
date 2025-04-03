@@ -1,8 +1,6 @@
 
 package acme.features.flightcrewmember.activitylog;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
@@ -30,21 +28,17 @@ public class FlightCrewMemberActivityLogCreateService extends AbstractGuiService
 
 	@Override
 	public void load() {
+
 		ActivityLog activityLog;
-		Date registrationMoment;
 		FlightCrewMember flightCrewMember = (FlightCrewMember) super.getRequest().getPrincipal().getActiveRealm();
 
-		registrationMoment = MomentHelper.getCurrentMoment();
-
 		activityLog = new ActivityLog();
-		activityLog.setRegistrationMoment(registrationMoment);
-		activityLog.setTypeOfIncident("");
-		activityLog.setDescription("");
-		activityLog.setSeverityLevel(0);
+		activityLog.setRegistrationMoment(MomentHelper.getCurrentMoment());
 		activityLog.setFlightCrewMember(flightCrewMember);
 		activityLog.setDraftMode(true);
 
 		super.getBuffer().addData(activityLog);
+
 	}
 
 	@Override
@@ -54,15 +48,15 @@ public class FlightCrewMemberActivityLogCreateService extends AbstractGuiService
 
 	@Override
 	public void validate(final ActivityLog activityLog) {
-		;
+		boolean confirmation;
+
+		confirmation = super.getRequest().getData("confirmation", boolean.class);
+		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}
 
 	@Override
 	public void perform(final ActivityLog activityLog) {
-		Date registrationMoment;
 
-		registrationMoment = MomentHelper.getCurrentMoment();
-		activityLog.setRegistrationMoment(registrationMoment);
 		this.repository.save(activityLog);
 	}
 

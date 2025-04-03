@@ -13,4 +13,4 @@ flight-assignment-12,PILOT,2012/07/02 00:00,CANCELLED,Crew unavailability,flight
 flight-assignment-13,PILOT,2012/07/02 00:00,CONFIRMED,Reassigned for extended route,flight-crew-member-04,true,leg-12
 flight-assignment-14,PILOT,2012/07/02 00:00,CONFIRMED,,flight-crew-member-03,true,leg-13
 flight-assignment-15,PILOT,2012/07/02 00:00,CONFIRMED,L,flight-crew-member-02,true,leg-14
-flight-assignment-16,PILOT,2012/07/02 00:00,CONFIRMED,Assigned with alternative schedule,flight-crew-member-01,true,leg-15
+flight-assignment-16,PILOT,2012/07/02 00:00,CONFIRMED,Assigned with alternative schedule,flight-crew-member-01,true,leg-18

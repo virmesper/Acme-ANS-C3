@@ -1,8 +1,6 @@
 
 package acme.features.flightcrewmember.flightAssignments;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Leg;
-import acme.entities.S3.AvailabilityStatus;
 import acme.entities.S3.CurrentStatus;
 import acme.entities.S3.Duty;
 import acme.entities.S3.FlightAssignment;
@@ -32,7 +29,6 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void authorise() {
-
 		super.getResponse().setAuthorised(true);
 	}
 
@@ -48,87 +44,45 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void bind(final FlightAssignment flightAssignment) {
-		super.bindObject(flightAssignment, "duty", "currentStatus", "remarks", "flightCrewMember", "leg");
+		super.bindObject(flightAssignment, "duty", "moment", "currentStatus", "remarks", "leg", "flightCrewMember");
+
 	}
 
 	@Override
 	public void validate(final FlightAssignment flightAssignment) {
-		boolean existSimultaneousLeg = false;
-		boolean unproperPilotDuty = true;
-		boolean unproperCopilotDuty = true;
-		boolean alreadyAssignedToTheLeg = false;
+		boolean confirmation;
 
-		Leg legAnalized = flightAssignment.getLeg();
-		Date legDeparture = flightAssignment.getLeg().getScheduledDeparture();
-		Date legArrival = flightAssignment.getLeg().getScheduledArrival();
-		List<Leg> simultaneousLegs = this.repository.findSimultaneousLegsByMember(legDeparture, legArrival, legAnalized.getId(), flightAssignment.getFlightCrewMember().getId());
-		if (simultaneousLegs.isEmpty())
-			existSimultaneousLeg = true;
-
-		List<FlightAssignment> legCopilotAssignments = this.repository.findFlightAssignmentsByLegAndDuty(legAnalized, Duty.COPILOT);
-		List<FlightAssignment> legPilotAssignments = this.repository.findFlightAssignmentsByLegAndDuty(legAnalized, Duty.PILOT);
-		if (flightAssignment.getDuty() == Duty.COPILOT)
-			if (legCopilotAssignments.size() + 1 >= 2)
-				unproperCopilotDuty = false;
-		if (flightAssignment.getDuty() == Duty.PILOT)
-			if (legPilotAssignments.size() + 1 >= 2)
-				unproperPilotDuty = false;
-
-		List<Leg> findLegsAssignedToMember = this.repository.findLegsAssignedToMemberById(flightAssignment.getFlightCrewMember().getId());
-		if (!findLegsAssignedToMember.contains(legAnalized))
-			alreadyAssignedToTheLeg = true;
-
-		super.state(alreadyAssignedToTheLeg, "crewMember", "acme.validation.flight-assignment.memberAlreadyAssigned.message");
-		super.state(existSimultaneousLeg, "leg", "acme.validation.flight-assignment.legCurrency.message");
-		super.state(unproperCopilotDuty, "duty", "acme.validation.flight-assignment.dutyCopilot.message");
-		super.state(unproperPilotDuty, "duty", "acme.validation.flight-assignment.dutyPilot.message");
+		confirmation = super.getRequest().getData("confirmation", boolean.class);
+		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}
 
 	@Override
 	public void perform(final FlightAssignment flightAssignment) {
+		flightAssignment.setMoment(MomentHelper.getCurrentMoment());
 		this.repository.save(flightAssignment);
 	}
 
 	@Override
-	public void unbind(final FlightAssignment fa) {
-		SelectChoices statusChoices;
-		SelectChoices dutyChoices;
-		SelectChoices memberChoices;
-		SelectChoices legChoices;
+	public void unbind(final FlightAssignment flightAssignment) {
 		Dataset dataset;
-		List<FlightCrewMember> avaliableMembers;
-		List<Leg> posibleLegs;
+		SelectChoices choices;
+		SelectChoices dutiesChoices;
+		List<Leg> legs = this.repository.findAllLegs();
+		List<FlightCrewMember> flightCrewMembers = this.repository.findAllFlightCrewMembers();
 
-		statusChoices = SelectChoices.from(CurrentStatus.class, fa.getCurrentStatus());
-		dutyChoices = SelectChoices.from(Duty.class, fa.getDuty());
-		avaliableMembers = this.getAvailableMembers();
-		posibleLegs = this.getPosibleLegs();
-		legChoices = SelectChoices.from(posibleLegs, "flightNumber", fa.getLeg());
-		memberChoices = SelectChoices.from(avaliableMembers, "userAccount.username", fa.getFlightCrewMember());
-		dataset = super.unbindObject(fa, "moment", "duty", "currentStatus", "remarks", "draftMode");
-		dataset.put("statuses", statusChoices);
-		dataset.put("duties", dutyChoices);
-		dataset.put("leg", legChoices.getSelected().getKey());
+		SelectChoices legChoices;
+		SelectChoices flightCrewMemberChoices;
+
+		choices = SelectChoices.from(CurrentStatus.class, flightAssignment.getCurrentStatus());
+		dutiesChoices = SelectChoices.from(Duty.class, flightAssignment.getDuty());
+		legChoices = SelectChoices.from(legs, "flightNumber", flightAssignment.getLeg());
+		flightCrewMemberChoices = SelectChoices.from(flightCrewMembers, "identity.fullName", flightAssignment.getFlightCrewMember());
+
+		dataset = super.unbindObject(flightAssignment, "duty", "moment", "currentStatus", "draftMode", "remarks", "leg", "flightCrewMember");
+		dataset.put("statuses", choices);
+		dataset.put("duties", dutiesChoices);
+		dataset.put("members", flightCrewMemberChoices);
 		dataset.put("legs", legChoices);
-		dataset.put("crewMember", memberChoices.getSelected().getKey());
-		dataset.put("crewMembers", memberChoices);
-
 		super.getResponse().addData(dataset);
 	}
-
-	public List<FlightCrewMember> getAvailableMembers() {
-		List<FlightCrewMember> avaliableMembers = this.repository.findMembersByStatus(AvailabilityStatus.AVAILABLE);
-		if (avaliableMembers == null)
-			avaliableMembers = new ArrayList<>();
-		return avaliableMembers;
-	}
-
-	public List<Leg> getPosibleLegs() {
-		Date currentDate = MomentHelper.getCurrentMoment();
-		List<Leg> posibleLegs = this.repository.findUpcomingLegs(currentDate);
-		if (posibleLegs == null)
-			posibleLegs = new ArrayList<>();
-		return posibleLegs;
-	}
-
 }

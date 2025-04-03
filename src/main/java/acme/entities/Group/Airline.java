@@ -73,7 +73,6 @@ public class Airline extends AbstractEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	// Relations
 	@Mandatory
 	@Valid
 	@ManyToOne(optional = false)

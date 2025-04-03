@@ -24,7 +24,11 @@ import lombok.Setter;
 @Setter
 public class ActivityLog extends AbstractEntity {
 
+	// Serialisation identifier -----------------------------------------------
+
 	private static final long	serialVersionUID	= 1L;
+
+	// Attributes -------------------------------------------------------------
 
 	@Mandatory
 	@Temporal(TemporalType.TIMESTAMP)
@@ -49,6 +53,8 @@ public class ActivityLog extends AbstractEntity {
 	@Mandatory
 	@Automapped
 	private boolean				draftMode;
+
+	// Relationships ----------------------------------------------------------
 
 	@Mandatory
 	@Valid
