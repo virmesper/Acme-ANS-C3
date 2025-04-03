@@ -73,7 +73,7 @@ Automapped}
 + description: String {Mandatory, ValidString(min=1, 
 max=255), Automapped}
 + type: ClaimType {Mandatory, Valid, Automapped}
-+ indicator: ClaimStatus {Mandatory, Valid,
++ indicator: Indicator {Mandatory, Valid,
 Automapped}
 + draftMode: boolean {Mandatory, Automapped}
 bg=GREEN</panel_attributes>
@@ -97,7 +97,7 @@ Temporal(TemporalType.TIMESTAP)}
 Automapped}
 + resolutionPorcentage: Double {Mandatory, 
 ValidScore, Automapped}
-+ indicator: Claim Status {Mandatory, 
++ indicator: Indicator {Mandatory, 
 Valid, Automapped}
 + resolution: String {Optional, 
 ValidString(max = 255), Automapped}
@@ -272,13 +272,13 @@ bg=YELLOW</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1000</x>
-      <y>344</y>
+      <x>456</x>
+      <y>416</y>
       <w>88</w>
       <h>88</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Enum&gt;&gt;
-Claim Status
+Indicator
 --
 PENDING
 ACCEPTED

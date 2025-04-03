@@ -1,11 +1,11 @@
 key,draftMode,tag,requiresSelfTransfer,cost,description,key:manager
 #base entity
-flight-00,true,Lorem ipsum dolor sit ame,true,EUR 500.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01
+flight-00,false,Lorem ipsum dolor sit ame,true,EUR 500.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01
 # highlights
-flight-01,true,L,true,EUR 500.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01
-flight-02,true,Lo,true,EUR 500.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01
+flight-01,false,L,true,EUR 500.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01
+flight-02,false,Lo,true,EUR 500.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01
 flight-03,true,"Lorem ipsum dolor sit amet, consectetur adipiscin",true,EUR 500.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01
-flight-04,true,"Lorem ipsum dolor sit amet, consectetur adipiscing",true,EUR 500.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01
+flight-04,false,"Lorem ipsum dolor sit amet, consectetur adipiscing",true,EUR 500.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01
 flight-05,true,"Lorem ipsum dolor sit amet, consectetur adipiscing",true,EUR 500.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01
 flight-06,true,โลเร็ม อิปซัม,true,EUR 500.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01
 flight-07,true,لوريم إيبسوم,true,EUR 500.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",manager-01
