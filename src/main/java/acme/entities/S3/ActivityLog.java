@@ -61,9 +61,4 @@ public class ActivityLog extends AbstractEntity {
 	@ManyToOne(optional = false)
 	private FlightCrewMember	flightCrewMember;
 
-	public void setRegistrationMoment(Date currentMoment) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
