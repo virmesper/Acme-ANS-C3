@@ -15,6 +15,7 @@ acme.validation.employeeCode.unique.message = El código del empleado debe ser �
 acme.validation.employeeCode.initials.message=El código de empleado debe comenzar con tus iniciales extraídas de tu nombre completo
 customer.booking.publish.error.noPassengers=No se puede publicar una reserva sin pasajeros.
 acme.validation.confirmation.message.booking.locator-code = El localizador debe ser unico.
+acme.validation.airport.notfound.message=El código IATA del aeropuerto no existe.
 acme.validation.confirmation.message.booking-record.create.booking 
 acme.validation.confirmation.message.booking-record.create.passenger = 
 acme.validation.confirmation.message.booking-record.create = 

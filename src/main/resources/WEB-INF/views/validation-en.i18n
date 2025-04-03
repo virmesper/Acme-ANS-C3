@@ -15,8 +15,7 @@ acme.validation.employeeCode.unique.message = The employee code must be unique
 acme.validation.employeeCode.initials.message=The employee code must begin with your initials extracted from your full name
 customer.booking.publish.error.noPassengers=You cannot publish a booking without passengers.
 acme.validation.confirmation.message.booking.locator-code = Locator Code Should be unique.
+acme.validation.airport.notfound.message=IATA code doesn't exists.
 acme.validation.confirmation.message.booking-record.create.booking = 
 acme.validation.confirmation.message.booking-record.create.passenger = 
 acme.validation.confirmation.message.booking-record.create = 
-
-

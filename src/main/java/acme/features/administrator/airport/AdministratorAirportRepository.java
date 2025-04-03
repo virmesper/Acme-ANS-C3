@@ -1,5 +1,5 @@
 
-package acme.features.administrator;
+package acme.features.administrator.airport;
 
 import java.util.Collection;
 
@@ -17,4 +17,8 @@ public interface AdministratorAirportRepository extends AbstractRepository {
 
 	@Query("select a from Airport a where a.id = :id")
 	Airport findAirportById(int id);
+
+	@Query("SELECT a FROM Airport a WHERE a.iataCode = :iataCode")
+	Airport findAirportByIataCode(String iataCode);
+
 }
