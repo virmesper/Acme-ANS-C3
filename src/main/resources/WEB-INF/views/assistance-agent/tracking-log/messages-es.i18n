@@ -1,0 +1,39 @@
+# messages-es.i18n
+#
+# Copyright (C) 2012-2025 Rafael Corchuelo.
+#
+# In keeping with the traditional purpose of furthering education and research, it is
+# the policy of the copyright owner to permit non-commercial use and redistribution of
+# this software. It has been tested carefully, but it is not guaranteed for any particular
+# purposes.  The copyright owner does not offer any warranties or representations, nor do
+# they accept any liabilities with respect to them.
+
+assistanceAgent.tracking-log.form.error.less-than-max-resolution-percentage = El porcentaje de resolución debe ser mayor que el porcentaje máximo registrado para esta reclamación 
+assistanceAgent.tracking-log.form.error.indicator-pending-exceptional-case = El indicador no puede estar en pendiente para este caso excepcional
+assistanceAgent.tracking-log.form.error.must-be-100 = El porcentaje de resolución debe ser del 100%
+assistanceAgent.tracking-log.form.error.resolution-not-null =  El motivo de la resolución no puede estar en blanco ni ser nulo si el indicador es "ACEPTADO" o "RECHAZADO"
+
+assistance-agent.tracking-log.list.title = Lista de registro de seguimiento
+assistance-agent.tracking-log.form.title = Detalles de registro de seguimiento
+ 
+assistance-agent.tracking-log.list.label.lastUpdateMoment = Momento última actualización
+assistance-agent.tracking-log.list.label.step = Paso
+assistance-agent.tracking-log.list.label.resolutionPercentage = Porcentaje de resolución
+assistance-agent.tracking-log.list.label.indicator = Indicador
+assistance-agent.tracking-log.list.label.published = ¿Está publicado?
+
+assistance-agent.tracking-log.form.label.lastUpdateMoment = Momento última actualización
+assistance-agent.tracking-log.form.label.step = Paso
+assistance-agent.tracking-log.form.label.resolutionPercentage = Porcentaje de resolución
+assistance-agent.tracking-log.form.label.resolution = Resolución
+assistance-agent.tracking-log.form.label.indicator = Indicador
+
+assistance-agent.tracking-log.form.button.list = Registros de seguimiento
+
+assistanceAgent.trackingLog.form.button.create = Crear registro de seguimiento
+assistanceAgent.trackingLog.form.button.update = Actualizar registro de seguimiento
+assistanceAgent.trackingLog.form.button.publish = Publicar registro de seguimiento
+assistanceAgent.trackingLog.form.button.delete = Eliminar registro de seguimiento
+
+assistanceAgent.trackingLog.list.button.create = Crear registro de seguimiento
+assistanceAgent.trackingLog.list.button.create-exceptional-case = Caso Excepcional

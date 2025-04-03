@@ -1,12 +1,13 @@
 
 package acme.entities.S2;
 
+import java.beans.Transient;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -17,9 +18,11 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
-import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
+import acme.client.helpers.SpringHelper;
+import acme.constraints.ValidUniqueLocatorCode;
 import acme.entities.S1.Flight;
+import acme.entities.S1.FlightRepository;
 import acme.realms.Customer;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,8 +30,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "bookings")
-
 public class Booking extends AbstractEntity {
 
 	// Serialisation identifier -----------------------------------------------
@@ -38,8 +39,14 @@ public class Booking extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
+	@Valid
+	@ManyToOne(optional = false)
+	private Flight				flightId;
+
+	@Mandatory
 	@ValidString(pattern = "^[A-Z0-9]{6,8}$")
 	@Column(unique = true)
+	@ValidUniqueLocatorCode
 	private String				locatorCode;
 
 	@Mandatory
@@ -52,33 +59,58 @@ public class Booking extends AbstractEntity {
 	@Automapped
 	private TravelClass			travelClass;
 
-	@Mandatory
-	@ValidMoney
-	@Automapped
-	private Money				price;
-
 	@Optional
 	@ValidString(pattern = "^[0-9]{4}$")
 	@Automapped
 	private String				lastCardDigits;
 
 	@Mandatory
-	@Valid
 	@Automapped
-	private Boolean				published;
+	private boolean				draftMode;
 
 	// Derived attributes -----------------------------------------------------
 
+
+	@Transient
+	public Money getPrice() {
+		Money result = new Money();
+		try {
+			if (this.flightId == null) {
+				result.setAmount(0.0);
+				result.setCurrency("EUR");  // O la moneda predeterminada
+				return result;
+			}
+
+			FlightRepository flightRepository = SpringHelper.getBean(FlightRepository.class);
+			BookingRepository bookingRepository = SpringHelper.getBean(BookingRepository.class);
+
+			// Buscar el coste del vuelo asociado
+			result = flightRepository.findCostByFlight(this.flightId.getId());
+			if (result == null) {
+				result = new Money();
+				result.setAmount(0.0);
+				result.setCurrency("EUR");  // O la moneda predeterminada
+				return result;
+			}
+
+			// Calcular el precio según el número de pasajeros
+			Collection<Passenger> pg = bookingRepository.findPassengersByBooking(this.getId());
+			Double amount = result.getAmount() * pg.size();
+			result.setAmount(amount);
+		} catch (Exception e) {
+			// Manejar cualquier excepción inesperada
+			result.setAmount(0.0);
+			result.setCurrency("EUR");  // O la moneda predeterminada
+		}
+		return result;
+	}
+
 	// Relationships ----------------------------------------------------------
 
-	@Mandatory
-	@Valid
-	@ManyToOne(optional = false)
-	private Flight				flightId;
 
 	@Mandatory
 	@Valid
 	@ManyToOne
-	private Customer			customer;
+	private Customer customer;
 
 }

@@ -12,6 +12,7 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidEmail;
 import acme.client.components.validation.ValidString;
 import acme.client.components.validation.ValidUrl;
+import acme.constraints.ValidUniqueIataCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +34,7 @@ public class Airport extends AbstractEntity {
 	@Mandatory
 	@ValidString(pattern = "^[A-Z]{3}$")
 	@Column(unique = true)
+	@ValidUniqueIataCode
 	private String				iataCode;
 
 	@Mandatory
@@ -64,6 +66,10 @@ public class Airport extends AbstractEntity {
 	@ValidString(pattern = "^\\+?\\d{6,15}$")
 	@Automapped
 	private String				phoneNumber;
+
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
 
 	// Derived attributes -----------------------------------------------------
 

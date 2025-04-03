@@ -52,6 +52,10 @@ public class Leg extends AbstractEntity {
 	@Automapped
 	private LegStatus			status;
 
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
+
 	//Derived attributes-------------------------------------------------
 
 
@@ -62,6 +66,13 @@ public class Leg extends AbstractEntity {
 		long arrivalMilieconds = this.getScheduledArrival().getTime();
 		return (arrivalMilieconds - departureMilieconds) / 3600000.0;
 
+	}
+
+	@Transient
+	public boolean isAvailable() {
+		boolean result;
+		result = this.scheduledArrival != null && this.scheduledDeparture != null && this.scheduledArrival.after(this.scheduledDeparture);
+		return result;
 	}
 
 	// Relationships -----------------------------------------------------

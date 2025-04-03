@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
@@ -17,6 +16,7 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidScore;
 import acme.client.components.validation.ValidString;
+import acme.constraints.ValidShortText;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,7 +37,7 @@ public class TrackingLog extends AbstractEntity {
 
 	// Paso actual del procedimiento
 	@Mandatory
-	@ValidString(min = 1, max = 50)
+	@ValidShortText
 	@Automapped
 	private String				step;
 
@@ -49,26 +49,23 @@ public class TrackingLog extends AbstractEntity {
 	@Mandatory
 	@Valid
 	@Automapped
-	private ClaimStatus			accepted;
+	private Indicator			indicator;
 
 	@Optional
 	@ValidString(max = 255)
 	@Automapped
 	private String				resolution;
 
+	@Mandatory
+	@Automapped
+	private boolean				draftMode;
 
-	@Transient
-	public boolean isResolutionValid() {
-		if (this.accepted == ClaimStatus.ACCEPTED || this.accepted == ClaimStatus.REJECTED)
-			return this.resolution != null && !this.resolution.isBlank();
-		return this.resolution == null || this.resolution.isBlank();
-	}
+	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------
-
 
 	@Mandatory
 	@Valid
 	@ManyToOne
-	private Claim claim; // Relación con la reclamación a la que pertenece
+	private Claim				claim; // Relación con la reclamación a la que pertenece
 }

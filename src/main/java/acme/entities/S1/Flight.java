@@ -37,9 +37,8 @@ public class Flight extends AbstractEntity {
 	private String				tag;
 
 	@Mandatory
-	@Valid
 	@Automapped
-	private FlightIndication	requiresSelfTransfer;
+	private Boolean				requiresSelfTransfer;
 
 	@Mandatory
 	@ValidMoney(min = 0.00, max = 1000000.00)
@@ -50,6 +49,10 @@ public class Flight extends AbstractEntity {
 	@ValidString(min = 0, max = 255)
 	@Automapped
 	private String				description;
+
+	@Mandatory
+	@Automapped
+	private Boolean				draftMode;
 
 	// Derived atributes
 
