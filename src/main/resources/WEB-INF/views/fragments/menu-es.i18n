@@ -55,6 +55,7 @@ master.menu.customer.passenger = Mis pasajeros
 
 master.menu.technician = Técnico
 master.menu.technician.maintenance-records = Registros de Mantenimiento
+master.menu.technician.tasks = Tareas
 
 # master.menu.user-account ####################################################
 
