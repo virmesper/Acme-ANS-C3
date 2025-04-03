@@ -1,5 +1,5 @@
 
-package acme.features.flightcrewmember.activitylog;
+package acme.features.flightCrewMember.activityLog;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,7 +13,7 @@ import acme.entities.S3.FlightAssignment;
 import acme.realms.FlightCrewMember;
 
 @Repository
-public interface FlightCrewMemberActivityLogRepository extends AbstractRepository {
+public interface ActivityLogRepository extends AbstractRepository {
 
 	@Query("SELECT a FROM ActivityLog a WHERE a.flightCrewMember.id = :flightCrewMemberId")
 	Collection<ActivityLog> findAllActivityLogs(int flightCrewMemberId);

@@ -1,5 +1,5 @@
 
-package acme.features.flightcrewmember.flightAssignments;
+package acme.features.flightCrewMember.flightAssignments;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,9 +20,7 @@ import acme.entities.S3.FlightAssignment;
 import acme.realms.FlightCrewMember;
 
 @GuiService
-public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrewMember, FlightAssignment> {
-
-	// Internal state ---------------------------------------------------------
+public class FlightAssignmentPublishService extends AbstractGuiService<FlightCrewMember, FlightAssignment> {
 
 	@Autowired
 	private FlightAssignmentRepository repository;
@@ -30,15 +28,29 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		int flightAssignmentId;
+		FlightAssignment fa;
+		FlightCrewMember member;
+
+		flightAssignmentId = super.getRequest().getData("id", int.class);
+		fa = this.repository.findFa(flightAssignmentId);
+		member = fa == null ? null : fa.getFlightCrewMember();
+		boolean realm = super.getRequest().getPrincipal().hasRealm(member);
+		status = fa != null && fa.isDraftMode() && super.getRequest().getPrincipal().hasRealm(member) && fa.getDuty() == Duty.LEAD_ATTENDANT;
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		int flightAssignmentId = super.getRequest().getData("id", int.class);
-		FlightAssignment flightAssignment = this.repository.findFa(flightAssignmentId);
+		FlightAssignment fa;
+		int id;
+		id = super.getRequest().getData("id", int.class);
+		fa = this.repository.findFa(id);
 
-		super.getBuffer().addData(flightAssignment);
+		super.getBuffer().addData(fa);
+
 	}
 
 	@Override
@@ -46,7 +58,7 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 
 		int crewMemberId;
 		int legId;
-		crewMemberId = super.getRequest().getData("flightCrewMember", int.class);
+		crewMemberId = super.getRequest().getData("crewMember", int.class);
 		FlightCrewMember member = this.repository.findMemberById(crewMemberId);
 		legId = super.getRequest().getData("leg", int.class);
 		Leg legAssigned = this.repository.findLegById(legId);
@@ -63,6 +75,7 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 		boolean unproperPilotDuty = true;
 		boolean unproperCopilotDuty = true;
 		boolean alreadyAssignedToTheLeg = false;
+		boolean legIsPublished = false;
 
 		Leg legAnalized = flightAssignment.getLeg();
 		Date legDeparture = flightAssignment.getLeg().getScheduledDeparture();
@@ -80,6 +93,9 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 			if (legPilotAssignments.size() + 1 >= 2)
 				unproperPilotDuty = false;
 
+		if (!legAnalized.isDraftMode())
+			legIsPublished = true;
+
 		List<Object[]> legFlightAssignment = this.repository.findLegsAndAssignmentsByMemberId(flightAssignment.getFlightCrewMember().getId());
 		for (Object[] row : legFlightAssignment) {
 			Leg leg = (Leg) row[0];
@@ -88,15 +104,17 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 				alreadyAssignedToTheLeg = true;
 		}
 
-		super.state(alreadyAssignedToTheLeg, "flightCrewMember", "acme.validation.flight-assignment.memberAlreadyAssigned.message");
+		super.state(alreadyAssignedToTheLeg, "crewMember", "acme.validation.flight-assignment.memberAlreadyAssigned.message");
 		super.state(existSimultaneousLeg, "leg", "acme.validation.flight-assignment.legCurrency.message");
 		super.state(unproperCopilotDuty, "duty", "acme.validation.flight-assignment.dutyCopilot.message");
 		super.state(unproperPilotDuty, "duty", "acme.validation.flight-assignment.dutyPilot.message");
+		super.state(legIsPublished, "*", "acme.validation.flight-assignment.cant-be-published.message");
 
 	}
 
 	@Override
 	public void perform(final FlightAssignment flightAssignment) {
+		flightAssignment.setDraftMode(false);
 		this.repository.save(flightAssignment);
 	}
 
@@ -121,8 +139,8 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 		dataset.put("duties", dutyChoices);
 		dataset.put("leg", legChoices.getSelected().getKey());
 		dataset.put("legs", legChoices);
-		dataset.put("crewMembers", memberChoices.getSelected().getKey());
-		dataset.put("members", memberChoices);
+		dataset.put("crewMember", memberChoices.getSelected().getKey());
+		dataset.put("crewMembers", memberChoices);
 
 		super.getResponse().addData(dataset);
 	}
@@ -141,5 +159,4 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 			posibleLegs = new ArrayList<>();
 		return posibleLegs;
 	}
-
 }

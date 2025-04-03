@@ -1,5 +1,5 @@
 
-package acme.features.flightcrewmember.activitylog;
+package acme.features.flightCrewMember.activityLog;
 
 import java.util.Collection;
 
@@ -12,12 +12,12 @@ import acme.entities.S3.ActivityLog;
 import acme.realms.FlightCrewMember;
 
 @GuiService
-public class FlightCrewMemberActivityLogListService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
+public class ActivityLogListService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private FlightCrewMemberActivityLogRepository repository;
+	private ActivityLogRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 

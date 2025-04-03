@@ -1,5 +1,5 @@
 
-package acme.features.flightcrewmember.flightAssignments;
+package acme.features.flightCrewMember.flightAssignments;
 
 import java.util.Collection;
 import java.util.Date;

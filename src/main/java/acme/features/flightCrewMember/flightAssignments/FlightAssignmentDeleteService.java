@@ -1,5 +1,5 @@
 
-package acme.features.flightcrewmember.flightAssignments;
+package acme.features.flightCrewMember.flightAssignments;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +20,7 @@ import acme.entities.S3.FlightAssignment;
 import acme.realms.FlightCrewMember;
 
 @GuiService
-public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMember, FlightAssignment> {
+public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrewMember, FlightAssignment> {
 
 	@Autowired
 	private FlightAssignmentRepository repository;
@@ -28,30 +28,36 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int flightAssignmentId;
-		FlightAssignment fa;
-		FlightCrewMember member;
-
-		flightAssignmentId = super.getRequest().getData("id", int.class);
-		fa = this.repository.findFa(flightAssignmentId);
-		member = fa == null ? null : fa.getFlightCrewMember();
-		status = super.getRequest().getPrincipal().hasRealm(member);
-
-		super.getResponse().setAuthorised(status);
+		super.getResponse().setAuthorised(true);
 	}
 
 	@Override
 	public void load() {
+		FlightAssignment flightAssignment = new FlightAssignment();
 
-		FlightAssignment fa;
-		int id;
+		flightAssignment.setMoment(MomentHelper.getCurrentMoment());
+		flightAssignment.setDraftMode(true);
 
-		id = super.getRequest().getData("id", int.class);
-		fa = this.repository.findFa(id);
+		super.getBuffer().addData(flightAssignment);
+	}
 
-		super.getBuffer().addData(fa);
+	@Override
+	public void bind(final FlightAssignment flightAssignment) {
+		super.bindObject(flightAssignment, "duty", "moment", "currentStatus", "remarks", "leg", "flightCrewMember");
 
+	}
+
+	@Override
+	public void validate(final FlightAssignment flightAssignment) {
+		boolean confirmation;
+
+		confirmation = super.getRequest().getData("confirmation", boolean.class);
+		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
+	}
+
+	@Override
+	public void perform(final FlightAssignment fa) {
+		this.repository.delete(fa);
 	}
 
 	@Override
@@ -67,7 +73,7 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 		statusChoices = SelectChoices.from(CurrentStatus.class, fa.getCurrentStatus());
 		dutyChoices = SelectChoices.from(Duty.class, fa.getDuty());
 		avaliableMembers = this.getAvailableMembers();
-		posibleLegs = this.getPosibleLegs(fa);
+		posibleLegs = this.getPosibleLegs();
 		legChoices = SelectChoices.from(posibleLegs, "flightNumber", fa.getLeg());
 		memberChoices = SelectChoices.from(avaliableMembers, "userAccount.username", fa.getFlightCrewMember());
 		dataset = super.unbindObject(fa, "moment", "duty", "currentStatus", "remarks", "draftMode");
@@ -79,7 +85,6 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 		dataset.put("crewMembers", memberChoices);
 
 		super.getResponse().addData(dataset);
-
 	}
 
 	public List<FlightCrewMember> getAvailableMembers() {
@@ -89,16 +94,11 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 		return avaliableMembers;
 	}
 
-	public List<Leg> getPosibleLegs(final FlightAssignment flightA) {
+	public List<Leg> getPosibleLegs() {
 		Date currentDate = MomentHelper.getCurrentMoment();
-		List<Leg> posibleLegs;
-		if (MomentHelper.isAfter(flightA.getLeg().getScheduledArrival(), currentDate))
-			posibleLegs = this.repository.findUpcomingLegs(currentDate);
-		else if (MomentHelper.isBefore(flightA.getLeg().getScheduledArrival(), currentDate))
-			posibleLegs = this.repository.findPreviousLegs(currentDate);
-		else
+		List<Leg> posibleLegs = this.repository.findUpcomingLegs(currentDate);
+		if (posibleLegs == null)
 			posibleLegs = new ArrayList<>();
-		posibleLegs = posibleLegs == null ? new ArrayList<>() : posibleLegs;
 		return posibleLegs;
 	}
 

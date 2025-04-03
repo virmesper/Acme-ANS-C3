@@ -1,5 +1,5 @@
 
-package acme.features.flightcrewmember.activitylog;
+package acme.features.flightCrewMember.activityLog;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,12 +11,12 @@ import acme.entities.S3.ActivityLog;
 import acme.realms.FlightCrewMember;
 
 @GuiService
-public class FlightCrewMemberActivityLogCreateService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
+public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private FlightCrewMemberActivityLogRepository repository;
+	private ActivityLogRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 

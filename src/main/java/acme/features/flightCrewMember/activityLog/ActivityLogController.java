@@ -1,5 +1,5 @@
 
-package acme.features.flightcrewmember.activitylog;
+package acme.features.flightCrewMember.activityLog;
 
 import javax.annotation.PostConstruct;
 
@@ -11,21 +11,21 @@ import acme.entities.S3.ActivityLog;
 import acme.realms.FlightCrewMember;
 
 @GuiController
-public class FlightCrewMemberActivityLogController extends AbstractGuiController<FlightCrewMember, ActivityLog> {
+public class ActivityLogController extends AbstractGuiController<FlightCrewMember, ActivityLog> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private FlightCrewMemberActivityLogListService		listService;
+	private ActivityLogListService		listService;
 
 	@Autowired
-	private FlightCrewMemberActivityLogShowService		showService;
+	private ActivityLogShowService		showService;
 
 	@Autowired
-	private FlightCrewMemberActivityLogCreateService	createService;
+	private ActivityLogCreateService	createService;
 
 	@Autowired
-	private FlightCrewMemberActivityLogDeleteService	deleteService;
+	private ActivityLogDeleteService	deleteService;
 
 	// Constructors -----------------------------------------------------------
 
