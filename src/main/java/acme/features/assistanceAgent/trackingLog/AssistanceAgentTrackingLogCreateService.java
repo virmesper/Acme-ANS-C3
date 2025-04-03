@@ -64,7 +64,6 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 
 		super.bindObject(trackingLog, "lastUpdateMoment", "step", "resolutionPercentage", "resolution", "indicator");
 	}
-
 	@Override
 	public void validate(final TrackingLog trackingLog) {
 		if (!super.getBuffer().getErrors().hasErrors("indicator")) {
@@ -77,24 +76,27 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 				super.state(bool1 || bool2, "indicator", "assistanceAgent.tracking-log.form.error.indicator-pending");
 			}
 		}
+
 		if (!super.getBuffer().getErrors().hasErrors("resolutionPercentage")) {
 			Double maxResolutionPercentage;
 			double finalMaxResolutionPercentage;
 
+			// Manejo seguro del valor nulo devuelto por la consulta
 			maxResolutionPercentage = this.repository.findMaxResolutionPercentageByClaimId(trackingLog.getId(), trackingLog.getClaim().getId());
 			finalMaxResolutionPercentage = maxResolutionPercentage != null ? maxResolutionPercentage : 0.0;
 
 			super.state(trackingLog.getResolutionPercentage() > finalMaxResolutionPercentage, "resolutionPercentage", "assistanceAgent.tracking-log.form.error.less-than-max-resolution-percentage");
 		}
+
 		if (!super.getBuffer().getErrors().hasErrors("resolution")) {
 			boolean bool1;
 
-			bool1 = trackingLog.getIndicator() != Indicator.PENDING && !trackingLog.getResolution().isBlank() && trackingLog.getResolution() != null;
+			// Verificación segura de resolución no nula y no vacía
+			bool1 = trackingLog.getIndicator() != Indicator.PENDING && trackingLog.getResolution() != null && !trackingLog.getResolution().isBlank();
 
 			super.state(bool1 || trackingLog.getIndicator() == Indicator.PENDING, "resolution", "assistanceAgent.tracking-log.form.error.resolution-not-null");
 		}
 	}
-
 	@Override
 	public void perform(final TrackingLog trackingLog) {
 		assert trackingLog != null;
