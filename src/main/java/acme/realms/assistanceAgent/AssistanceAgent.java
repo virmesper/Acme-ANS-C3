@@ -1,5 +1,5 @@
 
-package acme.realms;
+package acme.realms.assistanceAgent;
 
 import java.util.Date;
 
@@ -19,6 +19,7 @@ import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
 import acme.client.components.validation.ValidUrl;
+import acme.constraints.ValidAssistanceAgent;
 import acme.entities.Group.Airline;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@ValidAssistanceAgent
 public class AssistanceAgent extends AbstractRole {
 
 	// Serialisation identifier -----------------------------------------------
@@ -51,7 +53,7 @@ public class AssistanceAgent extends AbstractRole {
 	private Date				moment;
 
 	@Optional
-	@ValidString(max = 255)
+	@ValidString(min = 0, max = 255)
 	@Automapped
 	private String				briefBio;
 

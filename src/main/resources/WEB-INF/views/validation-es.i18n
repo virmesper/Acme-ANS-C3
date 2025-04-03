@@ -8,10 +8,14 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-acme.validation.shortText.message  	= Debe tener entre 1 y 50 caracteres.
-acme.validation.flightNumber.message = El número de vuelo debe tener exactamente tres letras mayúsculas seguidas de cuatro dígitos (ejemplo: ABC1234).
+acme.validation.shortText.message  	= Debe tener entre 1 y 50 caracteres
+acme.validation.flightNumber.message = El número de vuelo debe tener exactamente tres letras mayúsculas seguidas de cuatro dígitos (ejemplo: ABC1234)
+acme.validation.employeeCode.format.message=El código de empleado debe comenzar con 2 o 3 letras mayúsculas seguidas de 6 dígitos
+acme.validation.employeeCode.unique.message = El código del empleado debe ser único
+acme.validation.employeeCode.initials.message=El código de empleado debe comenzar con tus iniciales extraídas de tu nombre completo
 customer.booking.publish.error.noPassengers=No se puede publicar una reserva sin pasajeros.
 acme.validation.confirmation.message.booking.locator-code = El localizador debe ser unico.
+acme.validation.airport.notfound.message=El código IATA del aeropuerto no existe.
 acme.validation.confirmation.message.booking-record.create.booking 
 acme.validation.confirmation.message.booking-record.create.passenger = 
 acme.validation.confirmation.message.booking-record.create = 

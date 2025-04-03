@@ -1,7 +1,5 @@
 
-package acme.features.administrator;
-
-import java.util.Collection;
+package acme.features.administrator.airline;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -9,14 +7,14 @@ import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.Group.Airport;
+import acme.entities.Group.Airline;
 
 @GuiService
-public class AdministratorAirportListService extends AbstractGuiService<Administrator, Airport> {
+public class AdministratorAirlineShowService extends AbstractGuiService<Administrator, Airline> {
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AdministratorAirportRepository repository;
+	private AdministratorAirlineRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -28,19 +26,22 @@ public class AdministratorAirportListService extends AbstractGuiService<Administ
 
 	@Override
 	public void load() {
-		Collection<Airport> airport;
+		Airline airline;
+		int id;
 
-		airport = this.repository.findAllAirport();
+		id = super.getRequest().getData("id", int.class);
+		airline = this.repository.findAirlineById(id);
 
-		super.getBuffer().addData(airport);
+		super.getBuffer().addData(airline);
 	}
 
 	@Override
-	public void unbind(final Airport airport) {
+	public void unbind(final Airline airline) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(airport, "name", "iataCode", "operationalScope", "city", "country");
+		dataset = super.unbindObject(airline, "name", "iataCode", "website", "type", "foundationMoment", "email", "phoneNumber");
 
 		super.getResponse().addData(dataset);
 	}
+
 }

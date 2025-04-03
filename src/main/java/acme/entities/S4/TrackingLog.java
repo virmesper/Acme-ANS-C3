@@ -49,7 +49,7 @@ public class TrackingLog extends AbstractEntity {
 	@Mandatory
 	@Valid
 	@Automapped
-	private ClaimStatus			indicator;
+	private Indicator			indicator;
 
 	@Optional
 	@ValidString(max = 255)
