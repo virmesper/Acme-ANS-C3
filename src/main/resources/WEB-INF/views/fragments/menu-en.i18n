@@ -5,13 +5,13 @@
 # In keeping with the traditional purpose of furthering education and research, it is
 # the policy of the copyright owner to permit non-commercial use and redistribution of
 # this software. It has been tested carefully, but it is not guaranteed for any particular
-# purposes.  The copyright owner does not offer any warranties or representations, nor do
+# purposes. The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
 # master.menu.anonymous #######################################################
 
 master.menu.anonymous = Anonymous
-master.menu.anonymous.favourite-link-1 = 5396*****: Jiménez Osuna,Álvaro
+master.menu.anonymous.favourite-link-1 = 5396*****: Jiménez Osuna, Álvaro
 master.menu.anonymous.favourite-link-2 = 5398*****: Reyes Apresa, Mario
 master.menu.anonymous.favourite-link-3 = 0909*****: Sánchez Gómez, Paula
 master.menu.anonymous.favourite-link-4 = 2682*****: Mesa Pérez, Virginia
@@ -21,7 +21,10 @@ master.menu.anonymous.favourite-link-4 = 2682*****: Mesa Pérez, Virginia
 master.menu.administrator = Administrator
 master.menu.administrator.list-user-accounts = List user accounts
 master.menu.administrator.list-airport = List airports
+
+master.menu.administrator.list-aircraft = List aircrafts
 master.menu.administrator.list-airlines = List airlines
+
 master.menu.administrator.populate-db-initial = Populate DB (initial)
 master.menu.administrator.populate-db-sample = Populate DB (samples)
 master.menu.administrator.shut-system-down = Shut system down
@@ -44,8 +47,8 @@ master.menu.customer.passenger-all = Passengers
 
 # master.menu.technician ######################################################
 
- master.menu.technician = Technician
- master.menu.technician.maintenance-records = Maintenance Records
+master.menu.technician = Technician
+master.menu.technician.maintenance-records = Maintenance Records
 
 # master.menu.user-account ####################################################
 
