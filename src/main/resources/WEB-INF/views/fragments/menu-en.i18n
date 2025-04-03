@@ -16,6 +16,13 @@ master.menu.anonymous.favourite-link-2 = 5398*****: Reyes Apresa, Mario
 master.menu.anonymous.favourite-link-3 = 0909*****: Sánchez Gómez, Paula
 master.menu.anonymous.favourite-link-4 = 2682*****: Mesa Pérez, Virginia
 
+
+# master.menu.assistanceAgent ##########################################################
+ 
+master.menu.assistance-agent = Assistance Agent
+master.menu.assistance-agent.claim.list-completed = Completed Claim list
+master.menu.assistance-agent.claim.list-undergoing = Pending Claim list
+
 # master.menu.administrator ###################################################
 
 master.menu.administrator = Administrator

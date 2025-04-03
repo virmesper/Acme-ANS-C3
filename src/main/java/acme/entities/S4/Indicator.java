@@ -1,6 +1,6 @@
 
 package acme.entities.S4;
 
-public enum ClaimStatus {
+public enum Indicator {
 	PENDING, ACCEPTED, REJECTED
 }
