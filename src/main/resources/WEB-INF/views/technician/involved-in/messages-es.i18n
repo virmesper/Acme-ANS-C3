@@ -1,0 +1,14 @@
+
+technician.involved-in.list.title = Tareas involucradas en el registro de mantenimiento anterior
+technician.involved-in.list.label.ticker = Ticker
+technician.involved-in.list.label.type = Tipo
+technician.involved-in.list.label.priority = Prioridad
+technician.involved-in.list.label.technician = Técnico
+technician.involved-in.list.button.create = Añadir
+
+technician.involved-in.form.title = Formulario de la tarea involucrada
+technician.involved-in.form.label.task = Tarea
+technician.involved-in.form.label.technician = Técnico asociado a la tarea
+
+technician.involved-in.form.button.delete = Borrar
+technician.involved-in.form.button.create = Añadir 

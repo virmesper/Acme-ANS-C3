@@ -1,6 +1,7 @@
 
 package acme.entities.S5;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,6 +13,7 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
+import acme.constraints.ValidTicker;
 import acme.realms.Technician;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +28,10 @@ public class Task extends AbstractEntity {
 	private static final long	serialVersionUID	= 1L;
 
 	// Attributes -------------------------------------------------------------
+	@Mandatory
+	@ValidTicker
+	@Column(unique = true)
+	private String				ticker;
 
 	@Mandatory
 	@Enumerated(EnumType.STRING)
@@ -49,7 +55,7 @@ public class Task extends AbstractEntity {
 
 	@Mandatory
 	@Automapped
-	private boolean				published; //  Indica si la tarea está publicada o no
+	private boolean				draftMode; //  Indica si la tarea está publicada o no
 
 	@Mandatory
 	@Valid
