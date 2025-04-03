@@ -1,5 +1,5 @@
 
-package acme.features.administrator;
+package acme.features.administrator.airport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +12,7 @@ import acme.entities.Group.Airport;
 import acme.entities.Group.OperationalScope;
 
 @GuiService
-public class AdministratorAirportCreateService extends AbstractGuiService<Administrator, Airport> {
+public class AdministratorAirportShowService extends AbstractGuiService<Administrator, Airport> {
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
@@ -28,52 +28,23 @@ public class AdministratorAirportCreateService extends AbstractGuiService<Admini
 
 	@Override
 	public void load() {
+		int id;
 		Airport airport;
 
-		airport = new Airport();
-		airport.setName("");
-		airport.setIataCode("");
-		airport.setOperationalScope(OperationalScope.DOMESTIC);
-		airport.setCity("");
-		airport.setCountry("");
-		airport.setWebsite("");
-		airport.setPhoneNumber("");
-
+		id = super.getRequest().getData("id", int.class);
+		airport = this.repository.findAirportById(id);
 		super.getBuffer().addData(airport);
 	}
 
 	@Override
-	public void bind(final Airport airport) {
-		super.bindObject(airport, "name", "iataCode", "city", "country", "website", "email", "phoneNumber");
-	}
-
-	@Override
-	public void validate(final Airport airport) {
-		boolean confirmation;
-
-		confirmation = super.getRequest().getData("confirmation", boolean.class);
-		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
-	}
-
-	@Override
-	public void perform(final Airport airport) {
-
-		this.repository.save(airport);
-	}
-
-	@Override
 	public void unbind(final Airport airport) {
-		SelectChoices choices;
 		Dataset dataset;
-
+		SelectChoices choices;
 		choices = SelectChoices.from(OperationalScope.class, airport.getOperationalScope());
 
 		dataset = super.unbindObject(airport, "name", "iataCode", "city", "country", "website", "email", "phoneNumber");
 		dataset.put("operationalScopes", choices);
-		dataset.put("confirmation", false);
-		dataset.put("readonly", false);
 
 		super.getResponse().addData(dataset);
 	}
-
 }
