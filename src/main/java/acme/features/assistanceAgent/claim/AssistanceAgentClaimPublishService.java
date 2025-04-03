@@ -62,12 +62,19 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 	@Override
 	public void validate(final Claim claim) {
 		super.state(this.repository.allTrackingLogsPublishedByClaimId(claim.getId()), "*", "assistanceAgent.claim.form.error.all-tracking-logs-published");
+
 		if (!super.getBuffer().getErrors().hasErrors("indicator")) {
 			boolean bool1;
 			boolean bool2;
 
-			bool1 = claim.getIndicator() == Indicator.PENDING && this.repository.findMaxResolutionPercentageByClaimId(claim.getId()) < 100;
-			bool2 = claim.getIndicator() != Indicator.PENDING && this.repository.findMaxResolutionPercentageByClaimId(claim.getId()) == 100;
+			// Obtener el porcentaje de resolución de manera segura
+			Double maxPercentage = this.repository.findMaxResolutionPercentageByClaimId(claim.getId());
+
+			// Si el valor es nulo, considerar que el porcentaje es 0
+			maxPercentage = maxPercentage != null ? maxPercentage : 0.0;
+
+			bool1 = claim.getIndicator() == Indicator.PENDING && maxPercentage < 100;
+			bool2 = claim.getIndicator() != Indicator.PENDING && maxPercentage == 100;
 
 			super.state(bool1 || bool2, "indicator", "assistanceAgent.claim.form.error.indicator-pending");
 		}
