@@ -53,7 +53,7 @@ public class Airport extends AbstractEntity {
 	private String				country;
 
 	@Optional
-	@ValidUrl
+	@ValidUrl(remote = false)
 	@Automapped
 	private String				website;
 
