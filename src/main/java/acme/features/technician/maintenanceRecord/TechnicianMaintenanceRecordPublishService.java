@@ -41,6 +41,10 @@ public class TechnicianMaintenanceRecordPublishService extends AbstractGuiServic
 		status = maintenanceRecord != null && maintenanceRecord.isDraftMode() //
 			&& super.getRequest().getPrincipal().hasRealm(technician) && !publishedTasks.isEmpty();
 
+		System.out.println("DraftMode: " + maintenanceRecord.isDraftMode());
+		System.out.println("Same technician: " + super.getRequest().getPrincipal().hasRealm(technician));
+		System.out.println("Published tasks: " + publishedTasks.size());
+
 		super.getResponse().setAuthorised(status);
 	}
 
