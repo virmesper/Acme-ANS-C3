@@ -20,6 +20,7 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S1.LegRepository;
 import acme.entities.S3.CurrentStatus;
 import acme.entities.S3.Duty;
 import acme.entities.S3.FlightAssignment;
@@ -31,7 +32,12 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private FlightAssignmentRepository repository;
+	private FlightAssignmentRepository	repositoryAssingment;
+
+	@Autowired
+	private LegRepository				repositoryLeg;
+
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
@@ -42,7 +48,7 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 	@Override
 	public void load() {
 		int flightAssignmentId = super.getRequest().getData("id", int.class);
-		FlightAssignment flightAssignment = this.repository.findFlightAssignmentById(flightAssignmentId);
+		FlightAssignment flightAssignment = this.repositoryAssingment.findFlightAssignmentById(flightAssignmentId);
 
 		super.getBuffer().addData(flightAssignment);
 	}
@@ -62,7 +68,7 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void perform(final FlightAssignment flightAssignment) {
-		this.repository.save(flightAssignment);
+		this.repositoryAssingment.save(flightAssignment);
 	}
 
 	@Override
@@ -75,12 +81,12 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 		SelectChoices statusChoices = SelectChoices.from(CurrentStatus.class, flightAssignment.getCurrentStatus());
 		dataset.put("statuses", statusChoices);
 
-		Collection<FlightCrewMember> flightCrewMembers = this.repository.findAllflightCrewMemberFromAirline(flightAssignment.getFlightCrewMember().getAirline().getId());
+		Collection<FlightCrewMember> flightCrewMembers = this.repositoryAssingment.findAllflightCrewMemberFromAirline(flightAssignment.getFlightCrewMember().getAirline().getId());
 		SelectChoices flightCrewMemberChoices = SelectChoices.from(flightCrewMembers, "identity.fullName", flightAssignment.getFlightCrewMember());
 		dataset.put("members", flightCrewMemberChoices);
 		dataset.put("readOnlyCrewMember", true);
 
-		SelectChoices legChoices = SelectChoices.from(this.repository.findAllLegs(), "flightNumber", flightAssignment.getLeg());
+		SelectChoices legChoices = SelectChoices.from(this.repositoryLeg.findAllLegs(), "flightNumber", flightAssignment.getLeg());
 		dataset.put("legs", legChoices);
 
 		super.getResponse().addData(dataset);

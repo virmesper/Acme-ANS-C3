@@ -10,6 +10,7 @@ import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S1.LegRepository;
 import acme.entities.S3.CurrentStatus;
 import acme.entities.S3.Duty;
 import acme.entities.S3.FlightAssignment;
@@ -20,7 +21,10 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private FlightAssignmentRepository repository;
+	private FlightAssignmentRepository	repositoryAssignment;
+
+	@Autowired
+	private LegRepository				repositoryLeg;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -33,7 +37,7 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 	@Override
 	public void load() {
 		int flightAssignmentId = super.getRequest().getData("id", int.class);
-		FlightAssignment flightAssignment = this.repository.findFlightAssignmentById(flightAssignmentId);
+		FlightAssignment flightAssignment = this.repositoryAssignment.findFlightAssignmentById(flightAssignmentId);
 
 		super.getBuffer().addData(flightAssignment);
 	}
@@ -49,7 +53,7 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		super.state(flightAssignment.getLeg() != null, "leg", "acme.validation.flightAssignment.leg");
 
 		if (flightAssignment.getDuty() != null && flightAssignment.getLeg() != null) {
-			boolean isDutyAssigned = this.repository.hasDutyAssigned(flightAssignment.getLeg().getId(), flightAssignment.getDuty(), flightAssignment.getId());
+			boolean isDutyAssigned = this.repositoryAssignment.hasDutyAssigned(flightAssignment.getLeg().getId(), flightAssignment.getDuty(), flightAssignment.getId());
 			super.state(!isDutyAssigned, "duty", "acme.validation.flightAssignment.duty");
 		}
 
@@ -63,7 +67,7 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 	@Override
 	public void perform(final FlightAssignment flightAssignment) {
 		flightAssignment.setDraftMode(false);
-		this.repository.save(flightAssignment);
+		this.repositoryAssignment.save(flightAssignment);
 	}
 
 	@Override
@@ -76,12 +80,12 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		SelectChoices statusChoices = SelectChoices.from(CurrentStatus.class, flightAssignment.getCurrentStatus());
 		dataset.put("statuses", statusChoices);
 
-		Collection<FlightCrewMember> flightCrewMembers = this.repository.findAllflightCrewMemberFromAirline(flightAssignment.getFlightCrewMember().getAirline().getId());
+		Collection<FlightCrewMember> flightCrewMembers = this.repositoryAssignment.findAllflightCrewMemberFromAirline(flightAssignment.getFlightCrewMember().getAirline().getId());
 		SelectChoices flightCrewMemberChoices = SelectChoices.from(flightCrewMembers, "identity.fullName", flightAssignment.getFlightCrewMember());
 		dataset.put("members", flightCrewMemberChoices);
 		dataset.put("readOnlyCrewMember", true);
 
-		SelectChoices legChoices = SelectChoices.from(this.repository.findAllLegs(), "flightNumber", flightAssignment.getLeg());
+		SelectChoices legChoices = SelectChoices.from(this.repositoryLeg.findAllLegs(), "flightNumber", flightAssignment.getLeg());
 		dataset.put("legs", legChoices);
 
 		super.getResponse().addData(dataset);

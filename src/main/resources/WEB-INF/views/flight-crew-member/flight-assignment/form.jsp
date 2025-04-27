@@ -4,12 +4,12 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:form>
+	<acme:input-textbox code="flight-crew-member.flight-assignment.form.label.flightCrewMember" path="flightCrewMember" readonly="true" />
 	<acme:input-select code="flight-crew-member.flight-assignment.form.label.duty" path="duty" choices="${duties}"/>
 	<acme:input-moment code="flight-crew-member.flight-assignment.form.label.moment" path="moment" readonly = "true"/>
 	<acme:input-select code="flight-crew-member.flight-assignment.form.label.status" path="currentStatus" choices="${statuses}"/>
 	<acme:input-textbox code="flight-crew-member.flight-assignment.form.label.remarks" path="remarks"/>
 	<acme:input-select code="flight-crew-member.flight-assignment.form.label.leg" path="leg" choices="${legs}"/>
-	<acme:input-select code="flight-crew-member.flight-assignment.form.label.crewMember" path="flightCrewMember" choices="${members}"/>
 	
 	
 	<jstl:choose>	 

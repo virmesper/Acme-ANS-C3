@@ -1,7 +1,7 @@
 
 package acme.features.flightCrewMember.flightAssignments;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,18 +26,23 @@ public class FlightAssignmentListServiceUncompletedLegs extends AbstractGuiServi
 
 	@Override
 	public void load() {
-		List<FlightAssignment> flightAssignments;
+		FlightCrewMember flightCrewMember = (FlightCrewMember) super.getRequest().getPrincipal().getActiveRealm();
 
-		flightAssignments = this.repository.findUncompletedFlightAssignments(MomentHelper.getCurrentMoment());
+		Collection<FlightAssignment> uncompletedFlightAssignments = this.repository.findAllPlannedFlightAssignments(MomentHelper.getCurrentMoment());
 
-		super.getBuffer().addData(flightAssignments);
+		super.getBuffer().addData(uncompletedFlightAssignments);
 	}
 
 	@Override
-	public void unbind(final FlightAssignment flightAssignment) {
-		Dataset dataset;
+	public void unbind(final FlightAssignment uncompletedFlightAssignments) {
 
-		dataset = super.unbindObject(flightAssignment, "duty", "moment", "currentStatus");
+		Dataset dataset = super.unbindObject(uncompletedFlightAssignments, "duty", "moment", "currentStatus", "remarks", "leg");
+
+		dataset.put("leg", uncompletedFlightAssignments.getLeg().getFlightNumber());
+
+		super.addPayload(dataset, uncompletedFlightAssignments, "duty", "moment", "currentStatus", "remarks", "leg");
 		super.getResponse().addData(dataset);
+
 	}
+
 }

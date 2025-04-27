@@ -34,7 +34,7 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 		FlightCrewMember member;
 
 		flightAssignmentId = super.getRequest().getData("id", int.class);
-		fa = this.repository.findFa(flightAssignmentId);
+		fa = this.repository.findFlightAssignmentById(flightAssignmentId);
 		member = fa == null ? null : fa.getFlightCrewMember();
 		status = super.getRequest().getPrincipal().hasRealm(member);
 
@@ -48,7 +48,7 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 		int id;
 
 		id = super.getRequest().getData("id", int.class);
-		fa = this.repository.findFa(id);
+		fa = this.repository.findFlightAssignmentById(id);
 
 		super.getBuffer().addData(fa);
 
