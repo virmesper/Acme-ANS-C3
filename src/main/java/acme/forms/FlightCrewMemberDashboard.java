@@ -6,7 +6,7 @@ import java.util.List;
 
 import acme.client.components.basis.AbstractForm;
 
-public class FlightCrewDashboard extends AbstractForm {
+public class FlightCrewMemberDashboard extends AbstractForm {
 
 	// Serialisation version --------------------------------------------------
 
@@ -28,14 +28,8 @@ public class FlightCrewDashboard extends AbstractForm {
 	// Their flight assignments grouped by their statuses. 
 	HashMap<String, Integer>	numberOfFlightAssignmentsGroupedByTheirStatus;
 
-	// The average, minimum, maximum, and standard deviation of the number of flight assignments they had in the last month.. 
-
-	Double						averageFlightAssignmentsLastMonth;
-	Integer						minimumFlightAssignmentsLastMonth;
-	Integer						maximumFlightAssignmentsLastMonth;
-	Double						standardDeviationFlightAssignmentsLastMonth;
-
 	// Derived attributes -----------------------------------------------------
 
 	// Relationships ----------------------------------------------------------
+
 }

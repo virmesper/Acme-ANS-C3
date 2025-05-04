@@ -7,7 +7,7 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S3.ActivityLog;
-import acme.realms.FlightCrewMember;
+import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
 public class ActivityLogDeleteService extends AbstractGuiService<FlightCrewMember, ActivityLog> {

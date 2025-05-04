@@ -24,7 +24,7 @@ import acme.entities.S1.LegRepository;
 import acme.entities.S3.CurrentStatus;
 import acme.entities.S3.Duty;
 import acme.entities.S3.FlightAssignment;
-import acme.realms.FlightCrewMember;
+import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
 public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrewMember, FlightAssignment> {

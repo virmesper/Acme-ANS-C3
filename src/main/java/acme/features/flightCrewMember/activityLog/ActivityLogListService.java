@@ -9,7 +9,7 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S3.ActivityLog;
-import acme.realms.FlightCrewMember;
+import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
 public class ActivityLogListService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
@@ -33,19 +33,22 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 		int flightCrewMemberId;
 
 		flightCrewMemberId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		activityLogs = this.repository.findAllActivityLogs(flightCrewMemberId);
-
+		activityLogs = this.repository.findLogsByFlightAssignment(flightCrewMemberId);
 		super.getBuffer().addData(activityLogs);
 
 	}
 
 	@Override
-	public void unbind(final ActivityLog activityLog) {
+	public void bind(final ActivityLog log) {
+		super.bindObject(log, "typeOfIncident", "description", "severityLevel");
+
+	}
+
+	@Override
+	public void unbind(final ActivityLog log) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "severityLevel");
-		super.addPayload(dataset, activityLog, "description");
-
+		dataset = super.unbindObject(log, "typeOfIncident", "description", "severityLevel");
 		super.getResponse().addData(dataset);
 	}
 

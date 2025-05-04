@@ -1,8 +1,7 @@
 
 package acme.features.flightCrewMember.flightAssignments;
 
-import java.util.Collection;
-import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,7 +10,7 @@ import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S3.FlightAssignment;
-import acme.realms.FlightCrewMember;
+import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
 public class FlightAssignmentListService extends AbstractGuiService<FlightCrewMember, FlightAssignment> {
@@ -27,23 +26,21 @@ public class FlightAssignmentListService extends AbstractGuiService<FlightCrewMe
 
 	@Override
 	public void load() {
-		Collection<FlightAssignment> fs;
-		int flightCrewMemberid;
-		Date currentDate = MomentHelper.getCurrentMoment();
-		flightCrewMemberid = super.getRequest().getPrincipal().getActiveRealm().getId();
-		fs = this.repository.findAssignmentsByMemberIdCompletedLegs(currentDate, flightCrewMemberid);
-		super.getBuffer().addData(fs);
+		List<FlightAssignment> flightAssignments;
+		List<FlightAssignment> myFlightAssignments;
+		FlightCrewMember flightCrewMember = (FlightCrewMember) super.getRequest().getPrincipal().getActiveRealm();
 
+		flightAssignments = this.repository.findCompletedFlightAssignmentsThatArePublished(MomentHelper.getCurrentMoment());
+		myFlightAssignments = this.repository.findCompletedFlightAssignmentsByFlightCrewMember(MomentHelper.getCurrentMoment(), flightCrewMember.getId());
+		flightAssignments.addAll(myFlightAssignments);
+		super.getBuffer().addData(flightAssignments);
 	}
 
 	@Override
 	public void unbind(final FlightAssignment flightAssignment) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(flightAssignment, "duty", "moment", "currentStatus", "leg.scheduledArrival");
-		super.addPayload(dataset, flightAssignment, "remarks");
-
+		dataset = super.unbindObject(flightAssignment, "duty", "moment", "currentStatus");
 		super.getResponse().addData(dataset);
 	}
-
 }

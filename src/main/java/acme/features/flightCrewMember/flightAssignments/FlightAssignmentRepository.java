@@ -14,7 +14,7 @@ import acme.entities.S1.Leg;
 import acme.entities.S3.AvailabilityStatus;
 import acme.entities.S3.Duty;
 import acme.entities.S3.FlightAssignment;
-import acme.realms.FlightCrewMember;
+import acme.realms.flightCrewMember.FlightCrewMember;
 
 @Repository
 public interface FlightAssignmentRepository extends AbstractRepository {
@@ -91,4 +91,15 @@ public interface FlightAssignmentRepository extends AbstractRepository {
 	@Query("SELECT l FROM Leg l WHERE l.aircraft.airline.id = :airlineId")
 	Collection<Leg> findAllLegsFromAirline(int airlineId);
 
+	@Query("select a from FlightAssignment a where a.leg.scheduledArrival<:now and  a.draftMode = false")
+	List<FlightAssignment> findCompletedFlightAssignmentsThatArePublished(Date now);
+
+	@Query("select a from FlightAssignment a where a.leg.scheduledArrival<:now and a.flightCrewMember.id=:id and a.draftMode = true")
+	List<FlightAssignment> findCompletedFlightAssignmentsByFlightCrewMember(Date now, int id);
+
+	@Query("select a from FlightAssignment a where a.leg.scheduledDeparture>:now and a.flightCrewMember.id=:id and a.draftMode = true")
+	List<FlightAssignment> findUncompletedFlightAssignmentsByFlightCrewMember(Date now, int id);
+
+	@Query("select a from FlightAssignment a where a.leg.scheduledDeparture>:now and  a.draftMode = false")
+	List<FlightAssignment> findUncompletedFlightAssignmentsThatArePublished(Date now);
 }

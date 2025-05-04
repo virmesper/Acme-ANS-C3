@@ -1,13 +1,17 @@
 
 package acme.features.flightCrewMember.activityLog;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S3.ActivityLog;
-import acme.realms.FlightCrewMember;
+import acme.entities.S3.FlightAssignment;
+import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
 public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
@@ -23,32 +27,29 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 	@Override
 	public void authorise() {
 		boolean status;
-		int activityLogId;
-		ActivityLog activityLog;
-		FlightCrewMember flightCrewMember;
+		ActivityLog log;
+		int logId;
 
-		activityLogId = super.getRequest().getData("id", int.class);
-		activityLog = this.repository.findActivityLogById(activityLogId);
-		flightCrewMember = activityLog == null ? null : activityLog.getFlightCrewMember();
-		status = super.getRequest().getPrincipal().hasRealm(flightCrewMember);
-
+		logId = super.getRequest().getData("id", int.class);
+		log = this.repository.findActivityLogById(logId);
+		status = log.isDraftMode();
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		ActivityLog activityLog;
+		ActivityLog log;
 		int id;
 
 		id = super.getRequest().getData("id", int.class);
-		activityLog = this.repository.findActivityLogById(id);
+		log = this.repository.findActivityLogById(id);
 
-		super.getBuffer().addData(activityLog);
+		super.getBuffer().addData(log);
 	}
 
 	@Override
 	public void bind(final ActivityLog activityLog) {
-		super.bindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel");
+		super.bindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "flightAssignment");
 	}
 
 	@Override
@@ -65,9 +66,16 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 	@Override
 	public void unbind(final ActivityLog activityLog) {
 		Dataset dataset;
+		List<FlightAssignment> assignments;
+		assignments = this.repository.findAllFlightAssignments();
 
-		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode");
-		dataset.put("readonly", false);
+		SelectChoices assignmentChoices;
+		assignmentChoices = SelectChoices.from(assignments, "leg.flightNumber", activityLog.getFlightAssignment());
+
+		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode", "flightAssignment");
+		dataset.put("assignmentChoices", assignmentChoices);
+		dataset.put("masterId", activityLog.getFlightAssignment().getId());
+		dataset.put("masterDraftMode", activityLog.getFlightAssignment().isDraftMode());
 
 		super.getResponse().addData(dataset);
 	}

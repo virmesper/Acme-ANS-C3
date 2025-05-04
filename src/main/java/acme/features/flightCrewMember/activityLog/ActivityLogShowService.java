@@ -1,13 +1,17 @@
 
 package acme.features.flightCrewMember.activityLog;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S3.ActivityLog;
-import acme.realms.FlightCrewMember;
+import acme.entities.S3.FlightAssignment;
+import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
 public class ActivityLogShowService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
@@ -22,17 +26,7 @@ public class ActivityLogShowService extends AbstractGuiService<FlightCrewMember,
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int activityLogId;
-		ActivityLog activityLog;
-		FlightCrewMember flightCrewMember;
-
-		activityLogId = super.getRequest().getData("id", int.class);
-		activityLog = this.repository.findActivityLogById(activityLogId);
-		flightCrewMember = activityLog == null ? null : activityLog.getFlightCrewMember();
-		status = super.getRequest().getPrincipal().hasRealm(flightCrewMember);
-
-		super.getResponse().setAuthorised(status);
+		super.getResponse().setAuthorised(true);
 	}
 
 	@Override
@@ -48,10 +42,17 @@ public class ActivityLogShowService extends AbstractGuiService<FlightCrewMember,
 
 	@Override
 	public void unbind(final ActivityLog activityLog) {
-
 		Dataset dataset;
+		List<FlightAssignment> assignments;
+		assignments = this.repository.findAllFlightAssignments();
 
-		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode");
+		SelectChoices assignmentChoices;
+		assignmentChoices = SelectChoices.from(assignments, "leg.flightNumber", activityLog.getFlightAssignment());
+
+		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode", "flightAssignment");
+		dataset.put("assignmentChoices", assignmentChoices);
+		dataset.put("masterId", activityLog.getFlightAssignment().getId());
+		dataset.put("masterDraftMode", activityLog.getFlightAssignment().isDraftMode());
 
 		super.getResponse().addData(dataset);
 	}
