@@ -19,3 +19,16 @@ acme.validation.airport.notfound.message=El código IATA del aeropuerto no exist
 acme.validation.confirmation.message.booking-record.create.booking 
 acme.validation.confirmation.message.booking-record.create.passenger = 
 acme.validation.confirmation.message.booking-record.create = 
+
+
+# Fight Assignments
+acme.validation.FlightAssignment.havePilot.message= Ese tramo ya tiene un piloto asignado
+acme.validation.FlightAssignment.haveCopilot.message= Ese tramo ya tiene un copiloto asignado
+acme.validation.FlightAssignment.flightCrewMemberNotAvailable.message= Ese miembro de la tripulación no está disponible
+acme.validation.FlightAssignment.FlightCrewMemberIncompatibleLegs.message= Ese miembro de la tripulación tiene tramos de vuelo incompatibles con ese
+acme.validation.FlightAssignment.LegAlreadyCompleted.message= El tramo al que esta asignacion de vuelo estaba asociado ya terminó, por lo que no podés publicarla
+acme.validation.flightAssignment.availableFlightCrewMember.message= La asignación de vuelo debe tener un miembro de la tripulación disponible asignado
+
+#Activity Log
+acme.validation.activityLog.wrongMoment.message = El momento de registro del Registro de Actividad debe ser posterior a la fecha de llegada de la leg
+acme.validation.ActivityLog.FlightAssignmentNotPublished.message = No puede publicar el Registro de Actividad si la asignación de vuelo a la que está asociado no se publico
