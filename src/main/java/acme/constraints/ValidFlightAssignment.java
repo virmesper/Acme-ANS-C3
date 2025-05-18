@@ -11,10 +11,10 @@ import javax.validation.Payload;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = FlightCrewMemberValidator.class)
-public @interface ValidFlightCrewMember {
+@Constraint(validatedBy = FlightAssignmentValidator.class)
+public @interface ValidFlightAssignment {
 
-	String message() default "{acme.validation.text.message}";
+	String message() default "{acme.validation.flightAssignament.availableFlightCrewMember.message}";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 

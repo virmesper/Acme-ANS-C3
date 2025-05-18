@@ -11,8 +11,8 @@ import javax.validation.Payload;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = FlightCrewMemberValidator.class)
-public @interface ValidFlightCrewMember {
+@Constraint(validatedBy = ActivityLogValidator.class)
+public @interface ValidActivityLog {
 
 	String message() default "{acme.validation.text.message}";
 	Class<?>[] groups() default {};

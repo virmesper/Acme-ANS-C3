@@ -1,23 +1,15 @@
 
 package acme.constraints;
 
-import java.util.List;
-
 import javax.validation.ConstraintValidatorContext;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+import acme.client.components.principals.UserAccount;
 import acme.client.components.validation.AbstractValidator;
+import acme.client.components.validation.Validator;
 import acme.realms.flightCrewMember.FlightCrewMember;
-import acme.realms.flightCrewMember.FlightCrewMemberRepository;
 
+@Validator
 public class FlightCrewMemberValidator extends AbstractValidator<ValidFlightCrewMember, FlightCrewMember> {
-
-	// ConstraintValidator interface ------------------------------------------
-
-	@Autowired
-	private FlightCrewMemberRepository flightCrewMemberRepository;
-
 
 	@Override
 	protected void initialise(final ValidFlightCrewMember annotation) {
@@ -26,49 +18,54 @@ public class FlightCrewMemberValidator extends AbstractValidator<ValidFlightCrew
 
 	@Override
 	public boolean isValid(final FlightCrewMember flightCrewMember, final ConstraintValidatorContext context) {
-		assert context != null;
-
-		boolean result;
-
-		if (flightCrewMember == null)
-			super.state(context, false, "*", "javax.validation.constraints.NotNull.message");
-		else {
-
-			String id = flightCrewMember.getEmployeeCode();
-			String name = flightCrewMember.getIdentity().getName();
-			String surname = flightCrewMember.getIdentity().getSurname();
-
-			String expectedInitials = this.getFlightCrewMemberInitials(name, surname);
-			String idPrefix = id.substring(0, expectedInitials.length());
-			List<FlightCrewMember> existingFlightCrewMembers = this.flightCrewMemberRepository.findByEmployeeCode(flightCrewMember.getEmployeeCode());
-
-			{
-				if (!id.matches("^[A-Z]{2,3}\\d{6}$"))
-					super.state(context, false, "employeeCode", "acme.validation.flightcrewmember.invalid-employeecode-pattern.message");
-
-			}
-
-			{
-				if (!idPrefix.equals(expectedInitials))
-					super.state(context, false, "employeeCode", "acme.validation.flightcrewmember.invalid-employeecode-initials.message");
-			}
-
-			{
-				if (!((existingFlightCrewMembers.isEmpty() || existingFlightCrewMembers.contains(flightCrewMember)) && existingFlightCrewMembers.size() == 1))
-					super.state(context, false, "employeeCode", "acme.validation.flightcrewmember.duplicated-employeecode.message");
-
-			}
-
+		if (flightCrewMember == null) {
+			context.disableDefaultConstraintViolation();
+			context.buildConstraintViolationWithTemplate("FlightCrewMember must not be null").addConstraintViolation();
+			return false;
 		}
 
-		result = !super.hasErrors(context);
+		if (flightCrewMember.getEmployeeCode() == null || flightCrewMember.getEmployeeCode().isBlank() || !flightCrewMember.getEmployeeCode().matches("^[A-Z]{2,3}\\d{6}$")) {
+			context.disableDefaultConstraintViolation();
+			context.buildConstraintViolationWithTemplate("The identifier must not be null or blank and must follow the pattern").addConstraintViolation();
+			return false;
+		}
 
-		return result;
-	}
+		UserAccount userAccount = flightCrewMember.getUserAccount();
+		if (userAccount == null || userAccount.getIdentity() == null) {
+			context.disableDefaultConstraintViolation();
+			context.buildConstraintViolationWithTemplate("User Account and Identity must not be null").addConstraintViolation();
+			return false;
+		}
 
-	public String getFlightCrewMemberInitials(final String name, final String surname) {
-		return ("" + name.charAt(0) + surname.charAt(0)).toUpperCase();
+		if (userAccount.getIdentity().getName() == null || userAccount.getIdentity().getName().isBlank()) {
+			context.disableDefaultConstraintViolation();
+			context.buildConstraintViolationWithTemplate("User Name must be fullfilled").addConstraintViolation();
+			return false;
+		}
 
+		if (userAccount.getIdentity().getSurname() == null || userAccount.getIdentity().getSurname().isBlank()) {
+			context.disableDefaultConstraintViolation();
+			context.buildConstraintViolationWithTemplate("User Surname must be fullfilled").addConstraintViolation();
+			return false;
+		}
+
+		String nombre = userAccount.getIdentity().getName();
+		String[] apellidos = userAccount.getIdentity().getSurname().split(" ");
+
+		String inicialNombre = nombre.isEmpty() ? "" : String.valueOf(nombre.charAt(0)).toUpperCase();
+		String inicial1Apellido = apellidos.length > 0 ? String.valueOf(apellidos[0].charAt(0)).toUpperCase() : "";
+		String inicial2Apellido = apellidos.length > 1 ? String.valueOf(apellidos[1].charAt(0)).toUpperCase() : "";
+
+		String iniciales = inicialNombre + inicial1Apellido + inicial2Apellido;
+
+		String identifierInitials = flightCrewMember.getEmployeeCode().substring(0, iniciales.length());
+
+		if (!iniciales.equals(identifierInitials)) {
+			context.disableDefaultConstraintViolation();
+			context.buildConstraintViolationWithTemplate("Identifier must start with initials of the user: Should be " + iniciales + " but is " + identifierInitials).addConstraintViolation();
+			return false;
+		}
+		return true;
 	}
 
 }

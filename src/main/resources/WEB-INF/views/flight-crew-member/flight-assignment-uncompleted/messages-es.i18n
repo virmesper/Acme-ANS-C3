@@ -1,7 +1,0 @@
-flight-crew-member.flight-assignment-uncomplete.list.title = Listado de Asignaciones de vuelos
-
-flight-crew-member.flight-assignment-uncomplete.list.label.duty = Deber de la tripulación de vuelo.
-flight-crew-member.flight-assignment-uncomplete.list.label.moment = Última actualización.
-flight-crew-member.flight-assignment-uncomplete.list.label.currentStatus = Estado del asignación de vuelo.
-
-flight-crew-member.flight-assignment-uncompleted.list.button.create = Crear 

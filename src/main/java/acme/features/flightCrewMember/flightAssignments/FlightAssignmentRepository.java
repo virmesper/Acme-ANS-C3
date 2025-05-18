@@ -3,14 +3,13 @@ package acme.features.flightCrewMember.flightAssignments;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
 import acme.entities.S1.Leg;
+import acme.entities.S3.ActivityLog;
 import acme.entities.S3.AvailabilityStatus;
 import acme.entities.S3.Duty;
 import acme.entities.S3.FlightAssignment;
@@ -19,87 +18,63 @@ import acme.realms.flightCrewMember.FlightCrewMember;
 @Repository
 public interface FlightAssignmentRepository extends AbstractRepository {
 
-	@Query("SELECT fa FROM FlightAssignment fa WHERE fa.flightCrewMember.id = :id")
-	Collection<FlightAssignment> findAssignmentsByCrewMemberId(@Param("id") int id);
-
-	@Query("SELECT fa FROM FlightAssignment fa WHERE fa.id = :flightAssignmentId")
-	FlightAssignment findFa(final int flightAssignmentId);
-
-	@Query("SELECT fa FROM FlightAssignment fa WHERE fa.flightCrewMember.id = :id AND fa.leg.scheduledArrival > :currentDate")
-	Collection<FlightAssignment> findAssignmentsByMemberIdUnCompletedLegs(@Param("currentDate") Date currentDate, @Param("id") int id);
-
-	@Query("SELECT fa FROM FlightAssignment fa WHERE fa.flightCrewMember.id = :id AND fa.leg.scheduledArrival < :currentDate")
-	Collection<FlightAssignment> findAssignmentsByMemberIdCompletedLegs(@Param("currentDate") Date currentDate, @Param("id") int id);
-
-	@Query("select a from FlightAssignment a where a.leg.scheduledDeparture>:now")
-	List<FlightAssignment> findUncompletedFlightAssignments(Date now);
-
-	@Query("SELECT fcm FROM FlightCrewMember fcm WHERE fcm.availabilityStatus  = :status")
-	List<FlightCrewMember> findMembersByStatus(AvailabilityStatus status);
-
-	@Query("SELECT fcm From FlightCrewMember fcm WHERE fcm.id = :fcmId")
-	FlightCrewMember findMemberById(int fcmId);
-
-	@Query("select l from FlightCrewMember l")
-	List<FlightCrewMember> findAllFlightCrewMembers();
-
-	@Query("SELECT l FROM Leg l WHERE l.scheduledArrival > :currentDate")
-	List<Leg> findUpcomingLegs(@Param("currentDate") Date currentDate);
-
-	@Query("SELECT l FROM Leg l WHERE l.scheduledArrival < :currentDate")
-	List<Leg> findPreviousLegs(@Param("currentDate") Date currentDate);
-
-	@Query("SELECT l from Leg l WHERE l.id = :legId")
-	Leg findLegById(int legId);
-
-	@Query("SELECT fa.leg FROM FlightAssignment fa " + "WHERE (fa.leg.scheduledDeparture < :legArrival AND fa.leg.scheduledArrival > :legDeparture) " + "AND fa.leg.id <> :legId " + "AND fa.flightCrewMember.id = :id")
-	List<Leg> findSimultaneousLegsByMember(@Param("legDeparture") Date legDeparture, @Param("legArrival") Date legArrival, @Param("legId") int legId, @Param("id") int id);
-
-	@Query("SELECT fa from FlightAssignment fa WHERE fa.leg = :leg and fa.duty = :duty")
-	List<FlightAssignment> findFlightAssignmentsByLegAndDuty(@Param("leg") Leg leg, @Param("duty") Duty duty);
-
-	@Query("SELECT fa.leg, fa FROM FlightAssignment fa WHERE fa.flightCrewMember.id = :id")
-	List<Object[]> findLegsAndAssignmentsByMemberId(@Param("id") int id);
-
-	@Query("SELECT fa.leg FROM FlightAssignment fa WHERE fa.flightCrewMember.id = :id")
-	List<Leg> findLegsAssignedToMemberById(int id);
-
-	@Query("select l from Leg l")
-	List<Leg> findAllLegs();
-
-	@Query("SELECT fa FROM FlightAssignment fa WHERE fa.id = :id")
+	@Query("select fa from FlightAssignment fa where fa.id = :id")
 	FlightAssignment findFlightAssignmentById(int id);
 
-	@Query("SELECT fa FROM FlightAssignment fa WHERE fa.leg.scheduledDeparture >= :moment")
-	Collection<FlightAssignment> findAllPlannedFlightAssignments(Date moment);
+	@Query("select fa from FlightAssignment fa where fa.leg.scheduledArrival < :currentMoment and fa.flightCrewMember.id = :flighCrewMemberId")
+	Collection<FlightAssignment> findAllFlightAssignmentByCompletedLeg(Date currentMoment, int flighCrewMemberId);
 
-	@Query("SELECT fa FROM FlightAssignment fa WHERE fa.leg.scheduledArrival < :moment")
-	Collection<FlightAssignment> findAllCompletedFlightAssignments(Date moment);
+	@Query("select case when count(fa) > 0 then true else false end from FlightAssignment fa where fa.id = :id and fa.leg.scheduledArrival < :currentMoment")
+	boolean associatedWithCompletedLeg(int id, Date currentMoment);
 
-	@Query("SELECT fcm FROM FlightCrewMember fcm WHERE fcm.airline.id = :airlineId")
-	Collection<FlightCrewMember> findAllflightCrewMemberFromAirline(int airlineId);
+	@Query("select fa from FlightAssignment fa where fa.leg.scheduledArrival >= :currentMoment and fa.flightCrewMember.id = :flighCrewMemberId")
+	Collection<FlightAssignment> findAllFlightAssignmentByPlannedLeg(Date currentMoment, int flighCrewMemberId);
 
-	@Query("SELECT fa FROM FlightAssignment fa WHERE fa.leg.id = :legId AND fa.duty = :duty")
-	FlightAssignment findFlightAssignmentByLegAndDuty(int legId, Duty duty);
+	@Query("select fa.leg from FlightAssignment fa where fa.id = :id")
+	Collection<Leg> findLegsByFlightAssignmentId(int id);
 
-	@Query("SELECT COUNT(fa) > 0 FROM FlightAssignment fa WHERE fa.leg.id = :legId AND fa.duty IN ('PILOT', 'COPILOT') AND fa.duty = :duty AND fa.id != :id")
-	Boolean hasDutyAssigned(int legId, Duty duty, int id);
+	@Query("select l from Leg l where l.id  = :legId")
+	Leg findLegById(int legId);
 
-	@Query("SELECT COUNT(fa) > 0 FROM FlightAssignment fa WHERE fa.flightCrewMember.id = :flightCrewMemberId AND fa.moment = :moment")
-	Boolean hasFlightCrewMemberLegAssociated(int flightCrewMemberId, Date moment);
+	@Query("select fa.flightCrewMember from FlightAssignment fa where fa.id = :id")
+	Collection<FlightCrewMember> findFlightCrewMembersByFlightAssignmentId(int id);
 
-	@Query("SELECT l FROM Leg l WHERE l.aircraft.airline.id = :airlineId")
-	Collection<Leg> findAllLegsFromAirline(int airlineId);
+	@Query("select fcm from FlightCrewMember fcm where fcm.id = :id")
+	FlightCrewMember findFlightCrewMemberById(int id);
 
-	@Query("select a from FlightAssignment a where a.leg.scheduledArrival<:now and  a.draftMode = false")
-	List<FlightAssignment> findCompletedFlightAssignmentsThatArePublished(Date now);
+	@Query("select fa.leg from FlightAssignment fa where fa.flightCrewMember.id = :id")
+	Collection<Leg> findLegsByFlightCrewMember(int id);
 
-	@Query("select a from FlightAssignment a where a.leg.scheduledArrival<:now and a.flightCrewMember.id=:id and a.draftMode = true")
-	List<FlightAssignment> findCompletedFlightAssignmentsByFlightCrewMember(Date now, int id);
+	@Query("select fcm from FlightCrewMember fcm where fcm.availabilityStatus = :availabilityStatus")
+	Collection<FlightCrewMember> findFlightCrewMembersByAvailability(AvailabilityStatus availabilityStatus);
 
-	@Query("select a from FlightAssignment a where a.leg.scheduledDeparture>:now and a.flightCrewMember.id=:id and a.draftMode = true")
-	List<FlightAssignment> findUncompletedFlightAssignmentsByFlightCrewMember(Date now, int id);
+	@Query("select fa.flightCrewMember from FlightAssignment fa where fa.leg.id = :legId")
+	Collection<FlightCrewMember> findFlightCrewMembersAssignedToLeg(int legId);
 
-	@Query("select a from FlightAssignment a where a.leg.scheduledDeparture>:now and  a.draftMode = false")
-	List<FlightAssignment> findUncompletedFlightAssignmentsThatArePublished(Date now);
+	@Query("select al from ActivityLog al where al.flightAssignment.id = :flightAssignmentId")
+	Collection<ActivityLog> findActivityLogsByFlightAssignmentId(int flightAssignmentId);
+
+	@Query("select count(fa) > 0 from FlightAssignment fa where fa.leg.id = :legId and fa.duty = :duty")
+	boolean existsFlightCrewMemberWithDutyInLeg(int legId, Duty duty);
+
+	@Query("select fa from FlightAssignment fa where fa.leg.id=:id")
+	Collection<FlightAssignment> findFlightAssignmentByLegId(int id);
+
+	@Query("select case when count(fa) > 0 then true else false end " + "from FlightAssignment fa " + "where fa.id = :flightAssignmentId " + "and fa.leg.scheduledArrival < :currentMoment")
+	boolean areLegsCompletedByFlightAssignment(int flightAssignmentId, Date currentMoment);
+
+	@Query("select count(fa) > 0 from FlightAssignment fa where fa.id = :flightAssignmentId and fa.flightCrewMember.id = :flightCrewMemberId")
+	boolean thatFlightAssignmentIsOf(int flightAssignmentId, int flightCrewMemberId);
+
+	@Query("select l from Leg l")
+	Collection<Leg> findAllLegs();
+
+	@Query("SELECT CASE WHEN COUNT(fcm) > 0 THEN true ELSE false END FROM FlightCrewMember fcm WHERE fcm.id = :id")
+	boolean existsFlightCrewMember(int id);
+
+	@Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END FROM Leg l WHERE l.id = :id")
+	boolean existsLeg(int id);
+
+	@Query("SELECT CASE WHEN COUNT(fa) > 0 THEN true ELSE false END FROM FlightAssignment fa WHERE fa.id = :id")
+	boolean existsFlightAssignment(int id);
 }

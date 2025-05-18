@@ -68,9 +68,8 @@ master.menu.user-account.become-consumer = Become a consumer
 master.menu.user-account.consumer-profile = Consumer profile
 
 
-# master.menu.member ##########################################################
+# master.menu.flight-crew-member ##########################################################
 
-master.menu.member = Flight Crew Member
-master.menu.member.list-my-assignments = My Assignments (Completed Legs)
-master.menu.flight-crew-member.flight-assignment-uncompleted= My Assignments (Uncompleted Legs)
-master.menu.member.activity-log-list = My Activity Log
+master.menu.flight-crew-member = Flight Crew Member
+master.menu.flight-crew-member.flight-assignment.completedlist = List Flight Assignments with completed legs
+master.menu.flight-crew-member.flight-assignment.plannedlist = List Flight Assignments with planned legs

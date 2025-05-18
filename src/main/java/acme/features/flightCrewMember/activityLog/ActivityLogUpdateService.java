@@ -1,14 +1,13 @@
 
 package acme.features.flightCrewMember.activityLog;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
-import acme.client.components.views.SelectChoices;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S1.Leg;
 import acme.entities.S3.ActivityLog;
 import acme.entities.S3.FlightAssignment;
 import acme.realms.flightCrewMember.FlightCrewMember;
@@ -26,57 +25,73 @@ public class ActivityLogUpdateService extends AbstractGuiService<FlightCrewMembe
 
 	@Override
 	public void authorise() {
-		boolean status;
-		ActivityLog log;
-		int logId;
+		boolean status = false;
+		String method = super.getRequest().getMethod();
+		if (method.equals("GET"))
+			status = false;
+		else {
+			int activityLogId;
+			ActivityLog activityLog;
 
-		logId = super.getRequest().getData("id", int.class);
-		log = this.repository.findActivityLogById(logId);
-		status = log.isDraftMode();
+			activityLogId = super.getRequest().getData("id", int.class);
+			activityLog = this.repository.findActivityLogById(activityLogId);
+			if (activityLog != null) {
+				int flightCrewMemberId = super.getRequest().getPrincipal().getActiveRealm().getId();
+				boolean authorised1 = this.repository.existsFlightCrewMember(flightCrewMemberId);
+				boolean authorised = authorised1 && this.repository.thatActivityLogIsOf(activityLogId, flightCrewMemberId);
+
+				status = authorised && activityLog != null && activityLog.isDraftMode();
+			}
+		}
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		ActivityLog log;
+		ActivityLog activityLog;
 		int id;
-
 		id = super.getRequest().getData("id", int.class);
-		log = this.repository.findActivityLogById(id);
+		activityLog = this.repository.findActivityLogById(id);
 
-		super.getBuffer().addData(log);
+		super.getBuffer().addData(activityLog);
 	}
 
 	@Override
 	public void bind(final ActivityLog activityLog) {
-		super.bindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "flightAssignment");
+		super.bindObject(activityLog, "typeOfIncident", "description", "severityLevel");
 	}
 
 	@Override
 	public void validate(final ActivityLog activityLog) {
-		;
+
+		if (activityLog == null)
+			return;
+		FlightAssignment flightAssignment = this.repository.findFlightAssignmentByActivityLogId(activityLog.getId());
+		if (activityLog.getRegistrationMoment() == null || flightAssignment == null)
+			return;
+		Leg leg = flightAssignment.getLeg();
+		if (leg == null || leg.getScheduledArrival() == null)
+			return;
+		boolean activityLogMomentIsAfterscheduledArrival = this.repository.associatedWithCompletedLeg(activityLog.getId(), MomentHelper.getCurrentMoment());
+		super.state(activityLogMomentIsAfterscheduledArrival, "WrongActivityLogDate", "acme.validation.activityLog.wrongMoment.message");
+
 	}
 
 	@Override
 	public void perform(final ActivityLog activityLog) {
+
+		activityLog.setRegistrationMoment(MomentHelper.getCurrentMoment());
+		activityLog.setDraftMode(true);
 		this.repository.save(activityLog);
 	}
 
 	@Override
 	public void unbind(final ActivityLog activityLog) {
 		Dataset dataset;
-		List<FlightAssignment> assignments;
-		assignments = this.repository.findAllFlightAssignments();
 
-		SelectChoices assignmentChoices;
-		assignmentChoices = SelectChoices.from(assignments, "leg.flightNumber", activityLog.getFlightAssignment());
-
-		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode", "flightAssignment");
-		dataset.put("assignmentChoices", assignmentChoices);
-		dataset.put("masterId", activityLog.getFlightAssignment().getId());
-		dataset.put("masterDraftMode", activityLog.getFlightAssignment().isDraftMode());
-
+		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode");
+		dataset.put("draftMode", activityLog.isDraftMode());
+		dataset.put("readonly", false);
 		super.getResponse().addData(dataset);
 	}
-
 }

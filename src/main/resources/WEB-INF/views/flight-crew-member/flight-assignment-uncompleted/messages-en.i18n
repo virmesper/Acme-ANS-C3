@@ -1,7 +1,0 @@
-flight-crew-member.flight-assignment-uncompleted.list.title = List Flight Assignment
-
-flight-crew-member.flight-assignment-uncompleted.list.label.duty = Flight Crew Duty
-flight-crew-member.flight-assignment-uncompleted.list.label.moment = Last Updated
-flight-crew-member.flight-assignment-uncompleted.list.label.currentStatus = Flight Assignment Status
-
-flight-crew-member.flight-assignment-uncompleted.list.button.create = Create

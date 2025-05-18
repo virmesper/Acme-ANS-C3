@@ -1,12 +1,9 @@
 
 package acme.features.flightCrewMember.activityLog;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
-import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
@@ -27,7 +24,25 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status = false;
+		int masterId;
+		FlightAssignment flightAssignment;
+
+		masterId = super.getRequest().getData("masterId", int.class);
+		int flightCrewMemberId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		boolean authorised = this.repository.existsFlightCrewMember(flightCrewMemberId);
+
+		flightAssignment = this.repository.findFlightAssignmentById(masterId);
+		boolean authorised2 = false;
+		if (flightAssignment != null) {
+			authorised2 = this.repository.existsFlightAssignment(masterId);
+			status = authorised && authorised2;
+			boolean isHis = flightAssignment.getFlightCrewMember().getId() == flightCrewMemberId;
+
+			status = status && isHis && this.repository.isFlightAssignmentCompleted(MomentHelper.getCurrentMoment(), masterId);
+		}
+		super.getResponse().setAuthorised(status);
+
 	}
 
 	@Override
@@ -42,21 +57,22 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 		activityLog = new ActivityLog();
 		activityLog.setFlightAssignment(flightAssignment);
 		activityLog.setDraftMode(true);
+		activityLog.setDescription("");
 		activityLog.setRegistrationMoment(MomentHelper.getCurrentMoment());
+		activityLog.setSeverityLevel(0);
+		activityLog.setTypeOfIncident("");
+
 		super.getBuffer().addData(activityLog);
 
 	}
+
 	@Override
 	public void bind(final ActivityLog activityLog) {
-		super.bindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "flightAssignment");
+		super.bindObject(activityLog, "typeOfIncident", "description", "severityLevel");
 	}
 
 	@Override
 	public void validate(final ActivityLog activityLog) {
-		boolean confirmation;
-
-		confirmation = super.getRequest().getData("confirmation", boolean.class);
-		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
 	}
 
 	@Override
@@ -67,19 +83,18 @@ public class ActivityLogCreateService extends AbstractGuiService<FlightCrewMembe
 
 	@Override
 	public void unbind(final ActivityLog activityLog) {
-		Dataset dataset = null;
+		Dataset dataset;
+		int masterId;
 
-		List<FlightAssignment> assignments;
-		assignments = this.repository.findAllFlightAssignments();
+		masterId = super.getRequest().getData("masterId", int.class);
 
-		SelectChoices assignmentChoices;
-		assignmentChoices = SelectChoices.from(assignments, "leg.flightNumber", activityLog.getFlightAssignment());
-
-		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode", "flightAssignment");
-		dataset.put("masterId", super.getRequest().getData("masterId", int.class));
-		dataset.put("assignmentChoices", assignmentChoices);
-
+		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode");
+		dataset.put("masterId", masterId);
+		dataset.put("draftMode", activityLog.isDraftMode());
+		dataset.put("readonly", false);
+		dataset.put("masterDraftMode", !this.repository.isFlightAssignmentAlreadyPublishedById(masterId));
 		super.getResponse().addData(dataset);
+
 	}
 
 }
