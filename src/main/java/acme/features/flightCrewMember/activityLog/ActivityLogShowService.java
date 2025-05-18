@@ -58,13 +58,13 @@ public class ActivityLogShowService extends AbstractGuiService<FlightCrewMember,
 	@Override
 	public void unbind(final ActivityLog activityLog) {
 		Dataset dataset;
-		FlightAssignment flightAssignament = this.repository.findFlightAssignmentByActivityLogId(activityLog.getId());
+		FlightAssignment flightAssignment = this.repository.findFlightAssignmentByActivityLogId(activityLog.getId());
 
 		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode");
 		dataset.put("id", activityLog.getId());
-		dataset.put("masterId", flightAssignament.getId());
+		dataset.put("masterId", flightAssignment.getId());
 		dataset.put("draftMode", activityLog.isDraftMode());
-		dataset.put("masterDraftMode", flightAssignament.isDraftMode());
+		dataset.put("masterDraftMode", flightAssignment.isDraftMode());
 		dataset.put("readonly", false);
 
 		super.getResponse().addData(dataset);

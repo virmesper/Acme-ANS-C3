@@ -80,7 +80,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 		FlightCrewMember flightCrewMember = flightAssignment.getFlightCrewMember();
 		Leg leg = flightAssignment.getLeg();
 		if (flightCrewMember != null && leg != null && this.isLegCompatible(flightAssignment)) {
-			super.state(false, "flightCrewMember", "acme.validation.FlightAssignament.FlightCrewMemberIncompatibleLegs.message");
+			super.state(false, "flightCrewMember", "acme.validation.FlightAssignment.FlightCrewMemberIncompatibleLegs.message");
 			return;
 		}
 		if (leg != null)
@@ -100,9 +100,9 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 		boolean haveCopilot = this.repository.existsFlightCrewMemberWithDutyInLeg(flightAssignment.getLeg().getId(), Duty.COPILOT);
 
 		if (Duty.PILOT.equals(flightAssignment.getDuty()))
-			super.state(!havePilot, "duty", "acme.validation.FlightAssignament.havePilot.message");
+			super.state(!havePilot, "duty", "acme.validation.FlightAssignment.havePilot.message");
 		if (Duty.COPILOT.equals(flightAssignment.getDuty()))
-			super.state(!haveCopilot, "duty", "acme.validation.FlightAssignament.haveCopilot.message");
+			super.state(!haveCopilot, "duty", "acme.validation.FlightAssignment.haveCopilot.message");
 	}
 
 	private boolean compatibleLegs(final Leg newLeg, final Leg oldLeg) {
