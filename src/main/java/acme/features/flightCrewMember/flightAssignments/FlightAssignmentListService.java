@@ -11,7 +11,7 @@ import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S3.FlightAssignment;
-import acme.realms.FlightCrewMember;
+import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
 public class FlightAssignmentListService extends AbstractGuiService<FlightCrewMember, FlightAssignment> {
@@ -22,28 +22,28 @@ public class FlightAssignmentListService extends AbstractGuiService<FlightCrewMe
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+
+		int flightCrewMemberId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		boolean authorised = this.repository.existsFlightCrewMember(flightCrewMemberId);
+		super.getResponse().setAuthorised(authorised);
 	}
 
 	@Override
 	public void load() {
-		Collection<FlightAssignment> fs;
-		int flightCrewMemberid;
-		Date currentDate = MomentHelper.getCurrentMoment();
-		flightCrewMemberid = super.getRequest().getPrincipal().getActiveRealm().getId();
-		fs = this.repository.findAssignmentsByMemberIdCompletedLegs(currentDate, flightCrewMemberid);
-		super.getBuffer().addData(fs);
+		Collection<FlightAssignment> flightAssignments;
 
+		Date currentMoment;
+		int flightCrewMemberId = super.getRequest().getPrincipal().getActiveRealm().getId();
+
+		currentMoment = MomentHelper.getCurrentMoment();
+		flightAssignments = this.repository.findAllFlightAssignmentByCompletedLeg(currentMoment, flightCrewMemberId);
+
+		super.getBuffer().addData(flightAssignments);
 	}
-
 	@Override
 	public void unbind(final FlightAssignment flightAssignment) {
-		Dataset dataset;
-
-		dataset = super.unbindObject(flightAssignment, "duty", "moment", "currentStatus", "leg.scheduledArrival");
-		super.addPayload(dataset, flightAssignment, "remarks");
+		Dataset dataset = super.unbindObject(flightAssignment, "duty", "moment", "currentStatus", "remarks", "draftMode");
 
 		super.getResponse().addData(dataset);
 	}
-
 }

@@ -1,6 +1,23 @@
-key,registrationMoment,typeOfIncident,description,severityLevel,draftMode,key:flightCrewMember
-activity-log-01,2012/07/02 00:00,Route and Navigation Issues,Routine assignment,2,true,flight-crew-member-01
-activity-log-02,2012/07/02 00:00,Crash,Pending review,5,true,flight-crew-member-02
-activity-log-03,2012/07/02 00:00,Weather,Cancelled due to weather,8,true,flight-crew-member-03
-activity-log-04,2012/07/02 00:00,Mechanical and Technical Issues,Engine Failure,3,true,flight-crew-member-04
-activity-log-05,2012/07/02 00:00,Passenger,Unruly Passenger,1,true,flight-crew-member-05
+key,key:flight-assignment,registrationMoment,typeOfIncident,description,severityLevel,draftMode
+
+# base entity
+activity-log-00,flight-assignment-00,2023/01/01 10:00,"Lorem ipsum dolor sit ame","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",05,true
+# registrationMoment - standard variations
+activity-log-01,flight-assignment-00,2024/12/31 23:59,"Lorem ipsum dolor sit ame","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,true
+activity-log-02,flight-assignment-00,2000/01/01 00:01,"Lorem ipsum dolor sit ame","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,true
+activity-log-03,flight-assignment-00,2000/01/01 00:00,"Lorem ipsum dolor sit ame","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,true
+# typeOfIncident - standard variations
+activity-log-04,flight-assignment-01,2023/01/01 10:00,"L","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,true
+activity-log-05,flight-assignment-02,2023/01/01 10:00,"Lo","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,true
+activity-log-06,flight-assignment-03,2023/01/01 10:00,"Lorem ipsum dolor sit amet, consectetur adipiscin","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,true
+activity-log-07,flight-assignment-04,2023/01/01 10:00,"Lorem ipsum dolor sit amet, consectetur adipiscing","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,true
+# description - standard variations
+activity-log-08,flight-assignment-05,2023/01/01 10:00,"Lorem ipsum dolor sit ame","L",5,true
+activity-log-09,flight-assignment-01,2023/01/01 10:00,"Lorem ipsum dolor sit ame","Lo",5,true
+activity-log-10,flight-assignment-02,2023/01/01 10:00,"Lorem ipsum dolor sit ame","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",5,true
+activity-log-11,flight-assignment-03,2023/01/01 10:00,"Lorem ipsum dolor sit ame","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",5,true
+# severityLevel - standard variations
+activity-log-12,flight-assignment-04,2023/01/01 10:00,"Lorem ipsum dolor sit ame","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",0,true
+activity-log-13,flight-assignment-05,2023/01/01 10:00,"Lorem ipsum dolor sit ame","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",1,true
+activity-log-14,flight-assignment-01,2023/01/01 10:00,"Lorem ipsum dolor sit ame","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",9,true
+activity-log-15,flight-assignment-02,2023/01/01 10:00,"Lorem ipsum dolor sit ame","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,true

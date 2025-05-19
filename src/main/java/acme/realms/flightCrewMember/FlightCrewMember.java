@@ -1,5 +1,5 @@
 
-package acme.realms;
+package acme.realms.flightCrewMember;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +16,7 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
+import acme.constraints.ValidFlightCrewMember;
 import acme.entities.Group.Airline;
 import acme.entities.S3.AvailabilityStatus;
 import lombok.Getter;
@@ -24,6 +25,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@ValidFlightCrewMember
 public class FlightCrewMember extends AbstractRole {
 
 	// Serialisation identifier -----------------------------------------------
@@ -68,6 +70,6 @@ public class FlightCrewMember extends AbstractRole {
 
 	@Mandatory
 	@Valid
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Airline				airline;
 }

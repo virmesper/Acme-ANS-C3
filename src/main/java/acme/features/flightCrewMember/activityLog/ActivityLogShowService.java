@@ -7,7 +7,8 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S3.ActivityLog;
-import acme.realms.FlightCrewMember;
+import acme.entities.S3.FlightAssignment;
+import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
 public class ActivityLogShowService extends AbstractGuiService<FlightCrewMember, ActivityLog> {
@@ -22,17 +23,25 @@ public class ActivityLogShowService extends AbstractGuiService<FlightCrewMember,
 
 	@Override
 	public void authorise() {
-		boolean status;
 		int activityLogId;
-		ActivityLog activityLog;
-		FlightCrewMember flightCrewMember;
 
+		ActivityLog activityLog;
+		boolean authorised = false;
+		boolean isHis = false;
 		activityLogId = super.getRequest().getData("id", int.class);
 		activityLog = this.repository.findActivityLogById(activityLogId);
-		flightCrewMember = activityLog == null ? null : activityLog.getFlightCrewMember();
-		status = super.getRequest().getPrincipal().hasRealm(flightCrewMember);
+		boolean authorised3 = this.repository.existsActivityLog(activityLogId);
+		int flightCrewMemberId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		FlightAssignment flightAssignment = this.repository.findFlightAssignmentByActivityLogId(activityLogId);
+		if (flightAssignment != null) {
+			boolean authorised2 = this.repository.existsFlightAssignment(flightAssignment.getId());
 
-		super.getResponse().setAuthorised(status);
+			boolean authorised1 = authorised3 && authorised2 && this.repository.existsFlightCrewMember(flightCrewMemberId);
+			authorised = authorised1 && this.repository.thatActivityLogIsOf(activityLogId, flightCrewMemberId);
+			isHis = flightAssignment.getFlightCrewMember().getId() == flightCrewMemberId;
+		}
+
+		super.getResponse().setAuthorised(authorised && activityLog != null && isHis);
 	}
 
 	@Override
@@ -48,10 +57,15 @@ public class ActivityLogShowService extends AbstractGuiService<FlightCrewMember,
 
 	@Override
 	public void unbind(final ActivityLog activityLog) {
-
 		Dataset dataset;
+		FlightAssignment flightAssignament = this.repository.findFlightAssignmentByActivityLogId(activityLog.getId());
 
 		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode");
+		dataset.put("id", activityLog.getId());
+		dataset.put("masterId", flightAssignament.getId());
+		dataset.put("draftMode", activityLog.isDraftMode());
+		dataset.put("masterDraftMode", flightAssignament.isDraftMode());
+		dataset.put("readonly", false);
 
 		super.getResponse().addData(dataset);
 	}

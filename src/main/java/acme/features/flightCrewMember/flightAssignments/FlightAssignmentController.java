@@ -8,16 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.controllers.AbstractGuiController;
 import acme.client.controllers.GuiController;
 import acme.entities.S3.FlightAssignment;
-import acme.realms.FlightCrewMember;
+import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiController
-public class FlightAssignmentsController extends AbstractGuiController<FlightCrewMember, FlightAssignment> {
+public class FlightAssignmentController extends AbstractGuiController<FlightCrewMember, FlightAssignment> {
 
 	@Autowired
-	private FlightAssignmentListService					listService;
+	private FlightAssignmentListService					completedListService;
 
 	@Autowired
-	private FlightAssignmentListServiceUncompletedLegs	listServiceUL;
+	private FlightAssignmentListServiceUncompletedLegs	plannedListService;
 
 	@Autowired
 	private FlightAssignmentShowService					showService;
@@ -37,13 +37,13 @@ public class FlightAssignmentsController extends AbstractGuiController<FlightCre
 
 	@PostConstruct
 	protected void initialise() {
-		super.addBasicCommand("list", this.listService);
-		super.addBasicCommand("show", this.showService);
 		super.addBasicCommand("create", this.createService);
+		super.addBasicCommand("show", this.showService);
 		super.addBasicCommand("update", this.updateService);
 		super.addBasicCommand("delete", this.deleteService);
 
-		super.addCustomCommand("list-uncompleted", "list", this.listServiceUL);
+		super.addCustomCommand("completed-list", "list", this.completedListService);
+		super.addCustomCommand("planned-list", "list", this.plannedListService);
 		super.addCustomCommand("publish", "update", this.publishService);
 	}
 }
