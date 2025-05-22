@@ -6,10 +6,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S1.FlightRepository;
 import acme.entities.S2.Booking;
 import acme.entities.S2.BookingRecord;
 import acme.entities.S2.Passenger;
@@ -29,6 +31,8 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 	@Autowired
 	private CustomerPassengerRepository		passengerRepository;
 
+	@Autowired
+	private FlightRepository				FlightRepository;
 	// AbstractGuiService interface -------------------------------------------
 
 
@@ -99,7 +103,20 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 
 	@Override
 	public void perform(final BookingRecord bookingRecord) {
+
 		this.customerBookingPassengerRepository.save(bookingRecord);
+
+		Booking booking = bookingRecord.getBooking();
+		Collection<Passenger> passengers = this.customerBookingPassengerRepository.findPassengersByBookingId(booking.getId());
+
+		Money basePrice = this.FlightRepository.findCostByFlight(booking.getFlightId().getId());
+
+		Money newPrice = new Money();
+		newPrice.setAmount(basePrice.getAmount() * passengers.size());
+		newPrice.setCurrency(basePrice.getCurrency());
+
+		booking.setPrice(newPrice);
+		this.bookingRepository.save(booking);
 	}
 
 	@Override

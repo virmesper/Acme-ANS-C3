@@ -7,6 +7,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.basis.AbstractRealm;
+import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
@@ -62,10 +63,13 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		flightId = super.getRequest().getData("flightId", int.class);
 		flight = this.flightRepository.findFlightById(flightId);
 
-		super.bindObject(booking, "locatorCode", "lastCardDigits", "price", "travelClass");
+		super.bindObject(booking, "locatorCode", "lastCardDigits", "travelClass");
+
 		booking.setFlightId(flight);
 		booking.setDraftMode(false);
 
+		Money basePrice = this.flightRepository.findCostByFlight(flight.getId());
+		booking.setPrice(basePrice);
 	}
 
 	@Override
@@ -87,7 +91,7 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		SelectChoices flightChoices;
 
 		Collection<Flight> flights = this.flightRepository.findAllFlight();
-		flightChoices = SelectChoices.from(flights, "id", booking.getFlightId());
+		flightChoices = SelectChoices.from(flights, "tag", booking.getFlightId());
 		choices = SelectChoices.from(TravelClass.class, booking.getTravelClass());
 
 		dataset = super.unbindObject(booking, "locatorCode", "lastCardDigits", "price");
