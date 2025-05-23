@@ -14,3 +14,5 @@
 <jstl:if test="${showCreate}">
 	<acme:button code="customer.booking.create" action="/customer/booking/create" />
 </jstl:if>
+
+<acme:button code="customer.booking.create" action="/customer/booking/create" />

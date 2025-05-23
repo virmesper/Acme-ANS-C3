@@ -1,8 +1,6 @@
 
 package acme.entities.S2;
 
-import java.beans.Transient;
-import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,11 +16,10 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
+import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
-import acme.client.helpers.SpringHelper;
 import acme.constraints.ValidUniqueLocatorCode;
 import acme.entities.S1.Flight;
-import acme.entities.S1.FlightRepository;
 import acme.realms.Customer;
 import lombok.Getter;
 import lombok.Setter;
@@ -68,49 +65,16 @@ public class Booking extends AbstractEntity {
 	@Automapped
 	private boolean				draftMode;
 
-	// Derived attributes -----------------------------------------------------
-
-
-	@Transient
-	public Money getPrice() {
-		Money result = new Money();
-		try {
-			if (this.flightId == null) {
-				result.setAmount(0.0);
-				result.setCurrency("EUR");  // O la moneda predeterminada
-				return result;
-			}
-
-			FlightRepository flightRepository = SpringHelper.getBean(FlightRepository.class);
-			BookingRepository bookingRepository = SpringHelper.getBean(BookingRepository.class);
-
-			// Buscar el coste del vuelo asociado
-			result = flightRepository.findCostByFlight(this.flightId.getId());
-			if (result == null) {
-				result = new Money();
-				result.setAmount(0.0);
-				result.setCurrency("EUR");  // O la moneda predeterminada
-				return result;
-			}
-
-			// Calcular el precio según el número de pasajeros
-			Collection<Passenger> pg = bookingRepository.findPassengersByBooking(this.getId());
-			Double amount = result.getAmount() * pg.size();
-			result.setAmount(amount);
-		} catch (Exception e) {
-			// Manejar cualquier excepción inesperada
-			result.setAmount(0.0);
-			result.setCurrency("EUR");  // O la moneda predeterminada
-		}
-		return result;
-	}
+	@Mandatory
+	@ValidMoney(min = 0.00, max = 999999999999.99)
+	@Automapped
+	private Money				price;
 
 	// Relationships ----------------------------------------------------------
-
 
 	@Mandatory
 	@Valid
 	@ManyToOne
-	private Customer customer;
+	private Customer			customer;
 
 }
