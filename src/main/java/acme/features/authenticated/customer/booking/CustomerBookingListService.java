@@ -30,15 +30,9 @@ public class CustomerBookingListService extends AbstractGuiService<Customer, Boo
 
 	@Override
 	public void load() {
-		Collection<Booking> data;
-		int userId;
-		int customerId;
-
-		userId = super.getRequest().getPrincipal().getAccountId();
-		customerId = this.repository.findCustomerIdByUserId(userId);
-		data = this.repository.findAllByCustomer(customerId);
-
-		super.getBuffer().addData(data);
+		int userAccountId = super.getRequest().getPrincipal().getAccountId();
+		Collection<Booking> bookings = this.repository.findBookingByCustomer(userAccountId);
+		super.getBuffer().addData(bookings);
 	}
 
 	@Override
