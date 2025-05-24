@@ -36,4 +36,4 @@ administrator.claim.form.label.assistanceAgent = Agente de Asistencia
 administrator.claim.form.label.leg = Tramo del Vuelo
 
 administrator.claim.form.error.indicator-in-progress = Si ya se ha llegado al 100 porciento el porcentaje máximo de resolución de todos los registros de seguimiento que tiene asociado, no debe estar "PENDIENTE"
-administrator.claim.form.error.all-tracking-logs-published = Todos los registros de seguimiento asociados con esta reclamación deben estar publicados.
+administrator.claim.form.error.all-tracking-logs-published = Todos los registros de seguimiento asociados con esta reclamación deben estar publicados

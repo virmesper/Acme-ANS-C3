@@ -45,6 +45,8 @@ public class AdministratorClaimListService extends AbstractGuiService<Administra
 		dataset.put("published", published);
 		dataset.put("leg", object.getLeg().getFlightNumber());
 		dataset.put("assistanceAgent", object.getAssistanceAgent().getEmployeeCode());
+		super.getResponse().addData(dataset);
+
 	}
 
 }

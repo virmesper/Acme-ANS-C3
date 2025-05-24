@@ -8,6 +8,8 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
+assistance-agent.assistance-agent-dashboard.form.title =  Assistance Agent Dashboard
+
 assistance-agent.dashboard.form.title.general-indicators=General Indicators
 
 assistance-agent.dashboard.form.label.ratio-of-claims-stored-successfully=Ratio of Claims Stored Successfully
