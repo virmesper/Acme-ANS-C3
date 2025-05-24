@@ -24,7 +24,7 @@ import lombok.Setter;
 
 @Entity
 @Table(indexes = {
-	@Index(columnList = "assistanceAgent_id"), @Index(columnList = "indicator"), @Index(columnList = "leg_id")
+	@Index(columnList = "assistance_agent_id"), @Index(columnList = "indicator"), @Index(columnList = "leg_id"), @Index(columnList = "draftMode")
 })
 
 @Getter
