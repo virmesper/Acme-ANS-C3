@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S2.Booking;
 import acme.entities.S2.Passenger;
 import acme.features.authenticated.customer.booking.CustomerBookingRepository;
 import acme.realms.Customer;
@@ -17,36 +18,40 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRepository	bookingRepository;
-
-	@Autowired
-	private CustomerPassengerRepository	passengerRepository;
+	private CustomerBookingRepository bookingRepository;
 
 	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int customerId;
-		Collection<Passenger> passengers;
+		int bookingId = super.getRequest().getData("bookingId", int.class);
+		int userAccountId = super.getRequest().getPrincipal().getAccountId();
 
-		customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
-		passengers = this.passengerRepository.findPassengerByCustomer(customerId);
-		status = passengers.stream().allMatch(b -> b.getCustomer().getUserAccount().getId() == customerId) && super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
-		super.getResponse().setAuthorised(status);
+		boolean authorised = false;
+
+		Booking booking = this.bookingRepository.findBookingById(bookingId);
+		if (booking != null && booking.getCustomer().getUserAccount().getId() == userAccountId)
+			authorised = true;
+
+		super.getResponse().setAuthorised(authorised);
 	}
 
 	@Override
 	public void load() {
-		Collection<Passenger> passengers;
-		int id;
+		int bookingId = super.getRequest().getData("bookingId", int.class);
+		int userAccountId = super.getRequest().getPrincipal().getAccountId();
 
-		id = super.getRequest().getData("bookingId", int.class);
-		super.getResponse().addGlobal("bookingId", id);
-		passengers = this.bookingRepository.findPassengersByBooking(id);
+		// Comprobar si la reserva pertenece al customer logueado
+		boolean isMine = this.bookingRepository.findBookingById(bookingId).getCustomer().getUserAccount().getId() == userAccountId;
 
-		super.getBuffer().addData(passengers);
+		super.getResponse().addGlobal("bookingId", bookingId);
+
+		if (isMine) {
+			Collection<Passenger> passengers = this.bookingRepository.findPassengersByBooking(bookingId);
+			super.getBuffer().addData(passengers);
+		} else
+			super.getResponse().setAuthorised(false);
 	}
 
 	@Override

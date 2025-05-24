@@ -42,7 +42,18 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 	@Override
 	public void bind(final Booking booking) {
 		assert booking != null;
-		super.bindObject(booking, "travelClass", "price", "locatorCode", "flightId", "purchaseMoment", "lastCardDigits");
+
+		// Solo permitimos modificar campos legítimos
+		super.bindObject(booking, "travelClass", "lastCardDigits");
+
+		// Ignorar campos que pueden haber sido manipulados
+		int id = super.getRequest().getData("id", int.class);
+		Booking original = this.repository.findById(id);
+
+		booking.setPrice(original.getPrice()); // ← Forzamos el valor real
+		booking.setPurchaseMoment(original.getPurchaseMoment());
+		booking.setLocatorCode(original.getLocatorCode());
+		booking.setFlightId(original.getFlightId());
 	}
 
 	@Override
