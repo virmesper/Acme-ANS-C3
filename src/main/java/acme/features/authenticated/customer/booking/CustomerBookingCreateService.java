@@ -36,7 +36,17 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	@Override
 	public void authorise() {
 		boolean isCustomer = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
-		super.getResponse().setAuthorised(isCustomer);
+
+		boolean authorised = isCustomer;
+
+		// Solo verificar flightId si es una petición POST (no en GET)
+		if (super.getRequest().getMethod().equalsIgnoreCase("POST")) {
+			int flightId = super.getRequest().getData("flightId", int.class);
+			Flight flight = this.flightRepository.findFlightById(flightId);
+			authorised = authorised && flight != null; // solo continúa si el vuelo existe
+		}
+
+		super.getResponse().setAuthorised(authorised);
 	}
 
 	@Override

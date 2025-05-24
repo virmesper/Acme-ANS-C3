@@ -23,24 +23,14 @@ public class CustomerPassengerListAllService extends AbstractGuiService<Customer
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int customerId;
-		Collection<Passenger> passengers;
-
-		customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
-		passengers = this.passengerRepository.findPassengerByCustomer(customerId);
-		status = passengers.stream().allMatch(p -> p.getCustomer().getUserAccount().getId() == customerId) && super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
-		super.getResponse().setAuthorised(status);
+		boolean isCustomer = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
+		super.getResponse().setAuthorised(isCustomer);
 	}
 
 	@Override
 	public void load() {
-		Collection<Passenger> passengers;
-		int customerId;
-
-		customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
-		passengers = this.passengerRepository.findPassengerByCustomer(customerId);
-
+		int userAccountId = super.getRequest().getPrincipal().getAccountId();
+		Collection<Passenger> passengers = this.passengerRepository.findPassengerByCustomer(userAccountId);
 		super.getBuffer().addData(passengers);
 	}
 
