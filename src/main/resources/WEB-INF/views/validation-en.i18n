@@ -19,3 +19,16 @@ acme.validation.airport.notfound.message=IATA code doesn't exists.
 acme.validation.confirmation.message.booking-record.create.booking = 
 acme.validation.confirmation.message.booking-record.create.passenger = 
 acme.validation.confirmation.message.booking-record.create = 
+
+
+# Fight Assignments
+acme.validation.FlightAssignment.havePilot.message= That leg already have a Pilot assigned
+acme.validation.FlightAssignment.haveCopilot.message= That leg already have a Copilot Assigned
+acme.validation.FlightAssignment.flightCrewMemberNotAvailable.message= That Flight Crew Member isn't available
+acme.validation.FlightAssignment.FlightCrewMemberIncompatibleLegs.message= That Flight Crew Member has incompatible legs with that one
+acme.validation.FlightAssignment.LegAlreadyCompleted.message= The leg that is associated with this flight assignment has already finished, so you can't publish it
+acme.validation.flightAssignment.availableFlightCrewMember.message= The Flight Assignment must be associated with a available Flight Crew Member
+
+#Activity Log
+acme.validation.activityLog.wrongMoment.message = The Activity Log registration moment must be after the scheduled arrival of the Leg
+acme.validation.ActivityLog.FlightAssignmentNotPublished.message = If the Flight Assignment which is associated with this Activity Log isn't published, you can't publish it
