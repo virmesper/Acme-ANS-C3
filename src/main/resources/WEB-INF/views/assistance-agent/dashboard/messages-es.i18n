@@ -1,0 +1,25 @@
+# messages-es.i18n
+#
+# Copyright (C) 2012-2025 Rafael Corchuelo.
+#
+# In keeping with the traditional purpose of furthering education and research, it is
+# the policy of the copyright owner to permit non-commercial use and redistribution of
+# this software. It has been tested carefully, but it is not guaranteed for any particular
+# purposes.  The copyright owner does not offer any warranties or representations, nor do
+# they accept any liabilities with respect to them.
+
+asistente.dashboard.form.titulo.indicadores-generales=Indicadores Generales
+
+asistente.dashboard.form.etiqueta.ratio-reclamaciones-almacenadas=Ratio de Reclamaciones Almacenadas con Éxito
+asistente.dashboard.form.etiqueta.ratio-reclamaciones-rechazadas=Ratio de Reclamaciones Rechazadas
+asistente.dashboard.form.etiqueta.top-tres-meses-reclamaciones=Top 3 Meses con Mayor Número de Reclamaciones
+
+asistente.dashboard.form.etiqueta.media-logs-por-reclamacion=Media de Logs por Reclamación
+asistente.dashboard.form.etiqueta.minimo-logs-por-reclamacion=Mínimo de Logs por Reclamación
+asistente.dashboard.form.etiqueta.maximo-logs-por-reclamacion=Máximo de Logs por Reclamación
+asistente.dashboard.form.etiqueta.desviacion-logs-por-reclamacion=Desviación Estándar de Logs por Reclamación
+
+asistente.dashboard.form.etiqueta.media-logs-asistidas-ultimo-mes=Media de Logs (Reclamaciones Asistidas - Último Mes)
+asistente.dashboard.form.etiqueta.minimo-logs-asistidas-ultimo-mes=Mínimo de Logs (Reclamaciones Asistidas - Último Mes)
+asistente.dashboard.form.etiqueta.maximo-logs-asistidas-ultimo-mes=Máximo de Logs (Reclamaciones Asistidas - Último Mes)
+asistente.dashboard.form.etiqueta.desviacion-logs-asistidas-ultimo-mes=Desviación Estándar (Reclamaciones Asistidas - Último Mes)
