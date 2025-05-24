@@ -11,7 +11,8 @@
 assistanceAgent.tracking-log.form.error.less-than-max-resolution-percentage = The resolution percentage must be greater than the maximum registered percentage for this claim
 assistanceAgent.tracking-log.form.error.indicator-pending-exceptional-case = The indicator can't be in progress for this exceptional case 
 assistanceAgent.tracking-log.form.error.must-be-100 = The resolution percentage must be 100%
-assistanceAgent.tracking-log.form.error.resolution-not-null = The resolution reason can't be blank or null if the indicator is "ACCEPTED" or "ACCEPTED"
+assistanceAgent.tracking-log.form.error.resolution-not-null = The resolution reason can't be blank or null if the indicator is "ACCEPTED" or "REJECTED"
+assistanceAgent.tracking-log.form.error.indicator-pending = Only the indicator is "PENDING" if the resolution percentage is less than 100%. If it is equal to 100%, it must be "ACCEPTED" or "REJECTED"
 
 assistance-agent.tracking-log.list.title = Tracking log list
 assistance-agent.tracking-log.form.title = Tracking log data
