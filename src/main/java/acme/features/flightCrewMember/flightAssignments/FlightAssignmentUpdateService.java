@@ -12,6 +12,7 @@ import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Leg;
+import acme.entities.S3.AvailabilityStatus;
 import acme.entities.S3.Duty;
 import acme.entities.S3.FlightAssignment;
 import acme.realms.flightCrewMember.FlightCrewMember;
@@ -71,6 +72,8 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 	public void validate(final FlightAssignment flightAssignment) {
 		FlightAssignment original = this.repository.findFlightAssignmentById(flightAssignment.getId());
 		Leg leg = flightAssignment.getLeg();
+		Duty duty = flightAssignment.getDuty();
+		AvailabilityStatus status = flightAssignment.getFlightCrewMember().getAvailabilityStatus();
 		boolean cambioDuty = !original.getDuty().equals(flightAssignment.getDuty());
 		boolean cambioLeg = !original.getLeg().equals(flightAssignment.getLeg());
 		boolean cambioMoment = !original.getMoment().equals(flightAssignment.getMoment());
@@ -84,6 +87,11 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 
 		if (leg != null && (cambioDuty || cambioLeg))
 			this.checkPilotAndCopilotAssignment(flightAssignment);
+
+		if (!Duty.LEAD_ATTENDANT.equals(duty))
+			super.state(false, "duty", "acme.validation.FlightAssignment.NotFlightAttendant.message");
+		if (!AvailabilityStatus.AVAILABLE.equals(status))
+			super.state(false, "crewMember", "acme.validation.FlightAssignment.OnlyAvailableCanBeAssigned.message");
 	}
 
 	private boolean isLegCompatible(final FlightAssignment flightAssignment) {

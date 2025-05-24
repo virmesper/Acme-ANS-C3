@@ -1,7 +1,7 @@
 key,key:userAccount,employeeCode,phoneNumber,languageSkills,availabilityStatus,key:airline,salary,yearsOfExperience
 # base entity
-flight-crew-member-00,user-account-flight-crew-member-01,II000000,+11234567890,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","AVAILABLE",Airline-01,EUR 500000.00,20
-flight-crew-member-01,user-account-flight-crew-member-02,LX000000,+123456,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","AVAILABLE",Airline-01,EUR 500000.00,20
-flight-crew-member-02,user-account-flight-crew-member-03,AA000000,+123456763,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","AVAILABLE",Airline-01,EUR 500000.00,20
-flight-crew-member-03,user-account-flight-crew-member-04,TA000000,+11111111111111,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","AVAILABLE",Airline-01,EUR 500000.00,20
-flight-crew-member-04,user-account-flight-crew-member-05,JIM000000,+11234567890,"L","AVAILABLE",Airline-01,EUR 500000.00,20
+flight-crew-member-00,user-account-flight-crew-member-00,II000000,+11234567890,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","AVAILABLE",Airline-01,EUR 500000.00,20
+flight-crew-member-01,user-account-flight-crew-member-01,LX000000,+123456,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","AVAILABLE",Airline-01,EUR 500000.00,20
+flight-crew-member-02,user-account-flight-crew-member-02,AA000000,+123456763,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","AVAILABLE",Airline-01,EUR 500000.00,20
+flight-crew-member-03,user-account-flight-crew-member-03,TA000000,+11111111111111,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","AVAILABLE",Airline-01,EUR 500000.00,20
+flight-crew-member-04,user-account-flight-crew-member-04,JIM000000,+11234567890,"L","AVAILABLE",Airline-01,EUR 500000.00,20
