@@ -18,5 +18,7 @@ authenticated.assistance-agent.form.label.salary = Salario
 authenticated.assistance-agent.form.label.photoUrl = Url
 authenticated.assistance-agent.form.label.airline = Aerolínea
 
+acme.validation.employeeCode.format.message = El código debe seguir el patrón "^[A-Z]{2-3}\d{6}$", donde las primeras dos o tres letras corresponden a sus iniciales.
+
 authenticated.assistance-agent.form.button.create = Registrar
 authenticated.assistance-agent.form.button.update = Actualizar
