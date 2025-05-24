@@ -69,6 +69,8 @@ public class AdministratorClaimShowService extends AbstractService<Administrator
 		dataset.put("indicators", choicesIndicator);
 		dataset.put("types", choicesType);
 
+		dataset.put("id", object.getId());
+
 		super.getResponse().addData(dataset);
 	}
 

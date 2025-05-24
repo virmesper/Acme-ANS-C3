@@ -23,5 +23,6 @@
 	<acme:input-select code="administrator.claim.form.label.indicator" path="indicator" choices="${indicators}" readonly="true"/>
 	<acme:input-select code="administrator.claim.form.label.leg" path="leg" choices="${legs}" readonly="true"/>	
 
-	<acme:button code="administrator.claim.form.button.trackingLogs" action="/administrator/tracking-log/list?masterId=${id}"/>
+    <acme:button code="administrator.claim.form.button.trackingLogs" action="/administrator/tracking-log/list?masterId=${id}"/>
+   
 </acme:form>
