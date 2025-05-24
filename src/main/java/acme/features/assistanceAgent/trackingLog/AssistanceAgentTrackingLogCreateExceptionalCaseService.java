@@ -30,11 +30,14 @@ public class AssistanceAgentTrackingLogCreateExceptionalCaseService extends Abst
 		int masterId;
 		AssistanceAgent assistanceAgent;
 		Claim claim;
+		Boolean exceptionalCase;
 
 		masterId = super.getRequest().getData("masterId", int.class);
 		claim = this.repository.findOneClaimById(masterId);
 		assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
-		status = claim != null && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
+		exceptionalCase = !claim.isDraftMode() && this.repository.countTrackingLogsForExceptionalCase(masterId) == 1;
+
+		status = claim != null && exceptionalCase && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -87,12 +90,17 @@ public class AssistanceAgentTrackingLogCreateExceptionalCaseService extends Abst
 		Dataset dataset;
 
 		SelectChoices choicesIndicator;
+		Boolean exceptionalCase;
+		Claim claim;
 
+		claim = object.getClaim();
 		choicesIndicator = SelectChoices.from(Indicator.class, object.getIndicator());
+		exceptionalCase = !claim.isDraftMode() && this.repository.countTrackingLogsForExceptionalCase(claim.getId()) == 1;
 
 		dataset = super.unbindObject(object, "lastUpdateMoment", "step", "resolutionPercentage", "resolution", "indicator");
 		dataset.put("masterId", super.getRequest().getData("masterId", int.class));
 		dataset.put("indicators", choicesIndicator);
+		dataset.put("exceptionalCase", exceptionalCase);
 
 		super.getResponse().addData(dataset);
 	}

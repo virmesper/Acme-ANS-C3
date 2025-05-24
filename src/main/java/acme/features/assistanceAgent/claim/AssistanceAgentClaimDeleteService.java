@@ -30,21 +30,25 @@ public class AssistanceAgentClaimDeleteService extends AbstractGuiService<Assist
 	@Override
 	public void authorise() {
 		boolean status;
-		int claimId = super.getRequest().getData("id", int.class);
-		Claim claim = this.repository.findClaimById(claimId);
-		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null && claim.isDraftMode() && super.getRequest().getPrincipal().getActiveRealm().getId() == claim.getAssistanceAgent().getId();
+		int masterId;
+		Claim claim;
+
+		masterId = super.getRequest().getData("id", int.class);
+		claim = this.repository.findClaimById(masterId);
+		status = claim != null && claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Claim claim;
-		int claimId;
+		int masterId;
+		Claim object;
 
-		claimId = super.getRequest().getData("id", int.class);
-		claim = this.repository.findClaimById(claimId);
+		masterId = super.getRequest().getData("id", int.class);
+		object = this.repository.findClaimById(masterId);
 
-		super.getBuffer().addData(claim);
+		super.getBuffer().addData(object);
 	}
 
 	@Override
@@ -82,7 +86,7 @@ public class AssistanceAgentClaimDeleteService extends AbstractGuiService<Assist
 		Dataset dataset;
 		SelectChoices claimTypeChoices = SelectChoices.from(ClaimType.class, claim.getType());
 		SelectChoices indicatorChoices = SelectChoices.from(Indicator.class, claim.getIndicator());
-		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", claim.getLeg());
+		SelectChoices legChoices = SelectChoices.from(this.repository.findAllLegs(), "flightNumber", claim.getLeg());
 
 		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode", "leg", "indicator", "type");
 		dataset.put("types", claimTypeChoices);

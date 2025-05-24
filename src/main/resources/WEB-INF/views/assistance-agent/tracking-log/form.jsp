@@ -16,12 +16,24 @@
  <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
  
  <acme:form>
- 	<acme:input-moment code="assistance-agent.tracking-log.form.label.lastUpdateMoment" path="lastUpdateMoment" readonly="true"/>
-	<acme:input-textbox code="assistance-agent.tracking-log.form.label.step" path="step"/>
-	<acme:input-double code="assistance-agent.tracking-log.form.label.resolutionPercentage" path="resolutionPercentage"/>
-	<acme:input-textbox code="assistance-agent.tracking-log.form.label.resolution" path="resolution"/>
-	<acme:input-select code="assistance-agent.tracking-log.form.label.indicator" path="indicator" choices="${indicators}"/>
- 			
+
+ 	<jstl:choose>
+		<jstl:when test="${!exceptionalCase}">
+			<acme:input-moment code="assistance-agent.tracking-log.form.label.lastUpdateMoment" path="lastUpdateMoment" readonly="true"/>
+			<acme:input-textbox code="assistance-agent.tracking-log.form.label.step" path="step"/>
+			<acme:input-double code="assistance-agent.tracking-log.form.label.resolutionPercentage" path="resolutionPercentage"/>
+			<acme:input-textbox code="assistance-agent.tracking-log.form.label.resolution" path="resolution"/>
+			<acme:input-select code="assistance-agent.tracking-log.form.label.indicator" path="indicator" choices="${indicators}"/>
+		</jstl:when>
+		<jstl:when test="${exceptionalCase}">
+			<acme:input-moment code="assistance-agent.tracking-log.form.label.lastUpdateMoment" path="lastUpdateMoment" readonly="true"/>
+			<acme:input-textbox code="assistance-agent.tracking-log.form.label.step" path="step"/>
+			<acme:input-double code="assistance-agent.tracking-log.form.label.resolutionPercentage" path="resolutionPercentage" readonly="true"/>
+			<acme:input-textbox code="assistance-agent.tracking-log.form.label.resolution" path="resolution"/>
+			<acme:input-select code="assistance-agent.tracking-log.form.label.indicator" path="indicator" choices="${indicators}"/>
+		</jstl:when>
+	</jstl:choose>	
+			
  	<jstl:choose>
  			<jstl:when test="${acme:anyOf(_command, 'show|update|delete|publish') && draftMode}">
 			<acme:submit code="assistanceAgent.trackingLog.form.button.update" action="/assistance-agent/tracking-log/update"/>

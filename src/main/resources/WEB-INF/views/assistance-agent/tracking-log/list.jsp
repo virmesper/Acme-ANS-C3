@@ -25,10 +25,10 @@
  </acme:list>
  
  <jstl:choose>
-		<jstl:when test="${!exceptionalCase && !notAnyMore}">
+		<jstl:when test="${!exceptionalCase && !notCreateButton}">
 			<acme:button code="assistanceAgent.trackingLog.list.button.create" action="/assistance-agent/tracking-log/create?masterId=${masterId}"/>
 		</jstl:when>	
-		<jstl:when test="${exceptionalCase && !notAnyMore}">
+		<jstl:when test="${exceptionalCase && !noMore}">
 			<acme:button code="assistanceAgent.trackingLog.list.button.create-exceptional-case" action="/assistance-agent/tracking-log/exceptional-case?masterId=${masterId}"/>
 		</jstl:when>		
 </jstl:choose>

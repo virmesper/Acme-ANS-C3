@@ -28,19 +28,38 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 	@Override
 	public void authorise() {
 		boolean status;
-		int claimId = super.getRequest().getData("id", int.class);
-		Claim claim = this.repository.findClaimById(claimId);
-		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null && claim.isDraftMode() && super.getRequest().getPrincipal().getActiveRealm().getId() == claim.getAssistanceAgent().getId();
+		int masterId;
+		Claim claim;
+		int legId;
+		Leg leg;
+		boolean externalRelation = true;
+
+		if (super.getRequest().getMethod().equals("POST")) {
+			legId = super.getRequest().getData("leg", int.class);
+			leg = this.repository.findLegById(legId);
+
+			boolean isLegIdZero = legId == 0;
+			boolean isLegValid = leg != null;
+			boolean isLegNotDraft = isLegValid && !leg.isDraftMode();
+			boolean isFlightNotDraft = isLegNotDraft && !leg.getFlight().getDraftMode();
+
+			externalRelation = isLegIdZero || isLegValid && isLegNotDraft && isFlightNotDraft;
+		}
+
+		masterId = super.getRequest().getData("id", int.class);
+		claim = this.repository.findClaimById(masterId);
+		status = claim != null && claim.isDraftMode() && externalRelation && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
 		Claim claim;
-		int claimId;
+		int masterId;
 
-		claimId = super.getRequest().getData("id", int.class);
-		claim = this.repository.findClaimById(claimId);
+		masterId = super.getRequest().getData("id", int.class);
+		claim = this.repository.findClaimById(masterId);
 
 		super.getBuffer().addData(claim);
 	}
@@ -92,7 +111,7 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 		Dataset dataset;
 		SelectChoices claimTypeChoices = SelectChoices.from(ClaimType.class, claim.getType());
 		SelectChoices indicatorChoices = SelectChoices.from(Indicator.class, claim.getIndicator());
-		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", claim.getLeg());
+		SelectChoices legChoices = SelectChoices.from(this.repository.findAllLegs(), "flightNumber", claim.getLeg());
 
 		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode", "leg", "indicator", "type");
 		dataset.put("types", claimTypeChoices);

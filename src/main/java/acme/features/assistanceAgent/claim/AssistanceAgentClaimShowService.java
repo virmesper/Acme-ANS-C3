@@ -1,6 +1,8 @@
 
 package acme.features.assistanceAgent.claim;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
@@ -10,6 +12,7 @@ import acme.client.services.GuiService;
 import acme.entities.S4.Claim;
 import acme.entities.S4.ClaimType;
 import acme.entities.S4.Indicator;
+import acme.entities.S4.TrackingLog;
 import acme.realms.assistanceAgent.AssistanceAgent;
 
 @GuiService
@@ -26,9 +29,13 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 	@Override
 	public void authorise() {
 		boolean status;
-		int claimId = super.getRequest().getData("id", int.class);
-		Claim claim = this.repository.findClaimById(claimId);
-		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class) && claim != null && super.getRequest().getPrincipal().getActiveRealm().getId() == claim.getAssistanceAgent().getId();
+		int masterId;
+		Claim claim;
+
+		masterId = super.getRequest().getData("id", int.class);
+		claim = this.repository.findClaimById(masterId);
+		status = claim != null && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -36,9 +43,15 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 	public void load() {
 		Claim claim;
 		int id;
+		Collection<TrackingLog> tlogs;
+		Indicator value;
 
 		id = super.getRequest().getData("id", int.class);
 		claim = this.repository.findClaimById(id);
+
+		tlogs = this.repository.findManyTrackingLogsByClaimId(id);
+		value = tlogs.stream().map(t -> t.getIndicator()).filter(t -> t.equals(Indicator.ACCEPTED) || t.equals(Indicator.REJECTED)).findFirst().orElse(Indicator.PENDING);
+		claim.setIndicator(value);
 
 		super.getBuffer().addData(claim);
 	}
@@ -48,7 +61,7 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 		Dataset dataset;
 		SelectChoices claimTypeChoices = SelectChoices.from(ClaimType.class, claim.getType());
 		SelectChoices indicatorChoices = SelectChoices.from(Indicator.class, claim.getIndicator());
-		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", claim.getLeg());
+		SelectChoices legChoices = SelectChoices.from(this.repository.findAllLegs(), "flightNumber", claim.getLeg());
 
 		dataset = super.unbindObject(claim, "registrationMoment", "passengerEmail", "description", "draftMode", "leg", "indicator", "type");
 		dataset.put("types", claimTypeChoices);
