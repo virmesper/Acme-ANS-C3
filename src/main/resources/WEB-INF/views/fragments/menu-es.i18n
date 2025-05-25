@@ -21,6 +21,7 @@ master.menu.anonymous.favourite-link-4 = 2682*****: Mesa Pérez, Virginia
 master.menu.assistance-agent = Agente de Asistencia
 master.menu.assistance-agent.claim.list-completed = Lista de reclamaciones completas
 master.menu.assistance-agent.claim.list-undergoing = Lista de reclamaciones pendientes
+master.menu.assistance-agent.dashboard = Panel de Control
 
 # master.menu.administrator ###################################################
 
@@ -34,6 +35,7 @@ master.menu.administrator.list-airlines = Ver aerolinias
 master.menu.administrator.populate-db-initial = Poblar BD (inicial)
 master.menu.administrator.populate-db-sample = Poblar BD (ejemplos)
 master.menu.administrator.shut-system-down = Parar el sistema
+master.menu.administrator.list.claim = Lista de Reclamaciones Publicadas
 
 # master.menu.provider ########################################################
 
@@ -65,6 +67,8 @@ master.menu.user-account.become-provider = Hacerse proveedor
 master.menu.user-account.provider-profile = Perfil de proveedor
 master.menu.user-account.become-consumer = Hazte consumidor
 master.menu.user-account.consumer-profile = Perfil de consumidor
+master.menu.user-account.become-assistance-agent = Hazte agente de asistencia
+master.menu.user-account.assistance-agent-profile = Perfil del agente de asistencia
 
 
 # master.menu.flight-crew-member ##########################################################

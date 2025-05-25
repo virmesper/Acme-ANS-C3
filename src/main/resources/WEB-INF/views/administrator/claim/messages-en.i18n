@@ -1,0 +1,39 @@
+# messages-en.i18n
+#
+# Copyright (C) 2012-2025 Rafael Corchuelo.
+#
+# In keeping with the traditional purpose of furthering education and research, it is
+# the policy of the copyright owner to permit non-commercial use and redistribution of
+# this software. It has been tested carefully, but it is not guaranteed for any particular
+# purposes.  The copyright owner does not offer any warranties or representations, nor do
+# they accept any liabilities with respect to them.
+
+administrator.claim.list.button.create = Create
+
+administrator.claim.list.title = Claims List
+administrator.claim.form.title = Claim Details
+
+administrator.claim.list.label.type = Claim Type
+administrator.claim.list.label.leg = Leg
+administrator.claim.list.label.indicator = Actual Situation
+administrator.claim.list.label.published = Is Published?
+administrator.claim.list.label.assistanceAgent = Assistance Agent
+
+administrator.claim.list.button.create = Create
+
+administrator.claim.form.button.create = Create
+administrator.claim.form.button.update = Update
+administrator.claim.form.button.publish = Publish
+administrator.claim.form.button.delete = Delete
+administrator.claim.form.button.trackingLogs = Tracking Logs
+
+administrator.claim.form.label.registrationMoment = Registration Moment
+administrator.claim.form.label.passengerEmail = Passenger Email
+administrator.claim.form.label.description = Description
+administrator.claim.form.label.type = Type of Claim
+administrator.claim.form.label.indicator = Indicator
+administrator.claim.form.label.assistanceAgent = Assistance Agent
+administrator.claim.form.label.leg = Leg
+
+administrator.claim.form.error.indicator-in-progress = If the maximum resolution percentage of all associated tracking logs has already reached 100%, it must not be "PENDING"
+administrator.claim.form.error.all-tracking-logs-published = All the tracking logs associated to this claim must be published

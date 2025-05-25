@@ -36,7 +36,7 @@ public class AssistanceAgentValidator extends AbstractValidator<ValidAssistanceA
 			String employeeCode = assistanceAgent.getEmployeeCode().toUpperCase();
 			String applicantName = assistanceAgent.getIdentity().getFullName().trim();
 
-			String initials = this.extractInitials(applicantName);
+			String initials = AssistanceAgentValidator.extractInitials(applicantName);
 
 			boolean validFormat = employeeCode.matches("^[A-Z]{2,3}\\d{6}$");
 			boolean initialsMatch = employeeCode.startsWith(initials);
@@ -56,7 +56,7 @@ public class AssistanceAgentValidator extends AbstractValidator<ValidAssistanceA
 	}
 
 	// Método para extraer las iniciales del nombre completo
-	private String extractInitials(final String fullName) {
+	public static String extractInitials(final String fullName) {
 		String cleanedFullName = fullName.replace(",", "").trim();
 
 		String[] parts = cleanedFullName.split("\\s+");

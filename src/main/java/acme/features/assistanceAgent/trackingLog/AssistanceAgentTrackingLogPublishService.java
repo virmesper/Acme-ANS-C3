@@ -1,6 +1,8 @@
 
 package acme.features.assistanceAgent.trackingLog;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
@@ -8,6 +10,7 @@ import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S4.Claim;
 import acme.entities.S4.Indicator;
 import acme.entities.S4.TrackingLog;
 import acme.realms.assistanceAgent.AssistanceAgent;
@@ -51,22 +54,20 @@ public class AssistanceAgentTrackingLogPublishService extends AbstractGuiService
 
 	@Override
 	public void bind(final TrackingLog trackingLog) {
-		assert trackingLog != null;
-
 		super.bindObject(trackingLog, "lastUpdateMoment", "step", "resolutionPercentage", "resolution", "indicator");
 	}
 
 	@Override
 	public void validate(final TrackingLog trackingLog) {
+		super.state(!trackingLog.getClaim().isDraftMode(), "*", "assistanceAgent.tracking-log.form.error.claim-must-be-published");
+		super.state(this.repository.countTrackingLogsForExceptionalCase(trackingLog.getClaim().getId()) < 2, "*", "assistanceAgent.tracking-log.form.error.only-two-tracking-logs-100");
 		if (!super.getBuffer().getErrors().hasErrors("indicator")) {
 			boolean bool1;
 			boolean bool2;
 
-			if (!super.getBuffer().getErrors().hasErrors("resolutionPercentage")) {
-				bool1 = trackingLog.getIndicator() == Indicator.PENDING && trackingLog.getResolutionPercentage() < 100;
-				bool2 = trackingLog.getIndicator() != Indicator.PENDING && trackingLog.getResolutionPercentage() == 100;
-				super.state(bool1 || bool2, "indicator", "assistanceAgent.tracking-log.form.error.indicator-pending");
-			}
+			bool1 = trackingLog.getIndicator() == Indicator.PENDING && trackingLog.getResolutionPercentage() < 100;
+			bool2 = trackingLog.getIndicator() != Indicator.PENDING && trackingLog.getResolutionPercentage() == 100;
+			super.state(bool1 || bool2, "indicator", "assistanceAgent.tracking-log.form.error.indicator-pending");
 		}
 		if (!super.getBuffer().getErrors().hasErrors("resolutionPercentage")) {
 			Double maxResolutionPercentage;
@@ -75,7 +76,7 @@ public class AssistanceAgentTrackingLogPublishService extends AbstractGuiService
 
 			notAnyMore = this.repository.countTrackingLogsForExceptionalCase(trackingLog.getClaim().getId()) == 2;
 			maxResolutionPercentage = this.repository.findMaxResolutionPercentageByClaimId(trackingLog.getId(), trackingLog.getClaim().getId());
-			finalMaxResolutionPercentage = maxResolutionPercentage != null ? maxResolutionPercentage : 0.0;
+			finalMaxResolutionPercentage = maxResolutionPercentage != null ? maxResolutionPercentage : -0.01;
 
 			if (notAnyMore)
 				super.state(trackingLog.getResolutionPercentage() == 100, "resolutionPercentage", "assistanceAgent.tracking-log.form.error.must-be-100");
@@ -83,21 +84,26 @@ public class AssistanceAgentTrackingLogPublishService extends AbstractGuiService
 				super.state(trackingLog.getResolutionPercentage() > finalMaxResolutionPercentage, "resolutionPercentage", "assistanceAgent.tracking-log.form.error.less-than-max-resolution-percentage");
 		}
 		if (!super.getBuffer().getErrors().hasErrors("resolution")) {
-			boolean bool1;
+			boolean isPending = trackingLog.getIndicator() == Indicator.PENDING;
 
-			bool1 = trackingLog.getIndicator() != Indicator.PENDING && !trackingLog.getResolution().isBlank() && trackingLog.getResolution() != null;
+			boolean valid = isPending && !Optional.ofNullable(trackingLog.getResolution()).map(String::strip).filter(s -> !s.isEmpty()).isPresent()
+				|| !isPending && Optional.ofNullable(trackingLog.getResolution()).map(String::strip).filter(s -> !s.isEmpty()).isPresent();
 
-			super.state(bool1 || trackingLog.getIndicator() == Indicator.PENDING, "resolution", "assistanceAgent.tracking-log.form.error.resolution-not-null");
+			super.state(valid, "resolution", "assistanceAgent.tracking-log.form.error.resolution-not-null");
 		}
 	}
 
 	@Override
 	public void perform(final TrackingLog trackingLog) {
-		assert trackingLog != null;
+		Claim claim;
+
+		claim = this.repository.findOneClaimById(trackingLog.getClaim().getId());
+		claim.setIndicator(trackingLog.getIndicator());
 
 		trackingLog.setDraftMode(false);
 		trackingLog.setLastUpdateMoment(MomentHelper.getCurrentMoment());
 
+		this.repository.save(claim);
 		this.repository.save(trackingLog);
 	}
 

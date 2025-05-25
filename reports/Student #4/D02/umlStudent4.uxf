@@ -254,17 +254,17 @@ bg=GREEN</panel_attributes>
     <panel_attributes>&lt;&lt;Form&gt;&gt;
 AssistanceAgentDashboard
 --
-+ ratioResolvedClaims: double
-+ ratioRejectedClaims: double
-+ topThreeMonthsWithMostClaims: List&lt;String&gt;
-+ averageClaimLogs:  double
-+ deviationClaimLogs: double
-+ minClaimLogs: int
-+ maxClaimLogs: int
-+ averageClaimsAssisted: double
-+ deviationClaimsAssisted: double
-+ minClaimsAssisted: int
-+ maxClaimsAssisted: int
++ ratioResolvedClaims: Double
++ ratioRejectedClaims: Double
++ topThreeMonthsWithMostClaims: List&lt;Integer&gt;
++ averageClaimLogs:  Double
++ deviationClaimLogs: Double
++ minClaimLogs: Double
++ maxClaimLogs: Double
++ averageClaimsAssisted: Double
++ deviationClaimsAssisted: Double
++ minClaimsAssisted: Double
++ maxClaimsAssisted: Double
 --
 bg=YELLOW</panel_attributes>
     <additional_attributes/>

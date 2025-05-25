@@ -18,3 +18,18 @@ trackingLog-16,2012/07/02 0:15,Final Step,100.00,REJECTED,false,"Resolution reje
 trackingLog-17,2012/07/02 0:20,Review Step,99.99,PENDING,true,null,claim-02
 trackingLog-18,2012/07/02 0:25,Approval Step,100.00,ACCEPTED,false,"Final approval granted",claim-03
 trackingLog-19,2012/07/02 0:30,Approval Step,100.00,REJECTED,true,"Final approval denied",claim-03
+trackingLog-20,2024/01/25 12:00,Final step,100.00,ACCEPTED,true,Final resolution,claim-04
+trackingLog-21,2024/12/01 12:00,Final step test publish,100.00,ACCEPTED,true,Final resolution text publish,claim-27
+trackingLog-22,2024/06/02 10:00,Initial step,100.00,ACCEPTED,false,Initial resolution,claim-28
+trackingLog-23,2024/06/03 11:00,Exceptional step 1,100.00,ACCEPTED,false,Exceptional resolution,claim-28
+trackingLog-24,2024/06/04 12:00,Exceptional step 2,100.00,ACCEPTED,true,Second attempt,claim-28
+trackingLog-25,2024/06/05 12:00,Extra step,100.00,ACCEPTED,false,Extra resolution attempt,claim-28
+trackingLog-26,2012/07/02 00:00,"Initial step",0.00,PENDING,true,null,claim-21
+trackingLog-27,2016/12/01 17:30,"โลเร็ม อิปซัม",100.00,ACCEPTED,false,"โลเร็ม อิปซัม",claim-14
+trackingLog-28,2017/09/10 11:00,"لوريم إيبسوم",100.00,ACCEPTED,false,"لوريم إيبسوم",claim-15
+trackingLog-29,2015/08/21 13:20,"洛伦·伊普森",100.00,ACCEPTED,false,"洛伦·伊普森",claim-16
+trackingLog-30,2016/04/17 09:10,"<marquee>Hacked</marquee>",100.00,ACCEPTED,false,"<marquee>Hacked</marquee>",claim-17
+trackingLog-31,2014/10/05 14:50,"<script>alert(‘Hacked!’);</script>",100.00,ACCEPTED,false,"<script>alert(‘Hacked!’);</script>",claim-18
+trackingLog-32,2013/06/25 16:30,"' or 'A' = 'A ",100.00,ACCEPTED,false,"' or 'A' = 'A",claim-19
+trackingLog-33,2013/06/25 16:31,"Step micro",0.01,PENDING,true,null,claim-20
+
