@@ -39,35 +39,44 @@ public class AssistanceAgentTrackingLogListService extends AbstractGuiService<As
 		Collection<TrackingLog> objects;
 		int masterId;
 
-		masterId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		objects = this.repository.findManyTrackingLogsByMasterId(masterId);
+		masterId = super.getRequest().getData("masterId", int.class);
+		objects = this.repository.findManyTrackingLogsClaimId(masterId);
 
 		super.getBuffer().addData(objects);
 	}
 
 	@Override
-	public void unbind(final TrackingLog trackingLog) {
+	public void unbind(final TrackingLog object) {
 		String published;
 		Dataset dataset;
+
+		dataset = super.unbindObject(object, "lastUpdateMoment", "step", "resolutionPercentage", "indicator");
+		published = !object.isDraftMode() ? "✓" : "x";
+		dataset.put("published", published);
+
+		super.getResponse().addData(dataset);
+	}
+
+	@Override
+	public void unbind(final Collection<TrackingLog> object) {
 		int masterId;
 		Claim claim;
-		boolean exceptionalCase;
-		boolean notAnyMore;
+		Boolean noMore;
+		Boolean exceptionalCase;
+		Boolean greatRealm;
 
 		masterId = super.getRequest().getData("masterId", int.class);
 		claim = this.repository.findOneClaimById(masterId);
-		exceptionalCase = this.repository.countTrackingLogsForExceptionalCase(masterId) == 1;
-		notAnyMore = this.repository.countTrackingLogsForExceptionalCase(masterId) == 2;
 
-		dataset = super.unbindObject(trackingLog, "lastUpdateMoment", "step", "resolutionPercentage", "indicator");
-		published = !trackingLog.isDraftMode() ? "✓" : "x";
-		dataset.put("published", published);
+		exceptionalCase = this.repository.countTrackingLogsForExceptionalCase(masterId) == 1;
+		noMore = this.repository.countTrackingLogsForExceptionalCase(masterId) == 0;
+
+		greatRealm = super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
 
 		super.getResponse().addGlobal("masterId", masterId);
-		super.getResponse().addGlobal("exceptionalCase", !claim.isDraftMode() && exceptionalCase);
-		super.getResponse().addGlobal("notAnyMore", notAnyMore);
-
-		super.getResponse().addData(dataset);
+		super.getResponse().addGlobal("exceptionalCase", exceptionalCase);
+		super.getResponse().addGlobal("noMore", noMore);
+		super.getResponse().addGlobal("greatRealm", greatRealm);
 	}
 
 }

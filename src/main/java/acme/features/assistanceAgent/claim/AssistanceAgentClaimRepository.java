@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import acme.client.repositories.AbstractRepository;
 import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
+import acme.entities.S4.Indicator;
 import acme.entities.S4.TrackingLog;
 import acme.realms.assistanceAgent.AssistanceAgent;
 
@@ -21,14 +22,17 @@ public interface AssistanceAgentClaimRepository extends AbstractRepository {
 	@Query("SELECT c FROM Claim c WHERE c.id = :claimId")
 	Claim findClaimById(int claimId);
 
+	@Query("SELECT l FROM Leg l WHERE l.draftMode = false AND l.flight.draftMode = false")
+	public Collection<Leg> findAllLegs();
+
 	@Query("SELECT l FROM Leg l WHERE l.id = :legId")
 	Leg findLegById(int legId);
 
-	@Query("SELECT c FROM Claim c WHERE c.indicator <> acme.entities.S4.Indicator.PENDING AND c.assistanceAgent.id = :agentId")
-	Collection<Claim> findCompletedClaims(int agentId);
+	@Query("select c from Claim c where c.assistanceAgent.id = :id and c.indicator != :type")
+	public Collection<Claim> findManyClaimsCompletedByMasterId(int id, Indicator type);
 
-	@Query("SELECT c FROM Claim c WHERE c.indicator = acme.entities.S4.Indicator.PENDING AND c.assistanceAgent.id = :agentId")
-	Collection<Claim> findUndergoingClaims(int agentId);
+	@Query("select c from Claim c where c.assistanceAgent.id = :id and c.indicator = :type")
+	public Collection<Claim> findManyClaimsUndergoingByMasterId(int id, Indicator type);
 
 	@Query("SELECT l FROM Leg l WHERE l.draftMode = false AND l.flight.draftMode = false")
 	Collection<Leg> findAvailableLegs();

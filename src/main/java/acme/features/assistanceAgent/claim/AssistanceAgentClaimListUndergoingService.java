@@ -9,6 +9,7 @@ import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S4.Claim;
+import acme.entities.S4.Indicator;
 import acme.realms.assistanceAgent.AssistanceAgent;
 
 @GuiService
@@ -24,26 +25,26 @@ public class AssistanceAgentClaimListUndergoingService extends AbstractGuiServic
 
 	@Override
 	public void authorise() {
+		AssistanceAgent assistanceAgent;
 		boolean status;
-		status = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
 
+		assistanceAgent = (AssistanceAgent) super.getRequest().getPrincipal().getActiveRealm();
+		status = super.getRequest().getPrincipal().hasRealm(assistanceAgent);
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
 		Collection<Claim> claims;
-		int agentId;
-		agentId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		claims = this.repository.findUndergoingClaims(agentId);
+		int masterId;
+		masterId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		claims = this.repository.findManyClaimsUndergoingByMasterId(masterId, Indicator.PENDING);
 
 		super.getBuffer().addData(claims);
 	}
 
 	@Override
 	public void unbind(final Claim object) {
-		assert object != null;
-
 		String published;
 		Dataset dataset;
 

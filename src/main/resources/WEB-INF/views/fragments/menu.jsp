@@ -33,6 +33,8 @@
 		<acme:menu-option code="master.menu.assistance-agent" access="hasRealm('AssistanceAgent')">
  			<acme:menu-suboption code="master.menu.assistance-agent.claim.list-completed" action="/assistance-agent/claim/list-completed"/>
  			<acme:menu-suboption code="master.menu.assistance-agent.claim.list-undergoing" action="/assistance-agent/claim/list-undergoing"/>
+ 			<acme:menu-suboption code="master.menu.assistance-agent.dashboard" action="/assistance-agent/assistance-agent-dashboard/show"/>
+
  		</acme:menu-option>
 		
 		<acme:menu-option code="master.menu.customer" access="hasRealm('Customer')">
@@ -52,7 +54,8 @@
 		    <acme:menu-suboption code="master.menu.administrator.populate-db-sample" action="/administrator/system/populate-sample"/>
 		    <acme:menu-separator/>
 		    <acme:menu-suboption code="master.menu.administrator.shut-system-down" action="/administrator/system/shut-down"/>
-
+			<acme:menu-separator/>
+			<acme:menu-suboption code="master.menu.administrator.list.claim" action="/administrator/claim/list" access="isAuthenticated()"/>
 		</acme:menu-option>
 
 
@@ -97,6 +100,12 @@
 			<acme:menu-suboption code="master.menu.user-account.consumer-profile"
 				action="/authenticated/consumer/update"
 				access="hasRealm('Consumer')" />
+			<acme:menu-suboption code="master.menu.user-account.become-assistance-agent" 
+				action="/authenticated/assistance-agent/create" 
+				access="!hasRealm('AssistanceAgent')"/>
+			<acme:menu-suboption code="master.menu.user-account.assistance-agent-profile" 
+				action="/authenticated/assistance-agent/update" 
+				access="hasRealm('AssistanceAgent')"/>
 		</acme:menu-option>
 	</acme:menu-right>
 </acme:menu-bar>

@@ -7,6 +7,7 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S4.Claim;
 import acme.entities.S4.Indicator;
 import acme.entities.S4.TrackingLog;
 import acme.realms.assistanceAgent.AssistanceAgent;
@@ -51,11 +52,17 @@ public class AssistanceAgentTrackingLogShowService extends AbstractGuiService<As
 	@Override
 	public void unbind(final TrackingLog trackingLog) {
 		Dataset dataset;
+		Boolean exceptionalCase;
+		SelectChoices choicesIndicator;
+		Claim claim;
 
-		SelectChoices indicatorChoices = SelectChoices.from(Indicator.class, trackingLog.getIndicator());
+		claim = trackingLog.getClaim();
+		exceptionalCase = !claim.isDraftMode() && this.repository.countTrackingLogsForExceptionalCase(claim.getId()) == 1;
+		choicesIndicator = SelectChoices.from(Indicator.class, trackingLog.getIndicator());
 
-		dataset = super.unbindObject(trackingLog, "lastUpdateMoment", "step", "resolutionPercentage", "indicator", "resolution", "draftMode");
-		dataset.put("indicators", indicatorChoices);
+		dataset = super.unbindObject(trackingLog, "lastUpdateMoment", "step", "resolutionPercentage", "draftMode", "resolution", "indicator");
+		dataset.put("indicators", choicesIndicator);
+		dataset.put("exceptionalCase", exceptionalCase);
 
 		super.getResponse().addData(dataset);
 	}

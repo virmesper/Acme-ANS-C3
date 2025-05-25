@@ -17,19 +17,19 @@ public class AssistanceAgentDashboard extends AbstractForm {
 
 	// Attributes -------------------------------------------------------------
 
-	double						ratioResolvedClaims;
-	double						ratioRejectedClaims;
+	Double						ratioOfClaimsStoredSuccessfully;
+	Double						ratioOfClaimsRejected;
 
-	private List<String>		topThreeMonthsWithMostClaims;
+	List<Integer>				topThreeMonthsHighestNumberOfClaims;
 
-	double						averageClaimLogs;
-	double						deviationClaimLogs;
-	int							minClaimLogs;
-	int							maxClaimLogs;
+	Double						avgNumberOfLogsClaimsHave;
+	Double						minNumberOfLogsClaimsHave;
+	Double						maxNumberOfLogsClaimsHave;
+	Double						devNumberOfLogsClaimsHave;
 
-	double						averageClaimsAssisted;
-	double						deviationClaimsAssisted;
-	int							minClaimsAssisted;
-	int							maxClaimsAssisted;
+	Double						avgNumberOfLogsClaimsAssistedDuringLastMonth;
+	Double						minNumberOfLogsClaimsAssistedDuringLastMonth;
+	Double						maxNumberOfLogsClaimsAssistedDuringLastMonth;
+	Double						devNumberOfLogsClaimsAssistedDuringLastMonth;
 
 }

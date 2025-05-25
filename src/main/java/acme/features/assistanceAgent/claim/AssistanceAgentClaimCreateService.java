@@ -1,6 +1,7 @@
 
 package acme.features.assistanceAgent.claim;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,30 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 
 	@Override
 	public void authorise() {
-		boolean isAgent = super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
-		super.getResponse().setAuthorised(isAgent);
+		AssistanceAgent assistanceAgent;
+		boolean status;
+		boolean bool;
+		int legId;
+		Leg leg;
+
+		if (super.getRequest().getMethod().equals("GET"))
+			bool = true;
+		else {
+			legId = super.getRequest().getData("leg", int.class);
+			leg = this.repository.findLegById(legId);
+
+			boolean isLegValid = leg != null;
+			boolean isLegNotDraft = isLegValid && !leg.isDraftMode();
+			boolean isFlightNotDraft = isLegNotDraft && !leg.getFlight().getDraftMode();
+			boolean isLegIdZero = legId == 0;
+
+			bool = isLegIdZero || isLegValid && isLegNotDraft && isFlightNotDraft;
+		}
+
+		assistanceAgent = (AssistanceAgent) super.getRequest().getPrincipal().getActiveRealm();
+		status = bool && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -69,6 +92,13 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 
 		if (!super.getBuffer().getErrors().hasErrors("indicator"))
 			super.state(object.getIndicator() == Indicator.PENDING, "indicator", "assistanceAgent.claim.form.error.indicator.pending");
+
+		if (!super.getBuffer().getErrors().hasErrors("leg")) {
+			Collection<Leg> legs;
+			legs = this.repository.findAllLegs();
+
+			super.state(legs.contains(object.getLeg()), "leg", "assistanceAgent.claim.form.error.leg-wrong");
+		}
 	}
 
 	@Override
@@ -85,7 +115,7 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 		Dataset dataset;
 		SelectChoices claimTypeChoices = SelectChoices.from(ClaimType.class, object.getType());
 		SelectChoices indicatorChoices = SelectChoices.from(Indicator.class, object.getIndicator());
-		SelectChoices legChoices = SelectChoices.from(this.repository.findAvailableLegs(), "flightNumber", object.getLeg());
+		SelectChoices legChoices = SelectChoices.from(this.repository.findAllLegs(), "flightNumber", object.getLeg());
 
 		dataset = super.unbindObject(object, "registrationMoment", "passengerEmail", "description", "leg", "indicator", "type");
 		dataset.put("types", claimTypeChoices);
