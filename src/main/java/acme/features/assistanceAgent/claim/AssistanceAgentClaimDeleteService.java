@@ -53,8 +53,6 @@ public class AssistanceAgentClaimDeleteService extends AbstractGuiService<Assist
 
 	@Override
 	public void bind(final Claim claim) {
-		assert claim != null;
-
 		int legId;
 		Leg leg;
 
@@ -67,13 +65,10 @@ public class AssistanceAgentClaimDeleteService extends AbstractGuiService<Assist
 
 	@Override
 	public void validate(final Claim claim) {
-		assert claim != null;
 	}
 
 	@Override
 	public void perform(final Claim claim) {
-		assert claim != null;
-
 		Collection<TrackingLog> trackingLogs;
 
 		trackingLogs = this.repository.findManyTrackingLogsByClaimId(claim.getId());

@@ -20,7 +20,7 @@
 	<acme:input-email code="assistance-agent.claim.form.label.passengerEmail" path="passengerEmail"/>
 	<acme:input-textbox code="assistance-agent.claim.form.label.description" path="description"/>
 	<acme:input-select code="assistance-agent.claim.form.label.type" path="type"  choices="${types}"/>
-	<acme:input-select code="assistance-agent.claim.form.label.indicator" path="indicator" choices="${indicators}"/>
+	<acme:input-textbox code="assistance-agent.claim.form.label.indicator" path="indicator" readonly="true"/>
 	<acme:input-select code="assistance-agent.claim.form.label.leg" path="leg" choices="${legs}"/>
 	
 	<jstl:choose>

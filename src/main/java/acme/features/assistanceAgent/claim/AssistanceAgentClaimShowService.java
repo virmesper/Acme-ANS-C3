@@ -1,8 +1,6 @@
 
 package acme.features.assistanceAgent.claim;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
@@ -12,7 +10,6 @@ import acme.client.services.GuiService;
 import acme.entities.S4.Claim;
 import acme.entities.S4.ClaimType;
 import acme.entities.S4.Indicator;
-import acme.entities.S4.TrackingLog;
 import acme.realms.assistanceAgent.AssistanceAgent;
 
 @GuiService
@@ -43,15 +40,9 @@ public class AssistanceAgentClaimShowService extends AbstractGuiService<Assistan
 	public void load() {
 		Claim claim;
 		int id;
-		Collection<TrackingLog> tlogs;
-		Indicator value;
 
 		id = super.getRequest().getData("id", int.class);
 		claim = this.repository.findClaimById(id);
-
-		tlogs = this.repository.findManyTrackingLogsByClaimId(id);
-		value = tlogs.stream().map(t -> t.getIndicator()).filter(t -> t.equals(Indicator.ACCEPTED) || t.equals(Indicator.REJECTED)).findFirst().orElse(Indicator.PENDING);
-		claim.setIndicator(value);
 
 		super.getBuffer().addData(claim);
 	}

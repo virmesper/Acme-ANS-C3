@@ -10,7 +10,6 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S4.Claim;
 import acme.entities.S4.Indicator;
-import acme.entities.S4.TrackingLog;
 import acme.realms.assistanceAgent.AssistanceAgent;
 
 @GuiService
@@ -46,17 +45,8 @@ public class AssistanceAgentClaimListUndergoingService extends AbstractGuiServic
 
 	@Override
 	public void unbind(final Claim object) {
-		assert object != null;
-
 		String published;
 		Dataset dataset;
-
-		Collection<TrackingLog> tlogs;
-		Indicator value;
-
-		tlogs = this.repository.findManyTrackingLogsByClaimId(object.getId());
-		value = tlogs.stream().map(t -> t.getIndicator()).filter(t -> t.equals(Indicator.ACCEPTED) || t.equals(Indicator.REJECTED)).findFirst().orElse(Indicator.PENDING);
-		object.setIndicator(value);
 
 		dataset = super.unbindObject(object, "registrationMoment", "passengerEmail", "type", "indicator");
 
