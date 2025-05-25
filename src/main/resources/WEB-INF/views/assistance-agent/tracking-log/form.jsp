@@ -30,7 +30,7 @@
 			<acme:input-textbox code="assistance-agent.tracking-log.form.label.step" path="step"/>
 			<acme:input-double code="assistance-agent.tracking-log.form.label.resolutionPercentage" path="resolutionPercentage" readonly="true"/>
 			<acme:input-textbox code="assistance-agent.tracking-log.form.label.resolution" path="resolution"/>
-			<acme:input-select code="assistance-agent.tracking-log.form.label.indicator" path="indicator" choices="${indicators}"/>
+			<acme:input-textbox code="assistance-agent.tracking-log.form.label.indicator" path="indicator" readonly="true"/>
 		</jstl:when>
 	</jstl:choose>	
 			

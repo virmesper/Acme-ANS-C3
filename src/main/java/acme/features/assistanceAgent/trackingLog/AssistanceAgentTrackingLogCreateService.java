@@ -71,10 +71,11 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 		if (!super.getBuffer().getErrors().hasErrors("indicator")) {
 			boolean bool1;
 			boolean bool2;
-
-			bool1 = trackingLog.getIndicator() == Indicator.PENDING && trackingLog.getResolutionPercentage() < 100;
-			bool2 = trackingLog.getIndicator() != Indicator.PENDING && trackingLog.getResolutionPercentage() == 100;
-			super.state(bool1 || bool2, "indicator", "assistanceAgent.tracking-log.form.error.indicator-pending");
+			if (!super.getBuffer().getErrors().hasErrors("resolutionPercentage")) {
+				bool1 = trackingLog.getIndicator() == Indicator.PENDING && trackingLog.getResolutionPercentage() < 100;
+				bool2 = trackingLog.getIndicator() != Indicator.PENDING && trackingLog.getResolutionPercentage() == 100;
+				super.state(bool1 || bool2, "indicator", "assistanceAgent.tracking-log.form.error.indicator-pending");
+			}
 
 		}
 

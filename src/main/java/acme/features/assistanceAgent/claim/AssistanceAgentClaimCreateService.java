@@ -1,7 +1,6 @@
 
 package acme.features.assistanceAgent.claim;
 
-import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import acme.client.components.basis.AbstractRealm;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
-import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Leg;
@@ -88,22 +86,12 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 
 	@Override
 	public void validate(final Claim object) {
-		assert object != null;
-
 		if (!super.getBuffer().getErrors().hasErrors("indicator"))
 			super.state(object.getIndicator() == Indicator.PENDING, "indicator", "assistanceAgent.claim.form.error.indicator.pending");
-
-		if (!super.getBuffer().getErrors().hasErrors("leg")) {
-			Collection<Leg> legs;
-			legs = this.repository.findAllLegs();
-
-			super.state(legs.contains(object.getLeg()), "leg", "assistanceAgent.claim.form.error.leg-wrong");
-		}
 	}
 
 	@Override
 	public void perform(final Claim object) {
-		assert object != null;
 
 		object.setRegistrationMoment(MomentHelper.getCurrentMoment());
 
@@ -123,12 +111,6 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 		dataset.put("legs", legChoices);
 
 		super.getResponse().addData(dataset);
-	}
-
-	@Override
-	public void onSuccess() {
-		if (super.getRequest().getMethod().equals("POST"))
-			PrincipalHelper.handleUpdate();
 	}
 
 }
