@@ -23,8 +23,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(indexes = {
-	@Index(columnList = "claim_id")
+@Table(name = "TrackingLog", indexes = {
+	@Index(columnList = "claim_id"), @Index(columnList = "lastUpdateMoment"), @Index(columnList = "indicator"), @Index(columnList = "resolutionPercentage")
 })
 
 @Getter
