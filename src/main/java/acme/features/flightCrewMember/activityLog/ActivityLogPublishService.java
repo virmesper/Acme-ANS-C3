@@ -75,8 +75,8 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 		Date activityLogMoment = activityLog.getRegistrationMoment();
 		boolean activityLogMomentIsAfterscheduledArrival = this.repository.associatedWithCompletedLeg(activityLogId, activityLogMoment);
 		super.state(activityLogMomentIsAfterscheduledArrival, "WrongActivityLogDate", "acme.validation.activityLog.wrongMoment.message");
-		boolean flightAssignamentIsPublished = this.repository.isFlightAssignmentAlreadyPublishedByActivityLogId(activityLogId);
-		super.state(flightAssignamentIsPublished, "activityLog", "acme.validation.ActivityLog.FlightAssignamentNotPublished.message");
+		boolean flightAssignmentIsPublished = this.repository.isFlightAssignmentAlreadyPublishedByActivityLogId(activityLogId);
+		super.state(flightAssignmentIsPublished, "activityLog", "acme.validation.ActivityLog.FlightAssignmentNotPublished.message");
 	}
 
 	@Override

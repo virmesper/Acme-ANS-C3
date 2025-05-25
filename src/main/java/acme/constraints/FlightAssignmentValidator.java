@@ -17,15 +17,15 @@ public class FlightAssignmentValidator extends AbstractValidator<ValidFlightAssi
 	}
 
 	@Override
-	public boolean isValid(final FlightAssignment flightAssignament, final ConstraintValidatorContext context) {
-		if (flightAssignament == null)
+	public boolean isValid(final FlightAssignment flightAssignment, final ConstraintValidatorContext context) {
+		if (flightAssignment == null)
 			return false;
-		if (flightAssignament.getFlightCrewMember() == null)
+		if (flightAssignment.getFlightCrewMember() == null)
 			return false;
 
 		boolean flightCrewMemberAvailable;
-		flightCrewMemberAvailable = AvailabilityStatus.AVAILABLE.equals(flightAssignament.getFlightCrewMember().getAvailabilityStatus());
-		super.state(context, flightCrewMemberAvailable, "flightCrewMember", "{acme.validation.FlightAssignament.flightCrewMemberNotAvailable.message}");
+		flightCrewMemberAvailable = AvailabilityStatus.AVAILABLE.equals(flightAssignment.getFlightCrewMember().getAvailabilityStatus());
+		super.state(context, flightCrewMemberAvailable, "flightCrewMember", "{acme.validation.FlightAssignment.flightCrewMemberNotAvailable.message}");
 
 		return !super.hasErrors(context);
 	}

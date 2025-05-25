@@ -12,6 +12,7 @@ import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Leg;
+import acme.entities.S3.AvailabilityStatus;
 import acme.entities.S3.CurrentStatus;
 import acme.entities.S3.Duty;
 import acme.entities.S3.FlightAssignment;
@@ -84,19 +85,23 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 	public void validate(final FlightAssignment flightAssignment) {
 		FlightAssignment original = this.repository.findFlightAssignmentById(flightAssignment.getId());
 		Leg leg = flightAssignment.getLeg();
-		boolean cambioDuty = !original.getDuty().equals(flightAssignment.getDuty());
+		Duty duty = flightAssignment.getDuty();
+		AvailabilityStatus status = flightAssignment.getFlightCrewMember().getAvailabilityStatus();
 
+		boolean cambioDuty = !original.getDuty().equals(flightAssignment.getDuty());
 		boolean cambioLeg = !original.getLeg().equals(flightAssignment.getLeg());
+		boolean legCompleted = this.isLegCompleted(leg);
 
 		if (leg != null && cambioLeg && !this.isLegCompatible(flightAssignment))
 			super.state(false, "flightCrewMember", "acme.validation.FlightAssignment.FlightCrewMemberIncompatibleLegs.message");
-
 		if (leg != null && (cambioDuty || cambioLeg))
 			this.checkPilotAndCopilotAssignment(flightAssignment);
-
-		boolean legCompleted = this.isLegCompleted(leg);
 		if (legCompleted)
 			super.state(false, "leg", "acme.validation.FlightAssignment.LegAlreadyCompleted.message");
+		if (!Duty.LEAD_ATTENDANT.equals(duty))
+			super.state(false, "duty", "acme.validation.FlightAssignment.NotFlightAttendant.message");
+		if (!AvailabilityStatus.AVAILABLE.equals(status))
+			super.state(false, "crewMember", "acme.validation.FlightAssignment.OnlyAvailableCanBeAssigned.message");
 	}
 
 	private boolean isLegCompleted(final Leg leg) {
