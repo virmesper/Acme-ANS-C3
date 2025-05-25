@@ -2,16 +2,15 @@
 package acme.features.flightCrewMember.flightAssignments;
 
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
-import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Leg;
+import acme.entities.S1.LegStatus;
 import acme.entities.S3.CurrentStatus;
 import acme.entities.S3.Duty;
 import acme.entities.S3.FlightAssignment;
@@ -73,9 +72,7 @@ public class FlightAssignmentShowService extends AbstractGuiService<FlightCrewMe
 		FlightCrewMember flightCrewMember = this.repository.findFlightCrewMemberById(flightCrewMemberId);
 
 		legChoices = SelectChoices.from(legs, "flightNumber", flightAssignment.getLeg());
-		Date currentMoment;
-		currentMoment = MomentHelper.getCurrentMoment();
-		isCompleted = this.repository.areLegsCompletedByFlightAssignment(flightAssignmentId, currentMoment);
+		isCompleted = this.repository.areLegsCompletedByFlightAssignment(flightAssignmentId, LegStatus.LANDED);
 		dataset = super.unbindObject(flightAssignment, "duty", "moment", "currentStatus", "remarks", "draftMode");
 		dataset.put("currentStatus", currentStatus);
 		dataset.put("duty", duty);

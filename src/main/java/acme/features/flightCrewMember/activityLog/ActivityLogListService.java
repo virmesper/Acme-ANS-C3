@@ -48,12 +48,11 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 	public void load() {
 
 		Collection<ActivityLog> activityLog;
-		int masterId;
 
-		masterId = super.getRequest().getData("masterId", int.class);
+		Integer masterId = super.getRequest().getData("masterId", Integer.class);
 
 		activityLog = this.repository.findActivityLogsByMasterId(masterId);
-
+		super.getResponse().addGlobal("masterId", masterId);
 		super.getBuffer().addData(activityLog);
 	}
 
@@ -70,11 +69,9 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode");
 		super.addPayload(dataset, activityLog, "registrationMoment", "typeOfIncident");
 
-		int masterId;
-
 		boolean showCreate;
 
-		masterId = super.getRequest().getData("masterId", int.class);
+		Integer masterId = super.getRequest().getData("masterId", Integer.class);
 
 		showCreate = this.repository.flightAssignmentAssociatedWithCompletedLeg(masterId, MomentHelper.getCurrentMoment());
 
