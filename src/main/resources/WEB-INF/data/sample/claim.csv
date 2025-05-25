@@ -9,8 +9,6 @@ claim-04,2025/01/01 0:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, conse
 claim-05,2012/07/02 0:00,a@b.e,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
 claim-06,2012/07/02 0:00,a@b.es,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
 claim-07,2012/07/02 0:00,a@b.esx,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
-claim-08,2012/07/02 0:00,lorem-ipsum@dolor.sit.amet.consectetur.adipiscing.elit.sed.do.eiusmod.tempor.incididunt.ut.labore.et.dolore.magna.aliqua.Ut.enim.ad.minim.veniam.quis.nostrud.exercitation.ullamco.laboris.nisi.ut.aliquip.ex.ea.commodo.consequat.duis.aute.irure.doloris.edu,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
-claim-09,2012/07/02 0:00,lorem-ipsum@dolor.sit.amet.consectetur.adipiscing.elit.sed.do.eiusmod.tempor.incididunt.ut.labore.et.dolore.magna.aliqua.Ut.enim.ad.minim.veniam.quis.nostrud.exercitation.ullamco.laboris.nisi.ut.aliquip.ex.ea.commodo.consequat.duis.aute.irure.dolor.es.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
 # description 
 claim-10,2012/07/02 0:00,acme@lorem-ipsum.org,"L",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
 claim-11,2012/07/02 0:00,acme@lorem-ipsum.org,"Lo",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
@@ -39,4 +37,3 @@ claim-31,2025/01/01 00:00,mike.brown@example.com,"<marquee>Hacked</marquee>",SEC
 claim-32,2025/01/01 00:00,lucy.green@example.com,"<script>alert(‘Hacked!’);</script>",OTHER_ISSUES,PENDING,agent2,leg-01,true
 claim-33,2014/09/23 08:00,lucy.green@example.com,"' or 'A' = 'A ",OTHER_ISSUES,PENDING,agent2,leg-01,true
 claim-34,2000/01/01 00:00,a@b.es,"Seat was broken; not functional",SECURITY_INCIDENT,PENDING,agent1,leg-02,true
-claim-35,2000/01/01 00:01,lorem-ipsum@dolor.sit.amet.consectetur.adipiscing.elit.sed.do.eiusmod.tempor.incididunt.ut.labore.et.dolore.magna.aliqua.Ut.enim.ad.minim.veniam.quis.nostrud.exercitation.ullamco.laboris.nisi.ut.aliquip.ex.ea.commodo.consequat.duis.aute.irure.doloris.edu,"Incorrect baggage charge",SECURITY_INCIDENT,PENDING,agent1,leg-02,true
