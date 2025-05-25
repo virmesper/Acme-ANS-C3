@@ -13,6 +13,8 @@ assistanceAgent.tracking-log.form.error.indicator-pending-exceptional-case = El 
 assistanceAgent.tracking-log.form.error.must-be-100 = El porcentaje de resolución debe ser del 100%
 assistanceAgent.tracking-log.form.error.resolution-not-null =  El motivo de la resolución no puede estar en blanco ni ser nulo si el indicador es "ACEPTADO" o "RECHAZADO"
 assistanceAgent.tracking-log.form.error.indicator-pending = El indicador solo puede estar en "PENDIENTE" si el porcentaje de resolución es menor al 100%. En el caso de ser igual a 100%, debe ser "ACEPTADO" o "RECHAZADO"
+assistanceAgent.tracking-log.form.error.claim-must-be-published = Antes de publicar un registro de seguimiento debes de publicar su reclamo correspondiente
+assistanceAgent.tracking-log.form.error.only-two-tracking-logs-100 = Solo puedes tener 2 registros de seguimiento con un porcentaje del 100 %. Elimina los otros registros de seguimiento que no están publicados
 
 assistance-agent.tracking-log.list.title = Lista de registro de seguimiento
 assistance-agent.tracking-log.form.title = Detalles de registro de seguimiento

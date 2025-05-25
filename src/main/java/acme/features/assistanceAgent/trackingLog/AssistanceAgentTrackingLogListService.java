@@ -62,25 +62,21 @@ public class AssistanceAgentTrackingLogListService extends AbstractGuiService<As
 		int masterId;
 		Claim claim;
 		Boolean noMore;
-		Boolean notCreateButton;
 		Boolean exceptionalCase;
 		Boolean greatRealm;
 
 		masterId = super.getRequest().getData("masterId", int.class);
 		claim = this.repository.findOneClaimById(masterId);
 
-		exceptionalCase = !claim.isDraftMode() && this.repository.countTrackingLogsForExceptionalCase(masterId) == 1;
-		notCreateButton = claim.isDraftMode() && this.repository.countTrackingLogsForExceptionalCaseNotDraftMode(masterId) == 1;
-		noMore = !claim.isDraftMode() && this.repository.countTrackingLogsForExceptionalCaseNotDraftMode(masterId) == 2;
+		exceptionalCase = this.repository.countTrackingLogsForExceptionalCase(masterId) == 1;
+		noMore = this.repository.countTrackingLogsForExceptionalCase(masterId) == 0;
 
 		greatRealm = super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
 
 		super.getResponse().addGlobal("masterId", masterId);
 		super.getResponse().addGlobal("exceptionalCase", exceptionalCase);
-		super.getResponse().addGlobal("notCreateButton", notCreateButton);
 		super.getResponse().addGlobal("noMore", noMore);
 		super.getResponse().addGlobal("greatRealm", greatRealm);
-
 	}
 
 }
