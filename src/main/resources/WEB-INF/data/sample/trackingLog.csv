@@ -14,7 +14,7 @@ trackingLog-12,2012/07/02 0:00,Lorem ipsum dolor sit ame,100.00,ACCEPTED,false,<
 trackingLog-13,2012/07/02 0:00,Lorem ipsum dolor sit ame,100.00,ACCEPTED,false,<script>alert(‘Hacked!’);</script>,claim-13
 trackingLog-14,2012/07/02 0:05,Intermediate Step,50.00,PENDING,false,null,claim-14
 trackingLog-15,2012/07/02 0:10,Final Step,100.00,ACCEPTED,true,"Resolution complete",claim-01
-trackingLog-16,2012/07/02 0:15,Final Step,100.00,REJECTED,false,"Resolution rejected",claim-02
+trackingLog-16,2012/07/02 0:15,Final Step,100.00,REJECTED,true,"Resolution rejected",claim-02
 trackingLog-17,2012/07/02 0:20,Review Step,99.99,PENDING,true,null,claim-02
 trackingLog-18,2012/07/02 0:25,Approval Step,100.00,ACCEPTED,false,"Final approval granted",claim-03
 trackingLog-19,2012/07/02 0:30,Approval Step,100.00,REJECTED,true,"Final approval denied",claim-03
