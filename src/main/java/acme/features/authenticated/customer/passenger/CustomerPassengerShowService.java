@@ -27,7 +27,13 @@ public class CustomerPassengerShowService extends AbstractGuiService<Customer, P
 
 		id = super.getRequest().getData("id", int.class);
 		passenger = this.repository.findPassengerById(id);
+
+		// VALIDACIÓN FUERTE
+		if (passenger == null)
+			throw new IllegalArgumentException("Passenger no encontrado con ID: " + id);
+
 		boolean status = passenger.getCustomer().getUserAccount().getId() == customerId && super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
+
 		super.getResponse().setAuthorised(status);
 	}
 
@@ -38,6 +44,11 @@ public class CustomerPassengerShowService extends AbstractGuiService<Customer, P
 
 		id = super.getRequest().getData("id", int.class);
 		passenger = this.repository.findPassengerById(id);
+
+		// VALIDACIÓN FUERTE
+		if (passenger == null)
+			throw new IllegalArgumentException("Passenger no encontrado con ID: " + id);
+
 		super.getBuffer().addData(passenger);
 	}
 
