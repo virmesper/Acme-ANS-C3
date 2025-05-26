@@ -58,25 +58,30 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		Booking booking;
 		Passenger passenger;
 
-		// Los nombres deben coincidir con los campos del formulario: booking y passenger
+		// Obtener IDs desde el request
 		bookingId = super.getRequest().getData("booking", Integer.class);
 		passengerId = super.getRequest().getData("passenger", Integer.class);
 
-		// Verificar que los valores obtenidos no sean nulos
-		System.out.println("Booking ID recibido: " + bookingId);
-		System.out.println("Passenger ID recibido: " + passengerId);
-
-		// Recuperar las entidades desde la base de datos
+		// Obtener booking y comprobar existencia
 		booking = this.bookingRepository.findBookingById(bookingId);
-		passenger = this.passengerRepository.findPassengerById(passengerId);
-
-		// Comprobación adicional para asegurar que no sean nulos
 		if (booking == null)
-			System.out.println("Error: No se encontró la reserva con ID: " + bookingId);
-		if (passenger == null)
-			System.out.println("Error: No se encontró el pasajero con ID: " + passengerId);
+			super.getResponse().setAuthorised(false);
 
-		// Realizar la vinculación habitual
+		// Comprobar que la booking pertenece al customer actual
+		int customerAccountId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
+		if (booking.getCustomer().getUserAccount().getId() != customerAccountId)
+			super.getResponse().setAuthorised(false);
+
+		// Obtener passenger y comprobar existencia
+		passenger = this.passengerRepository.findPassengerById(passengerId);
+		if (passenger == null)
+			throw new IllegalArgumentException("❌ Passenger no encontrado con ID: " + passengerId);
+
+		// Validar también que el passenger pertenece al customer actual
+		if (passenger.getCustomer().getUserAccount().getId() != customerAccountId)
+			throw new IllegalArgumentException("❌ El passenger no pertenece al customer actual.");
+
+		// Bindear campos normales
 		super.bindObject(bookingRecord);
 		bookingRecord.setBooking(booking);
 		bookingRecord.setPassenger(passenger);
@@ -128,26 +133,19 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		int bookingId = super.getRequest().getData("bookingId", int.class);
 		Booking booking = this.bookingRepository.findBookingById(bookingId);
 
-		// Crear una lista con la única booking encontrada
+		// Validación crítica
+		if (booking == null)
+			throw new IllegalArgumentException("Booking no encontrado con ID: " + bookingId);
+
+		// Continuar normalmente
 		Collection<Booking> singleBookingList = List.of(booking);
 
 		int customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
-		// Obtener todos los pasajeros del cliente
 		Collection<Passenger> allPassengers = this.passengerRepository.findPassengerByCustomer(customerId);
-		// Obtener los pasajeros ya asignados a la reserva
 		Collection<Passenger> assignedPassengers = this.customerBookingPassengerRepository.findPassengersByBookingId(bookingId);
 
-		// Log para depuración
-		System.out.println("Total pasajeros del cliente: " + allPassengers.size());
-		System.out.println("Total pasajeros asignados: " + assignedPassengers.size());
-
-		// Filtrar los pasajeros disponibles (no asignados a la reserva actual)
 		Collection<Passenger> availablePassengers = allPassengers.stream().filter(passenger -> assignedPassengers.stream().noneMatch(assigned -> assigned.getId() == passenger.getId())).toList();
 
-		// Log para verificar los pasajeros disponibles
-		System.out.println("Pasajeros disponibles: " + availablePassengers.size());
-
-		// Crear las opciones de selección
 		bookingChoices = SelectChoices.from(singleBookingList, "locatorCode", bookingRecord.getBooking());
 		passengerChoices = SelectChoices.from(availablePassengers, "fullName", bookingRecord.getPassenger());
 

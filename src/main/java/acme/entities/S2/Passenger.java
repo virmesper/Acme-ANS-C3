@@ -23,12 +23,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(indexes = {
-	@Index(columnList = "customer_id"), @Index(columnList = "passportNumber")
-})
 @Getter
 @Setter
-
+@Table(indexes = {
+	@Index(columnList = "passportNumber"), @Index(columnList = "customer_id"), @Index(columnList = "draftMode"),
+})
 public class Passenger extends AbstractEntity {
 
 	// Serialisation identifier -----------------------------------------------

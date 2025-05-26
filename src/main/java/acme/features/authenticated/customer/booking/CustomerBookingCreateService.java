@@ -73,6 +73,10 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		flightId = super.getRequest().getData("flightId", int.class);
 		flight = this.flightRepository.findFlightById(flightId);
 
+		// Validación fuerte: si el vuelo no existe, lanza excepción
+		if (flight == null)
+			throw new IllegalArgumentException("El vuelo con ID " + flightId + " no existe.");
+
 		super.bindObject(booking, "locatorCode", "lastCardDigits", "travelClass");
 
 		booking.setFlightId(flight);
@@ -101,6 +105,11 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		SelectChoices flightChoices;
 
 		Collection<Flight> flights = this.flightRepository.findAllFlight();
+
+		// Validación: si no hay vuelos cargados, se considera error (opcional)
+		if (flights == null || flights.isEmpty())
+			throw new IllegalArgumentException("No hay vuelos disponibles");
+
 		flightChoices = SelectChoices.from(flights, "tag", booking.getFlightId());
 		choices = SelectChoices.from(TravelClass.class, booking.getTravelClass());
 
@@ -112,4 +121,5 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 		super.getResponse().addData(dataset);
 	}
+
 }
