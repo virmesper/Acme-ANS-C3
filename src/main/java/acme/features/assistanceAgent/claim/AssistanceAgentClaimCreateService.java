@@ -30,30 +30,25 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 
 	@Override
 	public void authorise() {
-		AssistanceAgent assistanceAgent;
-		boolean status;
-		boolean bool;
-		int legId;
-		Leg leg;
+		boolean status = false;
+		AssistanceAgent assistanceAgent = (AssistanceAgent) super.getRequest().getPrincipal().getActiveRealm();
 
 		if (super.getRequest().getMethod().equals("GET"))
-			bool = true;
+			status = super.getRequest().getPrincipal().hasRealm(assistanceAgent);
 		else {
-			legId = super.getRequest().getData("leg", int.class);
-			leg = this.repository.findLegById(legId);
+			int legId = super.getRequest().getData("leg", int.class);
+			Leg leg = this.repository.findLegById(legId);
 
 			boolean isLegValid = leg != null;
 			boolean isLegNotDraft = isLegValid && !leg.isDraftMode();
 			boolean isFlightNotDraft = isLegNotDraft && !leg.getFlight().getDraftMode();
 			boolean isLegIdZero = legId == 0;
 
-			bool = isLegIdZero || isLegValid && isLegNotDraft && isFlightNotDraft;
+			status = (isLegIdZero || isLegValid && isLegNotDraft && isFlightNotDraft) && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
 		}
 
-		assistanceAgent = (AssistanceAgent) super.getRequest().getPrincipal().getActiveRealm();
-		status = bool && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
-
 		super.getResponse().setAuthorised(status);
+
 	}
 
 	@Override
