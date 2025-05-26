@@ -28,11 +28,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(indexes = {
-	@Index(columnList = "customer_id"), @Index(columnList = "flight_id"), @Index(columnList = "draftMode")
-})
 @Getter
 @Setter
+@Table(indexes = {
+	@Index(columnList = "locatorCode", unique = true), @Index(columnList = "flight_id"), @Index(columnList = "customer_id"), @Index(columnList = "draftMode"),
+})
 public class Booking extends AbstractEntity {
 
 	// Serialisation identifier -----------------------------------------------
