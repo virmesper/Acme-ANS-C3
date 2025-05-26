@@ -60,7 +60,7 @@ public class AdministratorClaimShowService extends AbstractService<Administrator
 
 		legs = this.repository.findAllLegs();
 
-		choices = SelectChoices.from(legs, "flightNumberNumber", object.getLeg());
+		choices = SelectChoices.from(legs, "flightNumber", object.getLeg());
 		choicesType = SelectChoices.from(ClaimType.class, object.getType());
 		choicesIndicator = SelectChoices.from(Indicator.class, object.getIndicator());
 
