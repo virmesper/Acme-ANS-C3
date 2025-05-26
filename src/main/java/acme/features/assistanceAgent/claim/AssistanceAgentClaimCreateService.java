@@ -86,8 +86,6 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 
 	@Override
 	public void validate(final Claim object) {
-		if (!super.getBuffer().getErrors().hasErrors("indicator"))
-			super.state(object.getIndicator() == Indicator.PENDING, "indicator", "assistanceAgent.claim.form.error.indicator.pending");
 	}
 
 	@Override
