@@ -85,17 +85,9 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void validate(final Booking booking) {
-		// Validar que no exista un booking con el mismo locatorCode
 		Booking b = this.repository.findBookingByLocatorCode(booking.getLocatorCode());
 		if (b != null)
 			super.state(false, "locatorCode", "acme.validation.confirmation.message.booking.locator-code");
-
-		// Validaciones manuales
-		super.state(booking.getLocatorCode() != null && !booking.getLocatorCode().isBlank(), "locatorCode", "javax.validation.constraints.NotBlank.message");
-		super.state(booking.getLastCardDigits() != null && !booking.getLastCardDigits().isBlank(), "lastCardDigits", "javax.validation.constraints.NotBlank.message");
-		super.state(booking.getPrice() != null, "price", "javax.validation.constraints.NotNull.message");
-		super.state(booking.getTravelClass() != null, "travelClass", "javax.validation.constraints.NotNull.message");
-		super.state(booking.getFlightId() != null, "flightId", "javax.validation.constraints.NotNull.message");
 	}
 
 	@Override
