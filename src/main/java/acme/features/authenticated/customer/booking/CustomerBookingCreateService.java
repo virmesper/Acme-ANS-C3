@@ -36,15 +36,7 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	@Override
 	public void authorise() {
 		boolean isCustomer = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
-
 		boolean authorised = isCustomer;
-
-		// Solo verificar flightId si es una petición POST (no en GET)
-		if (super.getRequest().getMethod().equalsIgnoreCase("POST")) {
-			int flightId = super.getRequest().getData("flightId", int.class);
-			Flight flight = this.flightRepository.findFlightById(flightId);
-			authorised = authorised && flight != null; // solo continúa si el vuelo existe
-		}
 
 		super.getResponse().setAuthorised(authorised);
 	}
@@ -67,30 +59,43 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void bind(final Booking booking) {
-		int flightId;
-		Flight flight;
+		Flight flight = null;
 
-		flightId = super.getRequest().getData("flightId", int.class);
-		flight = this.flightRepository.findFlightById(flightId);
-
-		// Validación fuerte: si el vuelo no existe, lanza excepción
-		if (flight == null)
-			throw new IllegalArgumentException("El vuelo con ID " + flightId + " no existe.");
+		// Validación segura del flightId
+		if (super.getRequest().hasData("flightId"))
+			try {
+				int flightId = super.getRequest().getData("flightId", int.class);
+				flight = this.flightRepository.findFlightById(flightId);
+			} catch (final Throwable t) {
+				// No hacemos nada, dejamos flight como null para validarlo más adelante
+			}
 
 		super.bindObject(booking, "locatorCode", "lastCardDigits", "travelClass");
 
 		booking.setFlightId(flight);
 		booking.setDraftMode(false);
 
-		Money basePrice = this.flightRepository.findCostByFlight(flight.getId());
-		booking.setPrice(basePrice);
+		// Asignar precio si hay vuelo, si no se valida en validate()
+		if (flight != null) {
+			Money basePrice = this.flightRepository.findCostByFlight(flight.getId());
+			booking.setPrice(basePrice);
+		} else
+			booking.setPrice(null);
 	}
 
 	@Override
 	public void validate(final Booking booking) {
+		// Validar que no exista un booking con el mismo locatorCode
 		Booking b = this.repository.findBookingByLocatorCode(booking.getLocatorCode());
 		if (b != null)
 			super.state(false, "locatorCode", "acme.validation.confirmation.message.booking.locator-code");
+
+		// Validaciones manuales
+		super.state(booking.getLocatorCode() != null && !booking.getLocatorCode().isBlank(), "locatorCode", "javax.validation.constraints.NotBlank.message");
+		super.state(booking.getLastCardDigits() != null && !booking.getLastCardDigits().isBlank(), "lastCardDigits", "javax.validation.constraints.NotBlank.message");
+		super.state(booking.getPrice() != null, "price", "javax.validation.constraints.NotNull.message");
+		super.state(booking.getTravelClass() != null, "travelClass", "javax.validation.constraints.NotNull.message");
+		super.state(booking.getFlightId() != null, "flightId", "javax.validation.constraints.NotNull.message");
 	}
 
 	@Override
