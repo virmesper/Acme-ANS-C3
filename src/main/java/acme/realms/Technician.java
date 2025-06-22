@@ -9,13 +9,17 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidNumber;
-import acme.client.components.validation.ValidString;
+import acme.constraints.ValidLongText;
+import acme.constraints.ValidPhoneNumber;
+import acme.constraints.ValidShortText;
+import acme.constraints.ValidTechnician;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@ValidTechnician
 public class Technician extends AbstractRole {
 
 	// Serialisation identifier -----------------------------------------------
@@ -25,17 +29,17 @@ public class Technician extends AbstractRole {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidString(pattern = "^[A-Z]{2,3}\\d{6}$", min = 8, max = 9)
+	//@ValidString(pattern = "^[A-Z]{2,3}\\d{6}$", min = 8, max = 9)
 	@Column(unique = true)
 	private String				licenseNumber;
 
 	@Mandatory
-	@ValidString(pattern = "^\\+?\\d{6,15}$", min = 6, max = 15)
+	@ValidPhoneNumber
 	@Automapped
 	private String				phoneNumber;
 
 	@Mandatory
-	@ValidString(max = 50, min = 1)
+	@ValidShortText
 	@Automapped
 	private String				specialisation;
 
@@ -49,7 +53,7 @@ public class Technician extends AbstractRole {
 	private Integer				yearsOfExperience;
 
 	@Optional
-	@ValidString(max = 255)
+	@ValidLongText
 	@Automapped
 	private String				certifications;
 }

@@ -2,6 +2,6 @@
 package acme.entities.Group;
 
 public enum Status {
-	ACTIVE, MAINTENANCE
+	ACTIVE_SERVICE, UNDER_MAINTENANCE
 
 }

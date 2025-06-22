@@ -19,7 +19,7 @@ public class UniqueRegistrationNumberValidator extends AbstractValidator<ValidUn
 		if (value == null || value.trim().isEmpty())
 			return false;
 
-		Boolean existsInAircraft = this.aircraftRepository.existsAircraftWithregistrationnumber(value);
+		Boolean existsInAircraft = this.aircraftRepository.existsAircraftWithregistrationNumber(value);
 
 		return !existsInAircraft;
 	}

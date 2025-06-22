@@ -31,7 +31,7 @@ public class AdministratorAircraftDisableService extends AbstractGuiService<Admi
 
 	@Override
 	public void bind(final Aircraft aircraft) {
-		super.bindObject(aircraft, "model", "registrationnumber", "capacity", "cargoweight", "status", "details", "airline");
+		super.bindObject(aircraft, "model", "registrationNumber", "capacity", "cargoWeight", "status", "details", "airline");
 	}
 
 	@Override
@@ -42,16 +42,16 @@ public class AdministratorAircraftDisableService extends AbstractGuiService<Admi
 
 	@Override
 	public void perform(final Aircraft aircraft) {
-		if (aircraft.getStatus() == Status.ACTIVE)
-			aircraft.setStatus(Status.MAINTENANCE);
+		if (aircraft.getStatus() == Status.ACTIVE_SERVICE)
+			aircraft.setStatus(Status.UNDER_MAINTENANCE);
 		else
-			aircraft.setStatus(Status.ACTIVE);
+			aircraft.setStatus(Status.ACTIVE_SERVICE);
 		this.repository.save(aircraft);
 	}
 
 	@Override
 	public void unbind(final Aircraft aircraft) {
-		Dataset dataset = super.unbindObject(aircraft, "model", "registrationnumber", "capacity", "cargoweight", "status", "details", "airline");
+		Dataset dataset = super.unbindObject(aircraft, "model", "registrationNumber", "capacity", "cargoWeight", "status", "details", "airline");
 		super.getResponse().addData(dataset);
 	}
 }
