@@ -3,7 +3,9 @@ package acme.entities.Group;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
@@ -11,7 +13,9 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidNumber;
-import acme.client.components.validation.ValidString;
+import acme.constraints.ValidAircraft;
+import acme.constraints.ValidLongText;
+import acme.constraints.ValidShortText;
 import acme.constraints.ValidUniqueRegistrationNumber;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +23,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@ValidAircraft
+@Table(indexes = {
+	@Index(columnList = "registrationNumber"),//
+	@Index(columnList = "status")
+})
 public class Aircraft extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------
@@ -28,15 +37,15 @@ public class Aircraft extends AbstractEntity {
 	// Attributes -------------------------------------------------------------
 
 	@Mandatory
-	@ValidString(min = 1, max = 50)
+	@ValidShortText
 	@Automapped
 	private String				model;
 
 	@Mandatory
-	@ValidString(min = 1, max = 50)
+	@ValidShortText
 	@Column(unique = true)
 	@ValidUniqueRegistrationNumber
-	private String				registrationnumber;
+	private String				registrationNumber;
 
 	@Mandatory
 	@ValidNumber(min = 1, max = 255)
@@ -46,7 +55,7 @@ public class Aircraft extends AbstractEntity {
 	@Mandatory
 	@ValidNumber(min = 2000, max = 50000)
 	@Automapped
-	private Double				cargoweight;
+	private Double				cargoWeight;
 
 	@Mandatory
 	@Valid
@@ -54,7 +63,7 @@ public class Aircraft extends AbstractEntity {
 	private Status				status;
 
 	@Optional
-	@ValidString(min = 0, max = 255)
+	@ValidLongText
 	@Automapped
 	private String				details;
 

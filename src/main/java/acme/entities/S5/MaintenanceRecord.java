@@ -3,11 +3,10 @@ package acme.entities.S5;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -19,8 +18,8 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidMoney;
-import acme.client.components.validation.ValidString;
-import acme.constraints.ValidTicker;
+import acme.constraints.ValidLongText;
+import acme.constraints.ValidMaintenanceRecord;
 import acme.entities.Group.Aircraft;
 import acme.realms.Technician;
 import lombok.Getter;
@@ -29,6 +28,15 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@ValidMaintenanceRecord
+@Table(indexes = {
+	@Index(columnList = "draftMode"),//
+	@Index(columnList = "status,technician_id"),//
+	@Index(columnList = "technician_id,moment"),//
+	@Index(columnList = "technician_id,estimatedCost_currency"),//
+	@Index(columnList = "technician_id,nextInspectionDueTime")
+})
+
 public class MaintenanceRecord extends AbstractEntity {
 
 	// Serialisation identifier -----------------------------------------------
@@ -37,17 +45,12 @@ public class MaintenanceRecord extends AbstractEntity {
 
 	// Attributess -------------------------------------------------------------	
 	@Mandatory
-	@ValidTicker
-	@Column(unique = true)
-	private String					ticker;
-
-	@Mandatory
 	@ValidMoment(past = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date					moment;
 
 	@Mandatory
-	@Enumerated(EnumType.STRING)
+	@Valid
 	@Automapped
 	private MaintenanceRecordStatus	status;
 
@@ -62,7 +65,7 @@ public class MaintenanceRecord extends AbstractEntity {
 	private Money					estimatedCost;
 
 	@Optional
-	@ValidString(max = 255)
+	@ValidLongText
 	@Automapped
 	private String					notes;
 

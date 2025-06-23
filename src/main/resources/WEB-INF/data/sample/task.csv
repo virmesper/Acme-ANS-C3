@@ -1,37 +1,39 @@
-key,ticker,type,description,priority,estimated-duration,draft-mode,key:technician
+key,type,description,priority,estimated-duration,draft-mode,key:technician
 # base entity
-task-00,TICKER-00,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,20,TRUE,technician-01
-# ticker - standard variations
-task-24,TICKE,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,20,TRUE,technician-01
-task-25,TICKER,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,20,TRUE,technician-01
-task-26,TICKER-1234567,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,20,TRUE,technician-01
-task-27,TICKER-12345678,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,20,TRUE,technician-01
+task-000,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,TRUE,technician-01
 # type - standard variations
-task-01,TICKER-05,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,20,TRUE,technician-01
-task-02,TICKER-06,REPAIR,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,20,TRUE,technician-01
-task-03,TICKER-07,SYSTEM_CHECK,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,20,TRUE,technician-01
+task-001,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,TRUE,technician-01
+task-002,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,TRUE,technician-01
+task-003,REPAIR,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,TRUE,technician-01
+task-004,SYSTEM_CHECK,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,TRUE,technician-01
+# type - no singular values
 # description - standard variations
-task-04,TICKER-08,MAINTENANCE,L,5,20,TRUE,technician-01
-task-05,TICKER-09,MAINTENANCE,Lo,5,20,TRUE,technician-01
-task-06,TICKER-10,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",5,20,TRUE,technician-01
-task-07,TICKER-11,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",5,20,TRUE,technician-01
-task-08,TICKER-12,MAINTENANCE,โลเร็ม อิปซัม,5,20,TRUE,technician-01
-task-09,TICKER-13,MAINTENANCE,لوريم إيبسوم,5,20,TRUE,technician-01
-task-10,TICKER-14,MAINTENANCE,洛伦·伊普森,5,20,TRUE,technician-01
-task-11,TICKER-15,MAINTENANCE,"<marquee>Hacked</marquee>",5,20,TRUE,technician-01
-task-12,TICKER-16,MAINTENANCE,"<script>alert(‘Hacked!’);</script>",5,20,TRUE,technician-01
-task-13,TICKER-17,MAINTENANCE,"' or 'A' = 'A ",5,20,TRUE,technician-01
+task-005,INSPECTION,L,5,500,TRUE,technician-01
+task-006,INSPECTION,Lo,5,500,TRUE,technician-01
+task-007,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",5,500,TRUE,technician-01
+task-008,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",5,500,TRUE,technician-01
+task-009,INSPECTION,โลเร็ม อิปซัม,5,500,TRUE,technician-01
+task-010,INSPECTION,لوريم إيبسوم,5,500,TRUE,technician-01
+task-011,INSPECTION,洛伦·伊普森,5,500,TRUE,technician-01
+task-012,INSPECTION,<marquee>Hacked</marquee>,5,500,TRUE,technician-01
+task-013,INSPECTION,<script>alert(‘Hacked!’);</script>,5,500,TRUE,technician-01
+task-014,INSPECTION,' or 'A' = 'A ,5,500,TRUE,technician-01
+# description - no singular values
 # priority - standard variations
-task-14,TICKER-18,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",0,20,TRUE,technician-01
-task-15,TICKER-19,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",1,20,TRUE,technician-01
-task-16,TICKER-20,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",9,20,TRUE,technician-01
-task-17,TICKER-21,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",10,20,TRUE,technician-01
-# estimated-duration - standard variations
-task-18,TICKER-22,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,0,TRUE,technician-01
-task-19,TICKER-23,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,1,TRUE,technician-01
-task-20,TICKER-24,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,999,TRUE,technician-01
-task-21,TICKER-25,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,1000,TRUE,technician-01
+task-015,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",0,500,TRUE,technician-01
+task-016,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",1,500,TRUE,technician-01
+task-017,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",9,500,TRUE,technician-01
+task-018,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10,500,TRUE,technician-01
+# priority - no singular values
+# estimatedDurationHours - standard variations
+task-019,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,0,TRUE,technician-01
+task-020,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,1,TRUE,technician-01
+task-021,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,999,TRUE,technician-01
+task-022,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,1000,TRUE,technician-01
+# estimated-duration-hours - no singular values
 # draft-mode - standard variations
-task-23,TICKER-26,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,20,FALSE,technician-01
+task-023,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,FALSE,technician-01
+# draft-mode - no singular values
 # technician - standard variations
-task-22,TICKER-27,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod",5,20,TRUE,technician-02
+task-024,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,TRUE,technician-02
+# technician - no singular values

@@ -1,19 +1,17 @@
 
 package acme.entities.S5;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidNumber;
-import acme.client.components.validation.ValidString;
-import acme.constraints.ValidTicker;
+import acme.constraints.ValidLongText;
 import acme.realms.Technician;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +19,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(indexes = {
+	@Index(columnList = "draftMode"),              // 
+	@Index(columnList = "draftMode, technician_id")
+})
+
 public class Task extends AbstractEntity {
 
 	// Serialisation identifier -----------------------------------------------
@@ -28,18 +31,14 @@ public class Task extends AbstractEntity {
 	private static final long	serialVersionUID	= 1L;
 
 	// Attributes -------------------------------------------------------------
-	@Mandatory
-	@ValidTicker
-	@Column(unique = true)
-	private String				ticker;
 
 	@Mandatory
-	@Enumerated(EnumType.STRING)
+	@Valid
 	@Automapped
 	private TaskType			type;
 
 	@Mandatory
-	@ValidString(max = 255, min = 1)
+	@ValidLongText
 	@Automapped
 	private String				description;
 

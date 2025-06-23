@@ -14,8 +14,8 @@ import acme.entities.Group.Airline;
 @Repository
 public interface AdministratorAircraftRepository extends AbstractRepository {
 
-	@Query("select a from Aircraft a where a.registrationnumber = :registrationnumber")
-	Aircraft findAircraftByRegistrationNumber(String registrationnumber);
+	@Query("select a from Aircraft a where a.registrationNumber = :registrationNumber")
+	Aircraft findAircraftByRegistrationNumber(String registrationNumber);
 
 	@Query("select a from Aircraft a where a.id = :id")
 	Aircraft findAircraftById(int id);
