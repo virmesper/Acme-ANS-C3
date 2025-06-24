@@ -35,3 +35,19 @@ acme.validation.flightAssignment.availableFlightCrewMember.message= The Flight A
 #Activity Log
 acme.validation.activityLog.wrongMoment.message = The Activity Log registration moment must be after the scheduled arrival of the Leg
 acme.validation.ActivityLog.FlightAssignmentNotPublished.message = If the Flight Assignment which is associated with this Activity Log isn't published, you can't publish it
+
+#Technician
+acme.validation.header.message= Must have from 1 to 50 characters
+acme.validation.text.message= Must have from 1 to 255 characters
+acme.validation.optional-text.message= Must have from 0 to 255 characters
+
+acme.validation.aircraft.duplicated-registration-number.message = Duplicated registration number
+
+acme.validation.technician.duplicated-license-number.message = This license number is already in use
+acme.validation.technician.license-number.message  	= Must have your initials and then six figures (e.g., AB123456 or ABC987654)
+acme.validation.technician.phone-number.message = must have between 6 and 15 digits, optionally starting with '+'. (e.g: +123456789 or 987654321)
+
+acme.validation.maintenance-record.inspection-due-date.message = The next inspection must be set after the actual maintenance takes place
+acme.validation.maintenance-record.future-inspection-due-date.message = The next inspection must be set in the future
+
+acme.validation.task.maintenance-record-linked.message = In order to delete a task it must not have any maintenance records linked

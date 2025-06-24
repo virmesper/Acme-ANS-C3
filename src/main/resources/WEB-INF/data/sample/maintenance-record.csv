@@ -16,7 +16,7 @@ maintenance-record-07,2024/09/19 10:00,COMPLETED,2025/09/19 10:00,EUR 500000.00,
 maintenance-record-08,2025/01/01 00:00,PENDING,2025/01/01 00:01,EUR 500000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",TRUE,aircraft-01,technician-01
 maintenance-record-08.a,2024/09/19 10:00,PENDING,2025/01/01 00:02,EUR 500000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",TRUE,aircraft-01,technician-01
 maintenance-record-09,2024/09/19 10:00,PENDING,2200/12/31 23:59,EUR 500000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",TRUE,aircraft-01,technician-01
-maintenance-record-10,2024/09/19 10:00,PENDING,2201/01/01 00:00,EUR 500000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",TRUE,aircraft-01,technician-01
+maintenance-record-10,2024/09/19 10:00,PENDING,2101/01/01 00:00,EUR 500000.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",TRUE,aircraft-01,technician-01
 # inspection-due-date - no singular values 
 # estimated-cost - standard variations
 maintenance-record-11,2024/09/19 10:00,PENDING,2025/09/19 10:00,EUR 0.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",TRUE,aircraft-01,technician-01

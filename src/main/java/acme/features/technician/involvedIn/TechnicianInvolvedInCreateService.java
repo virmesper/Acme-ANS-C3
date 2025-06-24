@@ -20,31 +20,61 @@ public class TechnicianInvolvedInCreateService extends AbstractGuiService<Techni
 	@Autowired
 	private TechnicianInvolvedInRepository repository;
 
+	//	@Override
+	//	public void authorise() {
+	//		boolean status;
+	//		int id;
+	//		MaintenanceRecord maintenanceRecord;
+	//
+	//		id = super.getRequest().getData("masterId", int.class);
+	//		maintenanceRecord = this.repository.findMaintenanceRecordById(id);
+	//		status = maintenanceRecord != null && super.getRequest().getPrincipal().hasRealm(maintenanceRecord.getTechnician());
+	//
+	//		super.getResponse().setAuthorised(status);
+	//	}
+
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int id;
+
+		boolean statusTask = true;
+		boolean status = false;
+		int taskId;
+		Task task;
+		int maintenanceRecordId;
 		MaintenanceRecord maintenanceRecord;
+		Technician technician;
+		Collection<Task> tasks;
 
-		id = super.getRequest().getData("masterId", int.class);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(id);
-		status = maintenanceRecord != null && super.getRequest().getPrincipal().hasRealm(maintenanceRecord.getTechnician());
+		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+		maintenanceRecordId = super.getRequest().getData("maintenanceRecordId", int.class);
+		maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
 
-		super.getResponse().setAuthorised(status);
+		tasks = this.repository.findValidTasksToLink(maintenanceRecord, technician);
+
+		if (super.getRequest().hasData("task", int.class)) {
+			taskId = super.getRequest().getData("task", int.class);
+			task = this.repository.findTaskById(taskId);
+
+			if (!tasks.contains(task) && taskId != 0)
+				statusTask = false;
+		}
+
+		status = maintenanceRecord != null && maintenanceRecord.isDraftMode() && super.getRequest().getPrincipal().hasRealm(maintenanceRecord.getTechnician());
+
+		super.getResponse().setAuthorised(status && statusTask);
 	}
 
 	@Override
 	public void load() {
 		InvolvedIn object;
-		int masterId;
+		Integer maintenanceRecordId;
 		MaintenanceRecord maintenanceRecord;
 
-		masterId = super.getRequest().getData("masterId", int.class);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(masterId);
+		maintenanceRecordId = super.getRequest().getData("maintenanceRecordId", int.class);
+		maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
 
 		object = new InvolvedIn();
-		object.setTask(null);
 		object.setMaintenanceRecord(maintenanceRecord);
 
 		super.getBuffer().addData(object);
@@ -52,17 +82,7 @@ public class TechnicianInvolvedInCreateService extends AbstractGuiService<Techni
 
 	@Override
 	public void bind(final InvolvedIn involves) {
-		int masterId;
-		Task task;
-		MaintenanceRecord maintenanceRecord;
-
-		masterId = super.getRequest().getData("masterId", int.class);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(masterId);
-		task = super.getRequest().getData("task", Task.class);
-
-		super.bindObject(involves);
-		involves.setTask(task);
-		involves.setMaintenanceRecord(maintenanceRecord);
+		super.bindObject(involves, "task");
 	}
 
 	@Override
@@ -80,15 +100,22 @@ public class TechnicianInvolvedInCreateService extends AbstractGuiService<Techni
 		Dataset dataset;
 		SelectChoices taskChoices;
 		Collection<Task> tasks;
+		int maintenanceRecordId;
+		MaintenanceRecord maintenanceRecord;
+		Technician technician;
 
-		tasks = this.repository.findAllTasks();
-		taskChoices = SelectChoices.from(tasks, "ticker", involves.getTask());
+		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+		maintenanceRecordId = super.getRequest().getData("maintenanceRecordId", int.class);
+		maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
 
-		dataset = super.unbindObject(involves, "task");
-		dataset.put("masterId", super.getRequest().getData("masterId", int.class));
-		dataset.put("maintenanceRecord", involves.getMaintenanceRecord().getId());
+		tasks = this.repository.findValidTasksToLink(maintenanceRecord, technician);
+		taskChoices = SelectChoices.from(tasks, "description", involves.getTask());
+
+		dataset = super.unbindObject(involves, "maintenanceRecord");
+		dataset.put("maintenanceRecordId", involves.getMaintenanceRecord().getId());
 		dataset.put("task", taskChoices.getSelected().getKey());
 		dataset.put("tasks", taskChoices);
+		dataset.put("aircraftRegistrationNumber", involves.getMaintenanceRecord().getAircraft().getRegistrationNumber());
 
 		super.getResponse().addData(dataset);
 	}

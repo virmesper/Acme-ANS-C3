@@ -7,6 +7,8 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S5.InvolvedIn;
+import acme.entities.S5.MaintenanceRecord;
 import acme.entities.S5.Task;
 import acme.entities.S5.TaskType;
 import acme.realms.Technician;
@@ -20,7 +22,27 @@ public class TechnicianTaskCreateService extends AbstractGuiService<Technician, 
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status = false;
+		Integer maintenanceRecordId = null;
+		MaintenanceRecord maintenanceRecord;
+		Technician technician;
+
+		if (super.getRequest().hasData("maintenanceRecordId")) {
+			maintenanceRecordId = super.getRequest().getData("maintenanceRecordId", Integer.class);
+
+			if (maintenanceRecordId != null) {
+				maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
+
+				if (maintenanceRecord != null) {
+					technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
+					status = maintenanceRecord.isDraftMode() && technician.equals(maintenanceRecord.getTechnician());
+				}
+			}
+		} else
+			status = true;
+
+		super.getResponse().setAuthorised(status);
+
 	}
 
 	@Override
@@ -31,7 +53,6 @@ public class TechnicianTaskCreateService extends AbstractGuiService<Technician, 
 		technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
 
 		task = new Task();
-		task.setType(TaskType.INSPECTION);
 		task.setDraftMode(true);
 		task.setTechnician(technician);
 
@@ -41,7 +62,7 @@ public class TechnicianTaskCreateService extends AbstractGuiService<Technician, 
 	@Override
 	public void bind(final Task task) {
 
-		super.bindObject(task, "ticker", "type", "description", "priority", "estimatedDuration");
+		super.bindObject(task, "type", "description", "priority", "estimatedDuration");
 	}
 
 	@Override
@@ -51,7 +72,24 @@ public class TechnicianTaskCreateService extends AbstractGuiService<Technician, 
 
 	@Override
 	public void perform(final Task task) {
+		Integer maintenanceRecordId;
+		MaintenanceRecord maintenanceRecord;
+		InvolvedIn involves;
+
+		maintenanceRecordId = super.getRequest().hasData("maintenanceRecordId") ? super.getRequest().getData("maintenanceRecordId", Integer.class) : null;
+
 		this.repository.save(task);
+
+		if (maintenanceRecordId != null) {
+
+			involves = new InvolvedIn();
+			maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
+
+			involves.setTask(task);
+			involves.setMaintenanceRecord(maintenanceRecord);
+
+			this.repository.save(involves);
+		}
 	}
 
 	@Override
@@ -61,8 +99,12 @@ public class TechnicianTaskCreateService extends AbstractGuiService<Technician, 
 
 		choices = SelectChoices.from(TaskType.class, task.getType());
 
-		dataset = super.unbindObject(task, "ticker", "type", "description", "priority", "estimatedDuration", "draftMode");
+		dataset = super.unbindObject(task, "type", "description", "priority", "estimatedDuration", "draftMode");
+		dataset.put("technician", task.getTechnician().getIdentity().getFullName());
+		dataset.put("type", choices.getSelected().getKey());
 		dataset.put("types", choices);
+		if (super.getRequest().hasData("maintenanceRecordId"))
+			dataset.put("maintenanceRecordId", super.getRequest().getData("maintenanceRecordId", Integer.class));
 
 		super.getResponse().addData(dataset);
 	}

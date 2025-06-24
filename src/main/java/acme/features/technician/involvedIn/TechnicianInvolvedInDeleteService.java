@@ -23,51 +23,65 @@ public class TechnicianInvolvedInDeleteService extends AbstractGuiService<Techni
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int id;
-		InvolvedIn involves;
+		boolean statusTask = true;
+		boolean status = false;
+		int taskId;
+		Task task;
+		int maintenanceRecordId;
+		MaintenanceRecord maintenanceRecord;
+		Collection<Task> tasks;
 
-		id = super.getRequest().getData("id", int.class);
-		involves = this.repository.findInvolvesById(id);
-		status = involves != null && super.getRequest().getPrincipal().hasRealm(involves.getMaintenanceRecord().getTechnician());
+		maintenanceRecordId = super.getRequest().getData("maintenanceRecordId", int.class);
+		maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
 
-		super.getResponse().setAuthorised(status);
+		tasks = this.repository.findValidTasksToUnlink(maintenanceRecord);
+
+		if (super.getRequest().hasData("task", int.class)) {
+			taskId = super.getRequest().getData("task", int.class);
+			task = this.repository.findTaskById(taskId);
+
+			if (!tasks.contains(task) && taskId != 0)
+				statusTask = false;
+		}
+
+		status = maintenanceRecord != null && maintenanceRecord.isDraftMode() && super.getRequest().getPrincipal().hasRealm(maintenanceRecord.getTechnician());
+
+		super.getResponse().setAuthorised(status && statusTask);
 	}
 
 	@Override
 	public void load() {
 		InvolvedIn involves;
-		int id;
+		Integer id;
+		MaintenanceRecord maintenanceRecord;
 
 		id = super.getRequest().getData("id", int.class);
-		involves = this.repository.findInvolvesById(id);
+		maintenanceRecord = this.repository.findMaintenanceRecordById(id);
 
+		involves = new InvolvedIn();
+		involves.setMaintenanceRecord(maintenanceRecord);
 		super.getBuffer().addData(involves);
 	}
 
 	@Override
 	public void bind(final InvolvedIn involves) {
-		Task task;
-		int id;
-		MaintenanceRecord maintenanceRecord;
-
-		id = super.getRequest().getData("id", int.class);
-		maintenanceRecord = this.repository.findMaintenanceRecordByInvolvesId(id);
-		task = super.getRequest().getData("task", Task.class);
-
-		super.bindObject(involves);
-		involves.setTask(task);
-		involves.setMaintenanceRecord(maintenanceRecord);
-	}
-
-	@Override
-	public void validate(final InvolvedIn involves) {
 		;
 	}
 
 	@Override
+	public void validate(final InvolvedIn involves) {
+		Task task = super.getRequest().getData("task", Task.class);
+		super.state(task != null, "task", "technician.involves.form.error.no-task-to-unlink");
+
+	}
+
+	@Override
 	public void perform(final InvolvedIn involves) {
-		this.repository.delete(involves);
+		Task task = super.getRequest().getData("task", Task.class);
+		MaintenanceRecord maintenanceRecord = involves.getMaintenanceRecord();
+
+		this.repository.delete(this.repository.findInvolvedInByMaintenanceRecordAndTask(maintenanceRecord, task));
+
 	}
 
 	@Override
@@ -75,20 +89,20 @@ public class TechnicianInvolvedInDeleteService extends AbstractGuiService<Techni
 		Dataset dataset;
 		SelectChoices taskChoices;
 		Collection<Task> tasks;
-		final boolean draftRecord;
+		int maintenanceRecordId;
+		MaintenanceRecord maintenanceRecord;
 
-		tasks = this.repository.findAllTasks();
-		taskChoices = SelectChoices.from(tasks, "ticker", involves.getTask());
+		maintenanceRecordId = super.getRequest().getData("maintenanceRecordId", int.class);
+		maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
 
-		dataset = super.unbindObject(involves, "task");
-		dataset.put("masterId", super.getRequest().getData("masterId", int.class));
-		dataset.put("maintenanceRecord", involves.getMaintenanceRecord().getId());
+		tasks = this.repository.findValidTasksToUnlink(maintenanceRecord);
+		taskChoices = SelectChoices.from(tasks, "description", involves.getTask());
+
+		dataset = super.unbindObject(involves, "maintenanceRecord");
+		dataset.put("maintenanceRecordId", involves.getMaintenanceRecord().getId());
 		dataset.put("task", taskChoices.getSelected().getKey());
 		dataset.put("tasks", taskChoices);
-		dataset.put("taskTechnician", involves.getTask().getTechnician().getLicenseNumber());
-
-		draftRecord = involves.getMaintenanceRecord().isDraftMode();
-		super.getResponse().addGlobal("draftRecord", draftRecord);
+		dataset.put("aircraftRegistrationNumber", involves.getMaintenanceRecord().getAircraft().getRegistrationNumber());
 
 		super.getResponse().addData(dataset);
 	}
