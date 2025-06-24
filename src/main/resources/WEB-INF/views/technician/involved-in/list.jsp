@@ -6,13 +6,9 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:list>
-	<acme:list-column code="technician.involved-in.list.label.ticker" path="taskTicker" width="30%"/>
-	<acme:list-column code="technician.involved-in.list.label.type" path="taskType" width="20%"/>	
-	<acme:list-column code="technician.involved-in.list.label.priority" path="taskPriority" width="20%"/>
-	<acme:list-column code="technician.involved-in.list.label.technician" path="taskTechnician" width="30%"/>
+	<acme:list-column code="technician.involved-in.list.label.maintenanceRecord" path="maintenanceRecord" width="50%"/>	
+	<acme:list-column code="technician.involved-in.list.label.task" path="task" width="50%"/>
 	<acme:list-payload path="payload"/>
 </acme:list>
 
-<jstl:if test="${draft}">
-	<acme:button code="technician.involved-in.list.button.create" action="/technician/involved-in/create?masterId=${masterId}"/>
-</jstl:if>
+<acme:button code="technician.involved-in.list.button.create" action="/technician/involved-in/create"/>

@@ -20,17 +20,24 @@ public class TechnicianTaskPublishService extends AbstractGuiService<Technician,
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int masterId;
+		boolean status = false;
+		Integer taskId;
 		Task task;
 		Technician technician;
 
-		masterId = super.getRequest().getData("id", int.class);
-		task = this.repository.findTaskById(masterId);
-		technician = task == null ? null : task.getTechnician();
-		status = task != null && task.isDraftMode() && super.getRequest().getPrincipal().hasRealm(technician);
+		if (super.getRequest().hasData("id", Integer.class)) {
+			taskId = super.getRequest().getData("id", Integer.class);
+			if (taskId != null) {
+				task = this.repository.findTaskById(taskId);
+				if (task != null) {
+					technician = task.getTechnician();
+					status = task.isDraftMode() && super.getRequest().getPrincipal().hasRealm(technician);
+				}
+			}
+		}
 
 		super.getResponse().setAuthorised(status);
+
 	}
 
 	@Override
@@ -46,8 +53,11 @@ public class TechnicianTaskPublishService extends AbstractGuiService<Technician,
 
 	@Override
 	public void bind(final Task task) {
+		Technician technician = (Technician) super.getRequest().getPrincipal().getActiveRealm();
 
-		super.bindObject(task, "ticker", "type", "description", "priority", "estimatedDuration");
+		super.bindObject(task, "type", "description", "priority", "estimatedDuration");
+
+		task.setTechnician(technician);
 	}
 
 	@Override
@@ -68,7 +78,9 @@ public class TechnicianTaskPublishService extends AbstractGuiService<Technician,
 
 		choices = SelectChoices.from(TaskType.class, task.getType());
 
-		dataset = super.unbindObject(task, "ticker", "type", "description", "priority", "estimatedDuration", "draftMode");
+		dataset = super.unbindObject(task, "type", "description", "priority", "estimatedDuration", "draftMode");
+		dataset.put("technician", task.getTechnician().getIdentity().getFullName());
+		dataset.put("type", choices.getSelected().getKey());
 		dataset.put("types", choices);
 
 		super.getResponse().addData(dataset);

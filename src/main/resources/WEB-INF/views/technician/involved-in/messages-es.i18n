@@ -1,14 +1,17 @@
 
-technician.involved-in.list.title = Tareas involucradas en el registro de mantenimiento anterior
-technician.involved-in.list.label.ticker = Ticker
-technician.involved-in.list.label.type = Tipo
-technician.involved-in.list.label.priority = Prioridad
-technician.involved-in.list.label.technician = Técnico
-technician.involved-in.list.button.create = Añadir
+technician.involved-in.form.title = Formulario de vinculación de tarea
+technician.involved-in.list.title = Lista de tareas vinculadas
 
-technician.involved-in.form.title = Formulario de la tarea involucrada
-technician.involved-in.form.label.task = Tarea
-technician.involved-in.form.label.technician = Técnico asociado a la tarea
+technician.involved-in.form.label.task = Tarea:
+technician.involved-in.form.label.aircraft = Aeronave asociada:
 
-technician.involved-in.form.button.delete = Borrar
-technician.involved-in.form.button.create = Añadir 
+
+technician.involved-in.form.button.link = Vincular
+technician.involved-in.form.button.unlink = Desvincular
+
+technician.involved-in.list.label.maintenanceRecord = Registro de mantenimiento
+technician.involved-in.list.label.task = Tarea
+
+technician.involved-in.list.button.create = Crear
+
+technician.involved-in.form.error.no-task-to-unlink = No puede ser nulo  
