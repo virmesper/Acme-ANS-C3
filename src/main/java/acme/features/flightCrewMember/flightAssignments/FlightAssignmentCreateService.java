@@ -77,7 +77,6 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void validate(final FlightAssignment flightAssignment) {
-		Duty duty = flightAssignment.getDuty();
 		AvailabilityStatus status = flightAssignment.getFlightCrewMember().getAvailabilityStatus();
 		FlightCrewMember flightCrewMember = flightAssignment.getFlightCrewMember();
 		Leg leg = flightAssignment.getLeg();
@@ -88,8 +87,6 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 		}
 		if (leg != null)
 			this.checkPilotAndCopilotAssignment(flightAssignment);
-		if (!Duty.LEAD_ATTENDANT.equals(duty))
-			super.state(false, "duty", "acme.validation.FlightAssignment.NotFlightAttendant.message");
 		if (!AvailabilityStatus.AVAILABLE.equals(status))
 			super.state(false, "flightCrewMember", "acme.validation.FlightAssignment.OnlyAvailableCanBeAssigned.message");
 	}

@@ -129,7 +129,8 @@ public class FlightAssignmentUpdateService extends AbstractGuiService<FlightCrew
 
 		flightAssignmentId = super.getRequest().getData("id", int.class);
 
-		isCompleted = this.repository.areLegsCompletedByFlightAssignment(flightAssignmentId, LegStatus.LANDED);
+		LegStatus landed = LegStatus.LANDED;
+		isCompleted = this.repository.areLegsCompletedByFlightAssignment(flightAssignmentId, landed);
 		SelectChoices legChoices = SelectChoices.from(legs, "flightNumber", flightAssignment.getLeg());
 		SelectChoices currentStatus = SelectChoices.from(acme.entities.S3.CurrentStatus.class, flightAssignment.getCurrentStatus());
 		SelectChoices duty = SelectChoices.from(Duty.class, flightAssignment.getDuty());
