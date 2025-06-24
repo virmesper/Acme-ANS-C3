@@ -35,3 +35,24 @@ acme.validation.FlightAssignment.OnlyAvailableCanBeAssigned.message = Solo un mi
 #Activity Log
 acme.validation.activityLog.wrongMoment.message = El momento de registro del Registro de Actividad debe ser posterior a la fecha de llegada de la leg
 acme.validation.ActivityLog.FlightAssignmentNotPublished.message = No puede publicar el Registro de Actividad si la asignación de vuelo a la que está asociado no se publico
+
+#Technician
+
+acme.validation.header.message      = Debe tener entre 1 y 50 caracteres
+acme.validation.text.message           = Debe tener entre 1 y 255 caracteres
+acme.validation.optional-text.message           = Debe tener entre 0 y 255 caracteres
+
+acme.validation.aircraft.duplicated-registration-number.message = Número de registro ya en uso
+
+acme.validation.airline.iata-code.message = Deben ser 3 letras mayúsculas  (ejemplo: ABC o DEX)
+
+acme.validation.technician.duplicated-license-number.message = Este número de licencia ya está en uso
+acme.validation.technician.license-number.message  	= Debe tener las iniciales del usuario y después seis dígitos (ejemplo: AB123456 o ABC987654)
+acme.validation.technician.phone-number.message =  Debe tener entre 6 y 15 dígitos, opcionalmente comenzando con '+'. (Ejemplo: +123456789 o 987654321)
+
+acme.validation.maintenance-record.inspection-due-date.message = La fecha de la siguiente inspección debe ser posterior a la finalización del matenimiento actual
+acme.validation.maintenance-record.certifications.message =  No debe exceder los 255 caracteres.
+acme.validation.maintenance-record.future-inspection-due-date.message = La fecha de la siguiente inspección debe ser en el futuro
+
+acme.validation.task.maintenance-record-linked.message = Para borrar una tarea, esta no debe tener registros de mantenimiento vinculados
+

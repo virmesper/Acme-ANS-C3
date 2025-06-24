@@ -1,14 +1,18 @@
+technician.involved-in.form.title = Task link form
+technician.involved-in.list.title = Linked tasks list
 
-technician.involved-in.list.title = Tasks involved in the previous maintenance record
-technician.involved-in.list.label.ticker = Ticker
-technician.involved-in.list.label.type = Type
-technician.involved-in.list.label.priority = Priority
-technician.involved-in.list.label.technician = Technician
-technician.involved-in.list.button.create = Add
+technician.involved-in.form.label.task = Task:
+technician.involved-in.form.label.aircraft = Aircraft associated:
 
-technician.involved-in.form.title = Involved task form
-technician.involved-in.form.label.task = Task
-technician.involved-in.form.label.technician = Technician associated to the task
 
-technician.involved-in.form.button.delete = Remove
-technician.involved-in.form.button.create = Add 
+technician.involved-in.form.button.link = Link
+technician.involved-in.form.button.unlink = Unlink
+
+
+technician.involved-in.list.label.maintenanceRecord = Maintenance record
+technician.involved-in.list.label.task = Task
+
+technician.involved-in.list.button.create = Create
+
+technician.involved-in.form.error.no-task-to-unlink = May not be null  
+
