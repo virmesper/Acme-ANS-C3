@@ -1,9 +1,9 @@
 key,license-number,phone-number,specialisation,health-test-passed,years-of-experience,certifications,key:user-account
 # Base entity
-technician-01,"GVA012345","+12345678910","Lorem ipsum dolor sit ame",TRUE, 60,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",user-account-technician-01
+technician-01,"MRA012345","+12345678910","Lorem ipsum dolor sit ame",TRUE, 60,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",user-account-technician-01
 # license-number - standard variations
-technician-02,"AA000000","+12345678910","Lorem ipsum dolor sit ame",TRUE, 60,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",user-account-technician-02
-technician-03,"AAA000001","+12345678910","Lorem ipsum dolor sit ame",TRUE, 60,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",user-account-technician-03
+technician-02,"EH000000","+12345678910","Lorem ipsum dolor sit ame",TRUE, 60,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",user-account-technician-02
+technician-03,"JRA000001","+12345678910","Lorem ipsum dolor sit ame",TRUE, 60,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",user-account-technician-03
 technician-04,"AB000011","+12345678910","Lorem ipsum dolor sit ame",TRUE, 60,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",user-account-technician-04
 technician-05,"AAB000111","+12345678910","Lorem ipsum dolor sit ame",TRUE, 60,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",user-account-technician-05
 technician-06,"AA001111","+12345678910","Lorem ipsum dolor sit ame",TRUE, 60,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",user-account-technician-06
