@@ -92,7 +92,6 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 	}
 
 	private boolean isLegCompatible(final FlightAssignment flightAssignment) {
-
 		Collection<Leg> legsByFlightCrewMember = this.repository.findLegsByFlightCrewMember(flightAssignment.getFlightCrewMember().getId());
 		Leg newLeg = flightAssignment.getLeg();
 
