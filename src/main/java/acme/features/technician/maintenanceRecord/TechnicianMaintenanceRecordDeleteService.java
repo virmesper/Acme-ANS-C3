@@ -44,10 +44,10 @@ public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService
 	@Override
 	public void load() {
 		MaintenanceRecord maintenanceRecord;
-		int id;
+		int maintenanceRecordId;
 
-		id = super.getRequest().getData("id", int.class);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(id);
+		maintenanceRecordId = super.getRequest().getData("id", int.class);
+		maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
 
 		super.getBuffer().addData(maintenanceRecord);
 	}

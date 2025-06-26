@@ -20,19 +20,6 @@ public class TechnicianInvolvedInCreateService extends AbstractGuiService<Techni
 	@Autowired
 	private TechnicianInvolvedInRepository repository;
 
-	//	@Override
-	//	public void authorise() {
-	//		boolean status;
-	//		int id;
-	//		MaintenanceRecord maintenanceRecord;
-	//
-	//		id = super.getRequest().getData("masterId", int.class);
-	//		maintenanceRecord = this.repository.findMaintenanceRecordById(id);
-	//		status = maintenanceRecord != null && super.getRequest().getPrincipal().hasRealm(maintenanceRecord.getTechnician());
-	//
-	//		super.getResponse().setAuthorised(status);
-	//	}
-
 
 	@Override
 	public void authorise() {

@@ -9,6 +9,7 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidNumber;
+import acme.constraints.ValidLicenseNumber;
 import acme.constraints.ValidLongText;
 import acme.constraints.ValidPhoneNumber;
 import acme.constraints.ValidShortText;
@@ -30,6 +31,7 @@ public class Technician extends AbstractRole {
 
 	@Mandatory
 	//@ValidString(pattern = "^[A-Z]{2,3}\\d{6}$", min = 8, max = 9)
+	@ValidLicenseNumber
 	@Column(unique = true)
 	private String				licenseNumber;
 

@@ -43,10 +43,10 @@ public class TechnicianTaskPublishService extends AbstractGuiService<Technician,
 	@Override
 	public void load() {
 		Task task;
-		int id;
+		int taskId;
 
-		id = super.getRequest().getData("id", int.class);
-		task = this.repository.findTaskById(id);
+		taskId = super.getRequest().getData("id", int.class);
+		task = this.repository.findTaskById(taskId);
 
 		super.getBuffer().addData(task);
 	}

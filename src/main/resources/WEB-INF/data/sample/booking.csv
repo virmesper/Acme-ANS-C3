@@ -34,3 +34,5 @@ booking-27,customer-01,flight-01,MQLTCA83,2012/07/02 00:00,ECONOMY,false,0879,EU
 #draftmode-examples
 booking-28,customer-01,flight-01,MQLTCA84,2012/07/02 00:00,ECONOMY,false,0879,EUR 500.00
 booking-29,customer-01,flight-01,MQLTCA85,2012/07/02 00:00,ECONOMY,true,0879,EUR 500.00
+booking-30,customer-03,flight-04,MQLTCA86,2012/07/02 00:00,ECONOMY,true,0879,EUR 500.00
+booking-31,customer-02,flight-03,MQLTCA87,2012/07/02 00:00,ECONOMY,true,0879,EUR 500.00
