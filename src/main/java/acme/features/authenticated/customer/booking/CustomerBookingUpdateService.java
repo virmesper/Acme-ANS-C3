@@ -3,11 +3,13 @@ package acme.features.authenticated.customer.booking;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.S1.FlightRepository;
 import acme.entities.S2.Booking;
 import acme.entities.S2.TravelClass;
 import acme.realms.Customer;
@@ -17,7 +19,10 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRepository repository;
+	private CustomerBookingRepository	repository;
+
+	@Autowired
+	private FlightRepository			flightRepository;
 
 	// AbstractGuiService interfaced ------------------------------------------
 
@@ -43,17 +48,14 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 	public void bind(final Booking booking) {
 		assert booking != null;
 
-		// Solo permitimos modificar campos legítimos
-		super.bindObject(booking, "travelClass", "lastCardDigits");
+		super.bindObject(booking, "travelClass", "lastCardDigits", "locatorCode", "flightId");
 
 		// Ignorar campos que pueden haber sido manipulados
 		int id = super.getRequest().getData("id", int.class);
 		Booking original = this.repository.findById(id);
 
-		booking.setPrice(original.getPrice()); // ← Forzamos el valor real
+		booking.setPrice(original.getPrice());
 		booking.setPurchaseMoment(original.getPurchaseMoment());
-		booking.setLocatorCode(original.getLocatorCode());
-		booking.setFlightId(original.getFlightId());
 	}
 
 	@Override
@@ -67,6 +69,27 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 	@Override
 	public void perform(final Booking booking) {
 		assert booking != null;
+
+		// Obtener el precio por pasajero (Money) desde el vuelo
+		Money pricePerPassenger = this.flightRepository.findCostByFlight(booking.getFlightId().getId());
+
+		// Obtener número de pasajeros
+		int passengerCount = this.repository.countNumberOfPassengersOfBooking(booking.getId());
+
+		// Calcular nuevo precio total
+		Money newPrice = new Money();
+		if (passengerCount == 0)
+			// Si no hay pasajeros, el precio es el del vuelo base
+			newPrice.setAmount(pricePerPassenger.getAmount());
+		else
+			// Si hay pasajeros, se multiplica por el número
+			newPrice.setAmount(pricePerPassenger.getAmount() * passengerCount);
+		newPrice.setCurrency(pricePerPassenger.getCurrency());
+
+		// Asignar nuevo precio a la booking
+		booking.setPrice(newPrice);
+
+		// Guardar la booking actualizada
 		this.repository.save(booking);
 	}
 
