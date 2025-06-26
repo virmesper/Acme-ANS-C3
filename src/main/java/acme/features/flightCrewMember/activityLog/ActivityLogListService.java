@@ -57,12 +57,6 @@ public class ActivityLogListService extends AbstractGuiService<FlightCrewMember,
 	}
 
 	@Override
-	public void bind(final ActivityLog log) {
-		super.bindObject(log, "typeOfIncident", "description", "severityLevel");
-
-	}
-
-	@Override
 	public void unbind(final ActivityLog activityLog) {
 		Dataset dataset;
 
