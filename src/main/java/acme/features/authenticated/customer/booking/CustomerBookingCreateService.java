@@ -36,15 +36,7 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	@Override
 	public void authorise() {
 		boolean isCustomer = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
-
 		boolean authorised = isCustomer;
-
-		// Solo verificar flightId si es una petición POST (no en GET)
-		if (super.getRequest().getMethod().equalsIgnoreCase("POST")) {
-			int flightId = super.getRequest().getData("flightId", int.class);
-			Flight flight = this.flightRepository.findFlightById(flightId);
-			authorised = authorised && flight != null; // solo continúa si el vuelo existe
-		}
 
 		super.getResponse().setAuthorised(authorised);
 	}
@@ -67,23 +59,28 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void bind(final Booking booking) {
-		int flightId;
-		Flight flight;
+		Flight flight = null;
 
-		flightId = super.getRequest().getData("flightId", int.class);
-		flight = this.flightRepository.findFlightById(flightId);
-
-		// Validación fuerte: si el vuelo no existe, lanza excepción
-		if (flight == null)
-			throw new IllegalArgumentException("El vuelo con ID " + flightId + " no existe.");
+		// Validación segura del flightId
+		if (super.getRequest().hasData("flightId"))
+			try {
+				int flightId = super.getRequest().getData("flightId", int.class);
+				flight = this.flightRepository.findFlightById(flightId);
+			} catch (final Throwable t) {
+				// No hacemos nada, dejamos flight como null para validarlo más adelante
+			}
 
 		super.bindObject(booking, "locatorCode", "lastCardDigits", "travelClass");
 
 		booking.setFlightId(flight);
 		booking.setDraftMode(false);
 
-		Money basePrice = this.flightRepository.findCostByFlight(flight.getId());
-		booking.setPrice(basePrice);
+		// Asignar precio si hay vuelo, si no se valida en validate()
+		if (flight != null) {
+			Money basePrice = this.flightRepository.findCostByFlight(flight.getId());
+			booking.setPrice(basePrice);
+		} else
+			booking.setPrice(null);
 	}
 
 	@Override
