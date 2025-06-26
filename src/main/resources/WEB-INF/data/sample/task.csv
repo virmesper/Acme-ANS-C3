@@ -2,15 +2,15 @@ key,type,description,priority,estimated-duration,draft-mode,key:technician
 # base entity
 task-000,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,TRUE,technician-01
 # type - standard variations
-task-001,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,TRUE,technician-01
+task-001,MAINTENANCE,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,TRUE,technician-02
 task-002,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,TRUE,technician-01
-task-003,REPAIR,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,TRUE,technician-01
+task-003,REPAIR,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,TRUE,technician-02
 task-004,SYSTEM_CHECK,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,TRUE,technician-01
 # type - no singular values
 # description - standard variations
 task-005,INSPECTION,L,5,500,TRUE,technician-01
 task-006,INSPECTION,Lo,5,500,TRUE,technician-01
-task-007,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",5,500,TRUE,technician-01
+task-007,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor",5,500,TRUE,technician-03
 task-008,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor*",5,500,TRUE,technician-01
 task-009,INSPECTION,โลเร็ม อิปซัม,5,500,TRUE,technician-01
 task-010,INSPECTION,لوريم إيبسوم,5,500,TRUE,technician-01
@@ -28,8 +28,8 @@ task-018,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Se
 # estimatedDurationHours - standard variations
 task-019,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,0,TRUE,technician-01
 task-020,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,1,TRUE,technician-01
-task-021,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,999,TRUE,technician-01
-task-022,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,1000,TRUE,technician-01
+task-021,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,999,TRUE,technician-02
+task-022,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,1000,TRUE,technician-02
 # estimated-duration-hours - no singular values
 # draft-mode - standard variations
 task-023,INSPECTION,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",5,500,FALSE,technician-01

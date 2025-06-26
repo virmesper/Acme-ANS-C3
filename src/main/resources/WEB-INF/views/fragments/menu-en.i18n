@@ -57,8 +57,10 @@ master.menu.customer.passenger-all = Passengers
 # master.menu.technician ######################################################
 
 master.menu.technician = Technician
-master.menu.technician.maintenance-records = Maintenance Records
-master.menu.technician.tasks = Tasks
+master.menu.technician.list-my-maintenance-records= List my maintenance records 
+master.menu.technician.list-my-tasks = List my tasks 
+master.menu.technician.list-maintenance-record-catalogue = List maintenance record catalogue (Published)
+master.menu.technician.list-task-catalogue = List task catalogue (Published)
 
 # master.menu.user-account ####################################################
 

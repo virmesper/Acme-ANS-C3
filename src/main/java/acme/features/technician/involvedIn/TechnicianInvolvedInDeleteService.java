@@ -52,11 +52,11 @@ public class TechnicianInvolvedInDeleteService extends AbstractGuiService<Techni
 	@Override
 	public void load() {
 		InvolvedIn involves;
-		Integer id;
+		int maintenanceRecordId;
 		MaintenanceRecord maintenanceRecord;
 
-		id = super.getRequest().getData("id", int.class);
-		maintenanceRecord = this.repository.findMaintenanceRecordById(id);
+		maintenanceRecordId = super.getRequest().getData("maintenanceRecordId", int.class);
+		maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
 
 		involves = new InvolvedIn();
 		involves.setMaintenanceRecord(maintenanceRecord);
