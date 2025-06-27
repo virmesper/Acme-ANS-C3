@@ -36,14 +36,3 @@ booking-28,customer-01,flight-01,MQLTCA84,2012/07/02 00:00,ECONOMY,false,0879,EU
 booking-29,customer-01,flight-01,MQLTCA85,2012/07/02 00:00,ECONOMY,true,0879,EUR 500.00
 booking-30,customer-03,flight-04,MQLTCA86,2012/07/02 00:00,ECONOMY,true,0879,EUR 500.00
 booking-31,customer-02,flight-03,MQLTCA87,2012/07/02 00:00,ECONOMY,true,0879,EUR 500.00
-
-booking-32,customer-02,flight-08,BNHJFG01,2012/07/02 0:00,ECONOMY,false,1234,EUR 500.00
-booking-33,customer-02,flight-09,BNHJFG02,2012/07/02 0:00,ECONOMY,false,1234,EUR 500.00
-booking-34,customer-02,flight-10,BNHJFG03,2012/07/02 0:00,ECONOMY,false,1234,EUR 500.00
-booking-35,customer-02,flight-11,BNHJFG04,2012/07/02 0:00,ECONOMY,false,1234,EUR 500.00
-booking-36,customer-02,flight-12,BNHJFG05,2012/07/02 0:00,ECONOMY,false,1234,EUR 500.00
-booking-37,customer-02,flight-13,BNHJFG06,2012/07/02 0:00,ECONOMY,false,1234,EUR 500.00
-booking-38,customer-02,flight-14,BNHJFG07,2012/07/02 0:00,ECONOMY,false,1234,EUR 500.00
-booking-39,customer-02,flight-15,BNHJFG08,2012/07/02 0:00,ECONOMY,false,1234,EUR 500.00
-booking-40,customer-02,flight-16,BNHJFG09,2012/07/02 0:00,ECONOMY,false,1234,EUR 500.00
-booking-41,customer-02,flight-17,BNHJFG10,2012/07/02 0:00,ECONOMY,false,1234,EUR 500.00
