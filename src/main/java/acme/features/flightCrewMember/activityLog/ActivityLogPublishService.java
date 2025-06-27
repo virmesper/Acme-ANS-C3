@@ -1,15 +1,12 @@
 
 package acme.features.flightCrewMember.activityLog;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S1.Leg;
 import acme.entities.S3.ActivityLog;
 import acme.entities.S3.FlightAssignment;
 import acme.realms.flightCrewMember.FlightCrewMember;
@@ -59,29 +56,25 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 
 	@Override
 	public void bind(final ActivityLog activityLog) {
+		int activityLogId;
+		FlightAssignment flightAssignment;
+		activityLogId = super.getRequest().getData("id", int.class);
+		flightAssignment = this.repository.findFlightAssignmentByActivityLogId(activityLogId);
+		activityLog.setFlightAssignment(flightAssignment);
+		activityLog.setRegistrationMoment(MomentHelper.getCurrentMoment());
 		super.bindObject(activityLog, "typeOfIncident", "description", "severityLevel");
 	}
 
 	@Override
 	public void validate(final ActivityLog activityLog) {
-		int activityLogId = activityLog.getId();
-
-		FlightAssignment flightAssignment = this.repository.findFlightAssignmentByActivityLogId(activityLog.getId());
-		if (activityLog.getRegistrationMoment() == null || flightAssignment == null)
-			return;
-		Leg leg = flightAssignment.getLeg();
-		if (leg == null || leg.getScheduledArrival() == null)
-			return;
-		Date activityLogMoment = activityLog.getRegistrationMoment();
-		boolean activityLogMomentIsAfterscheduledArrival = this.repository.associatedWithCompletedLeg(activityLogId, activityLogMoment);
-		super.state(activityLogMomentIsAfterscheduledArrival, "WrongActivityLogDate", "acme.validation.activityLog.wrongMoment.message");
-		boolean flightAssignmentIsPublished = this.repository.isFlightAssignmentAlreadyPublishedByActivityLogId(activityLogId);
-		super.state(flightAssignmentIsPublished, "activityLog", "acme.validation.ActivityLog.FlightAssignmentNotPublished.message");
+		int activityLogId = super.getRequest().getData("id", int.class);
+		FlightAssignment flightAssignment = this.repository.findFlightAssignmentByActivityLogId(activityLogId);
+		boolean legHasArrive = MomentHelper.isAfter(MomentHelper.getCurrentMoment(), flightAssignment.getLeg().getScheduledArrival());
+		super.state(legHasArrive, "*", "flight-crew-member.activity-log.validation.create");
 	}
 
 	@Override
 	public void perform(final ActivityLog activityLog) {
-		activityLog.setRegistrationMoment(MomentHelper.getCurrentMoment());
 		activityLog.setDraftMode(false);
 		this.repository.save(activityLog);
 	}
@@ -89,9 +82,7 @@ public class ActivityLogPublishService extends AbstractGuiService<FlightCrewMemb
 	@Override
 	public void unbind(final ActivityLog activityLog) {
 		Dataset dataset;
-		dataset = super.unbindObject(activityLog, "registrationMoment", "typeOfIncident", "description", "severityLevel", "draftMode");
-		dataset.put("draftMode", activityLog.isDraftMode());
-		dataset.put("readonly", false);
+		dataset = super.unbindObject(activityLog, "draftMode", "typeOfIncident", "description", "severityLevel");
 		super.getResponse().addData(dataset);
 	}
 

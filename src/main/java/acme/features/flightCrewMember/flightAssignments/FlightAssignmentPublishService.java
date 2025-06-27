@@ -100,18 +100,17 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		boolean completedLeg = LegStatus.LANDED.equals(flightAssignment.getLeg().getStatus());
 
 		if (leg != null && cambioLeg && !this.isLegCompatible(flightAssignment))
-			super.state(false, "FlightCrewMember", "acme.validation.FlightAssignment.FlightCrewMemberIncompatibleLegs.message");
+			super.state(false, "flightCrewMember", "acme.validation.FlightAssignment.FlightCrewMemberIncompatibleLegs.message");
 
 		if (leg != null && (cambioDuty || cambioLeg))
 			this.checkPilotAndCopilotAssignment(flightAssignment);
 
 		if (!AvailabilityStatus.AVAILABLE.equals(status))
-			super.state(false, "FlightCrewMember", "acme.validation.FlightAssignment.OnlyAvailableCanBeAssigned.message");
+			super.state(false, "flightCrewMember", "acme.validation.FlightAssignment.OnlyAvailableCanBeAssigned.message");
 
 		if (completedLeg)
 			super.state(false, "leg", "acme.validation.FlightAssignment.LegAlreadyCompleted.message");
 	}
-
 	@Override
 	public void perform(final FlightAssignment flightAssignment) {
 		flightAssignment.setMoment(MomentHelper.getCurrentMoment());
@@ -142,10 +141,11 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		dataset.put("duty", duty);
 		dataset.put("leg", legChoices.getSelected().getKey());
 		dataset.put("legs", legChoices);
-		dataset.put("FlightCrewMember", flightCrewMember.getEmployeeCode());
+		dataset.put("flightCrewMember", flightCrewMember.getEmployeeCode());
 		dataset.put("isCompleted", isCompleted);
 		dataset.put("draftMode", flightAssignment.isDraftMode());
 
 		super.getResponse().addData(dataset);
 	}
+
 }

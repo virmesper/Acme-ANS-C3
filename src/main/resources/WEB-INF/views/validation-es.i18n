@@ -24,7 +24,6 @@ acme.validation.employeeCode.initials.message = Las primeras dos o tres letras d
 acme.validation.assistanceAgent.code = Las primeras dos o tres letras de su código de empleado deben corresponder a sus iniciales.
 acme.validation.range. = El porcentaje debe ser mayor que 0 y menor o igual que 100.
 
-
 # Fight Assignments
 acme.validation.FlightAssignment.havePilot.message= Ese tramo ya tiene un piloto asignado
 acme.validation.FlightAssignment.haveCopilot.message= Ese tramo ya tiene un copiloto asignado
@@ -32,6 +31,8 @@ acme.validation.FlightAssignment.flightCrewMemberNotAvailable.message= Ese miemb
 acme.validation.FlightAssignment.FlightCrewMemberIncompatibleLegs.message= Ese miembro de la tripulación tiene tramos de vuelo incompatibles con ese
 acme.validation.FlightAssignment.LegAlreadyCompleted.message= El tramo al que esta asignacion de vuelo estaba asociado ya terminó, por lo que no podés publicarla
 acme.validation.flightAssignment.availableFlightCrewMember.message= La asignación de vuelo debe tener un miembro de la tripulación disponible asignado
+acme.validation.FlightAssignment.OnlyAvailableCanBeAssigned.message = Solo un miembro de la tripulación con estado disponible puede ser asignado a un tramo de vuelo
+acme.validation.FlightAssignment.NotFlightAttendant.message = Debe ser Auxiliar de Vuelo (Flight Attendant)
 
 #Activity Log
 acme.validation.activityLog.wrongMoment.message = El momento de registro del Registro de Actividad debe ser posterior a la fecha de llegada de la leg

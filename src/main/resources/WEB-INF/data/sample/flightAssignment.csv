@@ -13,7 +13,7 @@ flight-assignment-07,flight-crew-member-01,leg-01,PILOT,2000/01/01 00:01,CONFIRM
 flight-assignment-08,flight-crew-member-02,leg-02,PILOT,2024/12/31 23:59,CONFIRMED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true
 flight-assignment-09,flight-crew-member-02,leg-02,PILOT,2025/01/01 0:00,CONFIRMED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true
 # currentStatus - standard variations,"","","","","",""
-flight-assignment-10,flight-crew-member-00,leg-04,PILOT,2023/01/01 10:00,PENDING,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true
+flight-assignment-10,flight-crew-member-00,leg-04,COPILOT,2023/01/01 10:00,PENDING,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true
 flight-assignment-11,flight-crew-member-00,leg-05,PILOT,2023/01/01 10:00,CANCELLED,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true
 # remarks - standard variations
 flight-assignment-12,flight-crew-member-00,leg-06,PILOT,2023/01/01 10:00,CONFIRMED,L,false
@@ -24,5 +24,5 @@ flight-assignment-16,flight-crew-member-00,leg-02,PILOT,2023/01/01 10:00,CONFIRM
 flight-assignment-17,flight-crew-member-00,leg-03,PILOT,2023/01/01 10:00,CONFIRMED,لوريم إيبسوم,false
 flight-assignment-18,flight-crew-member-00,leg-21,PILOT,2023/01/01 10:00,CONFIRMED,洛伦·伊普森,true
 flight-assignment-19,flight-crew-member-00,leg-03,PILOT,2023/01/01 10:00,CONFIRMED,<marquee>Hacked</marquee>,true
-flight-assignment-20,flight-crew-member-00,leg-21,PILOT,2023/01/01 10:00,CONFIRMED,"<script>alert(‘Hacked!’),</script>",true
-flight-assignment-21,flight-crew-member-00,leg-03,PILOT,2023/01/01 10:00,CONFIRMED,or 'A' = 'A,true
+flight-assignment-20,flight-crew-member-04,leg-21,PILOT,2023/01/01 10:00,CONFIRMED,"<script>alert(‘Hacked!’),</script>",true
+flight-assignment-21,flight-crew-member-34,leg-04,PILOT,2023/01/01 10:00,CONFIRMED,or 'A' = 'A,true
