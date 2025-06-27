@@ -62,6 +62,7 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void validate(final FlightAssignment flightAssignment) {
+		;
 	}
 
 	@Override
@@ -73,6 +74,6 @@ public class FlightAssignmentDeleteService extends AbstractGuiService<FlightCrew
 
 	@Override
 	public void unbind(final FlightAssignment flightAssignment) {
-
+		;
 	}
 }

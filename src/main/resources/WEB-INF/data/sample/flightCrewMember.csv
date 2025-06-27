@@ -39,3 +39,4 @@ flight-crew-member-31,user-account-flight-crew-member-04,JIM000026,+11234567890,
 flight-crew-member-32,user-account-flight-crew-member-04,JIM000027,+11234567890,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",AVAILABLE,Airline-01,EUR 1000000,45
 # Opciones airline,"","","","",""
 flight-crew-member-33,user-account-flight-crew-member-04,JIM000028,+6206945534,Hindi,ON_VACATION,Airline-03,EUR 500000.00,45
+flight-crew-member-34,user-account-flight-crew-member-05,JIM000029,+6206945534,Hindi,ON_LEAVE,Airline-03,EUR 500000.00,45

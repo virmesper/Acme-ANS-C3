@@ -87,6 +87,7 @@ public class FlightAssignmentCreateService extends AbstractGuiService<FlightCrew
 		}
 		if (leg != null)
 			this.checkPilotAndCopilotAssignment(flightAssignment);
+
 		if (!AvailabilityStatus.AVAILABLE.equals(status))
 			super.state(false, "flightCrewMember", "acme.validation.FlightAssignment.OnlyAvailableCanBeAssigned.message");
 	}
