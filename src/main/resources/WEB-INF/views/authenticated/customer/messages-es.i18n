@@ -1,0 +1,9 @@
+authenticated.customer.form.title=Registrarse como Cliente
+authenticated.customer.form.label.identifier=Identificador
+authenticated.customer.form.label.phoneNumber=Número de Teléfono
+authenticated.customer.form.label.address=Dirección
+authenticated.customer.form.label.city=Ciudad
+authenticated.customer.form.label.country=País
+authenticated.customer.form.label.earnedPoints=Puntos obtenidos
+authenticated.customer.form.button.create=Registrarse
+authenticated.customer.form.button.update=Actualizar
