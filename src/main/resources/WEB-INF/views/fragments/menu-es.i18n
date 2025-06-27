@@ -80,3 +80,4 @@ master.menu.user-account.customer-profile = Perfil de cliente
 master.menu.flight-crew-member = Miembro de la tripulación
 master.menu.flight-crew-member.flight-assignment.completedlist = Listar asignaciones de vuelo con tramos completados
 master.menu.flight-crew-member.flight-assignment.plannedlist = Listar asignaciones de vuelo con tramos planeados
+master.menu.flight-crew-member.show-dashboard = Mostrar Dashboard

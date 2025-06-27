@@ -81,3 +81,4 @@ master.menu.user-account.customer-profile = Customer Profile
 master.menu.flight-crew-member = Flight Crew Member
 master.menu.flight-crew-member.flight-assignment.completedlist = List Flight Assignments with completed legs
 master.menu.flight-crew-member.flight-assignment.plannedlist = List Flight Assignments with planned legs
+master.menu.flight-crew-member.show-dashboard = Dashboard

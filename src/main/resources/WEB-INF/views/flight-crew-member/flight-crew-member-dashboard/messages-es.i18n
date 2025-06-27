@@ -1,0 +1,15 @@
+flight-crew-member.flight-crew-member-dashboard.form.title = Dashboard de miebro de la tripulación
+
+flight-crew-member.dashboard.title.assignment-stats = Estadísticas de Asignaciones
+flight-crew-member.dashboard.label.average = Promedio
+flight-crew-member.dashboard.label.minimum = Mínimo
+flight-crew-member.dashboard.label.maximum = Máximo
+flight-crew-member.dashboard.label.standard-deviation = Desviación Estándar
+
+flight-crew-member.dashboard.title.activity-severity = Severidad de Actividad
+flight-crew-member.dashboard.label.severity-range = Rango de Severidad
+flight-crew-member.dashboard.label.count = Cantidad
+
+flight-crew-member.dashboard.title.last-destinations = Últimos Cinco Destinos
+flight-crew-member.dashboard.title.colleagues-last-stage = Compañeros en la Última Etapa
+flight-crew-member.dashboard.title.assignments-by-status = Asignaciones por Estado
