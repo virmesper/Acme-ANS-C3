@@ -1,0 +1,4 @@
+key,currencyName,isDefaultCurrency
+supportedCurrency-01,EUR,true
+supportedCurrency-02,USD,false
+supportedCurrency-03,GBP,false
