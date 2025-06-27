@@ -13,3 +13,4 @@ administrator.booking.form.label.locatorCode = Localizador
 administrator.booking.form.label.flight = Vuelo
 administrator.booking.form.label.travelClass = Clase
 administrator.booking.form.label.lastCardDigits = Últimos dígitos de la tarjeta de crédito
+customer.booking.form.button.passengers = Ver pasajeros

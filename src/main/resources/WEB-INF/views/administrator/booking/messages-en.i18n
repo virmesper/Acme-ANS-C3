@@ -13,3 +13,4 @@ administrator.booking.form.label.locatorCode = Locator Code
 administrator.booking.form.label.flight = Flight
 administrator.booking.form.label.travelClass = Travel Class
 administrator.booking.form.label.lastCardDigits = Last nibble of the credit card
+customer.booking.form.button.passengers = View Passengers
