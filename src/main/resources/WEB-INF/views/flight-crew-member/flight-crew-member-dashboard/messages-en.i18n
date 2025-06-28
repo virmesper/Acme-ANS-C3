@@ -1,0 +1,15 @@
+flight-crew-member.flight-crew-member-dashboard.form.title = Crew Member Dashboard
+
+flight-crew-member.dashboard.title.assignment-stats = Assignment Statistics
+flight-crew-member.dashboard.label.average = Average
+flight-crew-member.dashboard.label.minimum = Minimum
+flight-crew-member.dashboard.label.maximum = Maximum
+flight-crew-member.dashboard.label.standard-deviation = Standard Deviation
+
+flight-crew-member.dashboard.title.activity-severity = Activity Severity
+flight-crew-member.dashboard.label.severity-range = Severity Range
+flight-crew-member.dashboard.label.count = Count
+
+flight-crew-member.dashboard.title.last-destinations = Last Five Destinations
+flight-crew-member.dashboard.title.colleagues-last-stage = Colleagues in Last Stage
+flight-crew-member.dashboard.title.assignments-by-status = Assignments by Status

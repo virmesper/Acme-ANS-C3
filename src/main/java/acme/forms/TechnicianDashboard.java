@@ -2,12 +2,10 @@
 package acme.forms;
 
 import java.util.List;
-import java.util.Map;
 
 import acme.client.components.basis.AbstractForm;
-import acme.client.components.datatypes.Money;
+import acme.entities.Group.Aircraft;
 import acme.entities.S5.MaintenanceRecord;
-import acme.entities.S5.MaintenanceRecordStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,29 +13,27 @@ import lombok.Setter;
 @Setter
 public class TechnicianDashboard extends AbstractForm {
 
-	private static final long		serialVersionUID	= 1L;
+	private static final long	serialVersionUID	= 1L;
 
-	// Número de registros de mantenimiento agrupados por estado
-	private Map<MaintenanceRecordStatus, Integer>	maintenanceRecordsByStatus;
+	// Attributes -------------------------------------------------------------
 
-	// Mantenimiento con la inspección más cercana (si participa en tareas dentro de ese mantenimiento)
-	// (si hay más de uno, devuelve una lista)
-	private List<MaintenanceRecord>	nearestMaintenanceRecords;
+	// 1. Number of maintenance records grouped by their status
+	Integer						numberOfMaintenanceRecordsPending;
+	Integer						numberOfMaintenanceRecordsInProgress;
+	Integer						numberOfMaintenanceRecordsCompleted;
 
-	// Top 5 aeronaves con mayor número de tareas en registros de mantenimiento
-	private List<String>			topFiveAircraftWithMostTasks;
+	// 2. Maintenance record with the nearest inspection due date (where technician is involved)
+	MaintenanceRecord			nearestMaintenanceRecordByInspectionDueDate;
 
-	// Indicadores de costo estimado de registros de mantenimiento en el último año
-	private Money					averageEstimatedMaintenanceCost;
-	private Money					minimumEstimatedMaintenanceCost;
-	private Money					maximumEstimatedMaintenanceCost;
-	private Money					standardDeviationEstimatedMaintenanceCost;
-	private Integer					countMaintenanceRecordsLastYear;
+	// 3. Top 5 aircrafts with higher number of tasks in their maintenance records
+	List<Aircraft>				topFiveAircraftsWithMostTasks;
 
-	// Indicadores de duración estimada de tareas en las que participa el técnico
-	private Double					averageEstimatedTaskDuration;
-	private Double					minimumEstimatedTaskDuration;
-	private Double					maximumEstimatedTaskDuration;
-	private Double					standardDeviationEstimatedTaskDuration;
-	private Integer					countInvolvedTasks;
+	// 4. Stats on estimated cost of maintenance records in the last year
+	List<Object[]>				maintenanceRecordEstimatedCostLastYearStats;
+
+	// 5. Stats on estimated duration of tasks technician is involved in
+	Double						averageTaskDuration;
+	Double						minimumTaskDuration;
+	Double						maximumTaskDuration;
+	Double						deviationTaskDuration;
 }
