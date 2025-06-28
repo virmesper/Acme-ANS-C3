@@ -42,11 +42,11 @@ public class CustomerPassengerListService extends AbstractGuiService<Customer, P
 		int bookingId = super.getRequest().getData("bookingId", int.class);
 		int userAccountId = super.getRequest().getPrincipal().getAccountId();
 
-		// Comprobar si la reserva pertenece al customer logueado
-		boolean isMine = this.bookingRepository.findBookingById(bookingId).getCustomer().getUserAccount().getId() == userAccountId;
+		Booking booking = this.bookingRepository.findBookingById(bookingId);
+		boolean isMine = booking.getCustomer().getUserAccount().getId() == userAccountId;
 
 		super.getResponse().addGlobal("bookingId", bookingId);
-
+		super.getResponse().addGlobal("draftMode", booking.isDraftMode());
 		if (isMine) {
 			Collection<Passenger> passengers = this.bookingRepository.findPassengersByBooking(bookingId);
 			super.getBuffer().addData(passengers);
