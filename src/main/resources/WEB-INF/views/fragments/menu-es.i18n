@@ -38,6 +38,9 @@ master.menu.administrator.shut-system-down = Parar el sistema
 master.menu.administrator.list.claim = Lista de Reclamaciones Publicadas
 master.menu.administrator.list-bookings = Listar Reservas
 
+master.menu.administrator.list-maintenance-records = Catálogo de registros de mantenimiento
+
+
 # master.menu.provider ########################################################
 
 master.menu.provider = Proveedor
@@ -62,6 +65,7 @@ master.menu.technician.list-my-maintenance-records= Listar mis registros de mant
 master.menu.technician.list-my-tasks = Listar mis tareas 
 master.menu.technician.list-maintenance-record-catalogue = Listar catálogo de registros de mantenimiento (Publicados)
 master.menu.technician.list-task-catalogue = Listar catálogo de tareas (Publicadas)
+master.menu.technician.show-dashboard = Mostrar dashboard
 
 # master.menu.user-account ####################################################
 
@@ -73,8 +77,13 @@ master.menu.user-account.become-consumer = Hazte consumidor
 master.menu.user-account.consumer-profile = Perfil de consumidor
 master.menu.user-account.become-assistance-agent = Hazte agente de asistencia
 master.menu.user-account.assistance-agent-profile = Perfil del agente de asistencia
+
+master.menu.user-account.become-technician = Hazte técnico
+master.menu.user-account.technician-profile = Perfil de técnico
+
 master.menu.user-account.become-customer = Hazte Cliente
 master.menu.user-account.customer-profile = Perfil de cliente
+
 
 # master.menu.flight-crew-member ##########################################################
 

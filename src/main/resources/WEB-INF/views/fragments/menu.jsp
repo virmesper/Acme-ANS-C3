@@ -52,7 +52,8 @@
 		    <acme:menu-separator/>
 		    <acme:menu-suboption code="master.menu.administrator.list-airport" action="/administrator/airport/list"/>
 		    <acme:menu-suboption code="master.menu.administrator.list-aircraft" action="/administrator/aircraft/list"/>
-        <acme:menu-suboption code="master.menu.administrator.list-airlines" action="/administrator/airline/list" />
+        	<acme:menu-suboption code="master.menu.administrator.list-airlines" action="/administrator/airline/list" />
+			<acme:menu-suboption code="master.menu.administrator.list-maintenance-records" action="/administrator/maintenance-record/list"/>
 		    <acme:menu-separator/>
 		    <acme:menu-suboption code="master.menu.administrator.populate-db-initial" action="/administrator/system/populate-initial"/>
 		    <acme:menu-suboption code="master.menu.administrator.populate-db-sample" action="/administrator/system/populate-sample"/>
@@ -90,6 +91,9 @@
 			<acme:menu-separator/>
 			<acme:menu-suboption code="master.menu.technician.list-maintenance-record-catalogue" action="/technician/maintenance-record/list" />
 			<acme:menu-suboption code="master.menu.technician.list-task-catalogue" action="/technician/task/list" />
+ 			<acme:menu-separator/>
+			<acme:menu-suboption code="master.menu.technician.show-dashboard" action="/technician/technician-dashboard/show" />
+			
  		</acme:menu-option>
 	</acme:menu-left>
 
@@ -116,12 +120,21 @@
 			<acme:menu-suboption code="master.menu.user-account.assistance-agent-profile" 
 				action="/authenticated/assistance-agent/update" 
 				access="hasRealm('AssistanceAgent')"/>
+
+			<acme:menu-suboption code="master.menu.user-account.become-technician" 
+				action="/authenticated/technician/create" 
+				access="!hasRealm('Technician')" />
+			<acme:menu-suboption code="master.menu.user-account.technician-profile" 
+				action="/authenticated/technician/update" 
+				access="hasRealm('Technician')" />
+
 		    <acme:menu-suboption code="master.menu.user-account.become-customer"
 		        action="/authenticated/customer/create"
 		        access="!hasRealm('Customer')" />
 		    <acme:menu-suboption code="master.menu.user-account.customer-profile"
 		        action="/authenticated/customer/update"
 		        access="hasRealm('Customer')" />
+
 		</acme:menu-option>
 	</acme:menu-right>
 </acme:menu-bar>
