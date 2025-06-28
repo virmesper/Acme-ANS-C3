@@ -27,7 +27,9 @@
 				action="https://www.zara.com" />
 			<acme:menu-suboption code="master.menu.anonymous.favourite-link-4"
 				action="https://www.netflix.com" />
-
+			<acme:menu-separator/>
+			<acme:menu-suboption code="master.menu.authenticated.list-assignments" 
+				action="/any/flight-assignment/list" />
 		</acme:menu-option>
     
 		<acme:menu-option code="master.menu.assistance-agent" access="hasRealm('AssistanceAgent')">
