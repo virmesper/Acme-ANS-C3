@@ -17,6 +17,7 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidEmail;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
+import acme.constraints.ValidClaim;
 import acme.entities.S1.Leg;
 import acme.realms.assistanceAgent.AssistanceAgent;
 import lombok.Getter;
@@ -29,6 +30,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@ValidClaim
 public class Claim extends AbstractEntity {
 
 	// Serialisation identifier -----------------------------------------------

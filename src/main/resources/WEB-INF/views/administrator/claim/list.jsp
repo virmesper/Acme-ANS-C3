@@ -21,5 +21,6 @@
 	<acme:list-column code="administrator.claim.list.label.indicator" path="indicator"/>
 	<acme:list-column code="administrator.claim.list.label.assistanceAgent" path="assistanceAgent"/>				
 	<acme:list-column code="administrator.claim.list.label.published" path="published"/>
+	<acme:list-payload path="payload"/>
 </acme:list>
 

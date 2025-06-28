@@ -2,17 +2,17 @@
 package acme.features.administrator.trackingLog;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.components.views.SelectChoices;
-import acme.client.services.AbstractService;
+import acme.client.services.AbstractGuiService;
+import acme.client.services.GuiService;
 import acme.entities.S4.Indicator;
 import acme.entities.S4.TrackingLog;
 
-@Service
-public class AdministratorTrackingLogShowService extends AbstractService<Administrator, TrackingLog> {
+@GuiService
+public class AdministratorTrackingLogShowService extends AbstractGuiService<Administrator, TrackingLog> {
 
 	// Internal state ---------------------------------------------------------
 

@@ -4,14 +4,14 @@ package acme.features.administrator.claim;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
+import acme.client.services.GuiService;
 import acme.entities.S4.Claim;
 
-@Service
+@GuiService
 public class AdministratorClaimListService extends AbstractGuiService<Administrator, Claim> {
 
 	// Internal state ---------------------------------------------------------
@@ -24,7 +24,10 @@ public class AdministratorClaimListService extends AbstractGuiService<Administra
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		if (!super.getRequest().getMethod().equals("GET"))
+			super.getResponse().setAuthorised(false);
+		else
+			super.getResponse().setAuthorised(true);
 
 	}
 

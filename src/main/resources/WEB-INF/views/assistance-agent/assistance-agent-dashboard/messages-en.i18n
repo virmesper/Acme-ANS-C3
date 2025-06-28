@@ -21,7 +21,7 @@ assistance-agent.dashboard.form.label.min-number-of-logs-claims-have=Minimum Log
 assistance-agent.dashboard.form.label.max-number-of-logs-claims-have=Maximum Logs per Claim
 assistance-agent.dashboard.form.label.dev-number-of-logs-claims-have=Standard Deviation of Logs per Claim
 
-assistance-agent.dashboard.form.label.avg-number-of-logs-assisted-last-month=Average Logs (Assisted Claims - Last Month)
-assistance-agent.dashboard.form.label.min-number-of-logs-assisted-last-month=Minimum Logs (Assisted Claims - Last Month)
-assistance-agent.dashboard.form.label.max-number-of-logs-assisted-last-month=Maximum Logs (Assisted Claims - Last Month)
-assistance-agent.dashboard.form.label.dev-number-of-logs-assisted-last-month=Standard Deviation (Assisted Claims - Last Month)
+assistance-agent.dashboard.form.label.avg-number-assisted-last-month=Average Assisted Claims - Last Month
+assistance-agent.dashboard.form.label.min-number-assisted-last-month=Minimum Assisted Claims - Last Month
+assistance-agent.dashboard.form.label.max-number-assisted-last-month=Maximum Assisted Claims - Last Month
+assistance-agent.dashboard.form.label.dev-number-assisted-last-month=Standard Deviation Assisted Claims - Last Month

@@ -11,25 +11,20 @@ import lombok.Setter;
 @Setter
 public class AssistanceAgentDashboard extends AbstractForm {
 
-	// Serialisation Identifier
-
+	// Serialisation version --------------------------------------------------
 	private static final long	serialVersionUID	= 1L;
 
 	// Attributes -------------------------------------------------------------
-
-	Double						ratioOfClaimsStoredSuccessfully;
-	Double						ratioOfClaimsRejected;
-
-	List<Integer>				topThreeMonthsHighestNumberOfClaims;
-
-	Double						avgNumberOfLogsClaimsHave;
-	Double						minNumberOfLogsClaimsHave;
-	Double						maxNumberOfLogsClaimsHave;
-	Double						devNumberOfLogsClaimsHave;
-
-	Double						avgNumberOfLogsClaimsAssistedDuringLastMonth;
-	Double						minNumberOfLogsClaimsAssistedDuringLastMonth;
-	Double						maxNumberOfLogsClaimsAssistedDuringLastMonth;
-	Double						devNumberOfLogsClaimsAssistedDuringLastMonth;
+	private Double				ratioOfClaimsStoredSuccessfully;
+	private Double				ratioOfClaimsRejected;
+	private List<Integer>		topThreeMonthsHighestNumberOfClaims;
+	private Double				avgNumberOfLogsClaimsHave;
+	private Double				minNumberOfLogsClaimsHave;
+	private Double				maxNumberOfLogsClaimsHave;
+	private Double				devNumberOfLogsClaimsHave;
+	private Double				avgNumberClaimsAssistedDuringLastMonth;
+	private Double				minNumberClaimsAssistedDuringLastMonth;
+	private Double				maxNumberClaimsAssistedDuringLastMonth;
+	private Double				devNumberClaimsAssistedDuringLastMonth;
 
 }

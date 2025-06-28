@@ -1,9 +1,9 @@
 key,flightNumber,scheduledDeparture,scheduledArrival,status,draftMode,key:flight,key:departureAirport,key:arrivalAirport,key:aircraft
 # Base Entity
-leg-00,AAA1001,2024/06/10 08:00,2024/06/10 10:00,ON_TIME,false,flight-00,airport-01,airport-02,aircraft-01
+leg-00,AAA1001,2024/06/10 08:00,2000/01/01 00:00,ON_TIME,false,flight-00,airport-01,airport-02,aircraft-01
 # Variantes del atributo 'flightNumber'
-leg-01,AAA1002,2024/06/11 07:30,2024/06/11 09:45,ON_TIME,false,flight-00,airport-01,airport-02,aircraft-01
-leg-02,AAA2003,2024/06/12 10:00,2024/06/12 12:15,DELAYED,false,flight-01,airport-02,airport-03,aircraft-02
+leg-01,AAA1002,2024/06/11 07:30,2000/01/01 00:00,ON_TIME,false,flight-00,airport-01,airport-02,aircraft-01
+leg-02,AAA2003,2024/06/12 10:00,2000/01/01 00:00,DELAYED,false,flight-01,airport-02,airport-03,aircraft-02
 leg-03,AAA3004,2024/06/13 15:45,2024/06/13 18:30,LANDED,false,flight-02,airport-03,airport-04,aircraft-03
 leg-04,AAA4005,2024/06/14 05:20,2024/06/14 07:35,CANCELLED,true,flight-03,airport-04,airport-05,aircraft-04
 # Variantes del atributo 'scheduledDeparture' y 'scheduledArrival'

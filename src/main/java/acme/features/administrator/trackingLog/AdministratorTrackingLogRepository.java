@@ -22,7 +22,7 @@ public interface AdministratorTrackingLogRepository extends AbstractRepository {
 	@Query("SELECT l FROM Leg l WHERE l.draftMode = false AND l.flight.draftMode = false")
 	public Collection<Leg> findAllLegs();
 
-	@Query("select t from TrackingLog t where t.claim.id = :id")
-	public Collection<TrackingLog> findManyTrackingLogsClaimId(int id);
+	@Query("SELECT t FROM TrackingLog t WHERE t.claim.id = :claimId and t.draftMode=false")
+	Collection<TrackingLog> findTrackingLogsPublishedByClaimId(int claimId);
 
 }
