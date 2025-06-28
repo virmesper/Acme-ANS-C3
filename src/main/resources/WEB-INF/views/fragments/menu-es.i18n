@@ -16,6 +16,10 @@ master.menu.anonymous.favourite-link-2 = 5398*****: Reyes Apresa, Mario
 master.menu.anonymous.favourite-link-3 = 0909*****: Sánchez Gómez, Paula
 master.menu.anonymous.favourite-link-4 = 2682*****: Mesa Pérez, Virginia
 
+# master.menu.authenticated ###################################################
+
+master.menu.authenticated.list-assignments = Ver asignaciones
+
 # master.menu.assistanceAgent ##########################################################
  
 master.menu.assistance-agent = Agente de Asistencia
