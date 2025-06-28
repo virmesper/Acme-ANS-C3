@@ -11,8 +11,7 @@
     <acme:list-column code="customer.passenger.list.label.email" path="email" width="20%" />
     <acme:list-payload path="payload"/>   
 </acme:list>
-
-<c:if test="${_command == 'list'}">
-	<acme:button code="customer.booking-record.create" action="/customer/booking-record/create?bookingId=${bookingId}" />
+<c:if test="${!draftMode}">
+    <acme:button code="customer.booking-record.create" action="/customer/booking-record/create?bookingId=${bookingId}" />
+    <acme:button code="customer.passenger.form.button.create" action="/customer/passenger/create"/>
 </c:if>
-<acme:button code="customer.passenger.form.button.create" action="/customer/passenger/create"/>

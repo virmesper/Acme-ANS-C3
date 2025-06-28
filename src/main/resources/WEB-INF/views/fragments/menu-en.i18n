@@ -43,6 +43,8 @@ master.menu.administrator.list.claim = List of Published Claims
 master.menu.administrator.list-bookings = List Bookings
 administrator.menu.populate-visa = Populate DB (Visa Requirements)
 
+master.menu.administrator.list-maintenance-records = Maintenance record catalogue
+
 # master.menu.provider ########################################################
 
 master.menu.provider = Provider
@@ -58,6 +60,7 @@ master.menu.consumer.favourite-link = Favourite link
 master.menu.customer = Customer
 master.menu.customer.list-bookings = Bookings
 master.menu.customer.passenger-all = Passengers
+master.menu.customer.dashboard = Dashboard
 
 # master.menu.technician ######################################################
 
@@ -66,6 +69,7 @@ master.menu.technician.list-my-maintenance-records= List my maintenance records
 master.menu.technician.list-my-tasks = List my tasks 
 master.menu.technician.list-maintenance-record-catalogue = List maintenance record catalogue (Published)
 master.menu.technician.list-task-catalogue = List task catalogue (Published)
+master.menu.technician.show-dashboard = Show dashboard
 
 # master.menu.user-account ####################################################
 
@@ -77,6 +81,10 @@ master.menu.user-account.become-consumer = Become a consumer
 master.menu.user-account.consumer-profile = Consumer profile
 master.menu.user-account.become-assistance-agent = Become an assistance agent
 master.menu.user-account.assistance-agent-profile = Assistance agent profile
+
+master.menu.user-account.become-technician = Become a technician
+master.menu.user-account.technician-profile = Technician profile
+
 master.menu.user-account.become-customer = Become a customer
 master.menu.user-account.customer-profile = Customer Profile
 master.menu.user-account.become-crewMember = Become a crew member
