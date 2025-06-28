@@ -83,7 +83,7 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 	public void validate(final Claim object) {
 		boolean valid;
 		if (object.getLeg() != null) {
-			valid = MomentHelper.getCurrentMoment().after(object.getLeg().getScheduledArrival());
+			valid = object.getRegistrationMoment().after(object.getLeg().getScheduledArrival());
 			super.state(valid, "leg", "assistanceAgent.claim.form.error.badLeg");
 		}
 	}
