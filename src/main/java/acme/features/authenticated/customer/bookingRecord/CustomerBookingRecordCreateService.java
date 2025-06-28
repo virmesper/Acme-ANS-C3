@@ -58,30 +58,34 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		Booking booking;
 		Passenger passenger;
 
-		// Obtener IDs desde el request
 		bookingId = super.getRequest().getData("booking", Integer.class);
 		passengerId = super.getRequest().getData("passenger", Integer.class);
 
-		// Obtener booking y comprobar existencia
 		booking = this.bookingRepository.findBookingById(bookingId);
-		if (booking == null)
+		if (booking == null) {
 			super.getResponse().setAuthorised(false);
+			return;
+		}
 
-		// Comprobar que la booking pertenece al customer actual
+		// 🚨 Validación para evitar GET hacking si booking ya está publicada
+		if (!booking.isDraftMode()) {
+			super.getResponse().setAuthorised(false);
+			return;
+		}
+
 		int customerAccountId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
-		if (booking.getCustomer().getUserAccount().getId() != customerAccountId)
+		if (booking.getCustomer().getUserAccount().getId() != customerAccountId) {
 			super.getResponse().setAuthorised(false);
+			return;
+		}
 
-		// Obtener passenger y comprobar existencia
 		passenger = this.passengerRepository.findPassengerById(passengerId);
 		if (passenger == null)
 			throw new IllegalArgumentException("❌ Passenger no encontrado con ID: " + passengerId);
 
-		// Validar también que el passenger pertenece al customer actual
 		if (passenger.getCustomer().getUserAccount().getId() != customerAccountId)
 			throw new IllegalArgumentException("❌ El passenger no pertenece al customer actual.");
 
-		// Bindear campos normales
 		super.bindObject(bookingRecord);
 		bookingRecord.setBooking(booking);
 		bookingRecord.setPassenger(passenger);
