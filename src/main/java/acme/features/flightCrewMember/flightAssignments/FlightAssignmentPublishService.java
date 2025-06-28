@@ -68,16 +68,38 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 		flightAssignment.setFlightCrewMember(flightCrewMember);
 	}
 
-	private boolean compatibleLegs(final Leg newLeg, final Leg oldLeg) {
-		return !(MomentHelper.isInRange(newLeg.getScheduledDeparture(), oldLeg.getScheduledDeparture(), oldLeg.getScheduledArrival()) || MomentHelper.isInRange(newLeg.getScheduledArrival(), oldLeg.getScheduledDeparture(), oldLeg.getScheduledArrival()));
+	@Override
+	public void validate(final FlightAssignment flightAssignment) {
+		FlightAssignment original = this.repository.findFlightAssignmentById(flightAssignment.getId());
+		Leg leg = flightAssignment.getLeg();
+		AvailabilityStatus status = flightAssignment.getFlightCrewMember().getAvailabilityStatus();
+		boolean cambioDuty = !original.getDuty().equals(flightAssignment.getDuty());
+		boolean cambioLeg = !original.getLeg().equals(flightAssignment.getLeg());
+		boolean cambioMoment = !original.getMoment().equals(flightAssignment.getMoment());
+		boolean cambioStatus = !original.getCurrentStatus().equals(flightAssignment.getCurrentStatus());
+
+		if (!(cambioDuty || cambioLeg || cambioMoment || cambioStatus))
+			return;
+
+		if (leg != null && cambioLeg && !this.isLegCompatible(flightAssignment))
+			super.state(false, "flightCrewMember", "acme.validation.FlightAssignment.FlightCrewMemberIncompatibleLegs.message");
+
+		if (leg != null && (cambioDuty || cambioLeg))
+			this.checkPilotAndCopilotAssignment(flightAssignment);
+
+		if (!AvailabilityStatus.AVAILABLE.equals(status))
+			super.state(false, "flightCrewMember", "acme.validation.FlightAssignment.OnlyAvailableCanBeAssigned.message");
 	}
 
 	private boolean isLegCompatible(final FlightAssignment flightAssignment) {
-
-		Collection<Leg> legsByFlightCrewMember = this.repository.findLegsByFlightCrewMemberId(flightAssignment.getFlightCrewMember().getId());
+		Collection<Leg> legsByMember = this.repository.findLegsByFlightCrewMember(flightAssignment.getFlightCrewMember().getId());
 		Leg newLeg = flightAssignment.getLeg();
 
-		return legsByFlightCrewMember.stream().anyMatch(existingLeg -> !this.compatibleLegs(newLeg, existingLeg));
+		return legsByMember.stream().allMatch(existingLeg -> this.areLegsCompatible(newLeg, existingLeg));
+	}
+
+	private boolean areLegsCompatible(final Leg newLeg, final Leg oldLeg) {
+		return !(MomentHelper.isInRange(newLeg.getScheduledDeparture(), oldLeg.getScheduledDeparture(), oldLeg.getScheduledArrival()) || MomentHelper.isInRange(newLeg.getScheduledArrival(), oldLeg.getScheduledDeparture(), oldLeg.getScheduledArrival()));
 	}
 
 	private void checkPilotAndCopilotAssignment(final FlightAssignment flightAssignment) {
@@ -90,27 +112,6 @@ public class FlightAssignmentPublishService extends AbstractGuiService<FlightCre
 			super.state(!haveCopilot, "duty", "acme.validation.FlightAssignment.haveCopilot.message");
 	}
 
-	@Override
-	public void validate(final FlightAssignment flightAssignment) {
-		FlightAssignment original = this.repository.findFlightAssignmentById(flightAssignment.getId());
-		Leg leg = flightAssignment.getLeg();
-		AvailabilityStatus status = flightAssignment.getFlightCrewMember().getAvailabilityStatus();
-		boolean cambioDuty = !original.getDuty().equals(flightAssignment.getDuty());
-		boolean cambioLeg = !original.getLeg().equals(flightAssignment.getLeg());
-		boolean completedLeg = LegStatus.LANDED.equals(flightAssignment.getLeg().getStatus());
-
-		if (leg != null && cambioLeg && !this.isLegCompatible(flightAssignment))
-			super.state(false, "flightCrewMember", "acme.validation.FlightAssignment.FlightCrewMemberIncompatibleLegs.message");
-
-		if (leg != null && (cambioDuty || cambioLeg))
-			this.checkPilotAndCopilotAssignment(flightAssignment);
-
-		if (!AvailabilityStatus.AVAILABLE.equals(status))
-			super.state(false, "flightCrewMember", "acme.validation.FlightAssignment.OnlyAvailableCanBeAssigned.message");
-
-		if (completedLeg)
-			super.state(false, "leg", "acme.validation.FlightAssignment.LegAlreadyCompleted.message");
-	}
 	@Override
 	public void perform(final FlightAssignment flightAssignment) {
 		flightAssignment.setMoment(MomentHelper.getCurrentMoment());
