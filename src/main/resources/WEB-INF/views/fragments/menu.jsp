@@ -57,6 +57,7 @@
 		    <acme:menu-suboption code="master.menu.administrator.populate-db-initial" action="/administrator/system/populate-initial"/>
 		    <acme:menu-suboption code="master.menu.administrator.populate-db-sample" action="/administrator/system/populate-sample"/>
 		    <acme:menu-separator/>
+			<acme:menu-suboption code="administrator.menu.populate-visa" action="/administrator/system/populate-visa"/>
 		    <acme:menu-separator/>
 			<acme:menu-suboption code="master.menu.administrator.list-bookings" action="/administrator/booking/list"/>
 			<acme:menu-separator/>
@@ -69,7 +70,9 @@
 		<acme:menu-option code="master.menu.flight-crew-member" access="hasRealm('FlightCrewMember')">
 			<acme:menu-suboption code="master.menu.flight-crew-member.flight-assignment.completedlist" action="/flight-crew-member/flight-assignment/completed-list"/>
 			<acme:menu-suboption code="master.menu.flight-crew-member.flight-assignment.plannedlist" action="/flight-crew-member/flight-assignment/planned-list"/>
+			<acme:menu-separator />
 			<acme:menu-suboption code="master.menu.flight-crew-member.show-dashboard" action="/flight-crew-member/flight-crew-member-dashboard/show" />		
+			<acme:menu-suboption code="master.menu.flight-crew-member.list-visa" action="/flight-crew-member/visa-requirement/list" />
 		</acme:menu-option>
 
 

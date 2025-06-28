@@ -38,6 +38,7 @@ master.menu.administrator.populate-db-sample = Populate DB (samples)
 master.menu.administrator.shut-system-down = Shut system down
 master.menu.administrator.list.claim = List of Published Claims
 master.menu.administrator.list-bookings = List Bookings
+administrator.menu.populate-visa = Populate DB (Visa Requirements)
 
 # master.menu.provider ########################################################
 
@@ -82,3 +83,4 @@ master.menu.flight-crew-member = Flight Crew Member
 master.menu.flight-crew-member.flight-assignment.completedlist = List Flight Assignments with completed legs
 master.menu.flight-crew-member.flight-assignment.plannedlist = List Flight Assignments with planned legs
 master.menu.flight-crew-member.show-dashboard = Dashboard
+master.menu.flight-crew-member.list-visa = List visa requirement

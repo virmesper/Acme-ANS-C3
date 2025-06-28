@@ -28,3 +28,7 @@ leg-18,AAA2041,2028/06/28 07:10,2028/06/28 09:30,CANCELLED,true,flight-17,airpor
 leg-19,AAA3042,2024/06/29 16:45,2024/06/29 19:20,ON_TIME,true,flight-18,airport-09,airport-10,aircraft-02
 leg-20,AAA4043,2024/06/30 05:30,2024/06/30 07:40,DELAYED,true,flight-19,airport-10,airport-01,aircraft-03
 leg-21,AAA9999,2028/06/28 07:10,2028/06/28 09:30,ON_TIME,true,flight-17,airport-08,airport-09,aircraft-01
+leg-36,AAA1144,2000/01/01 0:00,2000/01/01 0:00,ON_TIME,false,flight-25,airport-01,airport-02,aircraft-01
+leg-37,AAA1145,2000/01/01 0:01,2000/01/01 0:01,ON_TIME,false,flight-25,airport-01,airport-02,aircraft-01
+leg-38,AAA1146,2022/07/29 23:59,2022/07/30 0:01,ON_TIME,false,flight-25,airport-01,airport-02,aircraft-01
+leg-39,AAA1147,2022/07/30 0:00,2022/07/30 0:00,ON_TIME,false,flight-25,airport-01,airport-02,aircraft-01
