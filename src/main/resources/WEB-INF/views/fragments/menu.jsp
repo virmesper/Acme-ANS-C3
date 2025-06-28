@@ -126,6 +126,8 @@
 		    <acme:menu-suboption code="master.menu.user-account.customer-profile"
 		        action="/authenticated/customer/update"
 		        access="hasRealm('Customer')" />
+		    <acme:menu-suboption code="master.menu.user-account.become-crewMember" action="/authenticated/flight-crew-member/create" access="!hasRealm('FlightCrewMember')"/>
+		    <acme:menu-suboption code="master.menu.user-account.crewMember-profile" action="/authenticated/flight-crew-member/update" access="hasRealm('FlightCrewMember')"/>
 		</acme:menu-option>
 	</acme:menu-right>
 </acme:menu-bar>
