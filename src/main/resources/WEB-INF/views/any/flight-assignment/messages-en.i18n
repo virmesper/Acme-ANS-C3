@@ -1,0 +1,18 @@
+any.flight-assignment.list.title = Assignment List
+any.flight-assignment.form.title = Assignment Form
+
+any.assignment.list.completed.label.flightNumber=Número de vuelo
+any.assignment.list.completed.label.duty=Rol de la tripulación
+any.assignment.list.completed.label.departureAirport.name=Aeropuerto de salida
+any.assignment.list.completed.label.arrivalAirport.name=Aeropuerto de llegada
+
+any.assignment.form.label.flightNumber=Número de vuelo
+any.assignment.form.label.departureAirport=Aeropuerto de salida
+any.assignment.form.label.arrivalAirport=Aeropuerto de llegada
+any.assignment.form.label.scheduledDeparture=Salida programada
+any.assignment.form.label.scheduledArrival=Llegada programada
+any.assignment.form.label.employeeCode=Código de empleado
+any.assignment.form.label.currentStatus=Estado de la asignación
+any.assignment.form.label.duty=Rol de la tripulación
+any.assignment.form.label.moment=Última actualización
+any.assignment.form.label.comments=Comentarios

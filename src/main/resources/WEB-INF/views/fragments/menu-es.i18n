@@ -16,6 +16,10 @@ master.menu.anonymous.favourite-link-2 = 5398*****: Reyes Apresa, Mario
 master.menu.anonymous.favourite-link-3 = 0909*****: Sánchez Gómez, Paula
 master.menu.anonymous.favourite-link-4 = 2682*****: Mesa Pérez, Virginia
 
+# master.menu.authenticated ###################################################
+
+master.menu.authenticated.list-assignments = Ver asignaciones
+
 # master.menu.assistanceAgent ##########################################################
  
 master.menu.assistance-agent = Agente de Asistencia
@@ -37,6 +41,7 @@ master.menu.administrator.populate-db-sample = Poblar BD (ejemplos)
 master.menu.administrator.shut-system-down = Parar el sistema
 master.menu.administrator.list.claim = Lista de Reclamaciones Publicadas
 master.menu.administrator.list-bookings = Listar Reservas
+administrator.menu.populate-visa = Poblar BD (Requisitos de visa)s
 
 master.menu.administrator.list-maintenance-records = Catálogo de registros de mantenimiento
 
@@ -83,6 +88,8 @@ master.menu.user-account.technician-profile = Perfil de técnico
 
 master.menu.user-account.become-customer = Hazte Cliente
 master.menu.user-account.customer-profile = Perfil de cliente
+master.menu.user-account.become-crewMember = Hazte miembro de la tripulación
+master.menu.user-account.crewMember-profile = Perfil de miembro de la tripulación
 
 
 # master.menu.flight-crew-member ##########################################################
@@ -90,3 +97,5 @@ master.menu.user-account.customer-profile = Perfil de cliente
 master.menu.flight-crew-member = Miembro de la tripulación
 master.menu.flight-crew-member.flight-assignment.completedlist = Listar asignaciones de vuelo con tramos completados
 master.menu.flight-crew-member.flight-assignment.plannedlist = Listar asignaciones de vuelo con tramos planeados
+master.menu.flight-crew-member.show-dashboard = Mostrar Dashboard
+master.menu.flight-crew-member.list-visa = Listar requisitos de visado

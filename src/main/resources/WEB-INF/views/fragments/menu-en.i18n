@@ -16,6 +16,9 @@ master.menu.anonymous.favourite-link-2 = 5398*****: Reyes Apresa, Mario
 master.menu.anonymous.favourite-link-3 = 0909*****: Sánchez Gómez, Paula
 master.menu.anonymous.favourite-link-4 = 2682*****: Mesa Pérez, Virginia
 
+# master.menu.authenticated ###################################################
+
+master.menu.authenticated.list-assignments = List Assignments
 
 # master.menu.assistanceAgent ##########################################################
  
@@ -38,6 +41,7 @@ master.menu.administrator.populate-db-sample = Populate DB (samples)
 master.menu.administrator.shut-system-down = Shut system down
 master.menu.administrator.list.claim = List of Published Claims
 master.menu.administrator.list-bookings = List Bookings
+administrator.menu.populate-visa = Populate DB (Visa Requirements)
 
 master.menu.administrator.list-maintenance-records = Maintenance record catalogue
 
@@ -83,9 +87,13 @@ master.menu.user-account.technician-profile = Technician profile
 
 master.menu.user-account.become-customer = Become a customer
 master.menu.user-account.customer-profile = Customer Profile
+master.menu.user-account.become-crewMember = Become a crew member
+master.menu.user-account.crewMember-profile = Crew Member profile
 
 # master.menu.flight-crew-member ##########################################################
 
 master.menu.flight-crew-member = Flight Crew Member
 master.menu.flight-crew-member.flight-assignment.completedlist = List Flight Assignments with completed legs
 master.menu.flight-crew-member.flight-assignment.plannedlist = List Flight Assignments with planned legs
+master.menu.flight-crew-member.show-dashboard = Dashboard
+master.menu.flight-crew-member.list-visa = List visa requirement

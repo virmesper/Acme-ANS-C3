@@ -27,7 +27,9 @@
 				action="https://www.zara.com" />
 			<acme:menu-suboption code="master.menu.anonymous.favourite-link-4"
 				action="https://www.netflix.com" />
-
+			<acme:menu-separator/>
+			<acme:menu-suboption code="master.menu.authenticated.list-assignments" 
+				action="/any/flight-assignment/list" />
 		</acme:menu-option>
     
 		<acme:menu-option code="master.menu.assistance-agent" access="hasRealm('AssistanceAgent')">
@@ -58,6 +60,7 @@
 		    <acme:menu-suboption code="master.menu.administrator.populate-db-initial" action="/administrator/system/populate-initial"/>
 		    <acme:menu-suboption code="master.menu.administrator.populate-db-sample" action="/administrator/system/populate-sample"/>
 		    <acme:menu-separator/>
+			<acme:menu-suboption code="administrator.menu.populate-visa" action="/administrator/system/populate-visa"/>
 		    <acme:menu-separator/>
 			<acme:menu-suboption code="master.menu.administrator.list-bookings" action="/administrator/booking/list"/>
 			<acme:menu-separator/>
@@ -70,6 +73,9 @@
 		<acme:menu-option code="master.menu.flight-crew-member" access="hasRealm('FlightCrewMember')">
 			<acme:menu-suboption code="master.menu.flight-crew-member.flight-assignment.completedlist" action="/flight-crew-member/flight-assignment/completed-list"/>
 			<acme:menu-suboption code="master.menu.flight-crew-member.flight-assignment.plannedlist" action="/flight-crew-member/flight-assignment/planned-list"/>
+			<acme:menu-separator />
+			<acme:menu-suboption code="master.menu.flight-crew-member.show-dashboard" action="/flight-crew-member/flight-crew-member-dashboard/show" />		
+			<acme:menu-suboption code="master.menu.flight-crew-member.list-visa" action="/flight-crew-member/visa-requirement/list" />
 		</acme:menu-option>
 
 
@@ -134,7 +140,8 @@
 		    <acme:menu-suboption code="master.menu.user-account.customer-profile"
 		        action="/authenticated/customer/update"
 		        access="hasRealm('Customer')" />
-
+		    <acme:menu-suboption code="master.menu.user-account.become-crewMember" action="/authenticated/flight-crew-member/create" access="!hasRealm('FlightCrewMember')"/>
+		    <acme:menu-suboption code="master.menu.user-account.crewMember-profile" action="/authenticated/flight-crew-member/update" access="hasRealm('FlightCrewMember')"/>
 		</acme:menu-option>
 	</acme:menu-right>
 </acme:menu-bar>
