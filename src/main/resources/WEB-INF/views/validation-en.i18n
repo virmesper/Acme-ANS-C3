@@ -13,6 +13,7 @@ acme.validation.flightNumber.message = The flight number must have exactly three
 acme.validation.employeeCode.format.message=The employee code must start with 2 or 3 uppercase letters followed by 6 digits
 acme.validation.employeeCode.unique.message = The employee code must be unique
 acme.validation.employeeCode.initials.message=The employee code must begin with your initials extracted from your full name
+acme.validation.employeeCode.invalidEmployeeCode.message = This employee Code is not valid
 customer.booking.publish.error.noPassengers=You cannot publish a booking without passengers.
 acme.validation.confirmation.message.booking.locator-code = Locator Code Should be unique.
 acme.validation.airport.notfound.message=IATA code doesn't exists.
