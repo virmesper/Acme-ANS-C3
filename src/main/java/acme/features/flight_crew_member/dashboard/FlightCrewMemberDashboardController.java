@@ -1,32 +1,29 @@
 
-package acme.features.any.flightAssignment;
+package acme.features.flight_crew_member.dashboard;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.client.components.principals.Any;
 import acme.client.controllers.AbstractGuiController;
 import acme.client.controllers.GuiController;
-import acme.entities.student3.FlightAssignment;
+import acme.forms.FlightCrewMemberDashboard;
+import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiController
-public class AnyFlightAssignmentController extends AbstractGuiController<Any, FlightAssignment> {
+public class FlightCrewMemberDashboardController extends AbstractGuiController<FlightCrewMember, FlightCrewMemberDashboard> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AnyFlightAssignmentListService	listService;
-
-	@Autowired
-	private AnyFlightAssignmentShowService	showService;
+	private FlightCrewMemberDashboardShowService showService;
 
 	// Constructors -----------------------------------------------------------
 
 
 	@PostConstruct
 	protected void initialise() {
-		super.addBasicCommand("list", this.listService);
 		super.addBasicCommand("show", this.showService);
 	}
+
 }

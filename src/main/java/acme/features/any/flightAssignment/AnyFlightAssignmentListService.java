@@ -9,7 +9,7 @@ import acme.client.components.models.Dataset;
 import acme.client.components.principals.Any;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S3.FlightAssignment;
+import acme.entities.student3.FlightAssignment;
 
 @GuiService
 public class AnyFlightAssignmentListService extends AbstractGuiService<Any, FlightAssignment> {

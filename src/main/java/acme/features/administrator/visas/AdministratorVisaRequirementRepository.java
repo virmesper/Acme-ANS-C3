@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-import acme.entities.S3.VisaRequirement;
+import acme.entities.student3.VisaRequirement;
 
 @Repository
 public interface AdministratorVisaRequirementRepository extends AbstractRepository {
