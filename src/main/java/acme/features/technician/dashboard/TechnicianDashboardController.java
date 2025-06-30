@@ -23,7 +23,6 @@ public class TechnicianDashboardController extends AbstractGuiController<Technic
 
 	@PostConstruct
 	protected void initialise() {
-		System.out.println(">>> TechnicianDashboardController cargado correctamente.");
 		super.addBasicCommand("show", this.showService);
 	}
 

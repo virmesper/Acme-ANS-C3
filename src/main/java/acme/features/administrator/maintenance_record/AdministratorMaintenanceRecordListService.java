@@ -1,5 +1,5 @@
 
-package acme.features.administrator.maintenanceRecord;
+package acme.features.administrator.maintenance_record;
 
 import java.util.Collection;
 
@@ -9,7 +9,7 @@ import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S5.MaintenanceRecord;
+import acme.entities.student5.MaintenanceRecord;
 
 @GuiService
 public class AdministratorMaintenanceRecordListService extends AbstractGuiService<Administrator, MaintenanceRecord> {

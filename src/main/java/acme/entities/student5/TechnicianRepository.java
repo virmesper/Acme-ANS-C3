@@ -1,5 +1,5 @@
 
-package acme.entities.S5;
+package acme.entities.student5;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

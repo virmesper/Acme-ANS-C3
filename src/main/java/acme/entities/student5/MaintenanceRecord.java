@@ -1,5 +1,5 @@
 
-package acme.entities.S5;
+package acme.entities.student5;
 
 import java.util.Date;
 

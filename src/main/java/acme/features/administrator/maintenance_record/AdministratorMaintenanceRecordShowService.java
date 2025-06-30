@@ -1,5 +1,5 @@
 
-package acme.features.administrator.maintenanceRecord;
+package acme.features.administrator.maintenance_record;
 
 import java.util.Collection;
 
@@ -11,8 +11,8 @@ import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.Group.Aircraft;
-import acme.entities.S5.MaintenanceRecord;
-import acme.entities.S5.MaintenanceRecordStatus;
+import acme.entities.student5.MaintenanceRecord;
+import acme.entities.student5.MaintenanceRecordStatus;
 
 @GuiService
 public class AdministratorMaintenanceRecordShowService extends AbstractGuiService<Administrator, MaintenanceRecord> {

@@ -5,7 +5,7 @@ import java.util.List;
 
 import acme.client.components.basis.AbstractForm;
 import acme.entities.Group.Aircraft;
-import acme.entities.S5.MaintenanceRecord;
+import acme.entities.student5.MaintenanceRecord;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -10,18 +10,18 @@ import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
 import acme.entities.Group.Aircraft;
-import acme.entities.S5.MaintenanceRecord;
+import acme.entities.student5.MaintenanceRecord;
 
 @Repository
 public interface TechnicianDashboardRepository extends AbstractRepository {
 
-	@Query("select count(mr) from MaintenanceRecord mr where mr.status = acme.entities.S5.MaintenanceRecordStatus.PENDING and mr.technician.id = :technicianId")
+	@Query("select count(mr) from MaintenanceRecord mr where mr.status = acme.entities.student5.MaintenanceRecordStatus.PENDING and mr.technician.id = :technicianId")
 	Integer numberOfMaintenanceRecordsPending(int technicianId);
 
-	@Query("select count(mr) from MaintenanceRecord mr where mr.status = acme.entities.S5.MaintenanceRecordStatus.IN_PROGRESS and mr.technician.id = :technicianId")
+	@Query("select count(mr) from MaintenanceRecord mr where mr.status = acme.entities.student5.MaintenanceRecordStatus.IN_PROGRESS and mr.technician.id = :technicianId")
 	Integer numberOfMaintenanceRecordsInProgress(int technicianId);
 
-	@Query("select count(mr) from MaintenanceRecord mr where mr.status = acme.entities.S5.MaintenanceRecordStatus.COMPLETED and mr.technician.id = :technicianId")
+	@Query("select count(mr) from MaintenanceRecord mr where mr.status = acme.entities.student5.MaintenanceRecordStatus.COMPLETED and mr.technician.id = :technicianId")
 	Integer numberOfMaintenanceRecordsCompleted(int technicianId);
 
 	@Query("select mr from MaintenanceRecord mr where mr.technician.id = :technicianId order by abs(timestampdiff(second, :currentMoment, mr.nextInspectionDueTime))")
