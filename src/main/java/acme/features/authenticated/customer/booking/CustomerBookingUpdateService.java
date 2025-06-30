@@ -9,9 +9,9 @@ import acme.client.components.views.SelectChoices;
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S1.FlightRepository;
 import acme.entities.S2.Booking;
 import acme.entities.S2.TravelClass;
+import acme.entities.student1.FlightRepository;
 import acme.realms.Customer;
 
 @GuiService

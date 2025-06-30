@@ -9,25 +9,26 @@ import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S4.Claim;
+import acme.entities.student4.Claim;
 
 @GuiService
 public class AdministratorClaimListService extends AbstractGuiService<Administrator, Claim> {
 
 	// Internal state ---------------------------------------------------------
 
+	private final AdministratorClaimRepository repository;
+
+
 	@Autowired
-	private AdministratorClaimRepository repository;
+	public AdministratorClaimListService(final AdministratorClaimRepository repository) {
+		this.repository = repository;
+	}
 
 	// AbstractService interface ----------------------------------------------
 
-
 	@Override
 	public void authorise() {
-		if (!super.getRequest().getMethod().equals("GET"))
-			super.getResponse().setAuthorised(false);
-		else
-			super.getResponse().setAuthorised(true);
+		super.getResponse().setAuthorised("GET".equals(super.getRequest().getMethod()));
 
 	}
 

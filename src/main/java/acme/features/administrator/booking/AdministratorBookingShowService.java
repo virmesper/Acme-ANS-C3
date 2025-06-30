@@ -8,8 +8,8 @@ import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S1.Flight;
 import acme.entities.S2.Booking;
+import acme.entities.student1.Flight;
 
 @GuiService
 public class AdministratorBookingShowService extends AbstractGuiService<Administrator, Booking> {

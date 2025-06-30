@@ -7,17 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
-import acme.realms.assistanceAgent.AssistanceAgent;
-import acme.realms.assistanceAgent.AssistanceAgentRepository;
+import acme.realms.assistance_agent.AssistanceAgent;
+import acme.realms.assistance_agent.AssistanceAgentRepository;
 
 @Validator
 public class AssistanceAgentValidator extends AbstractValidator<ValidAssistanceAgent, AssistanceAgent> {
 
+	private static final String				EMPLOYEE_CODE	= "employeeCode";
+
+	private final AssistanceAgentRepository	repository;
+
+
 	@Autowired
-	private AssistanceAgentRepository repository;
+	public AssistanceAgentValidator(final AssistanceAgentRepository repository) {
+		this.repository = repository;
+	}
 
 	// ConstraintValidator interface ------------------------------------------
-
 
 	@Override
 	protected void initialise(final ValidAssistanceAgent annotation) {
@@ -46,9 +52,9 @@ public class AssistanceAgentValidator extends AbstractValidator<ValidAssistanceA
 			AssistanceAgent existingAgent = this.repository.findByEmployeeCode(employeeCode);
 			uniqueEmployeeCode = existingAgent == null || existingAgent.equals(assistanceAgent);
 
-			super.state(context, validFormat, "employeeCode", "acme.validation.employeeCode.format.message");
-			super.state(context, initialsMatch, "employeeCode", "acme.validation.employeeCode.initials.message");
-			super.state(context, uniqueEmployeeCode, "employeeCode", "acme.validation.employeeCode.unique.message");
+			super.state(context, validFormat, AssistanceAgentValidator.EMPLOYEE_CODE, "acme.validation.employeeCode.format.message");
+			super.state(context, initialsMatch, AssistanceAgentValidator.EMPLOYEE_CODE, "acme.validation.employeeCode.initials.message");
+			super.state(context, uniqueEmployeeCode, AssistanceAgentValidator.EMPLOYEE_CODE, "acme.validation.employeeCode.unique.message");
 		}
 
 		result = !super.hasErrors(context);
