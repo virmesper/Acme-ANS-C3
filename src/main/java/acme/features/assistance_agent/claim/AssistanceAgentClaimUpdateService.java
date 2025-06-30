@@ -30,28 +30,28 @@ public class AssistanceAgentClaimUpdateService extends AbstractGuiService<Assist
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int masterId;
-		Claim claim;
-		int legId;
-		Leg leg;
-		boolean externalRelation = true;
+		boolean status = false;
 
-		if (super.getRequest().getMethod().equals("POST")) {
-			legId = super.getRequest().getData("leg", int.class);
-			leg = this.repository.findLegById(legId);
+		if (super.getRequest().getMethod().equals("GET")) {
+			int id = super.getRequest().getData("id", int.class);
+			Claim claim = this.repository.findClaimById(id);
+			status = claim != null && claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+
+		} else {
+			int legId = super.getRequest().getData("leg", int.class);
+			Leg leg = this.repository.findLegById(legId);
 
 			boolean isLegIdZero = legId == 0;
 			boolean isLegValid = leg != null;
 			boolean isLegNotDraft = isLegValid && !leg.isDraftMode();
 			boolean isFlightNotDraft = isLegNotDraft && !leg.getFlight().getDraftMode();
+			boolean externalRelation = isLegIdZero || isLegValid && isLegNotDraft && isFlightNotDraft;
 
-			externalRelation = isLegIdZero || isLegValid && isLegNotDraft && isFlightNotDraft;
+			int masterId = super.getRequest().getData("id", int.class);
+			Claim claim = this.repository.findClaimById(masterId);
+
+			status = claim != null && claim.isDraftMode() && externalRelation && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
 		}
-
-		masterId = super.getRequest().getData("id", int.class);
-		claim = this.repository.findClaimById(masterId);
-		status = claim != null && claim.isDraftMode() && externalRelation && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
 
 		super.getResponse().setAuthorised(status);
 	}

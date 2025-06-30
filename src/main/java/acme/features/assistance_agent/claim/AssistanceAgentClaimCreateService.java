@@ -52,7 +52,7 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 		}
 
 		super.getResponse().setAuthorised(status);
-
+ 		
 	}
 
 	@Override
