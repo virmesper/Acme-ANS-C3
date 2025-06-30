@@ -13,6 +13,7 @@ acme.validation.flightNumber.message = The flight number must have exactly three
 acme.validation.employeeCode.format.message=The employee code must start with 2 or 3 uppercase letters followed by 6 digits
 acme.validation.employeeCode.unique.message = The employee code must be unique
 acme.validation.employeeCode.initials.message=The employee code must begin with your initials extracted from your full name
+acme.validation.employeeCode.invalidEmployeeCode.message = This employee Code is not valid
 customer.booking.publish.error.noPassengers=You cannot publish a booking without passengers.
 acme.validation.confirmation.message.booking.locator-code = Locator Code Should be unique.
 acme.validation.airport.notfound.message=IATA code doesn't exists.
@@ -22,7 +23,7 @@ acme.validation.confirmation.message.booking-record.create =
 acme.validation.employeeCode.format.message = The code must follow the pattern "^[A-Z]{2-3}\d{6}$", where the first two or three letters correspond to their initials
 acme.validation.employeeCode.initials.message = The first two or three letters of their employeeCode correspond to their initials. 
 acme.validation.assistanceAgent.code = The first two or three letters of their employeeCode correspond to their initials.
-
+assistanceAgent.claim.form.error.badLeg = The selected leg must have a date earlier than the registration date
 
 # Fight Assignments
 acme.validation.FlightAssignment.havePilot.message= That leg already have a Pilot assigned

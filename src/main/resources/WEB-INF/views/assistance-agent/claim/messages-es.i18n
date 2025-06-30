@@ -11,7 +11,8 @@
 assistanceAgent.claim.form.error.indicator.pending = El reclamo debe crearse con el estado PENDIENTE
 assistanceAgent.claim.form.error.all-tracking-logs-published = Todos los registros de seguimiento deben publicarse antes de continuar
 assistanceAgent.claim.form.error.indicator-pending =  Si el porcentaje máximo de resolución de todos los registros de seguimiento asociados ya ha alcanzado el 100%, el estado no debe ser "PENDIENTE"
-assistanceAgent.claim.form.error.leg-wrong=Debe seleccionar un trayecto válido con vuelo publicado.
+assistanceAgent.claim.form.error.leg-wrong=Debe seleccionar un trayecto válido con vuelo publicado
+assistanceAgent.claim.form.error.badLeg = El tramo seleccionado debe tener una fecha anterior a la fecha de registro
 
 assistance-agent.claim.list.title = Lista de reclamaciones
 assistance-agent.claim.form.title = Detalles de reclamaciones

@@ -21,7 +21,7 @@ assistance-agent.dashboard.form.label.min-number-of-logs-claims-have=Mínimo de 
 assistance-agent.dashboard.form.label.max-number-of-logs-claims-have=Máximo de Logs por Reclamación
 assistance-agent.dashboard.form.label.dev-number-of-logs-claims-have=Desviación Estándar de Logs por Reclamación
 
-assistance-agent.dashboard.form.label.avg-number-of-logs-assisted-last-month=Media de Logs (Reclamaciones Asistidas - Último Mes)
-assistance-agent.dashboard.form.label.min-number-of-logs-assisted-last-month=Mínimo de Logs (Reclamaciones Asistidas - Último Mes)
-assistance-agent.dashboard.form.label.max-number-of-logs-assisted-last-month=Máximo de Logs (Reclamaciones Asistidas - Último Mes)
-assistance-agent.dashboard.form.label.dev-number-of-logs-assisted-last-month=Desviación Estándar (Reclamaciones Asistidas - Último Mes)
+assistance-agent.dashboard.form.label.avg-number-of-logs-assisted-last-month=Media de Reclamaciones Asistidas - Último Mes
+assistance-agent.dashboard.form.label.min-number-of-logs-assisted-last-month=Mínimo de Reclamaciones Asistidas - Último Mes
+assistance-agent.dashboard.form.label.max-number-of-logs-assisted-last-month=Máximo de Reclamaciones Asistidas - Último Mes
+assistance-agent.dashboard.form.label.dev-number-of-logs-assisted-last-month=Desviación Estándar Reclamaciones Asistidas - Último Mes

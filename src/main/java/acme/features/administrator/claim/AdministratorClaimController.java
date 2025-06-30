@@ -13,21 +13,18 @@ import acme.entities.S4.Claim;
 @GuiController
 public class AdministratorClaimController extends AbstractGuiController<Administrator, Claim> {
 
-	// Internal state ---------------------------------------------------------
-
 	@Autowired
 	private AdministratorClaimListService	listService;
 
 	@Autowired
 	private AdministratorClaimShowService	showService;
 
+
 	// Constructors -----------------------------------------------------------
-
-
 	@PostConstruct
 	protected void initialise() {
 		super.addBasicCommand("list", this.listService);
 		super.addBasicCommand("show", this.showService);
-	}
 
+	}
 }

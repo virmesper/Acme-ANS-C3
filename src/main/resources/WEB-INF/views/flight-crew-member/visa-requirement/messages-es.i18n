@@ -1,0 +1,21 @@
+flight-crew-member.visa-requirement.list.title = Requisitos de visa en los que puedes estar interesado
+flight-crew-member.visa-requirement.form.title = Requisitos de visa detallados
+
+flightCrewMember.visa.list.label.passportCountry = País del Pasaporte
+flightCrewMember.visa.list.label.destinationCountry = País de Destino
+flightCrewMember.visa.list.label.visaType = Tipo de Visa
+flightCrewMember.visa.list.label.stayDuration = Duración de la Estancia
+flightCrewMember.visa.list.label.passportValidity = Validez del Pasaporte
+
+flightCrewMember.visa.form.label.destinationCountry = País de Destino
+flightCrewMember.visa.form.label.passportCountry = País del Pasaporte
+flightCrewMember.visa.form.label.continent = Continente
+flightCrewMember.visa.form.label.capital = Capital
+flightCrewMember.visa.form.label.currency = Moneda
+flightCrewMember.visa.form.label.phoneCode = Código Telefónico
+flightCrewMember.visa.form.label.timezone = Zona Horaria
+flightCrewMember.visa.form.label.visaType = Tipo de Visa
+flightCrewMember.visa.form.label.stayDuration = Duración de la Estancia
+flightCrewMember.visa.form.label.passportValidity = Validez del Pasaporte
+flightCrewMember.visa.form.label.additionalInfo = Información Adicional
+flightCrewMember.visa.form.label.officialLink = Enlace Oficial

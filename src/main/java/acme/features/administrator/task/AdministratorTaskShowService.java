@@ -8,8 +8,8 @@ import acme.client.components.principals.Administrator;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S5.Task;
-import acme.entities.S5.TaskType;
+import acme.entities.student5.Task;
+import acme.entities.student5.TaskType;
 
 @GuiService
 public class AdministratorTaskShowService extends AbstractGuiService<Administrator, Task> {

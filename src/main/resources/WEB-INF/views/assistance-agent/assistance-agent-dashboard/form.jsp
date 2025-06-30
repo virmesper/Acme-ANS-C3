@@ -82,34 +82,34 @@
 
 	<tr>
 		<th scope="row">
-			<acme:print code="assistance-agent.dashboard.form.label.avg-number-of-logs-assisted-last-month"/>
+			<acme:print code="assistance-agent.dashboard.form.label.avg-number-assisted-last-month"/>
 		</th>
 		<td>
-			<acme:print value="${avgNumberOfLogsClaimsAssistedDuringLastMonth}"/>
+			<acme:print value="${avgNumberClaimsAssistedDuringLastMonth}"/>
 		</td>
 	</tr>
 	<tr>
 		<th scope="row">
-			<acme:print code="assistance-agent.dashboard.form.label.min-number-of-logs-assisted-last-month"/>
+			<acme:print code="assistance-agent.dashboard.form.label.min-number-assisted-last-month"/>
 		</th>
 		<td>
-			<acme:print value="${minNumberOfLogsClaimsAssistedDuringLastMonth}"/>
+			<acme:print value="${minNumberClaimsAssistedDuringLastMonth}"/>
 		</td>
 	</tr>
 	<tr>
 		<th scope="row">
-			<acme:print code="assistance-agent.dashboard.form.label.max-number-of-logs-assisted-last-month"/>
+			<acme:print code="assistance-agent.dashboard.form.label.max-number-assisted-last-month"/>
 		</th>
 		<td>
-			<acme:print value="${maxNumberOfLogsClaimsAssistedDuringLastMonth}"/>
+			<acme:print value="${maxNumberClaimsAssistedDuringLastMonth}"/>
 		</td>
 	</tr>
 	<tr>
 		<th scope="row">
-			<acme:print code="assistance-agent.dashboard.form.label.dev-number-of-logs-assisted-last-month"/>
+			<acme:print code="assistance-agent.dashboard.form.label.dev-number-assisted-last-month"/>
 		</th>
 		<td>
-			<acme:print value="${devNumberOfLogsClaimsAssistedDuringLastMonth}"/>
+			<acme:print value="${devNumberClaimsAssistedDuringLastMonth}"/>
 		</td>
 	</tr>
 </table>

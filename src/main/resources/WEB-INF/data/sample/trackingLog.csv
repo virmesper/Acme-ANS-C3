@@ -1,7 +1,7 @@
 key,lastUpdateMoment,step,resolutionPercentage,indicator,draftMode,resolution,key:claim
 trackingLog-01,2025/01/01 0:00,Lorem ipsum dolor sit ame,99.00,PENDING,false,null,claim-01
-trackingLog-02,2012/07/02 0:06,Lorem ipsum dolor sit ame,80.00,ACCEPTED,false,L orem ipsum dolor sit amet. consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,claim-02
-trackingLog-03,2012/07/02 0:03,Lorem ipsum dolor sit ame,60.00,ACCEPTED,true,Lorem ipsum dolor sit amet. consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,claim-03
+trackingLog-02,2012/07/02 0:06,Lorem ipsum dolor sit ame,80.00,PENDING,false,null,claim-02
+trackingLog-03,2012/07/02 0:03,Lorem ipsum dolor sit ame,60.00,PENDING,true,null,claim-03
 trackingLog-04,2012/07/02 0:00,Lorem ipsum dolor sit ame,100.00,REJECTED,false,Lorem ipsum dolor sit amet. consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*,claim-04
 trackingLog-05,2012/07/02 0:00,Lorem ipsum dolor sit ame,100.00,ACCEPTED,false,L,claim-05
 trackingLog-06,2012/07/02 0:00,Lorem ipsum dolor sit ame,100.00,ACCEPTED,false,Lo,claim-06
@@ -14,10 +14,10 @@ trackingLog-12,2012/07/02 0:00,Lorem ipsum dolor sit ame,100.00,ACCEPTED,false,<
 trackingLog-13,2012/07/02 0:00,Lorem ipsum dolor sit ame,100.00,ACCEPTED,false,<script>alert(‘Hacked!’);</script>,claim-13
 trackingLog-14,2012/07/02 0:05,Intermediate Step,50.00,PENDING,false,null,claim-14
 trackingLog-15,2012/07/02 0:10,Final Step,100.00,ACCEPTED,true,"Resolution complete",claim-01
-trackingLog-16,2012/07/02 0:15,Final Step,81.00,REJECTED,true,"Resolution rejected",claim-02
+trackingLog-16,2012/07/02 0:15,Final Step,81.00,PENDING,true,null,claim-02
 trackingLog-17,2012/07/02 0:20,Review Step,82.00,PENDING,true,null,claim-02
 trackingLog-18,2012/07/02 0:25,Approval Step,100.00,ACCEPTED,false,"Final approval granted",claim-03
-trackingLog-19,2012/07/02 0:30,Approval Step,50.00,REJECTED,true,"Final approval denied",claim-03
+trackingLog-19,2012/07/02 0:30,Approval Step,50.00,PENDING,true,null,claim-03
 trackingLog-20,2024/01/25 12:00,Final step,100.00,ACCEPTED,true,Final resolution,claim-04
 trackingLog-21,2024/12/01 12:00,Final step test publish,100.00,ACCEPTED,true,Final resolution text publish,claim-27
 trackingLog-22,2024/06/02 10:00,Initial step,100.00,ACCEPTED,false,Initial resolution,claim-28
@@ -32,3 +32,8 @@ trackingLog-30,2016/04/17 09:10,"<marquee>Hacked</marquee>",100.00,ACCEPTED,fals
 trackingLog-31,2014/10/05 14:50,"<script>alert(‘Hacked!’);</script>",100.00,ACCEPTED,false,"<script>alert(‘Hacked!’);</script>",claim-18
 trackingLog-32,2013/06/25 16:30,"' or 'A' = 'A ",100.00,ACCEPTED,false,"' or 'A' = 'A",claim-19
 trackingLog-33,2013/06/25 16:31,"Step micro",0.01,PENDING,true,null,claim-20
+
+trackingLog-100,2024/12/31 11:00,Initial,100.00,ACCEPTED,false,"Issue resolved",claim-100
+trackingLog-101,2024/12/30 16:00,Final,100.00,REJECTED,false,"Rejected for testing",claim-101
+trackingLog-102,2024/12/10 13:00,Initial,100.00,ACCEPTED,false,"Issue resolved agent2",claim-102
+trackingLog-103,2024/12/12 18:00,Final,100.00,REJECTED,false,"Rejected for testing agent2",claim-103

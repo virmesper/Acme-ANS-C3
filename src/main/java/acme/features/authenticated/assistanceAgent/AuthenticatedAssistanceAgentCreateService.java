@@ -67,20 +67,19 @@ public class AuthenticatedAssistanceAgentCreateService extends AbstractGuiServic
 
 	@Override
 	public void bind(final AssistanceAgent object) {
-		assert object != null;
-
-		super.bindObject(object, "employeeCode", "spokenLanguages", "moment", "briefBio", "salary", "photoUrl", "airline");
+		super.bindObject(object, "employeeCode", "spokenLanguages", "briefBio", "salary", "photoUrl", "airline");
 	}
 
 	@Override
 	public void validate(final AssistanceAgent object) {
-		assert object != null;
+		String employeeCode = object.getEmployeeCode();
+		AssistanceAgent existing = this.repository.findAssistanceAgentByEmployeeCode(employeeCode);
+		boolean valid = existing == null || existing.getId() == object.getId();
+		super.state(valid, "employeeCode", "acme.validation.employeeCode.invalidEmployeeCode.message");
 	}
 
 	@Override
 	public void perform(final AssistanceAgent object) {
-		assert object != null;
-
 		this.repository.save(object);
 	}
 
