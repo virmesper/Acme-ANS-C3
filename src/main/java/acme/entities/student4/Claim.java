@@ -25,9 +25,8 @@ import lombok.Setter;
 
 @Entity
 @Table(indexes = {
-	@Index(columnList = "assistance_agent_id"), @Index(columnList = "passengerEmail"), @Index(columnList = "registrationMoment"), @Index(columnList = "type"), @Index(columnList = "indicator"), @Index(columnList = "leg_id"), @Index(columnList = "draftMode")
+	@Index(name = "idx_claim_agent_indicator", columnList = "assistance_agent_id, indicator"), @Index(columnList = "type"), @Index(columnList = "leg_id"), @Index(columnList = "draftMode")
 })
-
 @Getter
 @Setter
 @ValidClaim
