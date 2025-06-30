@@ -9,9 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-import acme.entities.S2.Ban;
-import acme.entities.S2.Booking;
-import acme.entities.S2.Passenger;
+import acme.entities.student2.Ban;
+import acme.entities.student2.Booking;
+import acme.entities.student2.Passenger;
 
 @Repository
 public interface AdministratorPassengerRepository extends AbstractRepository {

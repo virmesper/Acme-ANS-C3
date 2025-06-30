@@ -7,16 +7,21 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S2.Booking;
-import acme.entities.S2.TravelClass;
+import acme.entities.student2.Booking;
+import acme.entities.student2.TravelClass;
 import acme.realms.Customer;
 
 @GuiService
 public class CustomerBookingPublishedService extends AbstractGuiService<Customer, Booking> {
+
+	// Constants --------------------------------------------------------------
+
+	private static final String			DRAFT_MODE_FIELD	= "draftMode";
+
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRepository repository;
+	private CustomerBookingRepository	repository;
 
 	// AbstractGuiService interface -------------------------------------------
 
@@ -41,15 +46,13 @@ public class CustomerBookingPublishedService extends AbstractGuiService<Customer
 	@Override
 	public void validate(final Booking booking) {
 		String lastNibble = booking.getLastCardDigits();
-
 		boolean lastNibbleNotNull = !lastNibble.isBlank();
 
 		int passengerCount = this.repository.countNumberOfPassengersOfBooking(booking.getId());
 		boolean hasPassengers = passengerCount > 0;
 
-		super.state(hasPassengers, "draftMode", "customer.booking.publish.error.noPassengers");
-
-		super.state(lastNibbleNotNull, "draftMode", "customer.booking.publish.error.LastCardDigits");
+		super.state(hasPassengers, CustomerBookingPublishedService.DRAFT_MODE_FIELD, "customer.booking.publish.error.noPassengers");
+		super.state(lastNibbleNotNull, CustomerBookingPublishedService.DRAFT_MODE_FIELD, "customer.booking.publish.error.LastCardDigits");
 	}
 
 	@Override
@@ -68,7 +71,7 @@ public class CustomerBookingPublishedService extends AbstractGuiService<Customer
 		SelectChoices flights = SelectChoices.from(this.repository.findAllFlights(), "id", booking.getFlightId());
 		SelectChoices travelClasses = SelectChoices.from(TravelClass.class, booking.getTravelClass());
 
-		Dataset dataset = super.unbindObject(booking, "travelClass", "price", "locatorCode", "flightId", "draftMode", "purchaseMoment");
+		Dataset dataset = super.unbindObject(booking, "travelClass", "price", "locatorCode", "flightId", CustomerBookingPublishedService.DRAFT_MODE_FIELD, "purchaseMoment");
 		dataset.put("flights", flights);
 		dataset.put("travelClasses", travelClasses);
 		dataset.put("bookingId", booking.getId());

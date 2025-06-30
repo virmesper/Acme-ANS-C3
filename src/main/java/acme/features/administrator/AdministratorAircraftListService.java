@@ -9,7 +9,7 @@ import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.Group.Aircraft;
+import acme.entities.group.Aircraft;
 
 @GuiService
 public class AdministratorAircraftListService extends AbstractGuiService<Administrator, Aircraft> {

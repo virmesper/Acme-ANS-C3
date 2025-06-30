@@ -10,7 +10,7 @@ import acme.client.components.principals.Administrator;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.Group.Aircraft;
+import acme.entities.group.Aircraft;
 import acme.entities.student5.MaintenanceRecord;
 import acme.entities.student5.MaintenanceRecordStatus;
 

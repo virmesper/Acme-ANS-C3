@@ -1,13 +1,11 @@
 
 package acme.features.administrator.recommendation;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S2.Recommendation;
+import acme.entities.student2.Recommendation;
 import acme.features.authenticated.customer.recommendation.CustomerRecommendationRepository;
 
 @GuiService
@@ -15,11 +13,16 @@ public class AdministratorRecommendationShowService extends AbstractGuiService<A
 
 	// Internal state ---------------------------------------------------------
 
-	@Autowired
-	private CustomerRecommendationRepository repository;
+	private final CustomerRecommendationRepository repository;
+
+	// Constructor ------------------------------------------------------------
+
+
+	public AdministratorRecommendationShowService(final CustomerRecommendationRepository repository) {
+		this.repository = repository;
+	}
 
 	// AbstractGuiService interface -------------------------------------------
-
 
 	@Override
 	public void authorise() {
@@ -36,7 +39,6 @@ public class AdministratorRecommendationShowService extends AbstractGuiService<A
 			status = false;
 
 		super.getResponse().setAuthorised(status);
-
 	}
 
 	@Override

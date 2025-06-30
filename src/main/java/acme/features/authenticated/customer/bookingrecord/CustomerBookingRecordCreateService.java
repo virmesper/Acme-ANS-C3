@@ -1,5 +1,5 @@
 
-package acme.features.authenticated.customer.bookingRecord;
+package acme.features.authenticated.customer.bookingrecord;
 
 import java.util.Collection;
 import java.util.List;
@@ -12,15 +12,22 @@ import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.FlightRepository;
-import acme.entities.S2.Booking;
-import acme.entities.S2.BookingRecord;
-import acme.entities.S2.Passenger;
+import acme.entities.student2.Booking;
+import acme.entities.student2.BookingRecord;
+import acme.entities.student2.Passenger;
 import acme.features.authenticated.customer.booking.CustomerBookingRepository;
 import acme.features.authenticated.customer.passenger.CustomerPassengerRepository;
 import acme.realms.Customer;
 
 @GuiService
 public class CustomerBookingRecordCreateService extends AbstractGuiService<Customer, BookingRecord> {
+
+	// Constants --------------------------------------------------------------
+
+	private static final String				BOOKING_FIELD	= "booking";
+	private static final String				PASSENGER_FIELD	= "passenger";
+
+	// Internal state ---------------------------------------------------------
 
 	@Autowired
 	private CustomerBookingRecordRepository	customerBookingPassengerRepository;
@@ -33,6 +40,7 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 
 	@Autowired
 	private FlightRepository				FlightRepository;
+
 	// AbstractGuiService interface -------------------------------------------
 
 
@@ -44,46 +52,26 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 
 	@Override
 	public void load() {
-		BookingRecord booking;
-
-		booking = new BookingRecord();
-
+		BookingRecord booking = new BookingRecord();
 		super.getBuffer().addData(booking);
 	}
 
 	@Override
 	public void bind(final BookingRecord bookingRecord) {
-		Integer bookingId;
-		Integer passengerId;
-		Booking booking;
-		Passenger passenger;
+		Integer bookingId = super.getRequest().getData(CustomerBookingRecordCreateService.BOOKING_FIELD, Integer.class);
+		Integer passengerId = super.getRequest().getData(CustomerBookingRecordCreateService.PASSENGER_FIELD, Integer.class);
 
-		bookingId = super.getRequest().getData("booking", Integer.class);
-		passengerId = super.getRequest().getData("passenger", Integer.class);
-
-		booking = this.bookingRepository.findBookingById(bookingId);
-		if (booking == null) {
+		Booking booking = this.bookingRepository.findBookingById(bookingId);
+		if (booking == null || !booking.isDraftMode() || booking.getCustomer().getUserAccount().getId() != super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId()) {
 			super.getResponse().setAuthorised(false);
 			return;
 		}
 
-		// 🚨 Validación para evitar GET hacking si booking ya está publicada
-		if (!booking.isDraftMode()) {
-			super.getResponse().setAuthorised(false);
-			return;
-		}
-
-		int customerAccountId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
-		if (booking.getCustomer().getUserAccount().getId() != customerAccountId) {
-			super.getResponse().setAuthorised(false);
-			return;
-		}
-
-		passenger = this.passengerRepository.findPassengerById(passengerId);
+		Passenger passenger = this.passengerRepository.findPassengerById(passengerId);
 		if (passenger == null)
 			throw new IllegalArgumentException("❌ Passenger no encontrado con ID: " + passengerId);
 
-		if (passenger.getCustomer().getUserAccount().getId() != customerAccountId)
+		if (passenger.getCustomer().getUserAccount().getId() != super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId())
 			throw new IllegalArgumentException("❌ El passenger no pertenece al customer actual.");
 
 		super.bindObject(bookingRecord);
@@ -93,26 +81,22 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 
 	@Override
 	public void validate(final BookingRecord bookingRecord) {
-
 		if (bookingRecord.getBooking() == null && bookingRecord.getPassenger() == null) {
-			super.state(false, "booking", "acme.validation.confirmation.message.booking-record.create.booking");
-			super.state(false, "passenger", "acme.validation.confirmation.message.booking-record.create.passenger");
-
+			super.state(false, CustomerBookingRecordCreateService.BOOKING_FIELD, "acme.validation.confirmation.message.booking-record.create.booking");
+			super.state(false, CustomerBookingRecordCreateService.PASSENGER_FIELD, "acme.validation.confirmation.message.booking-record.create.passenger");
 		} else if (bookingRecord.getPassenger() == null)
-			super.state(false, "passenger", "acme.validation.confirmation.message.booking-record.create.passenger");
+			super.state(false, CustomerBookingRecordCreateService.PASSENGER_FIELD, "acme.validation.confirmation.message.booking-record.create.passenger");
 		else if (bookingRecord.getBooking() == null)
-			super.state(false, "booking", "acme.validation.confirmation.message.booking-record.create.booking");
+			super.state(false, CustomerBookingRecordCreateService.BOOKING_FIELD, "acme.validation.confirmation.message.booking-record.create.booking");
 		else {
 			BookingRecord br = this.customerBookingPassengerRepository.findBookingRecordBybookingIdpassengerId(bookingRecord.getBooking().getId(), bookingRecord.getPassenger().getId());
 			if (br != null)
 				super.state(false, "*", "acme.validation.confirmation.message.booking-record.create");
 		}
-
 	}
 
 	@Override
 	public void perform(final BookingRecord bookingRecord) {
-
 		this.customerBookingPassengerRepository.save(bookingRecord);
 
 		Booking booking = bookingRecord.getBooking();
@@ -137,11 +121,9 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		int bookingId = super.getRequest().getData("bookingId", int.class);
 		Booking booking = this.bookingRepository.findBookingById(bookingId);
 
-		// Validación crítica
 		if (booking == null)
 			throw new IllegalArgumentException("Booking no encontrado con ID: " + bookingId);
 
-		// Continuar normalmente
 		Collection<Booking> singleBookingList = List.of(booking);
 
 		int customerId = super.getRequest().getPrincipal().getActiveRealm().getUserAccount().getId();
@@ -154,9 +136,9 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		passengerChoices = SelectChoices.from(availablePassengers, "fullName", bookingRecord.getPassenger());
 
 		dataset = super.unbindObject(bookingRecord);
-		dataset.put("booking", bookingChoices.getSelected().getKey());
+		dataset.put(CustomerBookingRecordCreateService.BOOKING_FIELD, bookingChoices.getSelected().getKey());
 		dataset.put("bookings", bookingChoices);
-		dataset.put("passenger", passengerChoices.getSelected().getKey());
+		dataset.put(CustomerBookingRecordCreateService.PASSENGER_FIELD, passengerChoices.getSelected().getKey());
 		dataset.put("passengers", passengerChoices);
 
 		super.getResponse().addData(dataset);

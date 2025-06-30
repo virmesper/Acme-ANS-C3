@@ -12,7 +12,7 @@ import acme.client.components.views.SelectChoices;
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.Group.Airline;
+import acme.entities.group.Airline;
 import acme.entities.student3.AvailabilityStatus;
 import acme.realms.flightCrewMember.FlightCrewMember;
 

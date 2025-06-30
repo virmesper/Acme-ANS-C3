@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-import acme.entities.S2.Booking;
-import acme.entities.S2.Recommendation;
+import acme.entities.student2.Booking;
+import acme.entities.student2.Recommendation;
 
 @Repository
 public interface CustomerRecommendationRepository extends AbstractRepository {

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-import acme.entities.Group.Aircraft;
+import acme.entities.group.Aircraft;
 import acme.entities.student5.InvolvedIn;
 import acme.entities.student5.MaintenanceRecord;
 import acme.entities.student5.Task;

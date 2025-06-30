@@ -1,5 +1,5 @@
 
-package acme.entities.Group;
+package acme.entities.group;
 
 public enum AirlineType {
 	LUXURY,    // Aerolínea de lujo

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-import acme.entities.S2.SupportedCurrency;
+import acme.entities.student2.SupportedCurrency;
 
 @Repository
 public interface AnySupportedCurrencyRepository extends AbstractRepository {

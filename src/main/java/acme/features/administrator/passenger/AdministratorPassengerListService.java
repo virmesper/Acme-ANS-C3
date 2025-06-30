@@ -3,25 +3,28 @@ package acme.features.administrator.passenger;
 
 import java.util.Collection;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S2.Booking;
-import acme.entities.S2.Passenger;
+import acme.entities.student2.Booking;
+import acme.entities.student2.Passenger;
 
 @GuiService
 public class AdministratorPassengerListService extends AbstractGuiService<Administrator, Passenger> {
 
 	// Internal state ---------------------------------------------------------
 
-	@Autowired
-	private AdministratorPassengerRepository repository;
+	private final AdministratorPassengerRepository repository;
+
+	// Constructor ------------------------------------------------------------
+
+
+	public AdministratorPassengerListService(final AdministratorPassengerRepository repository) {
+		this.repository = repository;
+	}
 
 	// AbstractGuiService interface -------------------------------------------
-
 
 	@Override
 	public void authorise() {
