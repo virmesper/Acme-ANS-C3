@@ -1,5 +1,5 @@
 
-package acme.features.assistanceAgent.trackingLog;
+package acme.features.assistance_agent.tracking_log;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -7,30 +7,32 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S4.Indicator;
-import acme.entities.S4.TrackingLog;
-import acme.realms.assistanceAgent.AssistanceAgent;
+import acme.entities.student4.Indicator;
+import acme.entities.student4.TrackingLog;
+import acme.realms.assistance_agent.AssistanceAgent;
 
 @GuiService
 public class AssistanceAgentTrackingLogDeleteService extends AbstractGuiService<AssistanceAgent, TrackingLog> {
 
 	// Internal state ---------------------------------------------------------
 
-	@Autowired
-	private AssistanceAgentTrackingLogRepository repository;
+	private final AssistanceAgentTrackingLogRepository repository;
 
+
+	@Autowired
+	public AssistanceAgentTrackingLogDeleteService(final AssistanceAgentTrackingLogRepository repository) {
+		this.repository = repository;
+	}
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int masterId;
-		AssistanceAgent assistanceAgent;
-		TrackingLog trackingLog;
+		boolean status = false;
 
-		masterId = super.getRequest().getData("id", int.class);
-		trackingLog = this.repository.findOneTrackingLogById(masterId);
-		assistanceAgent = trackingLog == null ? null : trackingLog.getClaim().getAssistanceAgent();
-		status = trackingLog != null && trackingLog.isDraftMode() && super.getRequest().getPrincipal().hasRealm(assistanceAgent);
+		if (super.getRequest().getMethod().equals("POST")) {
+			int masterId = super.getRequest().getData("id", int.class);
+			TrackingLog trackingLog = this.repository.findOneTrackingLogById(masterId);
+			status = trackingLog != null && trackingLog.isDraftMode() && super.getRequest().getPrincipal().hasRealm(trackingLog.getClaim().getAssistanceAgent());
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -48,11 +50,12 @@ public class AssistanceAgentTrackingLogDeleteService extends AbstractGuiService<
 
 	@Override
 	public void bind(final TrackingLog trackingLog) {
-		super.bindObject(trackingLog, "lastUpdateMoment", "step", "resolutionPercentage", "resolution", "indicator");
+		// Intentionally left blank
 	}
 
 	@Override
 	public void validate(final TrackingLog trackingLog) {
+		// Intentionally left blank: no additional validation required
 	}
 
 	@Override

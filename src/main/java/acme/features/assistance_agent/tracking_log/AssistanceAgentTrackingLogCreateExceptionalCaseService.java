@@ -1,5 +1,5 @@
 
-package acme.features.assistanceAgent.trackingLog;
+package acme.features.assistance_agent.tracking_log;
 
 import java.util.Optional;
 
@@ -10,21 +10,28 @@ import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S4.Claim;
-import acme.entities.S4.Indicator;
-import acme.entities.S4.TrackingLog;
-import acme.realms.assistanceAgent.AssistanceAgent;
+import acme.entities.student4.Claim;
+import acme.entities.student4.Indicator;
+import acme.entities.student4.TrackingLog;
+import acme.realms.assistance_agent.AssistanceAgent;
 
 @GuiService
 public class AssistanceAgentTrackingLogCreateExceptionalCaseService extends AbstractGuiService<AssistanceAgent, TrackingLog> {
 
 	// Internal state ---------------------------------------------------------
 
+	private static final String							RESOLUTION	= "resolution";
+	private static final String							MASTER_ID	= "masterId";
+
+	private final AssistanceAgentTrackingLogRepository	repository;
+
+
 	@Autowired
-	private AssistanceAgentTrackingLogRepository repository;
+	public AssistanceAgentTrackingLogCreateExceptionalCaseService(final AssistanceAgentTrackingLogRepository repository) {
+		this.repository = repository;
+	}
 
 	// AbstractService interface ----------------------------------------------
-
 
 	@Override
 	public void authorise() {
@@ -34,7 +41,7 @@ public class AssistanceAgentTrackingLogCreateExceptionalCaseService extends Abst
 		Claim claim;
 		Boolean exceptionalCase;
 
-		masterId = super.getRequest().getData("masterId", int.class);
+		masterId = super.getRequest().getData(AssistanceAgentTrackingLogCreateExceptionalCaseService.MASTER_ID, int.class);
 		claim = this.repository.findOneClaimById(masterId);
 		assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
 		exceptionalCase = this.repository.countTrackingLogsForExceptionalCase(masterId) == 1;
@@ -51,7 +58,7 @@ public class AssistanceAgentTrackingLogCreateExceptionalCaseService extends Abst
 		Claim claim;
 		TrackingLog trackingLog;
 
-		masterId = super.getRequest().getData("masterId", int.class);
+		masterId = super.getRequest().getData(AssistanceAgentTrackingLogCreateExceptionalCaseService.MASTER_ID, int.class);
 		claim = this.repository.findOneClaimById(masterId);
 		trackingLog = this.repository.findManyTrackingLogsClaimIdAndIndicator(masterId, Indicator.PENDING).stream().toList().get(0);
 
@@ -67,13 +74,13 @@ public class AssistanceAgentTrackingLogCreateExceptionalCaseService extends Abst
 
 	@Override
 	public void bind(final TrackingLog object) {
-		super.bindObject(object, "lastUpdateMoment", "step", "resolutionPercentage", "resolution", "indicator");
+		super.bindObject(object, "step", AssistanceAgentTrackingLogCreateExceptionalCaseService.RESOLUTION);
 	}
 
 	@Override
 	public void validate(final TrackingLog object) {
-		if (!super.getBuffer().getErrors().hasErrors("resolution"))
-			super.state(Optional.ofNullable(object.getResolution()).map(String::strip).filter(s -> !s.isEmpty()).isPresent(), "resolution", "assistanceAgent.tracking-log.form.error.resolution-not-null");
+		if (!super.getBuffer().getErrors().hasErrors(AssistanceAgentTrackingLogCreateExceptionalCaseService.RESOLUTION))
+			super.state(Optional.ofNullable(object.getResolution()).map(String::strip).filter(s -> !s.isEmpty()).isPresent(), AssistanceAgentTrackingLogCreateExceptionalCaseService.RESOLUTION, "assistanceAgent.tracking-log.form.error.resolution-not-null");
 	}
 
 	@Override
@@ -95,8 +102,8 @@ public class AssistanceAgentTrackingLogCreateExceptionalCaseService extends Abst
 		claim = object.getClaim();
 		exceptionalCase = this.repository.countTrackingLogsForExceptionalCase(claim.getId()) == 1;
 
-		dataset = super.unbindObject(object, "lastUpdateMoment", "step", "resolutionPercentage", "resolution", "indicator");
-		dataset.put("masterId", super.getRequest().getData("masterId", int.class));
+		dataset = super.unbindObject(object, "lastUpdateMoment", "step", "resolutionPercentage", AssistanceAgentTrackingLogCreateExceptionalCaseService.RESOLUTION, "indicator");
+		dataset.put(AssistanceAgentTrackingLogCreateExceptionalCaseService.MASTER_ID, super.getRequest().getData(AssistanceAgentTrackingLogCreateExceptionalCaseService.MASTER_ID, int.class));
 		dataset.put("exceptionalCase", exceptionalCase);
 		dataset.put("indicators", SelectChoices.from(Indicator.class, object.getIndicator()));
 
