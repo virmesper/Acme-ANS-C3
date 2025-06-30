@@ -1,5 +1,5 @@
 
-package acme.features.technician.involvedIn;
+package acme.features.technician.involved_in;
 
 import javax.annotation.PostConstruct;
 
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.controllers.AbstractGuiController;
 import acme.client.controllers.GuiController;
-import acme.entities.S5.InvolvedIn;
+import acme.entities.student5.InvolvedIn;
 import acme.realms.Technician;
 
 @GuiController

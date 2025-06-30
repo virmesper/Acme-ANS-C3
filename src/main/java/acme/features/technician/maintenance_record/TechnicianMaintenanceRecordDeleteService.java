@@ -1,5 +1,5 @@
 
-package acme.features.technician.maintenanceRecord;
+package acme.features.technician.maintenance_record;
 
 import java.util.Collection;
 
@@ -10,51 +10,35 @@ import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.Group.Aircraft;
-import acme.entities.S5.MaintenanceRecord;
-import acme.entities.S5.MaintenanceRecordStatus;
+import acme.entities.student5.InvolvedIn;
+import acme.entities.student5.MaintenanceRecord;
+import acme.entities.student5.MaintenanceRecordStatus;
 import acme.realms.Technician;
 
 @GuiService
-public class TechnicianMaintenanceRecordUpdateService extends AbstractGuiService<Technician, MaintenanceRecord> {
+public class TechnicianMaintenanceRecordDeleteService extends AbstractGuiService<Technician, MaintenanceRecord> {
 
 	@Autowired
 	private TechnicianMaintenanceRecordRepository repository;
 
+	// AbstractGuiService interface -------------------------------------------
+
 
 	@Override
 	public void authorise() {
-		boolean status = false;
-		boolean statusAircraft = true;
+		boolean status;
 		int maintenanceRecordId;
 		MaintenanceRecord maintenanceRecord;
-		boolean isDraft;
-		boolean isTechnician;
-		int aircraftId;
-		Aircraft aircraft;
+		Technician technician;
 
-		if (super.getRequest().hasData("id", int.class)) {
+		status = super.getRequest().hasData("id", int.class);
+		if (status) {
 			maintenanceRecordId = super.getRequest().getData("id", int.class);
 			maintenanceRecord = this.repository.findMaintenanceRecordById(maintenanceRecordId);
-
-			if (maintenanceRecord != null) {
-				Technician technician = maintenanceRecord.getTechnician();
-				isDraft = maintenanceRecord.isDraftMode();
-				isTechnician = super.getRequest().getPrincipal().hasRealm(technician);
-
-				status = isDraft && isTechnician;
-			}
+			technician = maintenanceRecord == null ? null : maintenanceRecord.getTechnician();
+			status = maintenanceRecord != null && maintenanceRecord.isDraftMode() && super.getRequest().getPrincipal().hasRealm(technician);
 		}
-
-		if (super.getRequest().hasData("aircraft", int.class)) {
-			aircraftId = super.getRequest().getData("aircraft", int.class);
-			aircraft = this.repository.findAircraftById(aircraftId);
-
-			if (aircraft == null && aircraftId != 0)
-				statusAircraft = false;
-		}
-
-		super.getResponse().setAuthorised(status && statusAircraft);
-
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -87,7 +71,11 @@ public class TechnicianMaintenanceRecordUpdateService extends AbstractGuiService
 
 	@Override
 	public void perform(final MaintenanceRecord maintenanceRecord) {
-		this.repository.save(maintenanceRecord);
+		Collection<InvolvedIn> involves;
+
+		involves = this.repository.findInvolvesByMaintenanceRecordId(maintenanceRecord.getId());
+		this.repository.deleteAll(involves);
+		this.repository.delete(maintenanceRecord);
 	}
 
 	@Override
@@ -111,5 +99,4 @@ public class TechnicianMaintenanceRecordUpdateService extends AbstractGuiService
 
 		super.getResponse().addData(dataset);
 	}
-
 }

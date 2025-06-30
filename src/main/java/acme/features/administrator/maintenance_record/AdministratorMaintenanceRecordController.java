@@ -1,5 +1,5 @@
 
-package acme.features.administrator.maintenanceRecord;
+package acme.features.administrator.maintenance_record;
 
 import javax.annotation.PostConstruct;
 
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.components.principals.Administrator;
 import acme.client.controllers.AbstractGuiController;
 import acme.client.controllers.GuiController;
-import acme.entities.S5.MaintenanceRecord;
+import acme.entities.student5.MaintenanceRecord;
 
 @GuiController
 public class AdministratorMaintenanceRecordController extends AbstractGuiController<Administrator, MaintenanceRecord> {

@@ -1,5 +1,5 @@
 
-package acme.features.technician.involvedIn;
+package acme.features.technician.involved_in;
 
 import java.util.Collection;
 
@@ -9,9 +9,9 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S5.InvolvedIn;
-import acme.entities.S5.MaintenanceRecord;
-import acme.entities.S5.Task;
+import acme.entities.student5.InvolvedIn;
+import acme.entities.student5.MaintenanceRecord;
+import acme.entities.student5.Task;
 import acme.realms.Technician;
 
 @GuiService

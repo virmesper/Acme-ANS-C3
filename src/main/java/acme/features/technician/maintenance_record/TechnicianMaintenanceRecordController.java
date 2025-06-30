@@ -1,5 +1,5 @@
 
-package acme.features.technician.maintenanceRecord;
+package acme.features.technician.maintenance_record;
 
 import javax.annotation.PostConstruct;
 
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.controllers.AbstractGuiController;
 import acme.client.services.GuiService;
-import acme.entities.S5.MaintenanceRecord;
+import acme.entities.student5.MaintenanceRecord;
 import acme.realms.Technician;
 
 @GuiService

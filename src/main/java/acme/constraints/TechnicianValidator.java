@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
-import acme.entities.S5.TechnicianRepository;
+import acme.entities.student5.TechnicianRepository;
 import acme.realms.Technician;
 
 @Validator

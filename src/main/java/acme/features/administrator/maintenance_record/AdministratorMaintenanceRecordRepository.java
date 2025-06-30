@@ -1,5 +1,5 @@
 
-package acme.features.administrator.maintenanceRecord;
+package acme.features.administrator.maintenance_record;
 
 import java.util.Collection;
 
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
 import acme.entities.Group.Aircraft;
-import acme.entities.S5.InvolvedIn;
-import acme.entities.S5.MaintenanceRecord;
-import acme.entities.S5.Task;
+import acme.entities.student5.InvolvedIn;
+import acme.entities.student5.MaintenanceRecord;
+import acme.entities.student5.Task;
 
 @Repository
 public interface AdministratorMaintenanceRecordRepository extends AbstractRepository {
