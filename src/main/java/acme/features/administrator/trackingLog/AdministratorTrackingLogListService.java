@@ -4,14 +4,14 @@ package acme.features.administrator.trackingLog;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
+import acme.client.services.GuiService;
 import acme.entities.S4.TrackingLog;
 
-@Service
+@GuiService
 public class AdministratorTrackingLogListService extends AbstractGuiService<Administrator, TrackingLog> {
 
 	// Internal staTrackingLog-------------------------------------------------------
@@ -24,18 +24,20 @@ public class AdministratorTrackingLogListService extends AbstractGuiService<Admi
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		if (!super.getRequest().getMethod().equals("GET"))
+			super.getResponse().setAuthorised(false);
+		else
+			super.getResponse().setAuthorised(true);
 	}
 
 	@Override
 	public void load() {
-		Collection<TrackingLog> objects;
-		int masterId;
+		Collection<TrackingLog> trackingLogs;
 
-		masterId = super.getRequest().getData("masterId", int.class);
-		objects = this.repository.findManyTrackingLogsClaimId(masterId);
+		int claimId = super.getRequest().getData("claimId", int.class);
+		trackingLogs = this.repository.findTrackingLogsPublishedByClaimId(claimId);
 
-		super.getBuffer().addData(objects);
+		super.getBuffer().addData(trackingLogs);
 	}
 
 	@Override

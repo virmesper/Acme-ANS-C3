@@ -75,12 +75,17 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 		legId = super.getRequest().getData("leg", int.class);
 		leg = this.repository.findLegById(legId);
 
-		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "type", "indicator", "leg");
+		super.bindObject(claim, "passengerEmail", "description", "type", "leg");
 		claim.setLeg(leg);
 	}
 
 	@Override
 	public void validate(final Claim object) {
+		boolean valid;
+		if (object.getLeg() != null) {
+			valid = object.getRegistrationMoment().after(object.getLeg().getScheduledArrival());
+			super.state(valid, "leg", "assistanceAgent.claim.form.error.badLeg");
+		}
 	}
 
 	@Override

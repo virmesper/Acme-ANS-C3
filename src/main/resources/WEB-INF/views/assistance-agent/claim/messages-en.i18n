@@ -11,7 +11,8 @@
 assistanceAgent.claim.form.error.indicator.pending = The claim must be created with the status PENDING
 assistanceAgent.claim.form.error.all-tracking-logs-published = All tracking logs must be published before proceeding
 assistanceAgent.claim.form.error.indicator-pending = If the maximum resolution percentage of all associated tracking logs has already reached 100%, the status must not be "PENDING"
-assistanceAgent.claim.form.error.leg-wrong=You must select a valid leg with a published flight.
+assistanceAgent.claim.form.error.leg-wrong=You must select a valid leg with a published flight
+assistanceAgent.claim.form.error.badLeg = The selected leg must have a date earlier than the registration date
 
 assistance-agent.claim.list.title = Claim list
 assistance-agent.claim.form.title = Claim Details

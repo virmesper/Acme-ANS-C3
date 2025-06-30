@@ -58,9 +58,7 @@ public class AuthenticatedAssistanceAgentUpdateService extends AbstractGuiServic
 
 	@Override
 	public void bind(final AssistanceAgent object) {
-		assert object != null;
-
-		super.bindObject(object, "employeeCode", "spokenLanguages", "moment", "briefBio", "salary", "photoUrl", "airline");
+		super.bindObject(object, "employeeCode", "spokenLanguages", "briefBio", "salary", "photoUrl", "airline");
 	}
 
 	@Override

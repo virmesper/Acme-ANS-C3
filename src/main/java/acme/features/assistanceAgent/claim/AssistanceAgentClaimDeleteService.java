@@ -9,7 +9,6 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
 import acme.entities.S4.ClaimType;
 import acme.entities.S4.Indicator;
@@ -29,13 +28,13 @@ public class AssistanceAgentClaimDeleteService extends AbstractGuiService<Assist
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int masterId;
-		Claim claim;
+		boolean status = false;
 
-		masterId = super.getRequest().getData("id", int.class);
-		claim = this.repository.findClaimById(masterId);
-		status = claim != null && claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+		if (super.getRequest().getMethod().equals("POST")) {
+			int masterId = super.getRequest().getData("id", int.class);
+			Claim claim = this.repository.findClaimById(masterId);
+			status = claim != null && claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -53,14 +52,7 @@ public class AssistanceAgentClaimDeleteService extends AbstractGuiService<Assist
 
 	@Override
 	public void bind(final Claim claim) {
-		int legId;
-		Leg leg;
-
-		legId = super.getRequest().getData("leg", int.class);
-		leg = this.repository.findLegById(legId);
-
-		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "leg", "indicator", "type");
-		claim.setLeg(leg);
+		// intentionally left blank to prevent post hacking
 	}
 
 	@Override

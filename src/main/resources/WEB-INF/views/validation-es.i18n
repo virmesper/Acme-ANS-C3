@@ -13,15 +13,17 @@ acme.validation.flightNumber.message = El número de vuelo debe tener exactament
 acme.validation.employeeCode.format.message=El código de empleado debe comenzar con 2 o 3 letras mayúsculas seguidas de 6 dígitos
 acme.validation.employeeCode.unique.message = El código del empleado debe ser único
 acme.validation.employeeCode.initials.message=El código de empleado debe comenzar con tus iniciales extraídas de tu nombre completo
+acme.validation.employeeCode.invalidEmployeeCode.message = This employee Code is not valid
 customer.booking.publish.error.noPassengers=No se puede publicar una reserva sin pasajeros.
 acme.validation.confirmation.message.booking.locator-code = El localizador debe ser unico.
 acme.validation.airport.notfound.message=El código IATA del aeropuerto no existe.
 acme.validation.confirmation.message.booking-record.create.booking 
 acme.validation.confirmation.message.booking-record.create.passenger = 
 acme.validation.confirmation.message.booking-record.create = 
-acme.validation.employeeCode.format.message = El código debe seguir el patrón "^[A-Z]{2-3}\d{6}$", donde las primeras dos o tres letras corresponden a sus iniciales.
-acme.validation.employeeCode.initials.message = Las primeras dos o tres letras de su código de empleado deben corresponder a sus iniciales.
-acme.validation.assistanceAgent.code = Las primeras dos o tres letras de su código de empleado deben corresponder a sus iniciales.
+acme.validation.employeeCode.format.message = El código debe seguir el patrón "^[A-Z]{2-3}\d{6}$", donde las primeras dos o tres letras corresponden a sus iniciales
+acme.validation.employeeCode.initials.message = Las primeras dos o tres letras de su código de empleado deben corresponder a sus iniciales
+acme.validation.assistanceAgent.code = Las primeras dos o tres letras de su código de empleado deben corresponder a sus iniciales
+assistanceAgent.claim.form.error.badLeg = El tramo seleccionado debe tener una fecha anterior a la fecha de registro
 acme.validation.range. = El porcentaje debe ser mayor que 0 y menor o igual que 100.
 
 # Fight Assignments

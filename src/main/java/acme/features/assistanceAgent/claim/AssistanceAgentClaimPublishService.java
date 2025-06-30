@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
+import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Leg;
@@ -65,18 +66,16 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 
 	@Override
 	public void bind(final Claim claim) {
-		int legId;
-		Leg leg;
-
-		legId = super.getRequest().getData("leg", int.class);
-		leg = this.repository.findLegById(legId);
-
-		super.bindObject(claim, "registrationMoment", "passengerEmail", "description", "leg", "indicator", "type");
-		claim.setLeg(leg);
+		// intentionally left blank to prevent post hacking
 	}
 
 	@Override
 	public void validate(final Claim claim) {
+		boolean valid;
+		if (claim.getLeg() != null && claim.getRegistrationMoment() != null) {
+			valid = MomentHelper.getCurrentMoment().after(claim.getLeg().getScheduledArrival());
+			super.state(valid, "leg", "assistanceAgent.claim.form.error.badLeg");
+		}
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 key,registrationMoment,passengerEmail,description,type,indicator,key:assistanceAgent,key:leg,draft-mode
 claim-00,2015/07/02 0:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
 # registrationMoment
-claim-01,2000/01/01 0:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,true
+claim-01,2001/01/01 0:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,true
 claim-02,2000/01/01 0:01,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
 claim-03,2024/12/31 23:59,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
 claim-04,2025/01/01 0:00,acme@lorem-ipsum.org,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut",FLIGHT_ISSUES,PENDING,agent1,leg-00,false
@@ -38,5 +38,10 @@ claim-28,2024/06/01 12:00,acme@lorem-ipsum.org,"Negative test claim",FLIGHT_ISSU
 claim-31,2025/01/01 00:00,mike.brown@example.com,"<marquee>Hacked</marquee>",SECURITY_INCIDENT,PENDING,agent2,leg-02,true
 claim-32,2025/01/01 00:00,lucy.green@example.com,"<script>alert(‘Hacked!’);</script>",OTHER_ISSUES,PENDING,agent2,leg-01,true
 claim-33,2014/09/23 08:00,lucy.green@example.com,"' or 'A' = 'A ",OTHER_ISSUES,PENDING,agent2,leg-01,true
-claim-34,2000/01/01 00:00,a@b.es,"Seat was broken; not functional",SECURITY_INCIDENT,PENDING,agent1,leg-02,true
+claim-34,2001/01/01 00:00,a@b.es,"Seat was broken; not functional",SECURITY_INCIDENT,PENDING,agent1,leg-02,true
 claim-35,2000/01/01 00:01,lorem-ipsum@dolor.sit.amet.consectetur.adipiscing.elit.sed.do.eiusmod.tempor.incididunt.ut.labore.et.dolore.magna.aliqua.Ut.enim.ad.minim.veniam.quis.nostrud.exercitation.ullamco.laboris.nisi.ut.aliquip.ex.ea.commodo.consequat.duis.aute.irure.doloris.edu,"Incorrect baggage charge",SECURITY_INCIDENT,PENDING,agent1,leg-02,true
+
+claim-100,2024/12/31 10:00,test1@example.com,"Test claim accepted agent1",FLIGHT_ISSUES,ACCEPTED,agent1,leg-00,false
+claim-101,2024/12/30 15:00,test2@example.com,"Test claim rejected agent1",FLIGHT_ISSUES,REJECTED,agent1,leg-01,false
+claim-102,2024/12/10 12:00,test3@example.com,"Test claim accepted agent2",LUGGAGE_ISSUES,ACCEPTED,agent2,leg-02,false
+claim-103,2024/12/12 17:30,test4@example.com,"Test claim rejected agent2",OTHER_ISSUES,REJECTED,agent2,leg-03,false
