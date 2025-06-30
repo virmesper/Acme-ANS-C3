@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-import acme.entities.S3.FlightAssignment;
+import acme.entities.student3.FlightAssignment;
 
 @Repository
 public interface AnyFlightAssignmentRepository extends AbstractRepository {

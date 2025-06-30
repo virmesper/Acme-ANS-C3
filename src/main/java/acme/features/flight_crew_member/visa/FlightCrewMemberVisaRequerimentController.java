@@ -1,25 +1,25 @@
 
-package acme.features.any.flightAssignment;
+package acme.features.flight_crew_member.visa;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.client.components.principals.Any;
 import acme.client.controllers.AbstractGuiController;
 import acme.client.controllers.GuiController;
-import acme.entities.student3.FlightAssignment;
+import acme.entities.student3.VisaRequirement;
+import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiController
-public class AnyFlightAssignmentController extends AbstractGuiController<Any, FlightAssignment> {
+public class FlightCrewMemberVisaRequerimentController extends AbstractGuiController<FlightCrewMember, VisaRequirement> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AnyFlightAssignmentListService	listService;
+	private FlightCrewMemberVisaRequirementListService	listService;
 
 	@Autowired
-	private AnyFlightAssignmentShowService	showService;
+	private FlightCrewMemberVisaRequirementShowService	showService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -29,4 +29,5 @@ public class AnyFlightAssignmentController extends AbstractGuiController<Any, Fl
 		super.addBasicCommand("list", this.listService);
 		super.addBasicCommand("show", this.showService);
 	}
+
 }

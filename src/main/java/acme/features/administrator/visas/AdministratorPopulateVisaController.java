@@ -24,7 +24,7 @@ import acme.client.components.principals.Administrator;
 import acme.client.controllers.GuiController;
 import acme.client.helpers.Assert;
 import acme.client.helpers.PrincipalHelper;
-import acme.entities.S3.VisaRequirement;
+import acme.entities.student3.VisaRequirement;
 
 @GuiController
 public class AdministratorPopulateVisaController {

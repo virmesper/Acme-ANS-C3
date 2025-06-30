@@ -8,9 +8,9 @@ import acme.client.components.principals.Any;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S3.CurrentStatus;
-import acme.entities.S3.Duty;
-import acme.entities.S3.FlightAssignment;
+import acme.entities.student3.CurrentStatus;
+import acme.entities.student3.Duty;
+import acme.entities.student3.FlightAssignment;
 
 @GuiService
 public class AnyFlightAssignmentShowService extends AbstractGuiService<Any, FlightAssignment> {

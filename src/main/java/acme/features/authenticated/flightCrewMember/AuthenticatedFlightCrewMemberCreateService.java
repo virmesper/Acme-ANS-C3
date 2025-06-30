@@ -14,7 +14,7 @@ import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.Group.Airline;
-import acme.entities.S3.AvailabilityStatus;
+import acme.entities.student3.AvailabilityStatus;
 import acme.realms.flightCrewMember.FlightCrewMember;
 
 @GuiService
