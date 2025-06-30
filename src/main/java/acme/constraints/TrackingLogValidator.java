@@ -27,14 +27,14 @@ public class TrackingLogValidator extends AbstractValidator<ValidTrackingLog, Tr
 		else if (trackingLog.getIndicator() != null && trackingLog.getResolution() != null && trackingLog.getClaim() != null) {
 
 			if (trackingLog.getResolutionPercentage() != null && trackingLog.getResolutionPercentage() == 100.0)
-				super.state(context, !trackingLog.getIndicator().equals(Indicator.PENDING), "Status", "El estado no puede ser PENDING");
+				super.state(context, !trackingLog.getIndicator().equals(Indicator.PENDING), "indicator", "El estado no puede ser PENDING");
 			else
-				super.state(context, trackingLog.getIndicator().equals(Indicator.PENDING), "Status", "El estado debe ser PENDING");
+				super.state(context, trackingLog.getIndicator().equals(Indicator.PENDING), "indicator", "El estado debe ser PENDING");
 
 			if (trackingLog.getIndicator().equals(Indicator.PENDING))
-				super.state(context, trackingLog.getResolution() == null || trackingLog.getResolution().isBlank(), "Resolution", "El campo resolution debe quedar vacío hasta la finalización del tracking log");
+				super.state(context, trackingLog.getResolution() == null || trackingLog.getResolution().isBlank(), "resolution", "El campo resolution debe quedar vacío hasta la finalización del tracking log");
 			else
-				super.state(context, trackingLog.getResolution() != null && !trackingLog.getResolution().isBlank(), "Resolution", "El campo resolucion es incorrecto");
+				super.state(context, trackingLog.getResolution() != null && !trackingLog.getResolution().isBlank(), "resolution", "El campo resolucion es incorrecto");
 
 		}
 		result = !super.hasErrors(context);
