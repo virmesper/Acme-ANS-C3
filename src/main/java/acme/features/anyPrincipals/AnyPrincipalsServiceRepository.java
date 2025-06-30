@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import acme.client.helpers.RandomHelper;
 import acme.client.repositories.AbstractRepository;
-import acme.entities.Group.Service;
+import acme.entities.group.Service;
 
 @Repository
 public interface AnyPrincipalsServiceRepository extends AbstractRepository {

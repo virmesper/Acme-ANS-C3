@@ -25,7 +25,7 @@ import acme.client.components.models.Dataset;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.Group.Aircraft;
+import acme.entities.group.Aircraft;
 import acme.entities.student5.MaintenanceRecord;
 import acme.forms.TechnicianDashboard;
 import acme.realms.Technician;

@@ -27,6 +27,14 @@ master.menu.assistance-agent.claim.list-completed = Lista de reclamaciones compl
 master.menu.assistance-agent.claim.list-undergoing = Lista de reclamaciones pendientes
 master.menu.assistance-agent.dashboard = Panel de Control
 
+# master.menu.recommendation #######################################################
+
+master.menu.recommendation = Recomendaciones
+master.menu.administrator.list-recommendation = Ver recomendaciones (admin)
+master.menu.customer.list-related-recommendation = Ver recomendaciones de destinos
+master.menu.customer.list-recommendation = Ver todas las recomendaciones
+master.menu.administrator.populate-recommendation = poblar
+
 # master.menu.administrator ###################################################
 
 master.menu.administrator = Administrador

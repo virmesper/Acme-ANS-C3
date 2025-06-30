@@ -7,8 +7,8 @@ import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.Group.Aircraft;
-import acme.entities.Group.Status;
+import acme.entities.group.Aircraft;
+import acme.entities.group.Status;
 
 @GuiService
 public class AdministratorAircraftDisableService extends AbstractGuiService<Administrator, Aircraft> {

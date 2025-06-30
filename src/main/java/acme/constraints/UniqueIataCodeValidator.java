@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
-import acme.entities.Group.AirlineRepository;
-import acme.entities.Group.AirportRepository;
+import acme.entities.group.AirlineRepository;
+import acme.entities.group.AirportRepository;
 
 @Validator
 public class UniqueIataCodeValidator extends AbstractValidator<ValidUniqueIataCode, String> {

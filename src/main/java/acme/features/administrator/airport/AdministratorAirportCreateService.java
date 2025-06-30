@@ -8,17 +8,16 @@ import acme.client.components.principals.Administrator;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.Group.Airport;
-import acme.entities.Group.OperationalScope;
+import acme.entities.group.Airport;
+import acme.entities.group.OperationalScope;
 
 @GuiService
 public class AdministratorAirportCreateService extends AbstractGuiService<Administrator, Airport> {
-	// Internal state ---------------------------------------------------------
+
+	private static final String				CONFIRMATION	= "confirmation";
 
 	@Autowired
-	private AdministratorAirportRepository repository;
-
-	// AbstractGuiService interface -------------------------------------------
+	private AdministratorAirportRepository	repository;
 
 
 	@Override
@@ -28,9 +27,7 @@ public class AdministratorAirportCreateService extends AbstractGuiService<Admini
 
 	@Override
 	public void load() {
-		Airport airport;
-
-		airport = new Airport();
+		Airport airport = new Airport();
 		airport.setName("");
 		airport.setIataCode("");
 		airport.setOperationalScope(OperationalScope.DOMESTIC);
@@ -49,31 +46,24 @@ public class AdministratorAirportCreateService extends AbstractGuiService<Admini
 
 	@Override
 	public void validate(final Airport airport) {
-		boolean confirmation;
-
-		confirmation = super.getRequest().getData("confirmation", boolean.class);
-		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
+		boolean confirmation = super.getRequest().getData(AdministratorAirportCreateService.CONFIRMATION, boolean.class);
+		super.state(confirmation, AdministratorAirportCreateService.CONFIRMATION, "acme.validation.confirmation.message");
 	}
 
 	@Override
 	public void perform(final Airport airport) {
-
 		this.repository.save(airport);
 	}
 
 	@Override
 	public void unbind(final Airport airport) {
-		SelectChoices choices;
-		Dataset dataset;
+		SelectChoices choices = SelectChoices.from(OperationalScope.class, airport.getOperationalScope());
 
-		choices = SelectChoices.from(OperationalScope.class, airport.getOperationalScope());
-
-		dataset = super.unbindObject(airport, "name", "iataCode", "city", "country", "website", "email", "phoneNumber");
+		Dataset dataset = super.unbindObject(airport, "name", "iataCode", "city", "country", "website", "email", "phoneNumber");
 		dataset.put("operationalScopes", choices);
-		dataset.put("confirmation", false);
+		dataset.put(AdministratorAirportCreateService.CONFIRMATION, false);
 		dataset.put("readonly", false);
 
 		super.getResponse().addData(dataset);
 	}
-
 }

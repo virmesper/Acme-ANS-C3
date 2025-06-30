@@ -22,7 +22,7 @@ import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidString;
 import acme.client.components.validation.ValidUrl;
 import acme.constraints.ValidAssistanceAgent;
-import acme.entities.Group.Airline;
+import acme.entities.group.Airline;
 import lombok.Getter;
 import lombok.Setter;
 

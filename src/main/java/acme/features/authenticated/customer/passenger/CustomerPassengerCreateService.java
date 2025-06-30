@@ -7,7 +7,7 @@ import acme.client.components.basis.AbstractRealm;
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S2.Passenger;
+import acme.entities.student2.Passenger;
 import acme.realms.Customer;
 
 @GuiService
@@ -48,7 +48,7 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 	@Override
 	public void validate(final Passenger passenger) {
-		;
+		// No additional validation rules are required for now.
 	}
 
 	@Override

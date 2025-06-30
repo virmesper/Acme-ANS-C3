@@ -25,7 +25,7 @@ import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.constraints.AssistanceAgentValidator;
-import acme.entities.Group.Airline;
+import acme.entities.group.Airline;
 import acme.realms.assistance_agent.AssistanceAgent;
 
 @GuiService

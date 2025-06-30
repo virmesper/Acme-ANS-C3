@@ -4,25 +4,28 @@ package acme.features.administrator.passenger;
 import java.util.Collection;
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S2.Passenger;
+import acme.entities.student2.Passenger;
 
 @GuiService
 public class AdministratorBannedPassengersListService extends AbstractGuiService<Administrator, Passenger> {
 
 	// Internal state ---------------------------------------------------------
 
-	@Autowired
-	private AdministratorPassengerRepository repository;
+	private final AdministratorPassengerRepository repository;
+
+	// Constructor ------------------------------------------------------------
+
+
+	public AdministratorBannedPassengersListService(final AdministratorPassengerRepository repository) {
+		this.repository = repository;
+	}
 
 	// AbstractGuiService interface -------------------------------------------
-
 
 	@Override
 	public void authorise() {
@@ -51,7 +54,6 @@ public class AdministratorBannedPassengersListService extends AbstractGuiService
 
 		super.getResponse().addData(dataset);
 		super.getResponse().addGlobal("banned", true);
-
 	}
 
 }

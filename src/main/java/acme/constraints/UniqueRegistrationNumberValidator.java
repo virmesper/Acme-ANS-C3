@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.validation.AbstractValidator;
-import acme.entities.Group.AircraftRepository;
+import acme.entities.group.AircraftRepository;
 
 public class UniqueRegistrationNumberValidator extends AbstractValidator<ValidUniqueRegistrationNumber, String> {
 

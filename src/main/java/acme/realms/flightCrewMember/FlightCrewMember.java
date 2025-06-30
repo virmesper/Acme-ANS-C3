@@ -17,7 +17,7 @@ import acme.client.components.validation.ValidMoney;
 import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidString;
 import acme.constraints.ValidFlightCrewMember;
-import acme.entities.Group.Airline;
+import acme.entities.group.Airline;
 import acme.entities.student3.AvailabilityStatus;
 import lombok.Getter;
 import lombok.Setter;

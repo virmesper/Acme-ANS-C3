@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.components.principals.Administrator;
 import acme.client.controllers.AbstractGuiController;
 import acme.client.controllers.GuiController;
-import acme.entities.Group.Airport;
+import acme.entities.group.Airport;
 
 @GuiController
 public class AdministratorAirportController extends AbstractGuiController<Administrator, Airport> {
