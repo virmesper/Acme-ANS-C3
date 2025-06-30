@@ -15,14 +15,19 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Flight;
 import acme.entities.S1.FlightRepository;
-import acme.entities.S2.Booking;
-import acme.entities.S2.TravelClass;
+import acme.entities.student2.Booking;
+import acme.entities.student2.TravelClass;
 import acme.realms.Customer;
 
 @GuiService
 public class CustomerBookingCreateService extends AbstractGuiService<Customer, Booking> {
 
-	// Internal state ---------------------------------------------------------
+	// Constants ---------------------------------------------------------------
+
+	private static final String			FLIGHT_ID_FIELD		= "flightId";
+	private static final String			LOCATOR_CODE_FIELD	= "locatorCode";
+
+	// Internal state ----------------------------------------------------------
 
 	@Autowired
 	private CustomerBookingRepository	repository;
@@ -30,7 +35,7 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	@Autowired
 	private FlightRepository			flightRepository;
 
-	// AbstractGuiService interface -------------------------------------------
+	// AbstractGuiService interface --------------------------------------------
 
 
 	@Override
@@ -61,21 +66,19 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	public void bind(final Booking booking) {
 		Flight flight = null;
 
-		// Validación segura del flightId
-		if (super.getRequest().hasData("flightId"))
+		if (super.getRequest().hasData(CustomerBookingCreateService.FLIGHT_ID_FIELD))
 			try {
-				int flightId = super.getRequest().getData("flightId", int.class);
+				int flightId = super.getRequest().getData(CustomerBookingCreateService.FLIGHT_ID_FIELD, int.class);
 				flight = this.flightRepository.findFlightById(flightId);
 			} catch (final Throwable t) {
-				// No hacemos nada, dejamos flight como null para validarlo más adelante
+				// Ignorado: se valida después
 			}
 
-		super.bindObject(booking, "locatorCode", "lastCardDigits", "travelClass");
+		super.bindObject(booking, CustomerBookingCreateService.LOCATOR_CODE_FIELD, "lastCardDigits", "travelClass");
 
 		booking.setFlightId(flight);
 		booking.setDraftMode(false);
 
-		// Asignar precio si hay vuelo, si no se valida en validate()
 		if (flight != null) {
 			Money basePrice = this.flightRepository.findCostByFlight(flight.getId());
 			booking.setPrice(basePrice);
@@ -87,7 +90,7 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	public void validate(final Booking booking) {
 		Booking b = this.repository.findBookingByLocatorCode(booking.getLocatorCode());
 		if (b != null)
-			super.state(false, "locatorCode", "acme.validation.confirmation.message.booking.locator-code");
+			super.state(false, CustomerBookingCreateService.LOCATOR_CODE_FIELD, "acme.validation.confirmation.message.booking.locator-code");
 	}
 
 	@Override
@@ -103,16 +106,15 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 		Collection<Flight> flights = this.flightRepository.findAllFlight();
 
-		// Validación: si no hay vuelos cargados, se considera error (opcional)
 		if (flights == null || flights.isEmpty())
 			throw new IllegalArgumentException("No hay vuelos disponibles");
 
 		flightChoices = SelectChoices.from(flights, "tag", booking.getFlightId());
 		choices = SelectChoices.from(TravelClass.class, booking.getTravelClass());
 
-		dataset = super.unbindObject(booking, "locatorCode", "lastCardDigits", "price");
+		dataset = super.unbindObject(booking, CustomerBookingCreateService.LOCATOR_CODE_FIELD, "lastCardDigits", "price");
 		dataset.put("travelClass", choices);
-		dataset.put("flightId", flightChoices.getSelected().getKey());
+		dataset.put(CustomerBookingCreateService.FLIGHT_ID_FIELD, flightChoices.getSelected().getKey());
 		dataset.put("flights", flightChoices);
 		dataset.put("purchaseMoment", booking.getPurchaseMoment());
 

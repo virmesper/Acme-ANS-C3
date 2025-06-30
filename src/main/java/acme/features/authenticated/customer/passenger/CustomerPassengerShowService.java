@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S2.Passenger;
+import acme.entities.student2.Passenger;
 import acme.realms.Customer;
 
 @GuiService

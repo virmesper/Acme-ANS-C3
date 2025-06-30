@@ -1,26 +1,29 @@
 
 package acme.features.administrator.booking;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.S1.Flight;
-import acme.entities.S2.Booking;
+import acme.entities.student2.Booking;
 
 @GuiService
 public class AdministratorBookingShowService extends AbstractGuiService<Administrator, Booking> {
 
 	// Internal state ---------------------------------------------------------
 
-	@Autowired
-	private AdministratorBookingRepository repository;
+	private final AdministratorBookingRepository repository;
+
+	// Constructor ------------------------------------------------------------
+
+
+	public AdministratorBookingShowService(final AdministratorBookingRepository repository) {
+		this.repository = repository;
+	}
 
 	// AbstractGuiService interface -------------------------------------------
-
 
 	@Override
 	public void authorise() {
@@ -56,7 +59,6 @@ public class AdministratorBookingShowService extends AbstractGuiService<Administ
 		Money cost = flight.getCost();
 
 		dataset = super.unbindObject(booking, "locatorCode", "purchaseMoment", "travelClass", "lastCardDigits");
-
 		dataset.put("flight", String.format("%s - %s ", origin, cost));
 
 		super.getResponse().addData(dataset);

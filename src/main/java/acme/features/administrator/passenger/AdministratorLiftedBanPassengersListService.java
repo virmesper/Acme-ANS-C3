@@ -11,7 +11,7 @@ import acme.client.components.principals.Administrator;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S2.Passenger;
+import acme.entities.student2.Passenger;
 
 @GuiService
 public class AdministratorLiftedBanPassengersListService extends AbstractGuiService<Administrator, Passenger> {

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-import acme.entities.Group.Airport;
+import acme.entities.group.Airport;
 
 @Repository
 public interface AdministratorAirportRepository extends AbstractRepository {

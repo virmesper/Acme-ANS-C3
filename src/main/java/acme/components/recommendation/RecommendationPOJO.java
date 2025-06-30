@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import acme.entities.S2.BusinessStatus;
+import acme.entities.student2.BusinessStatus;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.components.datatypes.Money;
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
-import acme.entities.S2.SupportedCurrency;
+import acme.entities.student2.SupportedCurrency;
 import acme.features.any.supportedCurrency.AnySupportedCurrencyRepository;
 
 @Validator

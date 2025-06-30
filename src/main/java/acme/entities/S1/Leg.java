@@ -16,8 +16,8 @@ import acme.client.components.mappings.Automapped;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.ValidMoment;
 import acme.constraints.ValidFlightNumber;
-import acme.entities.Group.Aircraft;
-import acme.entities.Group.Airport;
+import acme.entities.group.Aircraft;
+import acme.entities.group.Airport;
 import lombok.Getter;
 import lombok.Setter;
 
