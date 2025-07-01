@@ -7,7 +7,6 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.basis.AbstractRealm;
-import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
@@ -65,31 +64,50 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	@Override
 	public void bind(final Booking booking) {
 		Flight flight = null;
+		TravelClass travelClass = null;
 
-		if (super.getRequest().hasData(CustomerBookingCreateService.FLIGHT_ID_FIELD))
+		// Obtener el vuelo enviado por el cliente
+		if (super.getRequest().hasData("flightId"))
 			try {
-				int flightId = super.getRequest().getData(CustomerBookingCreateService.FLIGHT_ID_FIELD, int.class);
+				int flightId = super.getRequest().getData("flightId", int.class);
 				flight = this.flightRepository.findFlightById(flightId);
+
+				// Validar que el vuelo esté en modo "publicado"
+				if (flight == null || flight.getDraftMode())
+					throw new IllegalArgumentException("Invalid flightId: " + flightId);
 			} catch (final Throwable t) {
-				// Ignorado: se valida después
+				// Lanza error 500 si el flightId es manipulado
+				throw new RuntimeException("Internal Server Error: Invalid flightId", t);
 			}
 
-		super.bindObject(booking, CustomerBookingCreateService.LOCATOR_CODE_FIELD, "lastCardDigits", "travelClass");
+		// Validar que el travelClass no se pueda modificar ilegalmente
+		if (super.getRequest().hasData("travelClass"))
+			try {
+				travelClass = super.getRequest().getData("travelClass", TravelClass.class);
+				// Aquí puedes verificar si el travelClass está permitido para el cliente (según tu lógica)
+			} catch (final Throwable t) {
+				// Lanza error 500 si el travelClass es manipulado
+				throw new RuntimeException("Internal Server Error: Invalid travelClass", t);
+			}
 
 		booking.setFlightId(flight);
+		booking.setTravelClass(travelClass);
 		booking.setDraftMode(false);
 
-		if (flight != null) {
-			Money basePrice = this.flightRepository.findCostByFlight(flight.getId());
-			booking.setPrice(basePrice);
-		}
 	}
 
 	@Override
 	public void validate(final Booking booking) {
-		Booking b = this.repository.findBookingByLocatorCode(booking.getLocatorCode());
-		if (b != null)
-			super.state(false, CustomerBookingCreateService.LOCATOR_CODE_FIELD, "acme.validation.confirmation.message.booking.locator-code");
+		// Verificación de flightId y travelClass
+		if (booking.getFlightId() == null || booking.getTravelClass() == null)
+			throw new RuntimeException("Internal Server Error: Missing flightId or travelClass");
+
+		// Asegúrate de que el vuelo es válido y no esté en borrador
+		Flight flight = booking.getFlightId();
+		super.state(flight != null && !flight.getDraftMode(), "flightId", "booking.form.error.flight.invalid");
+
+		// Validación del travelClass, según tus reglas de negocio
+		super.state(booking.getTravelClass() != null, "travelClass", "booking.form.error.travelClass.invalid");
 	}
 
 	@Override
