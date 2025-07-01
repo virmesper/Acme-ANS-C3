@@ -52,7 +52,7 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 		}
 
 		super.getResponse().setAuthorised(status);
- 		
+
 	}
 
 	@Override
@@ -85,11 +85,7 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 
 	@Override
 	public void validate(final Claim object) {
-		boolean valid;
-		if (object.getLeg() != null) {
-			valid = object.getRegistrationMoment().after(object.getLeg().getScheduledArrival());
-			super.state(valid, "leg", "assistanceAgent.claim.form.error.badLeg");
-		}
+		;
 	}
 
 	@Override

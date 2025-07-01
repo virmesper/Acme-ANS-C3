@@ -8,7 +8,6 @@ import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.student1.Leg;
 import acme.entities.student4.Claim;
 import acme.entities.student4.ClaimType;
 import acme.entities.student4.Indicator;
@@ -37,22 +36,11 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 			int id = super.getRequest().getData("id", int.class);
 			Claim claim = this.repository.findClaimById(id);
 			status = claim != null && claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
-
 		} else {
-
-			int legId = super.getRequest().getData("leg", int.class);
-			Leg leg = this.repository.findLegById(legId);
-
-			boolean isLegIdZero = legId == 0;
-			boolean isLegValid = leg != null;
-			boolean isLegNotDraft = isLegValid && !leg.isDraftMode();
-			boolean isFlightNotDraft = isLegNotDraft && !leg.getFlight().getDraftMode();
-			boolean externalRelation = isLegIdZero || isLegValid && isLegNotDraft && isFlightNotDraft;
-
 			int masterId = super.getRequest().getData("id", int.class);
 			Claim claim = this.repository.findClaimById(masterId);
 
-			status = claim != null && claim.isDraftMode() && externalRelation && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
+			status = claim != null && claim.isDraftMode() && super.getRequest().getPrincipal().hasRealm(claim.getAssistanceAgent());
 		}
 
 		super.getResponse().setAuthorised(status);
@@ -77,10 +65,9 @@ public class AssistanceAgentClaimPublishService extends AbstractGuiService<Assis
 	@Override
 	public void validate(final Claim claim) {
 		boolean valid;
-		if (claim.getLeg() != null && claim.getRegistrationMoment() != null) {
-			valid = MomentHelper.getCurrentMoment().after(claim.getLeg().getScheduledArrival());
-			super.state(valid, "leg", "assistanceAgent.claim.form.error.badLeg");
-		}
+		valid = MomentHelper.getCurrentMoment().after(claim.getLeg().getScheduledArrival());
+		super.state(valid, "leg", "assistanceAgent.claim.form.error.badLeg");
+
 	}
 
 	@Override
