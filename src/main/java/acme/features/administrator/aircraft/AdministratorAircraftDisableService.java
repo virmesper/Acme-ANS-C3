@@ -11,10 +11,7 @@ import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.group.Aircraft;
-<<<<<<< HEAD:src/main/java/acme/features/administrator/aircraft/AdministratorAircraftDisableService.java
 import acme.entities.group.Airline;
-=======
->>>>>>> master:src/main/java/acme/features/administrator/AdministratorAircraftDisableService.java
 import acme.entities.group.Status;
 
 @GuiService

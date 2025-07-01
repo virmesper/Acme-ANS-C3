@@ -12,10 +12,7 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.group.Aircraft;
 import acme.entities.group.Airline;
-<<<<<<< HEAD:src/main/java/acme/features/administrator/aircraft/AdministratorAircraftUpdateService.java
 import acme.entities.group.Status;
-=======
->>>>>>> master:src/main/java/acme/features/administrator/AdministratorAircraftUpdateService.java
 
 @GuiService
 public class AdministratorAircraftUpdateService extends AbstractGuiService<Administrator, Aircraft> {
