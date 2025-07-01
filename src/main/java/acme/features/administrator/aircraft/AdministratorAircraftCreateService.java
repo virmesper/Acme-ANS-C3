@@ -17,8 +17,10 @@ import acme.entities.group.Status;
 @GuiService
 public class AdministratorAircraftCreateService extends AbstractGuiService<Administrator, Aircraft> {
 
+	private static final String				CONFIRMATION	= "confirmation";
+
 	@Autowired
-	private AdministratorAircraftRepository repository;
+	private AdministratorAircraftRepository	repository;
 
 
 	@Override
@@ -34,7 +36,6 @@ public class AdministratorAircraftCreateService extends AbstractGuiService<Admin
 
 	@Override
 	public void bind(final Aircraft aircraft) {
-
 		int airlineId = super.getRequest().getData("airline", int.class);
 		Airline airline = this.repository.findAirlineById(airlineId);
 
@@ -44,11 +45,8 @@ public class AdministratorAircraftCreateService extends AbstractGuiService<Admin
 
 	@Override
 	public void validate(final Aircraft aircraft) {
-		boolean confirmation;
-
-		confirmation = super.getRequest().getData("confirmation", boolean.class);
-		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
-
+		boolean confirmation = super.getRequest().getData(AdministratorAircraftCreateService.CONFIRMATION, boolean.class);
+		super.state(confirmation, AdministratorAircraftCreateService.CONFIRMATION, "acme.validation.confirmation.message");
 	}
 
 	@Override
@@ -66,11 +64,10 @@ public class AdministratorAircraftCreateService extends AbstractGuiService<Admin
 		dataset.put("statuses", choices);
 		dataset.put("airlines", selectedAirlines);
 		dataset.put("airline", selectedAirlines.getSelected().getKey());
-		dataset.put("confirmation", false);
+		dataset.put(AdministratorAircraftCreateService.CONFIRMATION, false);
 		dataset.put("readonly", false);
 
 		super.getResponse().addData(dataset);
 
 	}
-
 }

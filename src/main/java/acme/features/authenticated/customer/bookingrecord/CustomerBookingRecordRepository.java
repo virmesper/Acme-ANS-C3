@@ -1,5 +1,5 @@
 
-package acme.features.authenticated.customer.bookingRecord;
+package acme.features.authenticated.customer.bookingrecord;
 
 import java.util.Collection;
 
@@ -8,9 +8,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-import acme.entities.S2.Booking;
-import acme.entities.S2.BookingRecord;
-import acme.entities.S2.Passenger;
+import acme.entities.student2.Booking;
+import acme.entities.student2.BookingRecord;
+import acme.entities.student2.Passenger;
 
 @Repository
 public interface CustomerBookingRecordRepository extends AbstractRepository {

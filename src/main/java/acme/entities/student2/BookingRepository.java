@@ -1,5 +1,5 @@
 
-package acme.entities.S2;
+package acme.entities.student2;
 
 import java.util.Collection;
 

@@ -1,5 +1,5 @@
 
-package acme.features.authenticated.customer.bookingRecord;
+package acme.features.authenticated.customer.bookingrecord;
 
 import javax.annotation.PostConstruct;
 
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.controllers.AbstractGuiController;
 import acme.client.controllers.GuiController;
-import acme.entities.S2.BookingRecord;
+import acme.entities.student2.BookingRecord;
 import acme.realms.Customer;
 
 @GuiController

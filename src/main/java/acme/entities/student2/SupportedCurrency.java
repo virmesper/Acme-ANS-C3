@@ -1,5 +1,5 @@
 
-package acme.entities.S2;
+package acme.entities.student2;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -84,47 +84,65 @@ public class SupportedCurrency extends AbstractEntity {
 		Money result = new Money();
 		String defaultCurrency = SupportedCurrency.getDefaultCurrency();
 		result.setCurrency(defaultCurrency);
-		if (!money.getCurrency().equals(defaultCurrency)) {
-			if (SpringHelper.isRunningOn("production"))
-				try {
 
-					String apiKey = "fca_live_LoNLzqN8xfOE524QdmeycQrAkUMvlwcsWGd5nEhw";
-					Date now = MomentHelper.getCurrentMoment();
-					@SuppressWarnings("deprecation")
-					String nowFormatted = now.getYear() + 1900 + "-" + String.format("%02d", now.getMonth() + 1) + "-" + String.format("%02d", now.getDate());
-					String url = "https://api.freecurrencyapi.com/v1/historical?apikey=" + apiKey + "&date=" + nowFormatted + "&base_currency=" + defaultCurrency;
-					Map<String, Map<String, Double>> data;
-					if (SupportedCurrency.lastData != null && SupportedCurrency.lastData.get(nowFormatted) != null)
-						data = SupportedCurrency.lastData;
-					else {
-						RestTemplate api = new RestTemplate();
-						ResponseEntity<ExchangePOJO> response = api.getForEntity(url, ExchangePOJO.class);
-						data = response.getBody().getData();
-						SupportedCurrency.lastData = data;
-					}
+		if (money.getCurrency().equals(defaultCurrency))
+			return money;
 
-					Double newAmount = money.getAmount() / data.values().iterator().next().get(money.getCurrency());
-					result.setAmount(newAmount);
-				} catch (final Throwable oops) {
-					System.out.println(oops);
-					result.setAmount(0.);
-				}
-			else {
-				Map<String, Double> mockedValues = new HashMap<>();
-				if (defaultCurrency.equals("EUR") && (money.getCurrency().equals("GBP") || money.getCurrency().equals("USD"))) {
-					mockedValues.put("GBP", 0.8270029409);
-					mockedValues.put("USD", 1.0352287186);
-					Double newAmount = money.getAmount() / mockedValues.get(money.getCurrency());
-					result.setAmount(newAmount);
-				} else
-					result.setAmount(0.);
+		if (SpringHelper.isRunningOn("production"))
+			return SupportedCurrency.convertUsingApi(money, defaultCurrency);
+		else
+			return SupportedCurrency.convertMocked(money, defaultCurrency);
+	}
 
-			}
-		} else
-			result = money;
+	private static Money convertUsingApi(final Money money, final String defaultCurrency) {
+		Money result = new Money();
+		result.setCurrency(defaultCurrency);
 
+		try {
+			String nowFormatted = SupportedCurrency.getFormattedDate();
+			Map<String, Map<String, Double>> data = SupportedCurrency.getExchangeData(nowFormatted, defaultCurrency);
+			Double rate = data.values().iterator().next().get(money.getCurrency());
+			result.setAmount(money.getAmount() / rate);
+		} catch (final Throwable oops) {
+			System.out.println(oops);
+			result.setAmount(0.0);
+		}
 		return result;
 	}
 
-	// Relationships ----------------------------------------------------------
+	private static Map<String, Map<String, Double>> getExchangeData(final String date, final String defaultCurrency) {
+		if (SupportedCurrency.lastData != null && SupportedCurrency.lastData.get(date) != null)
+			return SupportedCurrency.lastData;
+		String apiKey = "fca_live_LoNLzqN8xfOE524QdmeycQrAkUMvlwcsWGd5nEhw";
+		String url = "https://api.freecurrencyapi.com/v1/historical?apikey=" + apiKey + "&date=" + date + "&base_currency=" + defaultCurrency;
+
+		RestTemplate api = new RestTemplate();
+		ResponseEntity<ExchangePOJO> response = api.getForEntity(url, ExchangePOJO.class);
+		Map<String, Map<String, Double>> data = response.getBody().getData();
+		SupportedCurrency.lastData = data;
+		return data;
+	}
+
+	private static String getFormattedDate() {
+		Date now = MomentHelper.getCurrentMoment();
+		@SuppressWarnings("deprecation")
+		String formatted = now.getYear() + 1900 + "-" + String.format("%02d", now.getMonth() + 1) + "-" + String.format("%02d", now.getDate());
+		return formatted;
+	}
+
+	private static Money convertMocked(final Money money, final String defaultCurrency) {
+		Money result = new Money();
+		result.setCurrency(defaultCurrency);
+
+		Map<String, Double> mockedValues = new HashMap<>();
+		mockedValues.put("GBP", 0.8270029409);
+		mockedValues.put("USD", 1.0352287186);
+
+		if ("EUR".equals(defaultCurrency) && mockedValues.containsKey(money.getCurrency())) {
+			Double rate = mockedValues.get(money.getCurrency());
+			result.setAmount(money.getAmount() / rate);
+		} else
+			result.setAmount(0.0);
+		return result;
+	}
 }

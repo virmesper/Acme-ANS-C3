@@ -16,6 +16,14 @@ master.menu.anonymous.favourite-link-2 = 5398*****: Reyes Apresa, Mario
 master.menu.anonymous.favourite-link-3 = 0909*****: Sánchez Gómez, Paula
 master.menu.anonymous.favourite-link-4 = 2682*****: Mesa Pérez, Virginia
 
+# master.menu.recommendation #######################################################
+
+master.menu.recommendation = Recommendations
+master.menu.administrator.list-recommendation = List recommendations (admin)
+master.menu.customer.list-recommendation = List all recommendations
+master.menu.customer.list-related-recommendation = List related recommendations
+master.menu.administrator.populate-recommendation = Populate
+
 # master.menu.authenticated ###################################################
 
 master.menu.authenticated.list-assignments = List Assignments

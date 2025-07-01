@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
-import acme.entities.S2.BookingRepository;
+import acme.entities.student2.BookingRepository;
 
 @Validator
 public class UniqueLocatorCodeValidator extends AbstractValidator<ValidUniqueLocatorCode, String> {
