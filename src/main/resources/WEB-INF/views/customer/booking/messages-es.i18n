@@ -21,8 +21,8 @@ customer.booking.list.label.flightId = Vuelo
 customer.booking.list.label.purchaseMoment=Momento de Compra
 customer.booking.list.label.lastCardDigits=Últimos Digitos de la Tarjeta de Crédito
 customer.booking.form.error.alreadyPublished=Esta reserva está publicada y no se puede actualizar.
-
-
+customer.booking.form.error.invalidLastCardDigits = Número inválido
+customer.booking.form.error.locatorCode.unique = Debe ser único
 customer.booking.form.button.update = Actualizar
 customer.booking.form.button.return = Volver
 customer.booking.form.button.passenger = Ver Pasajeros

@@ -1,107 +1,85 @@
 
 package acme.features.authenticated.customer.booking;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
-import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.student1.FlightRepository;
+import acme.entities.student1.Flight;
 import acme.entities.student2.Booking;
 import acme.entities.student2.TravelClass;
 import acme.realms.Customer;
 
 @GuiService
 public class CustomerBookingUpdateService extends AbstractGuiService<Customer, Booking> {
+
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private CustomerBookingRepository	repository;
+	private CustomerBookingRepository customerBookingRepository;
 
-	@Autowired
-	private FlightRepository			flightRepository;
-
-	// AbstractGuiService interfaced ------------------------------------------
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
 	public void authorise() {
-		int id = super.getRequest().getData("id", int.class);
-		Booking booking = this.repository.findById(id);
+		boolean status = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
 
-		boolean authorised = booking != null && super.getRequest().getPrincipal().hasRealm(booking.getCustomer()) && !booking.isDraftMode();
+		Integer bookingId = super.getRequest().getData("id", int.class);
+		Booking booking = this.customerBookingRepository.findBookingById(bookingId);
 
-		super.getResponse().setAuthorised(authorised);
+		Integer customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+
+		status = status && booking.getCustomer().getId() == customerId && !booking.isDraftMode();
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("id", int.class);
-		Booking booking = this.repository.findById(id);
+		Integer id = super.getRequest().getData("id", int.class);
+		Booking booking = this.customerBookingRepository.findBookingById(id);
 		super.getBuffer().addData(booking);
 	}
 
 	@Override
 	public void bind(final Booking booking) {
-		assert booking != null;
-
-		super.bindObject(booking, "travelClass", "lastCardDigits", "locatorCode", "flightId");
-
-		// Ignorar campos que pueden haber sido manipulados
-		int id = super.getRequest().getData("id", int.class);
-		Booking original = this.repository.findById(id);
-
-		booking.setPrice(original.getPrice());
-		booking.setPurchaseMoment(original.getPurchaseMoment());
+		super.bindObject(booking, "flightId", "locatorCode", "travelClass", "lastCardDigits");
 	}
 
 	@Override
 	public void validate(final Booking booking) {
-		assert booking != null;
+		Collection<Booking> bookings = this.customerBookingRepository.findBookingsByLocatorCode(booking.getLocatorCode());
+		boolean isUnique;
 
-		boolean Notpublished = !booking.isDraftMode();
-		super.state(Notpublished, "draftMode", "customer.booking.form.error.alreadyPublished");
-
+		isUnique = bookings.isEmpty() || bookings.stream().allMatch(b -> b.getId() == booking.getId());
+		super.state(isUnique, "locatorCode", "customer.booking.form.error.locatorCode");
 	}
+
 	@Override
 	public void perform(final Booking booking) {
-		assert booking != null;
-
-		Money pricePerPassenger = this.flightRepository.findCostByFlight(booking.getFlightId().getId());
-
-		int passengerCount = this.repository.countNumberOfPassengersOfBooking(booking.getId());
-
-		Money newPrice = new Money();
-		if (passengerCount == 0)
-			newPrice.setAmount(pricePerPassenger.getAmount());
-		else
-			newPrice.setAmount(pricePerPassenger.getAmount() * passengerCount);
-		newPrice.setCurrency(pricePerPassenger.getCurrency());
-
-		booking.setPrice(newPrice);
-
-		this.repository.save(booking);
+		this.customerBookingRepository.save(booking);
 	}
 
 	@Override
 	public void unbind(final Booking booking) {
-		SelectChoices flights = SelectChoices.from(this.repository.findAllFlights(), "id", booking.getFlightId());
 		SelectChoices travelClasses = SelectChoices.from(TravelClass.class, booking.getTravelClass());
+		Collection<Flight> flights = this.customerBookingRepository.findAllPublishedFlights();
+		SelectChoices flightChoices = SelectChoices.from(flights, "tag", booking.getFlightId());
 
-		Dataset dataset = super.unbindObject(booking, "travelClass", "price", "locatorCode", "purchaseMoment", "lastCardDigits");
-		dataset.put("travelClasses", travelClasses);
-		dataset.put("flights", flights);
-		dataset.put("bookingId", booking.getId());
+		Boolean hasPassengers;
+		hasPassengers = !this.customerBookingRepository.findPassengersByBooking(booking.getId()).isEmpty();
+		super.getResponse().addGlobal("hasPassengers", hasPassengers);
+
+		Dataset dataset = super.unbindObject(booking, "flightId", "customer", "locatorCode", "purchaseMoment", "travelClass", "price", "lastCardDigits", "draftMode", "id");
+		dataset.put("travelClass", travelClasses);
+		dataset.put("flights", flightChoices);
 
 		super.getResponse().addData(dataset);
 	}
 
-	@Override
-	public void onSuccess() {
-		if (super.getRequest().getMethod().equalsIgnoreCase("POST"))
-			PrincipalHelper.handleUpdate();
-	}
 }

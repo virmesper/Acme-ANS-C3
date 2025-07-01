@@ -36,4 +36,4 @@ customer.booking.publish = Publish Booking
 customer.booking.publish.error.lastCardDigits = There is no Credit Card last Nibble
 customer.booking.form.error.alreadyPublished=This booking is already published and cannot be updated.
 customer.booking.form.error.locatorCode.unique=The locator code must be unique. Please enter a different one.
-
+customer.booking.form.error.invalidLastCardDigits = Invalid Last Card Digits
