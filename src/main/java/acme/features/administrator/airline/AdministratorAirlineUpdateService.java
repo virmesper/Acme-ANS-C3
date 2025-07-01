@@ -8,8 +8,8 @@ import acme.client.components.principals.Administrator;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.Group.Airline;
-import acme.entities.Group.AirlineType;
+import acme.entities.group.Airline;
+import acme.entities.group.AirlineType;
 
 @GuiService
 public class AdministratorAirlineUpdateService extends AbstractGuiService<Administrator, Airline> {

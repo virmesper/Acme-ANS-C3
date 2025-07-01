@@ -1,5 +1,5 @@
 
-package acme.entities.Group;
+package acme.entities.group;
 
 import java.util.List;
 

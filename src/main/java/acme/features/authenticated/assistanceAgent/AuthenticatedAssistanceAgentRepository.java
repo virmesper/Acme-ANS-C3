@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import acme.client.components.principals.UserAccount;
 import acme.client.repositories.AbstractRepository;
-import acme.entities.Group.Airline;
+import acme.entities.group.Airline;
 import acme.realms.assistanceAgent.AssistanceAgent;
 
 @Repository

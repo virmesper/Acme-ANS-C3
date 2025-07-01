@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-import acme.entities.Group.Aircraft;
-import acme.entities.Group.Airline;
+import acme.entities.group.Aircraft;
+import acme.entities.group.Airline;
 
 @Repository
 public interface AdministratorAircraftRepository extends AbstractRepository {
