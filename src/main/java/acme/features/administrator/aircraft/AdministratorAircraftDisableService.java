@@ -1,5 +1,5 @@
 
-package acme.features.administrator;
+package acme.features.administrator.aircraft;
 
 import java.util.Collection;
 
@@ -12,9 +12,10 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.Group.Aircraft;
 import acme.entities.Group.Airline;
+import acme.entities.Group.Status;
 
 @GuiService
-public class AdministratorAircraftUpdateService extends AbstractGuiService<Administrator, Aircraft> {
+public class AdministratorAircraftDisableService extends AbstractGuiService<Administrator, Aircraft> {
 
 	@Autowired
 	private AdministratorAircraftRepository repository;
@@ -34,7 +35,7 @@ public class AdministratorAircraftUpdateService extends AbstractGuiService<Admin
 
 	@Override
 	public void bind(final Aircraft aircraft) {
-		super.bindObject(aircraft, "model", "registrationNumber", "capacity", "cargoWeight", "status", "details");
+		super.bindObject(aircraft, "model", "registrationNumber", "capacity", "cargoWeight", "status", "details", "airline");
 	}
 
 	@Override
@@ -45,20 +46,33 @@ public class AdministratorAircraftUpdateService extends AbstractGuiService<Admin
 
 	@Override
 	public void perform(final Aircraft aircraft) {
-		this.repository.save(aircraft);
+		String statusString = super.getRequest().getData("statusString", String.class);
+		if ("ACTIVE_SERVICE".equals(statusString))
+			aircraft.setStatus(Status.UNDER_MAINTENANCE);
+		else if ("UNDER_MAINTENANCE".equals(statusString))
+			aircraft.setStatus(Status.ACTIVE_SERVICE);
+		this.repository.save(aircraft);  // Guarda el cambio de estado
 	}
 
 	@Override
 	public void unbind(final Aircraft aircraft) {
-
 		Collection<Airline> airlines = this.repository.findAllAirlines();
-		SelectChoices selectedAirlines = SelectChoices.from(airlines, "name", aircraft.getAirline());
+		SelectChoices airlineChoices = SelectChoices.from(airlines, "name", aircraft.getAirline());
+
+		SelectChoices statusChoices = SelectChoices.from(Status.class, aircraft.getStatus());
 
 		Dataset dataset = super.unbindObject(aircraft, "model", "registrationNumber", "capacity", "cargoWeight", "status", "details");
-		dataset.put("statuses", aircraft.getStatus());
-		dataset.put("airline", selectedAirlines.getSelected().getKey());
-		dataset.put("airlines", selectedAirlines);
+
+		dataset.put("airline", airlineChoices.getSelected().getKey());
+		dataset.put("airlines", airlineChoices);
+
+		dataset.put("status", statusChoices.getSelected().getKey());
+		dataset.put("statuses", statusChoices);
+
+		dataset.put("confirmation", false);
+		dataset.put("statusString", aircraft.getStatus().name()); // Si lo usas en el formulario
 
 		super.getResponse().addData(dataset);
 	}
+
 }

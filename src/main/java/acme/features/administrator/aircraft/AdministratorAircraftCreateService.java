@@ -1,5 +1,5 @@
 
-package acme.features.administrator;
+package acme.features.administrator.aircraft;
 
 import java.util.Collection;
 
@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.components.views.SelectChoices;
-import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.Group.Aircraft;
@@ -71,12 +70,7 @@ public class AdministratorAircraftCreateService extends AbstractGuiService<Admin
 		dataset.put("readonly", false);
 
 		super.getResponse().addData(dataset);
-	}
 
-	@Override
-	public void onSuccess() {
-		if (super.getRequest().getMethod().equals("POST"))
-			PrincipalHelper.handleUpdate();
 	}
 
 }
