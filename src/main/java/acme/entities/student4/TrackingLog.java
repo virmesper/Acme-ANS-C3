@@ -24,8 +24,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "TrackingLog", indexes = {
-	@Index(name = "idx_trackinglog_claim_draft_indicator_respercentage", columnList = "claim_id, draftMode, indicator, resolutionPercentage")
+@Table(indexes = {
+	@Index(columnList = "claim_id"), @Index(columnList = "claim_id,draftMode,indicator"), @Index(columnList = "claim_id,draftMode"), @Index(columnList = "claim_id,resolutionPercentage,draftMode")
 })
 
 @Getter
