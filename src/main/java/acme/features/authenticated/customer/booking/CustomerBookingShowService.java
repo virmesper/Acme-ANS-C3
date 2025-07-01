@@ -52,7 +52,6 @@ public class CustomerBookingShowService extends AbstractGuiService<Customer, Boo
 
 	@Override
 	public void unbind(final Booking booking) {
-		assert booking != null;
 
 		Dataset dataset;
 		SelectChoices flights;

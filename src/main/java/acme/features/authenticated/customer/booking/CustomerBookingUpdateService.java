@@ -70,26 +70,19 @@ public class CustomerBookingUpdateService extends AbstractGuiService<Customer, B
 	public void perform(final Booking booking) {
 		assert booking != null;
 
-		// Obtener el precio por pasajero (Money) desde el vuelo
 		Money pricePerPassenger = this.flightRepository.findCostByFlight(booking.getFlightId().getId());
 
-		// Obtener número de pasajeros
 		int passengerCount = this.repository.countNumberOfPassengersOfBooking(booking.getId());
 
-		// Calcular nuevo precio total
 		Money newPrice = new Money();
 		if (passengerCount == 0)
-			// Si no hay pasajeros, el precio es el del vuelo base
 			newPrice.setAmount(pricePerPassenger.getAmount());
 		else
-			// Si hay pasajeros, se multiplica por el número
 			newPrice.setAmount(pricePerPassenger.getAmount() * passengerCount);
 		newPrice.setCurrency(pricePerPassenger.getCurrency());
 
-		// Asignar nuevo precio a la booking
 		booking.setPrice(newPrice);
 
-		// Guardar la booking actualizada
 		this.repository.save(booking);
 	}
 

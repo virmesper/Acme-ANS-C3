@@ -11,10 +11,9 @@
 customer.booking-record.list.title = List of bookings record
 customer.booking-record.form.title = Create a booking record
 
-customer.booking-record.list.label.passenger = Passenger
-customer.booking-record.list.label.booking = Booking
-
-authenticated.booking-record.form.button.create = Add
+customer.bookingRecord.form.label.booking = Booking
+customer.bookingRecord.form.label.passenger = Passenger
+customer.bookingRecord.form.button.create = Create
 
 acme.validation.confirmation.message.booking-record.create = That relation is already created
 acme.validation.confirmation.message.booking-record.create.booking = The booking must not be null

@@ -11,10 +11,10 @@
 customer.booking-record.list.title = Lista de registros de reserva
 customer.booking-record.form.title = Crear un registro de reserva
 
-customer.booking-record.list.label.passenger = Pasajero
-customer.booking-record.list.label.booking = Reserva
+customer.bookingRecord.form.label.booking = Reserva
+customer.bookingRecord.form.label.passenger = Pasajero
+customer.bookingRecord.form.button.create = Crear
 
-authenticated.booking-record.form.button.create = Añadir
 
 acme.validation.confirmation.message.booking-record.create = Esa relacion ya está creada
 acme.validation.confirmation.message.booking-record.create.booking = La reserva no puede ser nula

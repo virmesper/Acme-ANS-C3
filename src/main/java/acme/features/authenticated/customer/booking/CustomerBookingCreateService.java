@@ -82,8 +82,7 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		if (flight != null) {
 			Money basePrice = this.flightRepository.findCostByFlight(flight.getId());
 			booking.setPrice(basePrice);
-		} else
-			booking.setPrice(null);
+		}
 	}
 
 	@Override
@@ -105,9 +104,6 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		SelectChoices flightChoices;
 
 		Collection<Flight> flights = this.flightRepository.findAllFlight();
-
-		if (flights == null || flights.isEmpty())
-			throw new IllegalArgumentException("No hay vuelos disponibles");
 
 		flightChoices = SelectChoices.from(flights, "tag", booking.getFlightId());
 		choices = SelectChoices.from(TravelClass.class, booking.getTravelClass());
