@@ -1,5 +1,5 @@
 
-package acme.entities.S1;
+package acme.entities.student1;
 
 import java.beans.Transient;
 import java.util.Date;

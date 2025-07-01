@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-import acme.entities.S1.Leg;
-import acme.entities.S1.LegStatus;
+import acme.entities.student1.Leg;
+import acme.entities.student1.LegStatus;
 import acme.entities.student3.ActivityLog;
 import acme.entities.student3.AvailabilityStatus;
 import acme.entities.student3.Duty;

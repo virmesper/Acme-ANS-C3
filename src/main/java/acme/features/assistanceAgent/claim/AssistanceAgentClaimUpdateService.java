@@ -7,10 +7,10 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
 import acme.entities.S4.ClaimType;
 import acme.entities.S4.Indicator;
+import acme.entities.student1.Leg;
 import acme.realms.assistanceAgent.AssistanceAgent;
 
 @GuiService

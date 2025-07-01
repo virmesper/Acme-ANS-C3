@@ -10,10 +10,10 @@ import acme.client.components.principals.Administrator;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
 import acme.entities.S4.ClaimType;
 import acme.entities.S4.Indicator;
+import acme.entities.student1.Leg;
 
 @GuiService
 public class AdministratorClaimShowService extends AbstractGuiService<Administrator, Claim> {

@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-import acme.entities.S1.Leg;
 import acme.entities.S4.Claim;
 import acme.entities.S4.Indicator;
 import acme.entities.S4.TrackingLog;
+import acme.entities.student1.Leg;
 import acme.realms.assistanceAgent.AssistanceAgent;
 
 @Repository
