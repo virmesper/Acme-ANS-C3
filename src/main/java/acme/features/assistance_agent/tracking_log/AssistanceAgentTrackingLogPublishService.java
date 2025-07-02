@@ -36,26 +36,31 @@ public class AssistanceAgentTrackingLogPublishService extends AbstractGuiService
 
 	@Override
 	public void authorise() {
-		try {
-			boolean status;
-			TrackingLog trackingLog;
-			Integer id;
-			AssistanceAgent assistanceAgent;
-			if (!super.getRequest().getMethod().equals("POST"))
-				super.getResponse().setAuthorised(false);
-			else {
-				id = super.getRequest().getData("id", Integer.class);
-				trackingLog = null;
-				if (id != null)
-					trackingLog = this.repository.findOneTrackingLogById(id);
-				assistanceAgent = trackingLog == null ? null : trackingLog.getClaim().getAssistanceAgent();
-				status = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && (trackingLog == null || trackingLog.isDraftMode());
-				super.getResponse().setAuthorised(status);
+		boolean status = false;
+
+		if (super.getRequest().getMethod().equals("GET")) {
+			Integer id = super.getRequest().getData("id", Integer.class);
+			if (id != null) {
+				TrackingLog trackingLog = this.repository.findOneTrackingLogById(id);
+
+				if (trackingLog != null && trackingLog.getClaim() != null) {
+					AssistanceAgent assistanceAgent = trackingLog.getClaim().getAssistanceAgent();
+					status = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && trackingLog.isDraftMode();
+				}
 			}
-		} catch (Throwable t) {
-			super.getResponse().setAuthorised(false);
+		} else if (super.getRequest().getMethod().equals("POST")) {
+			Integer masterId = super.getRequest().getData("id", Integer.class);
+			if (masterId != null) {
+				TrackingLog trackingLog = this.repository.findOneTrackingLogById(masterId);
+
+				if (trackingLog != null && trackingLog.getClaim() != null) {
+					AssistanceAgent assistanceAgent = trackingLog.getClaim().getAssistanceAgent();
+					status = super.getRequest().getPrincipal().hasRealm(assistanceAgent) && trackingLog.isDraftMode();
+				}
+			}
 		}
 
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -71,7 +76,7 @@ public class AssistanceAgentTrackingLogPublishService extends AbstractGuiService
 
 	@Override
 	public void bind(final TrackingLog trackingLog) {
-		super.bindObject(trackingLog, "step", AssistanceAgentTrackingLogPublishService.RESOLUTION_PERCENTAGE, AssistanceAgentTrackingLogPublishService.RESOLUTION, AssistanceAgentTrackingLogPublishService.INDICATOR);
+		// intentionally left blank to prevent post hacking
 	}
 
 	@Override
@@ -103,14 +108,9 @@ public class AssistanceAgentTrackingLogPublishService extends AbstractGuiService
 
 	private void validateResolutionPercentageLimits(final TrackingLog trackingLog) {
 		if (!super.getBuffer().getErrors().hasErrors(AssistanceAgentTrackingLogPublishService.RESOLUTION_PERCENTAGE)) {
-			boolean notAnyMore = this.repository.countTrackingLogsForExceptionalCase(trackingLog.getClaim().getId()) == 2;
 			Double maxResolutionPercentage = this.repository.findMaxResolutionPercentageByClaimId(trackingLog.getId(), trackingLog.getClaim().getId());
 			double finalMax = maxResolutionPercentage != null ? maxResolutionPercentage : -0.01;
-
-			if (notAnyMore)
-				super.state(trackingLog.getResolutionPercentage() == 100, AssistanceAgentTrackingLogPublishService.RESOLUTION_PERCENTAGE, "assistanceAgent.tracking-log.form.error.must-be-100");
-			else
-				super.state(trackingLog.getResolutionPercentage() > finalMax, AssistanceAgentTrackingLogPublishService.RESOLUTION_PERCENTAGE, "assistanceAgent.tracking-log.form.error.less-than-max-resolution-percentage");
+			super.state(trackingLog.getResolutionPercentage() > finalMax, AssistanceAgentTrackingLogPublishService.RESOLUTION_PERCENTAGE, "assistanceAgent.tracking-log.form.error.less-than-max-resolution-percentage");
 		}
 	}
 

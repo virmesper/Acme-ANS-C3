@@ -81,14 +81,16 @@ public class AssistanceAgentTrackingLogCreateExceptionalCaseService extends Abst
 	public void validate(final TrackingLog object) {
 		if (!super.getBuffer().getErrors().hasErrors(AssistanceAgentTrackingLogCreateExceptionalCaseService.RESOLUTION))
 			super.state(Optional.ofNullable(object.getResolution()).map(String::strip).filter(s -> !s.isEmpty()).isPresent(), AssistanceAgentTrackingLogCreateExceptionalCaseService.RESOLUTION, "assistanceAgent.tracking-log.form.error.resolution-not-null");
+
+		boolean exceptionalCase = this.repository.countTrackingLogsForExceptionalCase(object.getClaim().getId()) == 1;
+		if (exceptionalCase)
+			super.state(object.getResolutionPercentage() == 100.00, "resolutionPercentage", "assistanceAgent.tracking-log.form.error.must-be-100");
 	}
 
 	@Override
 	public void perform(final TrackingLog object) {
-
 		object.setLastUpdateMoment(MomentHelper.getCurrentMoment());
 		object.setDraftMode(false);
-
 		this.repository.save(object);
 	}
 

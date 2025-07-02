@@ -98,10 +98,9 @@ public class AssistanceAgentTrackingLogCreateService extends AbstractGuiService<
 
 		}
 		if (!super.getBuffer().getErrors().hasErrors(AssistanceAgentTrackingLogCreateService.RESOLUTION_PERCENTAGE)) {
-			var publishedLogs = this.repository.findManyTrackingLogsClaimId(trackingLog.getClaim().getId()).stream().filter(t -> !t.isDraftMode()) // Solo los publicados
-				.toList();
+			var publishedLogs = this.repository.findManyTrackingLogsClaimId(trackingLog.getClaim().getId()).stream().filter(t -> !t.isDraftMode()).toList();
 
-			double maxPublished = publishedLogs.stream().mapToDouble(TrackingLog::getResolutionPercentage).max().orElse(-0.01); // por si no hay ninguno aún
+			double maxPublished = publishedLogs.stream().mapToDouble(TrackingLog::getResolutionPercentage).max().orElse(-0.01);
 
 			super.state(trackingLog.getResolutionPercentage() > maxPublished, AssistanceAgentTrackingLogCreateService.RESOLUTION_PERCENTAGE, "assistanceAgent.tracking-log.form.error.less-than-max-resolution-percentage");
 		}

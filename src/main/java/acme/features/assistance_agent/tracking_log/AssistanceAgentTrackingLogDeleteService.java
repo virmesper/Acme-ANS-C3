@@ -7,6 +7,7 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
+import acme.entities.student4.Claim;
 import acme.entities.student4.Indicator;
 import acme.entities.student4.TrackingLog;
 import acme.realms.assistance_agent.AssistanceAgent;
@@ -26,13 +27,24 @@ public class AssistanceAgentTrackingLogDeleteService extends AbstractGuiService<
 
 	@Override
 	public void authorise() {
+		int masterId;
+		TrackingLog trackingLog;
+		Claim claim;
+		AssistanceAgent assistanceAgent;
 		boolean status = false;
 
-		if (super.getRequest().getMethod().equals("POST")) {
-			int masterId = super.getRequest().getData("id", int.class);
-			TrackingLog trackingLog = this.repository.findOneTrackingLogById(masterId);
-			status = trackingLog != null && trackingLog.isDraftMode() && super.getRequest().getPrincipal().hasRealm(trackingLog.getClaim().getAssistanceAgent());
-		}
+		masterId = super.getRequest().getData("id", int.class);
+
+		trackingLog = this.repository.findOneTrackingLogById(masterId);
+
+		claim = trackingLog == null ? null : trackingLog.getClaim();
+
+		assistanceAgent = claim == null ? null : claim.getAssistanceAgent();
+
+		if (trackingLog != null || claim != null)
+			if (trackingLog.isDraftMode())
+				if (super.getRequest().getPrincipal().hasRealm(assistanceAgent))
+					status = true;
 
 		super.getResponse().setAuthorised(status);
 	}
