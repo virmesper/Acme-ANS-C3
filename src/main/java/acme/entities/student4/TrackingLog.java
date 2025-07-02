@@ -27,7 +27,6 @@ import lombok.Setter;
 @Table(indexes = {
 	@Index(columnList = "claim_id"), @Index(columnList = "claim_id,draftMode,indicator"), @Index(columnList = "claim_id,draftMode"), @Index(columnList = "claim_id,resolutionPercentage,draftMode")
 })
-
 @Getter
 @Setter
 @ValidTrackingLog

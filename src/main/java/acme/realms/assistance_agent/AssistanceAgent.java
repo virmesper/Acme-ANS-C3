@@ -27,9 +27,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-
 @Table(indexes = {
-	@Index(columnList = "user_account_id"), @Index(columnList = "employeeCode"), @Index(columnList = "airline_id")
+	@Index(columnList = "user_account_id"), @Index(columnList = "employeeCode")
 })
 @Getter
 @Setter

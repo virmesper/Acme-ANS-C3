@@ -28,10 +28,10 @@ public interface AssistanceAgentClaimRepository extends AbstractRepository {
 	@Query("SELECT l FROM Leg l WHERE l.id = :legId")
 	Leg findLegById(int legId);
 
-	@Query("select c from Claim c where c.assistanceAgent.id = :id and c.indicator != :type")
+	@Query("select c from Claim c where c.assistanceAgent.id = :id and c.indicator != :type ORDER BY c.id ASC")
 	public Collection<Claim> findManyClaimsCompletedByMasterId(int id, Indicator type);
 
-	@Query("select c from Claim c where c.assistanceAgent.id = :id and c.indicator = :type")
+	@Query("select c from Claim c where c.assistanceAgent.id = :id and c.indicator = :type ORDER BY c.id ASC")
 	public Collection<Claim> findManyClaimsUndergoingByMasterId(int id, Indicator type);
 
 	@Query("SELECT l FROM Leg l WHERE l.draftMode = false AND l.flight.draftMode = false")

@@ -32,6 +32,4 @@ public interface AssistanceAgentTrackingLogRepository extends AbstractRepository
 	@Query("SELECT COUNT(t) FROM TrackingLog t WHERE t.claim.id = :claimId AND t.resolutionPercentage = 100.00 AND t.draftMode = false")
 	public Long countTrackingLogsForExceptionalCase(int claimId);
 
-	@Query("SELECT CASE WHEN COUNT(t) = 0 THEN false WHEN COUNT(t) = COUNT(CASE WHEN t.draftMode = TRUE THEN 1 ELSE NULL END) THEN true ELSE false END FROM TrackingLog t WHERE t.claim.id = :claimId")
-	public Boolean allTrackingLogsDraftMode(int claimId);
 }
