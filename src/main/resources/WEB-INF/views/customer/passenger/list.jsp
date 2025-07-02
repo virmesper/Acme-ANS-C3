@@ -10,8 +10,9 @@
     <acme:list-column code="customer.passenger.list.label.specialNeeds" path="specialNeeds" width="20%" />
     <acme:list-column code="customer.passenger.list.label.email" path="email" width="20%" />
     <acme:list-payload path="payload"/>   
+    
 </acme:list>
-<c:if test="${!draftMode}">
+<c:if test="${_command == 'list' && !draftMode}">
     <acme:button code="customer.booking-record.create" action="/customer/booking-record/create?bookingId=${bookingId}" />
-    <acme:button code="customer.passenger.form.button.create" action="/customer/passenger/create"/>
 </c:if>
+<acme:button code="customer.passenger.form.button.create" action="/customer/passenger/create"/>
