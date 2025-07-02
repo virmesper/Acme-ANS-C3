@@ -7,6 +7,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.basis.AbstractRealm;
+import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
@@ -39,8 +40,24 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void authorise() {
-		boolean isCustomer = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
-		boolean authorised = isCustomer;
+		boolean authorised = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
+
+		if (authorised && super.getRequest().hasData(CustomerBookingCreateService.FLIGHT_ID_FIELD))
+			try {
+				int flightId = super.getRequest().getData(CustomerBookingCreateService.FLIGHT_ID_FIELD, int.class);
+				Flight flight = this.flightRepository.findFlightById(flightId);
+				authorised = flightId == 0 || flight != null && !flight.getDraftMode();
+			} catch (final Throwable e) {
+				authorised = false; // si alguien intenta manipular el valor
+			}
+
+		if (authorised && super.getRequest().hasData("travelClass"))
+			try {
+				TravelClass travelClass = super.getRequest().getData("travelClass", TravelClass.class);
+				authorised = travelClass != null;
+			} catch (final Throwable e) {
+				authorised = false; // enum inválido = manipulación
+			}
 
 		super.getResponse().setAuthorised(authorised);
 	}
@@ -66,48 +83,31 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		Flight flight = null;
 		TravelClass travelClass = null;
 
-		// Obtener el vuelo enviado por el cliente
-		if (super.getRequest().hasData("flightId"))
-			try {
-				int flightId = super.getRequest().getData("flightId", int.class);
-				flight = this.flightRepository.findFlightById(flightId);
+		if (super.getRequest().hasData(CustomerBookingCreateService.FLIGHT_ID_FIELD)) {
+			int flightId = super.getRequest().getData(CustomerBookingCreateService.FLIGHT_ID_FIELD, int.class);
+			flight = this.flightRepository.findFlightById(flightId);
+		}
 
-				// Validar que el vuelo esté en modo "publicado"
-				if (flight == null || flight.getDraftMode())
-					throw new IllegalArgumentException("Invalid flightId: " + flightId);
-			} catch (final Throwable t) {
-				// Lanza error 500 si el flightId es manipulado
-				throw new RuntimeException("Internal Server Error: Invalid flightId", t);
-			}
-
-		// Validar que el travelClass no se pueda modificar ilegalmente
 		if (super.getRequest().hasData("travelClass"))
-			try {
-				travelClass = super.getRequest().getData("travelClass", TravelClass.class);
-				// Aquí puedes verificar si el travelClass está permitido para el cliente (según tu lógica)
-			} catch (final Throwable t) {
-				// Lanza error 500 si el travelClass es manipulado
-				throw new RuntimeException("Internal Server Error: Invalid travelClass", t);
-			}
+			travelClass = super.getRequest().getData("travelClass", TravelClass.class);
 
 		booking.setFlightId(flight);
 		booking.setTravelClass(travelClass);
 		booking.setDraftMode(false);
 
+		super.bindObject(booking, CustomerBookingCreateService.LOCATOR_CODE_FIELD, "lastCardDigits");
+
+		if (flight != null) {
+			Money basePrice = this.flightRepository.findCostByFlight(flight.getId());
+			booking.setPrice(basePrice);
+		}
 	}
 
 	@Override
 	public void validate(final Booking booking) {
-		// Verificación de flightId y travelClass
-		if (booking.getFlightId() == null || booking.getTravelClass() == null)
-			throw new RuntimeException("Internal Server Error: Missing flightId or travelClass");
-
-		// Asegúrate de que el vuelo es válido y no esté en borrador
-		Flight flight = booking.getFlightId();
-		super.state(flight != null && !flight.getDraftMode(), "flightId", "booking.form.error.flight.invalid");
-
-		// Validación del travelClass, según tus reglas de negocio
-		super.state(booking.getTravelClass() != null, "travelClass", "booking.form.error.travelClass.invalid");
+		Collection<Booking> bookings = this.repository.findBookingsByLocatorCode(booking.getLocatorCode());
+		boolean status1 = bookings.isEmpty();
+		super.state(status1, CustomerBookingCreateService.LOCATOR_CODE_FIELD, "customer.booking.form.error.locatorCode");
 	}
 
 	@Override
