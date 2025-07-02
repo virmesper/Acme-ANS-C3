@@ -1,5 +1,5 @@
 
-package acme.features.administrator;
+package acme.features.administrator.aircraft;
 
 import java.util.Collection;
 
@@ -12,12 +12,15 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.group.Aircraft;
 import acme.entities.group.Airline;
+import acme.entities.group.Status;
 
 @GuiService
-public class AdministratorAircraftUpdateService extends AbstractGuiService<Administrator, Aircraft> {
+public class AdministratorAircraftCreateService extends AbstractGuiService<Administrator, Aircraft> {
+
+	private static final String				CONFIRMATION	= "confirmation";
 
 	@Autowired
-	private AdministratorAircraftRepository repository;
+	private AdministratorAircraftRepository	repository;
 
 
 	@Override
@@ -27,20 +30,23 @@ public class AdministratorAircraftUpdateService extends AbstractGuiService<Admin
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("id", int.class);
-		Aircraft aircraft = (Aircraft) this.repository.findById(id).get();
+		Aircraft aircraft = new Aircraft();
 		super.getBuffer().addData(aircraft);
 	}
 
 	@Override
 	public void bind(final Aircraft aircraft) {
+		int airlineId = super.getRequest().getData("airline", int.class);
+		Airline airline = this.repository.findAirlineById(airlineId);
+
 		super.bindObject(aircraft, "model", "registrationNumber", "capacity", "cargoWeight", "status", "details");
+		aircraft.setAirline(airline);
 	}
 
 	@Override
 	public void validate(final Aircraft aircraft) {
-		boolean confirmation = super.getRequest().getData("confirmation", boolean.class);
-		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
+		boolean confirmation = super.getRequest().getData(AdministratorAircraftCreateService.CONFIRMATION, boolean.class);
+		super.state(confirmation, AdministratorAircraftCreateService.CONFIRMATION, "acme.validation.confirmation.message");
 	}
 
 	@Override
@@ -50,15 +56,18 @@ public class AdministratorAircraftUpdateService extends AbstractGuiService<Admin
 
 	@Override
 	public void unbind(final Aircraft aircraft) {
-
+		SelectChoices choices = SelectChoices.from(Status.class, aircraft.getStatus());
 		Collection<Airline> airlines = this.repository.findAllAirlines();
 		SelectChoices selectedAirlines = SelectChoices.from(airlines, "name", aircraft.getAirline());
 
 		Dataset dataset = super.unbindObject(aircraft, "model", "registrationNumber", "capacity", "cargoWeight", "status", "details");
-		dataset.put("statuses", aircraft.getStatus());
-		dataset.put("airline", selectedAirlines.getSelected().getKey());
+		dataset.put("statuses", choices);
 		dataset.put("airlines", selectedAirlines);
+		dataset.put("airline", selectedAirlines.getSelected().getKey());
+		dataset.put(AdministratorAircraftCreateService.CONFIRMATION, false);
+		dataset.put("readonly", false);
 
 		super.getResponse().addData(dataset);
+
 	}
 }
