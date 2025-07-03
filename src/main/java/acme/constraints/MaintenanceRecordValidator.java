@@ -40,13 +40,13 @@ public class MaintenanceRecordValidator extends AbstractValidator<ValidMaintenan
 			minimumInspectionDueDate = MomentHelper.deltaFromMoment(maintenanceRecord.getMoment(), 1, ChronoUnit.MINUTES);
 			correctInspectionDueDate = MomentHelper.isAfterOrEqual(maintenanceRecord.getNextInspectionDueTime(), minimumInspectionDueDate);
 
-			super.state(context, correctInspectionDueDate, "inspectionDueDate", "acme.validation.maintenance-record.inspection-due-date.message");
+			super.state(context, correctInspectionDueDate, "nextInspectionDueTime", "acme.validation.maintenance-record.inspection-due-date.message");
 		}
 		if (maintenanceRecord.isDraftMode() && maintenanceRecord.getNextInspectionDueTime() != null) {
 			currentMoment = MomentHelper.deltaFromMoment(MomentHelper.getCurrentMoment(), 1, ChronoUnit.MINUTES);
 
 			futureInspectionDueDate = MomentHelper.isAfterOrEqual(maintenanceRecord.getNextInspectionDueTime(), currentMoment);
-			super.state(context, futureInspectionDueDate, "inspectionDueDate", "acme.validation.maintenance-record.future-inspection-due-date.message");
+			super.state(context, futureInspectionDueDate, "nextInspectionDueTime", "acme.validation.maintenance-record.future-inspection-due-date.message");
 		}
 
 		result = !super.hasErrors(context);

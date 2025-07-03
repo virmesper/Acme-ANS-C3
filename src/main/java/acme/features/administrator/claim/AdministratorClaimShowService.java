@@ -10,21 +10,25 @@ import acme.client.components.principals.Administrator;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S4.Claim;
-import acme.entities.S4.ClaimType;
-import acme.entities.S4.Indicator;
 import acme.entities.student1.Leg;
+import acme.entities.student4.Claim;
+import acme.entities.student4.ClaimType;
+import acme.entities.student4.Indicator;
 
 @GuiService
 public class AdministratorClaimShowService extends AbstractGuiService<Administrator, Claim> {
 
 	// Internal state ---------------------------------------------------------
 
+	private final AdministratorClaimRepository repository;
+
+
 	@Autowired
-	private AdministratorClaimRepository repository;
+	public AdministratorClaimShowService(final AdministratorClaimRepository repository) {
+		this.repository = repository;
+	}
 
 	// AbstractService interface ----------------------------------------------
-
 
 	@Override
 	public void authorise() {

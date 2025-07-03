@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>112</x>
+      <y>0</y>
+      <w>328</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Airline
+--
++ name: String {Mandatory, ValidString(min=1, 
+max=50), Automapped}
++ iataCode: String {Mandatory, ValidString(pattern="^[A-Z]{3}$"), 
+Column(unique=true)}
++ website: String {Mandatory, ValidUrl, Automapped}
++ type: AirlineType {Mandatory, Valid, Automapped}
++ foundationMoment: Date {Mandatory, 
+ValidMoment(past=true), Temporal(TemporalType.TIMESTAP)}
++ email: String {Optional, ValidEmail, Automapped}
++ phoneNumber: String {Optional, 
+ValidString(pattern="^\\+?\\d{6,15}$"), Automapped}
+bg=GREEN
+fg=BLACK</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>576</x>
+      <y>0</y>
+      <w>280</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Assistance Agent {ValidAssistanceAgent}
+--
++ employeeCode: String {Mandatory, ValidString(min=8, 
+max=9, pattern="^[A-Z]{2,3}\\d{6}$"), 
+Column(unique=true)}
++ spokenLanguages: String {Mandatory, 
+ValidString(min=1, max=255), Automapped}
++ moment: Date {Mandatory, ValidMoment(past=true), 
+Temporal(TemporalType.TIMESTAP)}
++ briefBio: String {Optional, ValidString(min=0,
+max=255), Automapped}
++ salary: Money {Optional, ValidMoney(min=0, 
+max=1000000), Automapped}
++ photoUrl: String {Optional, ValidUrl, Automapped}
+
+bg=PINK</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>576</x>
+      <y>296</y>
+      <w>264</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Claim
+--
++ registrationMoment: Date {Mandatory, 
+ValidMoment(past=true), 
+Temporal(TemporalType.TIMESTAP)}
++ passengerEmail: String {Mandatory, ValidEmail, 
+Automapped}
++ description: String {Mandatory, ValidString(min=1, 
+max=255), Automapped}
++ type: ClaimType {Mandatory, Valid, Automapped}
++ indicator: Indicator {Mandatory, Valid,
+Automapped}
++ draftMode: boolean {Mandatory, Automapped}
+bg=GREEN</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>192</x>
+      <y>264</y>
+      <w>224</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Tracking Log
+--
++ lastUpdateMoment: Date {Mandatory, 
+ValidMoment(past=true), 
+Temporal(TemporalType.TIMESTAP)}
++ step: String {Mandatory, ValidShortText, 
+Automapped}
++ resolutionPorcentage: Double {Mandatory, 
+ValidScore, Automapped}
++ indicator: Indicator {Mandatory, 
+Valid, Automapped}
++ resolution: String {Optional, 
+ValidString(max = 255), Automapped}
++ draftMode: boolean {Mandatory, Automapped}
+
+
+bg=GREEN</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>432</x>
+      <y>104</y>
+      <w>160</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-x
+m1=1
+m2=*
+works for</panel_attributes>
+    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>704</x>
+      <y>192</y>
+      <w>88</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-x
+m1=1
+m2=*
+registered by</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>408</x>
+      <y>360</y>
+      <w>184</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-x
+m1=1
+m2=*
+records</panel_attributes>
+    <additional_attributes>210.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>576</x>
+      <y>552</y>
+      <w>280</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Leg
+--
++ flightNumber: String {Mandatory, ValidFlightNumber, 
+Column(unique=true)}
++ scheduledDeparture: Date {Mandatory, ValidMoment, 
+Temporal(TemporalType.TIMESTAP)}
++ scheduledArrival:  Date {Mandatory, ValidMoment, 
+Temporal(TemporalType.TIMESTAP)}
++ status: LegStatus {Mandatory, Valid, Automapped}
++ draftMode: boolean {Mandatory, Automapped}
+--
++ getDuration():Double
++ isAvailable():boolean
+bg=GREEN</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>696</x>
+      <y>464</y>
+      <w>72</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-x
+m1=1
+m2=*
+belongs to</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>856</x>
+      <y>344</y>
+      <w>128</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+Claim Type
+--
+FLIGHT_ISSUES
+LUGGAGE_ISSUES
+SECURITY_INCIDENT
+OTHER_ISSUES
+bg=GREEN</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>464</x>
+      <y>560</y>
+      <w>96</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+Leg Status
+--
+ON_TIME
+DELAYED
+CANCELLED
+LANDED
+
+bg=GREEN</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>40</y>
+      <w>96</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+Airline Type
+--
+LUXURY
+STANDARD
+LOW_COST
+
+bg=GREEN</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>904</x>
+      <y>32</y>
+      <w>272</w>
+      <h>152</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Form&gt;&gt;
+AssistanceAgentDashboard
+--
++ ratioResolvedClaims: Double
++ ratioRejectedClaims: Double
++ topThreeMonthsWithMostClaims: List&lt;Integer&gt;
++ averageClaimLogs:  Double
++ deviationClaimLogs: Double
++ minClaimLogs: Double
++ maxClaimLogs: Double
++ averageClaimsAssisted: Double
++ deviationClaimsAssisted: Double
++ minClaimsAssisted: Double
++ maxClaimsAssisted: Double
+--
+bg=YELLOW</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>456</x>
+      <y>416</y>
+      <w>88</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+Indicator
+--
+PENDING
+ACCEPTED
+REJECTED
+bg=GREEN</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

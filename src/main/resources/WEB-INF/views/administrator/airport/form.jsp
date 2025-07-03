@@ -14,7 +14,7 @@
 		<acme:input-email code="administrator.airport.list.label.email" path="email"/>
 		<acme:input-textarea code="administrator.airport.list.label.contact-phone-number" path="phoneNumber"/>
 		<jstl:choose>
-			<jstl:when test="${acme:anyOf(_command, 'show')}">
+			<jstl:when test="${acme:anyOf(_command, 'show|update')}">
 				<acme:input-checkbox code="administrator.airport.form.label.confirmation.update" path="confirmation"/>
 				<acme:submit code="administrator.airport.form.button.update" action="/administrator/airport/update"/>
 			</jstl:when>

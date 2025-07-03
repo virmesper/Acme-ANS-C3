@@ -4,7 +4,7 @@ package acme.constraints;
 import javax.validation.ConstraintValidatorContext;
 
 import acme.client.components.validation.AbstractValidator;
-import acme.entities.S4.Claim;
+import acme.entities.student4.Claim;
 
 public class ClaimValidator extends AbstractValidator<ValidClaim, Claim> {
 

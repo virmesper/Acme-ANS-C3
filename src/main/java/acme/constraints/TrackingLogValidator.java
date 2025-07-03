@@ -5,8 +5,8 @@ import javax.validation.ConstraintValidatorContext;
 
 import acme.client.components.validation.AbstractValidator;
 import acme.client.components.validation.Validator;
-import acme.entities.S4.Indicator;
-import acme.entities.S4.TrackingLog;
+import acme.entities.student4.Indicator;
+import acme.entities.student4.TrackingLog;
 
 @Validator
 public class TrackingLogValidator extends AbstractValidator<ValidTrackingLog, TrackingLog> {
@@ -27,14 +27,14 @@ public class TrackingLogValidator extends AbstractValidator<ValidTrackingLog, Tr
 		else if (trackingLog.getIndicator() != null && trackingLog.getResolution() != null && trackingLog.getClaim() != null) {
 
 			if (trackingLog.getResolutionPercentage() != null && trackingLog.getResolutionPercentage() == 100.0)
-				super.state(context, !trackingLog.getIndicator().equals(Indicator.PENDING), "Status", "El estado no puede ser PENDING");
+				super.state(context, !trackingLog.getIndicator().equals(Indicator.PENDING), "indicator", "assistanceAgent.tracking-log.form.error.indicator-pending");
 			else
-				super.state(context, trackingLog.getIndicator().equals(Indicator.PENDING), "Status", "El estado debe ser PENDING");
+				super.state(context, trackingLog.getIndicator().equals(Indicator.PENDING), "indicator", "assistanceAgent.tracking-log.form.error.indicator-pending");
 
 			if (trackingLog.getIndicator().equals(Indicator.PENDING))
-				super.state(context, trackingLog.getResolution() == null || trackingLog.getResolution().isBlank(), "Resolution", "El campo resolution debe quedar vacío hasta la finalización del tracking log");
+				super.state(context, trackingLog.getResolution() == null || trackingLog.getResolution().isBlank(), "resolution", "assistanceAgent.tracking-log.form.error.resolution-not-null");
 			else
-				super.state(context, trackingLog.getResolution() != null && !trackingLog.getResolution().isBlank(), "Resolution", "El campo resolucion es incorrecto");
+				super.state(context, trackingLog.getResolution() != null && !trackingLog.getResolution().isBlank(), "resolution", "assistanceAgent.tracking-log.form.error.resolution-not-null");
 
 		}
 		result = !super.hasErrors(context);
