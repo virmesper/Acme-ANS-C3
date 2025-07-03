@@ -6,7 +6,7 @@ import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S1.Flight;
+import acme.entities.student1.Flight;
 import acme.entities.student2.Booking;
 
 @GuiService

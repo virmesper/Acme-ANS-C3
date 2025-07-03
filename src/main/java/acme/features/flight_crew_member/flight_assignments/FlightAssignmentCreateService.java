@@ -10,7 +10,7 @@ import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S1.Leg;
+import acme.entities.student1.Leg;
 import acme.entities.student3.AvailabilityStatus;
 import acme.entities.student3.CurrentStatus;
 import acme.entities.student3.Duty;

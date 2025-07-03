@@ -1,0 +1,113 @@
+/*
+ * AuthenticatedAssistanceAgentCreateService.java
+ *
+ * Copyright (C) 2012-2025 Rafael Corchuelo.
+ *
+ * In keeping with the traditional purpose of furthering education and research, it is
+ * the policy of the copyright owner to permit non-commercial use and redistribution of
+ * this software. It has been tested carefully, but it is not guaranteed for any particular
+ * purposes. The copyright owner does not offer any warranties or representations, nor do
+ * they accept any liabilities with respect to them.
+ */
+
+package acme.features.authenticated.assistance_agent;
+
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import acme.client.components.models.Dataset;
+import acme.client.components.principals.Authenticated;
+import acme.client.components.principals.UserAccount;
+import acme.client.components.views.SelectChoices;
+import acme.client.helpers.MomentHelper;
+import acme.client.helpers.PrincipalHelper;
+import acme.client.services.AbstractGuiService;
+import acme.client.services.GuiService;
+import acme.constraints.AssistanceAgentValidator;
+import acme.entities.group.Airline;
+import acme.realms.assistance_agent.AssistanceAgent;
+
+@GuiService
+public class AuthenticatedAssistanceAgentCreateService extends AbstractGuiService<Authenticated, AssistanceAgent> {
+
+	// Internal state ---------------------------------------------------------
+
+	private static final String								EMPLOYEE_CODE	= "employeeCode";
+
+	private final AuthenticatedAssistanceAgentRepository	repository;
+
+
+	@Autowired
+	public AuthenticatedAssistanceAgentCreateService(final AuthenticatedAssistanceAgentRepository repository) {
+		this.repository = repository;
+	}
+
+	// AbstractService<Authenticated, AssistanceAgent> ---------------------------
+
+	@Override
+	public void authorise() {
+		boolean status;
+
+		status = !super.getRequest().getPrincipal().hasRealmOfType(AssistanceAgent.class);
+
+		super.getResponse().setAuthorised(status);
+	}
+
+	@Override
+	public void load() {
+		AssistanceAgent object;
+		int userAccountId;
+		UserAccount userAccount;
+
+		userAccountId = super.getRequest().getPrincipal().getAccountId();
+		userAccount = this.repository.findUserAccountById(userAccountId);
+
+		object = new AssistanceAgent();
+		object.setUserAccount(userAccount);
+		object.setMoment(MomentHelper.getCurrentMoment());
+		object.setEmployeeCode(AssistanceAgentValidator.extractInitials(userAccount.getIdentity().getFullName()));
+
+		super.getBuffer().addData(object);
+	}
+
+	@Override
+	public void bind(final AssistanceAgent object) {
+		super.bindObject(object, AuthenticatedAssistanceAgentCreateService.EMPLOYEE_CODE, "spokenLanguages", "briefBio", "salary", "photoUrl", "airline");
+	}
+
+	@Override
+	public void validate(final AssistanceAgent object) {
+		String employeeCode = object.getEmployeeCode();
+		AssistanceAgent existing = this.repository.findAssistanceAgentByEmployeeCode(employeeCode);
+		boolean valid = existing == null || existing.getId() == object.getId();
+		super.state(valid, AuthenticatedAssistanceAgentCreateService.EMPLOYEE_CODE, "acme.validation.employeeCode.invalidEmployeeCode.message");
+	}
+
+	@Override
+	public void perform(final AssistanceAgent object) {
+		this.repository.save(object);
+	}
+
+	@Override
+	public void unbind(final AssistanceAgent object) {
+		Dataset dataset;
+		SelectChoices choices;
+		Collection<Airline> airlines;
+
+		airlines = this.repository.findAllAirlines();
+		choices = SelectChoices.from(airlines, "iataCode", object.getAirline());
+
+		dataset = super.unbindObject(object, AuthenticatedAssistanceAgentCreateService.EMPLOYEE_CODE, "spokenLanguages", "moment", "briefBio", "salary", "photoUrl", "airline");
+		dataset.put("airlines", choices);
+
+		super.getResponse().addData(dataset);
+	}
+
+	@Override
+	public void onSuccess() {
+		if (super.getRequest().getMethod().equals("POST"))
+			PrincipalHelper.handleUpdate();
+	}
+
+}

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.S1.Leg;
+import acme.entities.student1.Leg;
 import acme.entities.student3.ActivityLog;
 import acme.entities.student3.FlightAssignment;
 import acme.realms.flightCrewMember.FlightCrewMember;

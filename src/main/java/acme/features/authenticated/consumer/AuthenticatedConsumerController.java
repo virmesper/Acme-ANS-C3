@@ -26,14 +26,17 @@ public class AuthenticatedConsumerController extends AbstractGuiController<Authe
 
 	// Internal state ---------------------------------------------------------
 
-	@Autowired
-	private AuthenticatedConsumerCreateService	createService;
+	private final AuthenticatedConsumerCreateService	createService;
+	private final AuthenticatedConsumerUpdateService	updateService;
+
 
 	@Autowired
-	private AuthenticatedConsumerUpdateService	updateService;
+	public AuthenticatedConsumerController(final AuthenticatedConsumerCreateService createService, final AuthenticatedConsumerUpdateService updateService) {
+		this.createService = createService;
+		this.updateService = updateService;
+	}
 
 	// Constructors -----------------------------------------------------------
-
 
 	@PostConstruct
 	protected void initialise() {

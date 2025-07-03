@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-import acme.entities.S1.Leg;
-import acme.entities.S4.Claim;
-import acme.entities.S4.TrackingLog;
+import acme.entities.student1.Leg;
+import acme.entities.student4.Claim;
+import acme.entities.student4.TrackingLog;
 
 @Repository
 public interface AdministratorClaimRepository extends AbstractRepository {
