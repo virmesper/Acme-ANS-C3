@@ -30,13 +30,12 @@ public class AdministratorRecommendationShowService extends AbstractGuiService<A
 
 		if (status && super.getRequest().hasData("id")) {
 			recId = super.getRequest().getData("id", int.class);
-			rec = this.repository.findRecommendationById(recId);
+			rec = this.repository.findRecommendationById(recId).orElse(null);  // ✅ Manejo seguro del Optional
 			status = rec != null;
 		} else
 			status = false;
 
 		super.getResponse().setAuthorised(status);
-
 	}
 
 	@Override
@@ -45,8 +44,7 @@ public class AdministratorRecommendationShowService extends AbstractGuiService<A
 		int recommendationId;
 
 		recommendationId = super.getRequest().getData("id", int.class);
-		recommendation = this.repository.findRecommendationById(recommendationId);
-
+		recommendation = this.repository.findRecommendationById(recommendationId).orElseThrow();  // ✅ Control explícito del error
 		super.getBuffer().addData(recommendation);
 	}
 
@@ -58,5 +56,4 @@ public class AdministratorRecommendationShowService extends AbstractGuiService<A
 
 		super.getResponse().addData(dataset);
 	}
-
 }

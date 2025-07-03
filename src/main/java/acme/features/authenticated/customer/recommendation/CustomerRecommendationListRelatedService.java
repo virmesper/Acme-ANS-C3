@@ -1,6 +1,7 @@
 
 package acme.features.authenticated.customer.recommendation;
 
+import java.util.ArrayList; // Necesitas ArrayList para crear una lista mutable
 import java.util.Collection;
 import java.util.List;
 
@@ -26,30 +27,37 @@ public class CustomerRecommendationListRelatedService extends AbstractGuiService
 	@Override
 	public void authorise() {
 		super.getResponse().setAuthorised(super.getRequest().getPrincipal().hasRealmOfType(Customer.class));
-
 	}
 
 	@Override
 	public void load() {
-		Collection<Recommendation> recommendation;
+		Collection<Recommendation> recommendations;
 
 		Integer customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		List<String> cities = this.repository.findBookingsByCustomerId(customerId).stream().map(b -> b.getFlightId().getDestinationCity()).distinct().toList();
-		recommendation = this.repository.findRecommendationsByCities(cities);
+		List<String> cities = this.repository.findBookingsByCustomerId(customerId).stream().map(b -> b.getFlightId().getDestinationCity()).distinct().toList(); // Usa .toList() si estás en Java 16+, sino .collect(Collectors.toList())
 
-		super.getBuffer().addData(recommendation);
+		recommendations = this.repository.findRecommendationsByCities(cities);
+
+		if (recommendations == null)
+			recommendations = new ArrayList<>();
+
+		List<Dataset> datasetsForView = new ArrayList<>();
+		for (Recommendation r : recommendations) {
+			Dataset dataset = super.unbindObject(r, "city", "name", "rating", "photoReference");
+			dataset.put("openNow", r.getOpenNow() ? "✓" : "x");
+			datasetsForView.add(dataset);
+		}
+
+		super.getBuffer().addData("recommendationsList", datasetsForView); // O solo datasetsForView si 'addData' detecta el tipo
 
 	}
 
 	@Override
 	public void unbind(final Recommendation recommendation) {
+
 		Dataset dataset;
-
 		dataset = super.unbindObject(recommendation, "city", "name", "rating", "photoReference");
-
 		dataset.put("openNow", recommendation.getOpenNow() ? "✓" : "x");
-
-		super.getResponse().addData(dataset);
+		super.getResponse().addData(dataset); // Esto añade un Dataset al Response, quizás para un solo objeto.
 	}
-
 }

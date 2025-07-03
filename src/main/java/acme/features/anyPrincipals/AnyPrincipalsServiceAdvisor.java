@@ -16,13 +16,10 @@ public class AnyPrincipalsServiceAdvisor {
 
 	@ModelAttribute("service")
 	public Service getService() {
-		Service result;
 		try {
-			result = this.repository.findRandomService();
+			return this.repository.findRandomService(); // ✅ ahora seguro
 		} catch (final Throwable oops) {
-			result = null;
+			return null;
 		}
-		return result;
 	}
-
 }

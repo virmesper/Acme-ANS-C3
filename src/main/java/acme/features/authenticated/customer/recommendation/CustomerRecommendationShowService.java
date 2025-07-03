@@ -30,13 +30,12 @@ public class CustomerRecommendationShowService extends AbstractGuiService<Custom
 
 		if (status && super.getRequest().hasData("id")) {
 			recId = super.getRequest().getData("id", int.class);
-			rec = this.repository.findRecommendationById(recId);
+			rec = this.repository.findRecommendationById(recId).orElse(null); // ✅ Manejo de Optional
 			status = rec != null;
 		} else
 			status = false;
 
 		super.getResponse().setAuthorised(status);
-
 	}
 
 	@Override
@@ -45,7 +44,7 @@ public class CustomerRecommendationShowService extends AbstractGuiService<Custom
 		int recommendationId;
 
 		recommendationId = super.getRequest().getData("id", int.class);
-		recommendation = this.repository.findRecommendationById(recommendationId);
+		recommendation = this.repository.findRecommendationById(recommendationId).orElseThrow(); // ✅ Para evitar null y manejar error controlado
 
 		super.getBuffer().addData(recommendation);
 	}
@@ -58,5 +57,4 @@ public class CustomerRecommendationShowService extends AbstractGuiService<Custom
 
 		super.getResponse().addData(dataset);
 	}
-
 }
