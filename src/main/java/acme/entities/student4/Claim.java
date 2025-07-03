@@ -19,11 +19,7 @@ import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
 import acme.constraints.ValidClaim;
 import acme.entities.student1.Leg;
-<<<<<<< HEAD:src/main/java/acme/entities/S4/Claim.java
-import acme.realms.assistanceAgent.AssistanceAgent;
-=======
 import acme.realms.assistance_agent.AssistanceAgent;
->>>>>>> master:src/main/java/acme/entities/student4/Claim.java
 import lombok.Getter;
 import lombok.Setter;
 

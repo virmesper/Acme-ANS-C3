@@ -7,13 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-<<<<<<< HEAD:src/main/java/acme/features/administrator/trackingLog/AdministratorTrackingLogRepository.java
-import acme.entities.S4.TrackingLog;
-import acme.entities.student1.Leg;
-=======
 import acme.entities.student1.Leg;
 import acme.entities.student4.TrackingLog;
->>>>>>> master:src/main/java/acme/features/administrator/tracking_log/AdministratorTrackingLogRepository.java
 
 @Repository
 public interface AdministratorTrackingLogRepository extends AbstractRepository {

@@ -8,18 +8,10 @@ import acme.client.components.views.SelectChoices;
 import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-<<<<<<< HEAD:src/main/java/acme/features/assistanceAgent/claim/AssistanceAgentClaimPublishService.java
-import acme.entities.S4.Claim;
-import acme.entities.S4.ClaimType;
-import acme.entities.S4.Indicator;
-import acme.entities.student1.Leg;
-import acme.realms.assistanceAgent.AssistanceAgent;
-=======
 import acme.entities.student4.Claim;
 import acme.entities.student4.ClaimType;
 import acme.entities.student4.Indicator;
 import acme.realms.assistance_agent.AssistanceAgent;
->>>>>>> master:src/main/java/acme/features/assistance_agent/claim/AssistanceAgentClaimPublishService.java
 
 @GuiService
 public class AssistanceAgentClaimPublishService extends AbstractGuiService<AssistanceAgent, Claim> {

@@ -10,11 +10,7 @@ import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-<<<<<<< HEAD
 import acme.entities.student1.Flight;
-=======
-import acme.entities.student1.FlightRepository;
->>>>>>> master
 import acme.entities.student2.Booking;
 import acme.entities.student2.TravelClass;
 import acme.realms.Customer;

@@ -7,19 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
-<<<<<<< HEAD:src/main/java/acme/features/assistanceAgent/claim/AssistanceAgentClaimRepository.java
-import acme.entities.S4.Claim;
-import acme.entities.S4.Indicator;
-import acme.entities.S4.TrackingLog;
-import acme.entities.student1.Leg;
-import acme.realms.assistanceAgent.AssistanceAgent;
-=======
 import acme.entities.student1.Leg;
 import acme.entities.student4.Claim;
 import acme.entities.student4.Indicator;
 import acme.entities.student4.TrackingLog;
 import acme.realms.assistance_agent.AssistanceAgent;
->>>>>>> master:src/main/java/acme/features/assistance_agent/claim/AssistanceAgentClaimRepository.java
 
 @Repository
 public interface AssistanceAgentClaimRepository extends AbstractRepository {
