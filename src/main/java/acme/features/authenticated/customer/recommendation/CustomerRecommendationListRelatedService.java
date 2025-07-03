@@ -1,7 +1,6 @@
 
 package acme.features.authenticated.customer.recommendation;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.student2.Booking;
 import acme.entities.student2.Recommendation;
 import acme.realms.Customer;
 
@@ -36,17 +34,11 @@ public class CustomerRecommendationListRelatedService extends AbstractGuiService
 		Collection<Recommendation> recommendation;
 
 		Integer customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-
-		List<Booking> bookings = new ArrayList<>(this.repository.findBookingsByCustomerId(customerId));
-
-		List<String> cities = bookings.stream().map(booking -> {
-			var flight = booking.getFlightId();
-			return flight != null ? flight.getDestinationCity() : null;
-		}).filter(city -> city != null).distinct().toList();
-
+		List<String> cities = this.repository.findBookingsByCustomerId(customerId).stream().map(b -> b.getFlightId().getDestinationCity()).distinct().toList();
 		recommendation = this.repository.findRecommendationsByCities(cities);
 
 		super.getBuffer().addData(recommendation);
+
 	}
 
 	@Override

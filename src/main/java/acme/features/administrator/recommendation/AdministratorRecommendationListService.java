@@ -3,6 +3,8 @@ package acme.features.administrator.recommendation;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import acme.client.components.models.Dataset;
 import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
@@ -14,16 +16,11 @@ public class AdministratorRecommendationListService extends AbstractGuiService<A
 
 	// Internal state ---------------------------------------------------------
 
-	private final AdministratorRecommendationRepository repository;
-
-	// Constructor ------------------------------------------------------------
-
-
-	public AdministratorRecommendationListService(final AdministratorRecommendationRepository repository) {
-		this.repository = repository;
-	}
+	@Autowired
+	private AdministratorRecommendationRepository repository;
 
 	// AbstractGuiService interface -------------------------------------------
+
 
 	@Override
 	public void authorise() {
@@ -44,6 +41,7 @@ public class AdministratorRecommendationListService extends AbstractGuiService<A
 		Dataset dataset;
 
 		dataset = super.unbindObject(recommendation, "city", "name", "rating", "photoReference");
+
 		dataset.put("openNow", recommendation.getOpenNow() ? "✓" : "x");
 
 		super.getResponse().addData(dataset);

@@ -28,7 +28,7 @@ public class Recommendation extends AbstractEntity {
 
 	@Optional
 	@ValidString(max = 50)
-	@Column(unique = true)
+	@Column
 	private String				name;
 
 	@Optional

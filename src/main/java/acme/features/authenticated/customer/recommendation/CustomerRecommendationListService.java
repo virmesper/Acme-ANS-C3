@@ -30,17 +30,11 @@ public class CustomerRecommendationListService extends AbstractGuiService<Custom
 		if (status && super.getRequest().hasData("city")) {
 			String city = super.getRequest().getData("city", String.class);
 			Integer customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-
-			var bookings = this.repository.findBookingsByCustomerId(customerId);
-			List<String> cities = bookings.stream().map(b -> {
-				var flight = b.getFlightId();
-				return flight != null ? flight.getDestinationCity() : null;
-			}).filter(c -> c != null).distinct().toList();
-
+			List<String> cities = this.repository.findBookingsByCustomerId(customerId).stream().map(b -> b.getFlightId().getDestinationCity()).distinct().toList();
 			status = cities.contains(city);
 		}
-
 		super.getResponse().setAuthorised(status);
+
 	}
 
 	@Override
