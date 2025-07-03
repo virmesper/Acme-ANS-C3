@@ -85,7 +85,7 @@ public class AssistanceAgentClaimCreateService extends AbstractGuiService<Assist
 
 	@Override
 	public void validate(final Claim object) {
-		;
+		// Intentionally left blank
 	}
 
 	@Override
