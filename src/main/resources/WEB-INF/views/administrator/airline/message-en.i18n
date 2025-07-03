@@ -1,0 +1,26 @@
+administrator.airline.form.title = Airline form
+administrator.airline.list.title = Listing of airlines
+
+administrator.airline.form.label.name = Name:
+administrator.airline.form.label.iataCode = IATA Code:
+administrator.airline.form.label.website = Website:
+administrator.airline.form.label.type = Airline type:
+administrator.airline.form.label.foundationMoment = Foundation moment:
+administrator.airline.form.label.email = Email:
+administrator.airline.form.label.phoneNumber = Contact number:
+administrator.airline.form.label.confirmation = Do you confirm this operation?
+administrator.airline.form.placeholder.iataCode = ABX
+administrator.airline.form.placeholder.phoneNumber = +123456789
+
+administrator.airline.form.button.create = Create this airline
+administrator.airline.form.button.update = Update this airline
+
+administrator.airline.list.label.name = Name
+administrator.airline.list.label.iataCode = IATA Code
+administrator.airline.list.label.email = Email
+administrator.airline.list.label.type = Airline type
+administrator.airline.list.label.phoneNumber = Contact number
+
+administrator.airline.list.button.create = Create new airline
+
+administrator.airline.create.not-unique-iata = This IATA Code already exists

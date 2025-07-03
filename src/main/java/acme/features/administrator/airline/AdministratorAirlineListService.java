@@ -1,7 +1,7 @@
 
 package acme.features.administrator.airline;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,21 +16,21 @@ public class AdministratorAirlineListService extends AbstractGuiService<Administ
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AdministratorAirlineRepository repository;
+	private AdministratorAirlineRepository ar;
 
 	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		super.getResponse().setAuthorised(super.getRequest().getPrincipal().hasRealmOfType(Administrator.class));
 	}
 
 	@Override
 	public void load() {
-		Collection<Airline> airlines;
+		List<Airline> airlines;
 
-		airlines = this.repository.findAllAirlines();
+		airlines = this.ar.findAllAirlines();
 
 		super.getBuffer().addData(airlines);
 	}
@@ -39,9 +39,9 @@ public class AdministratorAirlineListService extends AbstractGuiService<Administ
 	public void unbind(final Airline airline) {
 		Dataset dataset;
 
-		dataset = super.unbindObject(airline, "name", "iataCode", "website", "type", "email", "phoneNumber");
-		super.addPayload(dataset, airline, "foundationMoment");
+		dataset = super.unbindObject(airline, "name", "iataCode", "type", "email", "phoneNumber");
 
 		super.getResponse().addData(dataset);
 	}
+
 }

@@ -1,6 +1,8 @@
 
 package acme.features.administrator.airline;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
@@ -10,69 +12,67 @@ import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.group.Airline;
 import acme.entities.group.AirlineType;
-import acme.entities.group.Airport;
-import acme.features.administrator.airport.AdministratorAirportRepository;
 
 @GuiService
 public class AdministratorAirlineCreateService extends AbstractGuiService<Administrator, Airline> {
 
-	private static final String				IATA_CODE_AIRPORT	= "iataCodeAirport";
+	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AdministratorAirlineRepository	repository;
+	private AdministratorAirlineRepository ar;
 
-	@Autowired
-	private AdministratorAirportRepository	repositoryAirline;
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		super.getResponse().setAuthorised(super.getRequest().getPrincipal().hasRealmOfType(Administrator.class));
 	}
 
 	@Override
 	public void load() {
-		Airline airline = new Airline();
+		Airline airline;
+
+		airline = new Airline();
+
 		super.getBuffer().addData(airline);
 	}
 
 	@Override
 	public void bind(final Airline airline) {
-		super.bindObject(airline, "name", "iataCode", "website", "type", "foundationMoment", "email", "phoneNumber", AdministratorAirlineCreateService.IATA_CODE_AIRPORT);
-
-		String iataCodeAirport = super.getRequest().getData(AdministratorAirlineCreateService.IATA_CODE_AIRPORT, String.class);
-
-		if (iataCodeAirport != null && !iataCodeAirport.isEmpty()) {
-			Airport airport = this.repositoryAirline.findAirportByIataCode(iataCodeAirport);
-
-			if (airport != null)
-				airline.setAirport(airport);
-			else
-				super.state(false, AdministratorAirlineCreateService.IATA_CODE_AIRPORT, "acme.validation.airport.notfound.message");
-		}
+		super.bindObject(airline, "name", "iataCode", "website", "type", "foundationMoment", "email", "phoneNumber");
 	}
 
 	@Override
 	public void validate(final Airline airline) {
-		boolean confirmation = super.getRequest().getData("confirmation", boolean.class);
+		List<Airline> airlines = this.ar.findAllAirlines();
+		List<String> airlineIds = airlines.stream().map(Airline::getIataCode).toList();
+
+		if (airline.getIataCode() != null)
+			super.state(!airlineIds.contains(airline.getIataCode()), "iataCode", "administrator.airline.create.not-unique-iata");
+
+		boolean confirmation;
+		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
+
 	}
 
 	@Override
 	public void perform(final Airline airline) {
-		if (airline.getAirport() != null)
-			this.repository.save(airline);
-		else
-			super.state(false, "airportIataCode", "acme.validation.airport.notfound.message");
+		this.ar.save(airline);
 	}
 
 	@Override
 	public void unbind(final Airline airline) {
-		SelectChoices choices = SelectChoices.from(AirlineType.class, airline.getType());
+		SelectChoices choices;
+		Dataset dataset;
 
-		Dataset dataset = super.unbindObject(airline, "name", "iataCode", "website", "type", "foundationMoment", "email", "phoneNumber");
-		dataset.put("types", choices);
+		choices = SelectChoices.from(AirlineType.class, airline.getType());
+
+		dataset = super.unbindObject(airline, "name", "iataCode", "website", "foundationMoment", "email", "phoneNumber");
+		dataset.put("airlineTypes", choices);
 
 		super.getResponse().addData(dataset);
 	}
+
 }
