@@ -19,3 +19,5 @@ customer.bookingRecord.form.button.create = Crear
 acme.validation.confirmation.message.booking-record.create = Esa relacion ya está creada
 acme.validation.confirmation.message.booking-record.create.booking = La reserva no puede ser nula
 acme.validation.confirmation.message.booking-record.create.passenger = El pasajero no puede ser nulo
+
+customer.bookingRecord.form.error.alreadyCreated = Ya existe un registro de reserva con estos datos

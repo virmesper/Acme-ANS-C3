@@ -2,6 +2,7 @@
 package acme.features.authenticated.customer.bookingrecord;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,16 +24,45 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 
 	@Override
 	public void authorise() {
-		boolean status = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
-		super.getResponse().setAuthorised(status);
+		boolean authorised = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
+
+		if (authorised && super.getRequest().hasData("bookingId"))
+			try {
+				int bookingId = super.getRequest().getData("bookingId", int.class);
+				Booking booking = this.customerBookingRecordRepository.findBookingById(bookingId);
+				authorised = booking != null && booking.getCustomer().getId() == super.getRequest().getPrincipal().getActiveRealm().getId();
+			} catch (final Throwable e) {
+				authorised = false;
+			}
+
+		if (authorised && super.getRequest().hasData("booking"))
+			try {
+				int bookingIdFromForm = super.getRequest().getData("booking", int.class);
+				Booking bookingFromForm = this.customerBookingRecordRepository.findBookingById(bookingIdFromForm);
+				authorised = bookingFromForm != null && bookingFromForm.getCustomer().getId() == super.getRequest().getPrincipal().getActiveRealm().getId();
+			} catch (final Throwable e) {
+				authorised = false;
+			}
+
+		if (authorised && super.getRequest().hasData("passenger"))
+			try {
+				int passengerId = super.getRequest().getData("passenger", int.class);
+				Passenger passenger = this.customerBookingRecordRepository.getPassengerFromBookingRecord(passengerId);
+				authorised = passenger != null && passenger.getCustomer().getId() == super.getRequest().getPrincipal().getActiveRealm().getId();
+			} catch (final Throwable e) {
+				authorised = false;
+			}
+
+		super.getResponse().setAuthorised(authorised);
+
+		if (!authorised)
+			throw new AssertionError("Access is not authorised");
 	}
 
 	@Override
 	public void load() {
 		BookingRecord bookingRecord = new BookingRecord();
-
 		super.getBuffer().addData(bookingRecord);
-
 	}
 
 	@Override
@@ -48,6 +78,7 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		BookingRecord bookingRecordCompare = null;
 		if (passenger != null && booking != null)
 			bookingRecordCompare = this.customerBookingRecordRepository.getBookingRecordByPassengerIdAndBookingId(passenger.getId(), booking.getId());
+
 		boolean status1 = bookingRecordCompare == null || bookingRecordCompare.getId() == bookingRecord.getId();
 		super.state(status1, "*", "customer.bookingRecord.form.error.alreadyCreated");
 	}
@@ -59,19 +90,20 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 
 	@Override
 	public void unbind(final BookingRecord bookingRecord) {
-
 		Integer customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		Integer bookingId = super.getRequest().getData("bookingId", int.class);
 
-		Collection<Passenger> passengers = this.customerBookingRecordRepository.getAllPassengersByCustomer(customerId);
-		Collection<Booking> bookings = this.customerBookingRecordRepository.getBookingsByCustomerId(customerId);
-		SelectChoices passengerChoices = SelectChoices.from(passengers, "fullName", bookingRecord.getPassenger());
-		SelectChoices bookingChoices = SelectChoices.from(bookings, "locatorCode", bookingRecord.getBooking());
+		Booking booking = this.customerBookingRecordRepository.findBookingById(bookingId);
+		Collection<Passenger> availablePassengers = this.customerBookingRecordRepository.getAvailablePassengersByCustomerAndBooking(customerId, bookingId);
+
+		SelectChoices passengerChoices = SelectChoices.from(availablePassengers, "fullName", bookingRecord.getPassenger());
+		SelectChoices bookingChoices = SelectChoices.from(List.of(booking), "locatorCode", bookingRecord.getBooking());
+
 		Dataset dataset = super.unbindObject(bookingRecord, "passenger", "booking");
 		dataset.put("passengers", passengerChoices);
 		dataset.put("bookings", bookingChoices);
+		dataset.put("bookingId", bookingId);
 
 		super.getResponse().addData(dataset);
-
 	}
-
 }
