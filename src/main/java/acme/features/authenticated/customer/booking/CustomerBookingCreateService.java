@@ -45,19 +45,12 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 		if (authorised && super.getRequest().hasData(CustomerBookingCreateService.FLIGHT_ID_FIELD))
 			try {
-				int flightId = super.getRequest().getData(CustomerBookingCreateService.FLIGHT_ID_FIELD, int.class);
-				Flight flight = this.flightRepository.findFlightById(flightId);
-				authorised = flightId == 0 || flight != null && !flight.getDraftMode();
-			} catch (final Throwable e) {
-				authorised = false; // si alguien intenta manipular el valor
-			}
-
-		if (authorised && super.getRequest().hasData("travelClass"))
-			try {
-				TravelClass travelClass = super.getRequest().getData("travelClass", TravelClass.class);
-				authorised = travelClass != null;
-			} catch (final Throwable e) {
-				authorised = false; // enum inválido = manipulación
+				final int flightId = super.getRequest().getData(CustomerBookingCreateService.FLIGHT_ID_FIELD, int.class);
+				if (flightId != 0) {
+					final Flight flight = this.flightRepository.findFlightById(flightId);
+					authorised = flight != null && !flight.getDraftMode();
+				}
+			} catch (Throwable ignored) {
 			}
 
 		super.getResponse().setAuthorised(authorised);
