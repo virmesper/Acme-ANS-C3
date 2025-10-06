@@ -3,6 +3,7 @@ package acme.features.authenticated.customer.booking;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -105,9 +106,15 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void validate(final Booking booking) {
-		Collection<Booking> bookings = this.repository.findBookingsByLocatorCode(booking.getLocatorCode());
-		boolean status1 = bookings.isEmpty();
-		super.state(status1, CustomerBookingCreateService.LOCATOR_CODE_FIELD, "customer.booking.form.error.locatorCode");
+		Objects.requireNonNull(booking, "booking");
+
+		if (!super.getBuffer().getErrors().hasErrors(CustomerBookingCreateService.LOCATOR_CODE_FIELD)) {
+			final String locator = booking.getLocatorCode();
+			if (locator != null && !locator.isBlank()) {
+				final boolean isUnique = this.repository.findBookingsByLocatorCode(locator.trim()).isEmpty();
+				super.state(isUnique, CustomerBookingCreateService.LOCATOR_CODE_FIELD, "customer.booking.form.error.locatorCode");
+			}
+		}
 	}
 
 	@Override
