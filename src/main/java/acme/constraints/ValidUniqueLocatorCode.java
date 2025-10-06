@@ -16,7 +16,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = UniqueLocatorCodeValidator.class)
 public @interface ValidUniqueLocatorCode {
 
-	String message() default "El Locator Code debería ser único para cada reserva.";
+	String message() default "{customer.booking.form.error.locatorCode}";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 

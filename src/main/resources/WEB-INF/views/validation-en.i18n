@@ -8,6 +8,7 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
+customer.booking.form.error.locatorCode=The locator code must be unique. Please enter a different one.
 acme.validation.shortText.message  	= Must have from 1 to 50 characters
 acme.validation.flightNumber.message = The flight number must have exactly three uppercase letters followed by four digits (example: ABC1234)
 acme.validation.employeeCode.format.message=The employee code must start with 2 or 3 uppercase letters followed by 6 digits

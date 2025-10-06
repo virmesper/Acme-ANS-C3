@@ -3,6 +3,7 @@ package acme.features.authenticated.customer.booking;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -44,19 +45,12 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 		if (authorised && super.getRequest().hasData(CustomerBookingCreateService.FLIGHT_ID_FIELD))
 			try {
-				int flightId = super.getRequest().getData(CustomerBookingCreateService.FLIGHT_ID_FIELD, int.class);
-				Flight flight = this.flightRepository.findFlightById(flightId);
-				authorised = flightId == 0 || flight != null && !flight.getDraftMode();
-			} catch (final Throwable e) {
-				authorised = false; // si alguien intenta manipular el valor
-			}
-
-		if (authorised && super.getRequest().hasData("travelClass"))
-			try {
-				TravelClass travelClass = super.getRequest().getData("travelClass", TravelClass.class);
-				authorised = travelClass != null;
-			} catch (final Throwable e) {
-				authorised = false; // enum inválido = manipulación
+				final int flightId = super.getRequest().getData(CustomerBookingCreateService.FLIGHT_ID_FIELD, int.class);
+				if (flightId != 0) {
+					final Flight flight = this.flightRepository.findFlightById(flightId);
+					authorised = flight != null && !flight.getDraftMode();
+				}
+			} catch (Throwable ignored) {
 			}
 
 		super.getResponse().setAuthorised(authorised);
@@ -105,9 +99,15 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void validate(final Booking booking) {
-		Collection<Booking> bookings = this.repository.findBookingsByLocatorCode(booking.getLocatorCode());
-		boolean status1 = bookings.isEmpty();
-		super.state(status1, CustomerBookingCreateService.LOCATOR_CODE_FIELD, "customer.booking.form.error.locatorCode");
+		Objects.requireNonNull(booking, "booking");
+
+		if (!super.getBuffer().getErrors().hasErrors(CustomerBookingCreateService.LOCATOR_CODE_FIELD)) {
+			final String locator = booking.getLocatorCode();
+			if (locator != null && !locator.isBlank()) {
+				final boolean isUnique = this.repository.findBookingsByLocatorCode(locator.trim()).isEmpty();
+				super.state(isUnique, CustomerBookingCreateService.LOCATOR_CODE_FIELD, "customer.booking.form.error.locatorCode");
+			}
+		}
 	}
 
 	@Override
