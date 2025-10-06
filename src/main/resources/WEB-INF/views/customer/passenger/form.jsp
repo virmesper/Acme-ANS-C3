@@ -4,6 +4,7 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:form>
+		<input type="hidden" name="bookingId" value="${bookingId}"/>
 		<acme:input-textbox code="customer.passenger.list.label.fullName" path="fullName" readonly="${draftMode}"/>
 		<acme:input-email code="customer.passenger.list.label.email" path="email" readonly="${draftMode}"/>
 		<acme:input-textbox code="customer.passenger.list.label.passportNumber" path="passportNumber" readonly="${draftMode}"/>

@@ -47,4 +47,7 @@ public interface CustomerBookingRecordRepository extends AbstractRepository {
 	@Query("SELECT p FROM Passenger p WHERE p.customer.id = :customerId AND p.id NOT IN (SELECT br.passenger.id FROM BookingRecord br WHERE br.booking.id = :bookingId)")
 	Collection<Passenger> getAvailablePassengersByCustomerAndBooking(int customerId, int bookingId);
 
+	@Query("select count(br) > 0 from BookingRecord br where br.booking.id = :bookingId and br.passenger.id = :passengerId")
+	boolean existsByBookingIdAndPassengerId(int bookingId, int passengerId);
+
 }

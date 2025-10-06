@@ -15,4 +15,4 @@
 <c:if test="${_command == 'list' && !draftMode}">
     <acme:button code="customer.booking-record.create" action="/customer/booking-record/create?bookingId=${bookingId}" />
 </c:if>
-<acme:button code="customer.passenger.form.button.create" action="/customer/passenger/create"/>
+<acme:button code="customer.passenger.form.button.create" action="/customer/passenger/create?bookingId=${bookingId}"/>
