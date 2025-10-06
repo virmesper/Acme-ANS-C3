@@ -35,15 +35,17 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 	public void authorise() {
 		boolean authorised = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
 
-		// Si viene bookingId, verifica que la booking existe y pertenece al customer logueado
+		// Si llega bookingId (puede venir vacío), comprueba propiedad solo si tiene valor
 		if (authorised && super.getRequest().hasData(CustomerPassengerCreateService.BOOKING_ID))
 			try {
-				final int bookingId = super.getRequest().getData(CustomerPassengerCreateService.BOOKING_ID, int.class);
-				final Booking booking = this.bookingRepository.findBookingById(bookingId);
-				final int customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
-				authorised = booking != null && booking.getCustomer().getId() == customerId;
+				final Integer bookingId = super.getRequest().getData(CustomerPassengerCreateService.BOOKING_ID, Integer.class);
+				if (bookingId != null) {
+					final Booking booking = this.bookingRepository.findBookingById(bookingId);
+					final int customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+					authorised = booking != null && booking.getCustomer().getId() == customerId;
+				}
 			} catch (final Throwable ignored) {
-				// No denegar por datos malformados; se validará después
+				// No denegar por formato inválido; se validará después
 			}
 
 		super.getResponse().setAuthorised(authorised);
@@ -51,13 +53,11 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 	@Override
 	public void load() {
-		Passenger passenger;
-
 		final AbstractRealm principal = super.getRequest().getPrincipal().getActiveRealm();
 		final int customerId = principal.getId();
 		final Customer customer = this.repository.findCustomerById(customerId);
 
-		passenger = new Passenger();
+		final Passenger passenger = new Passenger();
 		passenger.setCustomer(customer);
 		passenger.setDraftMode(false);
 
@@ -72,43 +72,43 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 
 	@Override
 	public void validate(final Passenger passenger) {
-		// Reglas extra si las necesitas; las anotaciones ya cubren lo básico
+		// Validaciones adicionales si necesitas
 	}
 
 	@Override
 	public void perform(final Passenger passenger) {
-		// 1) Guardar el Passenger (JPA le asigna id)
+		// 1) Guardar Passenger
 		this.repository.save(passenger);
 
-		// 2) Si venimos del listado de una booking, crear el BookingRecord
+		// 2) Si venimos desde una booking, crear el enlace BookingRecord
 		if (super.getRequest().hasData(CustomerPassengerCreateService.BOOKING_ID)) {
-			final int bookingId = super.getRequest().getData(CustomerPassengerCreateService.BOOKING_ID, int.class);
-			final Booking booking = this.bookingRepository.findBookingById(bookingId);
-
-			if (booking != null) {
-				// Evitar duplicados (por si se reenvía el POST)
-				final boolean alreadyLinked = this.bookingRecordRepository.existsByBookingIdAndPassengerId(bookingId, passenger.getId());
-
-				if (!alreadyLinked) {
+			final Integer bookingId = super.getRequest().getData(CustomerPassengerCreateService.BOOKING_ID, Integer.class);
+			if (bookingId != null) {
+				final Booking booking = this.bookingRepository.findBookingById(bookingId);
+				if (booking != null) {
 					final BookingRecord record = new BookingRecord();
 					record.setBooking(booking);
 					record.setPassenger(passenger);
+					// Completa otros campos obligatorios de BookingRecord si los hubiera
 					this.bookingRecordRepository.save(record);
-				}
 
-				// Mantener bookingId para la vuelta al listado
-				super.getResponse().addGlobal(CustomerPassengerCreateService.BOOKING_ID, bookingId);
+					// Mantener bookingId al volver al listado
+					super.getResponse().addGlobal(CustomerPassengerCreateService.BOOKING_ID, bookingId);
+				}
 			}
 		}
 	}
 
 	@Override
 	public void unbind(final Passenger passenger) {
-		Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "draftMode", "specialNeeds");
+		final Dataset dataset = super.unbindObject(passenger, "fullName", "email", "passportNumber", "dateOfBirth", "draftMode", "specialNeeds");
 
-		// MUY IMPORTANTE: mantener bookingId entre GET (form) y POST (create)
-		if (super.getRequest().hasData(CustomerPassengerCreateService.BOOKING_ID))
-			dataset.put(CustomerPassengerCreateService.BOOKING_ID, super.getRequest().getData(CustomerPassengerCreateService.BOOKING_ID, int.class));
+		// Mantener bookingId entre GET (form) y POST (create) solo si tiene valor
+		if (super.getRequest().hasData(CustomerPassengerCreateService.BOOKING_ID)) {
+			final Integer bookingId = super.getRequest().getData(CustomerPassengerCreateService.BOOKING_ID, Integer.class);
+			if (bookingId != null)
+				dataset.put(CustomerPassengerCreateService.BOOKING_ID, bookingId);
+		}
 
 		super.getResponse().addData(dataset);
 	}
