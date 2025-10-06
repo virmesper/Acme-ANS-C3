@@ -8,6 +8,7 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
+customer.booking.form.error.locatorCode=El localizador debe ser único. Por favor introduzca uno nuevo.
 acme.validation.shortText.message  	= Debe tener entre 1 y 50 caracteres
 acme.validation.flightNumber.message = El número de vuelo debe tener exactamente tres letras mayúsculas seguidas de cuatro dígitos (ejemplo: ABC1234)
 acme.validation.employeeCode.format.message=El código de empleado debe comenzar con 2 o 3 letras mayúsculas seguidas de 6 dígitos
@@ -25,7 +26,6 @@ acme.validation.employeeCode.initials.message = Las primeras dos o tres letras d
 acme.validation.assistanceAgent.code = Las primeras dos o tres letras de su código de empleado deben corresponder a sus iniciales
 assistanceAgent.claim.form.error.badLeg = El tramo seleccionado debe tener una fecha anterior a la fecha de registro
 acme.validation.range. = El porcentaje debe ser mayor que 0 y menor o igual que 100.
-customer.booking.form.error.locatorCode= Debe ser único
 
 # Fight Assignments
 acme.validation.FlightAssignment.havePilot.message= Ese tramo ya tiene un piloto asignado
