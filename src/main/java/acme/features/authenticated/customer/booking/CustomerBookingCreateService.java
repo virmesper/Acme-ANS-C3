@@ -42,17 +42,6 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	@Override
 	public void authorise() {
 		boolean authorised = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
-
-		if (authorised && super.getRequest().hasData(CustomerBookingCreateService.FLIGHT_ID_FIELD))
-			try {
-				final int flightId = super.getRequest().getData(CustomerBookingCreateService.FLIGHT_ID_FIELD, int.class);
-				if (flightId != 0) {
-					final Flight flight = this.flightRepository.findFlightById(flightId);
-					authorised = flight != null && !flight.getDraftMode();
-				}
-			} catch (Throwable ignored) {
-			}
-
 		super.getResponse().setAuthorised(authorised);
 	}
 
@@ -101,6 +90,11 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 	public void validate(final Booking booking) {
 		Objects.requireNonNull(booking, "booking");
 
+		super.state(booking.getFlightId() != null, "flightId", "customer.booking.form.error.flight-required");
+
+		if (booking.getFlightId() != null)
+			super.state(!booking.getFlightId().getDraftMode(), "flightId", "customer.booking.form.error.flight-not-published");
+
 		if (!super.getBuffer().getErrors().hasErrors(CustomerBookingCreateService.LOCATOR_CODE_FIELD)) {
 			final String locator = booking.getLocatorCode();
 			if (locator != null && !locator.isBlank()) {
@@ -121,15 +115,17 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 		SelectChoices choices;
 		SelectChoices flightChoices;
 
-		Collection<Flight> flights = this.flightRepository.findAllFlight();
+		Collection<Flight> flights = this.flightRepository.findAllPublishedFlights();
 
 		flightChoices = SelectChoices.from(flights, "tag", booking.getFlightId());
 		choices = SelectChoices.from(TravelClass.class, booking.getTravelClass());
 
 		dataset = super.unbindObject(booking, CustomerBookingCreateService.LOCATOR_CODE_FIELD, "lastCardDigits", "price");
 		dataset.put("travelClass", choices);
-		dataset.put(CustomerBookingCreateService.FLIGHT_ID_FIELD, flightChoices.getSelected().getKey());
+
+		dataset.put(CustomerBookingCreateService.FLIGHT_ID_FIELD, flightChoices.getSelected() != null ? flightChoices.getSelected().getKey() : null);
 		dataset.put("flights", flightChoices);
+
 		dataset.put("purchaseMoment", booking.getPurchaseMoment());
 
 		super.getResponse().addData(dataset);

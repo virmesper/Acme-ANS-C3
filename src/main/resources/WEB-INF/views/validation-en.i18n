@@ -61,3 +61,7 @@ customer.bookingRecord.form.error.passenger-not-owned=El pasajero no pertenece a
 customer.bookingRecord.form.error.booking-not-owned=La reserva no pertenece a su cuenta.
 customer.bookingRecord.form.error.booking-published=No puede añadir pasajeros a una reserva ya publicada.
 customer.bookingRecord.form.error.alreadyCreated=Este pasajero ya está en la reserva.
+customer.booking.form.error.flight-required=You must select a flight.
+customer.booking.form.error.flight-not-published=You cannot book an unpublished flight.
+customer.booking.form.error.locatorCode=The locator code already exists.
+

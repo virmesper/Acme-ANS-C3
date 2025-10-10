@@ -37,3 +37,7 @@ customer.booking.publish.error.lastCardDigits = There is no Credit Card last Nib
 customer.booking.form.error.alreadyPublished=This booking is already published and cannot be updated.
 customer.booking.form.error.locatorCode=The locator code must be unique. Please enter a different one.
 customer.booking.form.error.invalidLastCardDigits = Invalid Last Card Digits
+
+customer.booking.form.error.flight-required=You must select a flight.
+customer.booking.form.error.flight-not-published=You cannot book an unpublished flight.
+customer.booking.form.error.locatorCode=The locator code already exists.
