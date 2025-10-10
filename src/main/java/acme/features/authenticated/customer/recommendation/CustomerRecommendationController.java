@@ -15,11 +15,15 @@ import acme.realms.Customer;
 public class CustomerRecommendationController extends AbstractGuiController<Customer, Recommendation> {
 
 	@Autowired
-	private CustomerRecommendationListRelatedService listRelatedService;
+	private CustomerRecommendationListRelatedService	listRelatedService;
+	@Autowired
+	private CustomerRecommendationShowService			showService;   // << NUEVO
 
 
 	@PostConstruct
 	protected void initialise() {
 		super.addCustomCommand("list-related", "list", this.listRelatedService);
+		super.addBasicCommand("show", this.showService);
+
 	}
 }

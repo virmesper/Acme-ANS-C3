@@ -23,4 +23,7 @@ public interface CustomerRecommendationRepository extends AbstractRepository {
 		     or (r.country is not null and lower(r.country) in :countries)
 		""")
 	Collection<Recommendation> findByCitiesOrCountries(Set<String> cities, Set<String> countries);
+
+	@Query("select r from Recommendation r where r.id = :id")
+	Recommendation findOneById(int id);
 }

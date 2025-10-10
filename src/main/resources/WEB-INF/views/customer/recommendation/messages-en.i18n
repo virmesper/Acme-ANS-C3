@@ -5,3 +5,21 @@ customer.recommendation.list.label.city=City
 customer.recommendation.list.label.country=Country
 customer.recommendation.list.label.rating=Rating
 customer.recommendation.list.label.url=Link
+customer.recommendation.list.title = 
+customer.recommendation.form.title=Recommendation details
+customer.recommendation.form.label.title=Title
+customer.recommendation.form.label.category=Category
+customer.recommendation.form.label.city=City
+customer.recommendation.form.label.country=Country
+customer.recommendation.form.label.rating=Rating
+customer.recommendation.form.label.price=Price level
+customer.recommendation.form.label.desc=Description
+customer.recommendation.form.label.url=Link
+customer.recommendation.form.label.image=Image (URL)
+customer.recommendation.form.label.updated=Last update
+
+
+
+
+
+

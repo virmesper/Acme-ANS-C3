@@ -3,7 +3,7 @@
 
 <h2><acme:print code="customer.recommendation.list-related.title"/></h2>
 
-<acme:list>
+<acme:list >
   <acme:list-column code="customer.recommendation.list.label.title"    path="title"   width="35%"/>
   <acme:list-column code="customer.recommendation.list.label.category" path="category" width="15%"/>
   <acme:list-column code="customer.recommendation.list.label.city"     path="city"     width="15%"/>
@@ -12,4 +12,3 @@
   <acme:list-column code="customer.recommendation.list.label.url"      path="url"      width="15%"/>
 </acme:list>
 
-<acme:return/>
