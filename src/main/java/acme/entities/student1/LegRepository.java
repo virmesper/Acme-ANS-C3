@@ -21,11 +21,11 @@ public interface LegRepository extends AbstractRepository {
 	@Query(value = "SELECT l.scheduled_arrival FROM leg l WHERE l.flight_id = :flightId ORDER BY l.scheduled_arrival DESC LIMIT 1", nativeQuery = true)
 	Optional<Date> findLastScheduledArrival(@Param("flightId") int flightId);
 
-	@Query("SELECT l.departureAirport.city FROM Leg l WHERE l.flight.id = :flightId ORDER BY l.scheduledDeparture ASC")
-	Optional<String> findFirstOriginCity(@Param("flightId") int flightId);
+	@Query("SELECT l.departureAirport.city " + "FROM Leg l " + "WHERE l.flight.id = :flightId " + "ORDER BY l.scheduledDeparture ASC")
+	List<String> findOriginCitiesOrderByDepartureAsc(@Param("flightId") int flightId);
 
-	@Query("SELECT l.arrivalAirport.city FROM Leg l WHERE l.flight.id = :flightId ORDER BY l.scheduledArrival DESC")
-	Optional<String> findLastDestinationCity(@Param("flightId") int flightId);
+	@Query("SELECT l.arrivalAirport.city " + "FROM Leg l " + "WHERE l.flight.id = :flightId " + "ORDER BY l.scheduledArrival DESC")
+	List<String> findDestinationCitiesOrderByArrivalDesc(@Param("flightId") int flightId);
 
 	@Query("SELECT l FROM Leg l WHERE l.flight.id = :flightId " + "AND l.id <> :legId " + "AND ((l.scheduledDeparture < :scheduledArrival AND l.scheduledArrival > :scheduledDeparture))")
 	List<Leg> findOverlappingLegs(Integer flightId, Date scheduledDeparture, Date scheduledArrival, Integer legId);

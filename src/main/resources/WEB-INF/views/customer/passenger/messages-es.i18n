@@ -10,7 +10,7 @@
 
 customer.passenger.list.title = Listado de pasajeros
 customer.passenger.form.title = Detalles de pasajero
-
+customer.bookingRecord.button.add-existing = Añadir pasajero
 customer.passenger.list.label.fullName = Nombre completo
 customer.passenger.list.label.email = Email
 customer.passenger.list.label.passportNumber =Pasaporte

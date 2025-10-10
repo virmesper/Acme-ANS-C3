@@ -21,3 +21,9 @@ acme.validation.confirmation.message.booking-record.create.booking = La reserva 
 acme.validation.confirmation.message.booking-record.create.passenger = El pasajero no puede ser nulo
 
 customer.bookingRecord.form.error.alreadyCreated = Ya existe un registro de reserva con estos datos
+
+customer.bookingRecord.form.error.passenger-required=Debe seleccionar un pasajero.
+customer.bookingRecord.form.error.booking-required=No se ha podido determinar la reserva (booking).
+customer.bookingRecord.form.error.passenger-not-owned=El pasajero no pertenece a su cuenta.
+customer.bookingRecord.form.error.booking-not-owned=La reserva no pertenece a su cuenta.
+customer.bookingRecord.form.error.booking-published=No puede añadir pasajeros a una reserva ya publicada.

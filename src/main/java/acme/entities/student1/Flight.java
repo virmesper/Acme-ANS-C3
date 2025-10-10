@@ -3,6 +3,7 @@ package acme.entities.student1;
 
 import java.beans.Transient;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Index;
@@ -77,13 +78,15 @@ public class Flight extends AbstractEntity {
 	@Transient
 	public String getOriginCity() {
 		LegRepository repository = SpringHelper.getBean(LegRepository.class);
-		return repository.findFirstOriginCity(this.getId()).orElse("");
+		List<String> cities = repository.findOriginCitiesOrderByDepartureAsc(this.getId());
+		return cities.isEmpty() ? "" : cities.get(0);
 	}
 
 	@Transient
 	public String getDestinationCity() {
 		LegRepository repository = SpringHelper.getBean(LegRepository.class);
-		return repository.findLastDestinationCity(this.getId()).orElse("");
+		List<String> cities = repository.findDestinationCitiesOrderByArrivalDesc(this.getId());
+		return cities.isEmpty() ? "" : cities.get(0);
 	}
 
 	@Transient

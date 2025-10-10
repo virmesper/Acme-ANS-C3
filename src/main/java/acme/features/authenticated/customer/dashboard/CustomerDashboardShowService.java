@@ -1,38 +1,29 @@
 
 package acme.features.authenticated.customer.dashboard;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.DoubleSummaryStatistics;
-import java.util.IntSummaryStatistics;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
-import acme.client.helpers.MomentHelper;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.student2.Booking;
-import acme.entities.student2.SupportedCurrency;
-import acme.entities.student2.TravelClass;
 import acme.forms.CustomerDashboard;
 import acme.realms.Customer;
 
-@SuppressWarnings("deprecation")
 @GuiService
 public class CustomerDashboardShowService extends AbstractGuiService<Customer, CustomerDashboard> {
 
-	// Internal state ---------------------------------------------------------
-
 	@Autowired
 	private CustomerDashboardRepository repository;
-
-	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
@@ -42,135 +33,97 @@ public class CustomerDashboardShowService extends AbstractGuiService<Customer, C
 
 	@Override
 	public void load() {
-		Customer customer = (Customer) super.getRequest().getPrincipal().getRealmOfType(Customer.class);
-		int customerId = customer.getId();
-		CustomerDashboard dashboard = new CustomerDashboard();
+		final int customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 
-		Collection<Booking> bookings = this.repository.findAllBookings(customerId);
-		int numBookings = bookings.size();
-		String defaultCurrency = SupportedCurrency.getDefaultCurrency();
+		final Date now = new Date();
+		final Calendar cal = Calendar.getInstance();
 
-		if (numBookings == 0)
-			this.fillEmptyDashboard(dashboard, defaultCurrency);
-		else
-			this.fillDashboardWithData(dashboard, bookings, customerId, defaultCurrency);
+		cal.setTime(now);
+		cal.add(Calendar.YEAR, -1);
+		final Date oneYearAgo = cal.getTime();
 
-		super.getBuffer().addData(dashboard);
-	}
+		cal.setTime(now);
+		cal.add(Calendar.YEAR, -5);
+		final Date fiveYearsAgo = cal.getTime();
 
-	private void fillEmptyDashboard(final CustomerDashboard dashboard, final String currency) {
-		Money noMoney = new Money();
-		noMoney.setCurrency(currency);
-		noMoney.setAmount(0.0);
+		final CustomerDashboard vm = new CustomerDashboard();
 
-		dashboard.setLastFiveDestinations("N/A");
-		dashboard.setMoneySpentLastYear(noMoney);
-		dashboard.setNumOfBookingsByTravelClass("N/A");
-		dashboard.setMaxCostOfBookingsLastFiveYears(noMoney);
-		dashboard.setMinCostOfBookingsLastFiveYears(noMoney);
-		dashboard.setAvgCostOfBookingsLastFiveYears(noMoney);
-		dashboard.setStdDeviationCostOfBookingsLastFiveYears(0.0);
-		dashboard.setMinNumOfPassengersInBookings(0);
-		dashboard.setMaxNumOfPassengersInBookings(0);
-		dashboard.setAvgNumOfPassengersInBookings(0.0);
-		dashboard.setStdDeviationNumOfPassengersInBookings(0.0);
-	}
+		// 1) Last five destinations (usando @Transient getDestinationCity())
+		final List<Booking> ordered = new ArrayList<>(this.repository.findBookingsOrderedByPurchaseDesc(customerId));
+		final List<Booking> top5 = ordered.size() > 5 ? ordered.subList(0, 5) : ordered;
 
-	private void fillDashboardWithData(final CustomerDashboard dashboard, final Collection<Booking> bookings, final int customerId, final String defaultCurrency) {
-		dashboard.setLastFiveDestinations(this.getLastFiveDestinations(bookings));
-		dashboard.setMoneySpentLastYear(this.getMoneySpentLastYear(customerId, defaultCurrency));
-		dashboard.setNumOfBookingsByTravelClass(this.getBookingsByTravelClassString(bookings));
-		this.setCostStatistics(dashboard, bookings, defaultCurrency);
-		this.setPassengerStatistics(dashboard, bookings);
-	}
+		final List<String> lastFiveDestinations = top5.stream().map(b -> b.getFlightId() != null ? b.getFlightId().getDestinationCity() : "").collect(Collectors.toList());
+		vm.setLastFiveDestinations(lastFiveDestinations);
 
-	private String getLastFiveDestinations(final Collection<Booking> bookings) {
-		Comparator<Booking> cmp = Comparator.comparing(Booking::getPurchaseMoment).thenComparing(Booking::getId);
-		List<String> lastDestiniesList = bookings.stream().sorted(cmp).map(b -> b.getFlightId().getDestinationCity()).distinct().limit(5L).toList();
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < lastDestiniesList.size(); i++)
-			sb.append(i + 1).append(": ").append(lastDestiniesList.get(i)).append(", ");
-		return sb.substring(0, sb.length() - 2);
-	}
+		// 2) Dinero gastado último año
+		final Double spent = this.repository.sumMoneySpentSince(customerId, oneYearAgo);
+		vm.setMoneySpentLastYear(spent != null ? spent : 0.0);
 
-	private Money getMoneySpentLastYear(final int customerId, final String currency) {
-		Date lastYear = MomentHelper.getCurrentMoment();
-		lastYear.setYear(lastYear.getYear() - 1);
-		Double spent = this.repository.moneySpentLastYear(lastYear, customerId);
-		Money result = new Money();
-		result.setCurrency(currency);
-		result.setAmount(spent != null ? spent : 0.0);
-		return result;
-	}
+		// 3) Nº de bookings por travel class
+		final Map<String, Long> byClass = new LinkedHashMap<>();
+		for (Object[] row : this.repository.countBookingsByTravelClass(customerId))
+			byClass.put((String) row[0], (Long) row[1]);
+		vm.setBookingsByTravelClass(byClass);
 
-	private String getBookingsByTravelClassString(final Collection<Booking> bookings) {
-		Map<TravelClass, Integer> map = bookings.stream().collect(Collectors.groupingBy(Booking::getTravelClass, Collectors.summingInt(e -> 1)));
-		return map.entrySet().stream().map(e -> e.getKey() + ": " + e.getValue()).collect(Collectors.joining(", "));
-	}
-
-	private void setCostStatistics(final CustomerDashboard dashboard, final Collection<Booking> bookings, final String currency) {
-		Date lastFiveYears = MomentHelper.getCurrentMoment();
-		lastFiveYears.setYear(lastFiveYears.getYear() - 5);
-
-		List<Booking> recent = bookings.stream().filter(b -> b.getPurchaseMoment().after(lastFiveYears)).toList();
-		int count = recent.size();
-
-		Money max = new Money(), min = new Money(), avg = new Money();
-		max.setCurrency(currency);
-		min.setCurrency(currency);
-		avg.setCurrency(currency);
-		double stdDev = 0.0;
-
-		if (count > 0) {
-			DoubleSummaryStatistics stats = recent.stream().mapToDouble(b -> {
-				Money price = b.getPrice();
-				return price.getCurrency().equals(currency) ? price.getAmount() : SupportedCurrency.convertToDefault(price).getAmount();
-			}).summaryStatistics();
-
-			double avgVal = stats.getAverage();
-			max.setAmount(stats.getMax());
-			min.setAmount(stats.getMin());
-			avg.setAmount(avgVal);
-
-			for (Booking b : recent) {
-				double price = b.getPrice().getCurrency().equals(currency) ? b.getPrice().getAmount() : SupportedCurrency.convertToDefault(b.getPrice()).getAmount();
-				stdDev += Math.pow(price - avgVal, 2);
-			}
-			stdDev = Math.sqrt(stdDev / count);
+		// 4) Stats coste 5 años
+		final Collection<Double> amounts = this.repository.findBookingAmountsSince(customerId, fiveYearsAgo);
+		vm.setCostCount5y((long) amounts.size());
+		if (amounts.isEmpty()) {
+			vm.setCostAvg5y(0.0);
+			vm.setCostMin5y(0.0);
+			vm.setCostMax5y(0.0);
+			vm.setCostStddev5y(0.0);
 		} else {
-			max.setAmount(0.0);
-			min.setAmount(0.0);
-			avg.setAmount(0.0);
+			final double min = amounts.stream().min(Double::compare).get();
+			final double max = amounts.stream().max(Double::compare).get();
+			final double sum = amounts.stream().mapToDouble(Double::doubleValue).sum();
+			final double avg = sum / amounts.size();
+			final double var = amounts.stream().mapToDouble(x -> (x - avg) * (x - avg)).sum() / amounts.size();
+			vm.setCostAvg5y(avg);
+			vm.setCostMin5y(min);
+			vm.setCostMax5y(max);
+			vm.setCostStddev5y(Math.sqrt(var));
 		}
 
-		dashboard.setMaxCostOfBookingsLastFiveYears(max);
-		dashboard.setMinCostOfBookingsLastFiveYears(min);
-		dashboard.setAvgCostOfBookingsLastFiveYears(avg);
-		dashboard.setStdDeviationCostOfBookingsLastFiveYears(stdDev);
-	}
+		// 5) Stats nº pasajeros por booking
+		final Collection<Long> paxCounts = this.repository.passengersPerBookingCounts(customerId);
+		vm.setPaxCountSamples((long) paxCounts.size());
+		if (paxCounts.isEmpty()) {
+			vm.setPaxAvg(0.0);
+			vm.setPaxMin(0L);
+			vm.setPaxMax(0L);
+			vm.setPaxStddev(0.0);
+		} else {
+			final long min = paxCounts.stream().min(Long::compare).get();
+			final long max = paxCounts.stream().max(Long::compare).get();
+			final double sum = paxCounts.stream().mapToDouble(Long::doubleValue).sum();
+			final double avg = sum / paxCounts.size();
+			final double var = paxCounts.stream().mapToDouble(x -> (x - avg) * (x - avg)).sum() / paxCounts.size();
+			vm.setPaxAvg(avg);
+			vm.setPaxMin(min);
+			vm.setPaxMax(max);
+			vm.setPaxStddev(Math.sqrt(var));
+		}
 
-	private void setPassengerStatistics(final CustomerDashboard dashboard, final Collection<Booking> bookings) {
-		IntSummaryStatistics stats = bookings.stream().mapToInt(b -> this.repository.findPassengersByBookingId(b.getId()).size()).summaryStatistics();
-		double avg = stats.getAverage();
-		double stdDev = bookings.stream().mapToDouble(b -> {
-			int pCount = this.repository.findPassengersByBookingId(b.getId()).size();
-			return Math.pow(pCount - avg, 2);
-		}).sum();
-		stdDev = Math.sqrt(stdDev / bookings.size());
-
-		dashboard.setMinNumOfPassengersInBookings(stats.getMin());
-		dashboard.setMaxNumOfPassengersInBookings(stats.getMax());
-		dashboard.setAvgNumOfPassengersInBookings(avg);
-		dashboard.setStdDeviationNumOfPassengersInBookings(stdDev);
+		super.getBuffer().addData(vm);
 	}
 
 	@Override
-	public void unbind(final CustomerDashboard dashboard) {
-		Dataset dataset;
-
-		dataset = super.unbindObject(dashboard, "lastFiveDestinations", "moneySpentLastYear", "numOfBookingsByTravelClass", "avgCostOfBookingsLastFiveYears", "minCostOfBookingsLastFiveYears", "maxCostOfBookingsLastFiveYears",
-			"stdDeviationCostOfBookingsLastFiveYears", "avgNumOfPassengersInBookings", "minNumOfPassengersInBookings", "maxNumOfPassengersInBookings", "stdDeviationNumOfPassengersInBookings");
-
-		super.getResponse().addData(dataset);
+	public void unbind(final CustomerDashboard vm) {
+		final Dataset ds = new Dataset();
+		ds.put("lastFiveDestinations", vm.getLastFiveDestinations());
+		ds.put("moneySpentLastYear", vm.getMoneySpentLastYear());
+		ds.put("bookingsByTravelClass", vm.getBookingsByTravelClass());
+		ds.put("costCount5y", vm.getCostCount5y());
+		ds.put("costAvg5y", vm.getCostAvg5y());
+		ds.put("costMin5y", vm.getCostMin5y());
+		ds.put("costMax5y", vm.getCostMax5y());
+		ds.put("costStddev5y", vm.getCostStddev5y());
+		ds.put("paxCountSamples", vm.getPaxCountSamples());
+		ds.put("paxAvg", vm.getPaxAvg());
+		ds.put("paxMin", vm.getPaxMin());
+		ds.put("paxMax", vm.getPaxMax());
+		ds.put("paxStddev", vm.getPaxStddev());
+		super.getResponse().addData(ds);
 	}
 }

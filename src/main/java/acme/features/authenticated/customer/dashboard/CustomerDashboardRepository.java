@@ -9,18 +9,52 @@ import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
 import acme.entities.student2.Booking;
-import acme.entities.student2.Passenger;
 
 @Repository
 public interface CustomerDashboardRepository extends AbstractRepository {
 
-	@Query("SELECT b FROM Booking b WHERE b.customer.id = :id AND b.draftMode = false")
-	Collection<Booking> findAllBookings(int id);
+	// Trae bookings del customer ordenadas por compra (las usaremos para las 5 últimas)
+	@Query("""
+			select b
+			from Booking b
+			where b.customer.id = :customerId
+			order by b.purchaseMoment desc
+		""")
+	Collection<Booking> findBookingsOrderedByPurchaseDesc(int customerId);
 
-	@Query("SELECT SUM(b.price.amount) FROM Booking b WHERE b.purchaseMoment > :lastYear AND b.customer.id = :id AND b.draftMode = false")
-	Double moneySpentLastYear(Date lastYear, int id);
+	// Suma del dinero gastado desde fecha
+	@Query("""
+			select coalesce(sum(b.price.amount), 0.0)
+			from Booking b
+			where b.customer.id = :customerId
+			  and b.purchaseMoment >= :fromDate
+		""")
+	Double sumMoneySpentSince(int customerId, Date fromDate);
 
-	@Query("select bt.passenger from BookingRecord bt where bt.booking.id = :id AND bt.booking.draftMode = false")
-	Collection<Passenger> findPassengersByBookingId(int id);
+	// Nº de bookings por travel class
+	@Query("""
+			select cast(b.travelClass as string), count(b)
+			from Booking b
+			where b.customer.id = :customerId
+			group by b.travelClass
+		""")
+	Collection<Object[]> countBookingsByTravelClass(int customerId);
 
+	// Importes de bookings desde fecha (para stats en Java)
+	@Query("""
+			select b.price.amount
+			from Booking b
+			where b.customer.id = :customerId
+			  and b.purchaseMoment >= :fromDate
+		""")
+	Collection<Double> findBookingAmountsSince(int customerId, Date fromDate);
+
+	// Nº de pasajeros por booking (cuenta por booking)
+	@Query("""
+			select count(br)
+			from acme.entities.student2.BookingRecord br
+			where br.booking.customer.id = :customerId
+			group by br.booking.id
+		""")
+	Collection<Long> passengersPerBookingCounts(int customerId);
 }
