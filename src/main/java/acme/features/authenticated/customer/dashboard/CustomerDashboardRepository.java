@@ -33,10 +33,10 @@ public interface CustomerDashboardRepository extends AbstractRepository {
 
 	// Nº de bookings por travel class
 	@Query("""
-			select cast(b.travelClass as string), count(b)
-			from Booking b
-			where b.customer.id = :customerId
-			group by b.travelClass
+		  select b.travelClass, count(b)
+		  from Booking b
+		  where b.customer.id = :customerId
+		  group by b.travelClass
 		""")
 	Collection<Object[]> countBookingsByTravelClass(int customerId);
 

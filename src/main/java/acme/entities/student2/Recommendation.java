@@ -1,18 +1,18 @@
 
 package acme.entities.student2;
 
-import javax.persistence.Column;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.mappings.Automapped;
+import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
-import acme.client.components.validation.ValidNumber;
+import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidString;
-import acme.client.components.validation.ValidUrl;
-import acme.components.recommendation.RecommendationPOJO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,83 +20,56 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(indexes = {
-	@Index(columnList = "businessStatus,openNow,rating,userRatingsTotal"), @Index(columnList = "city,businessStatus,openNow,rating,userRatingsTotal")
+	@Index(columnList = "city"), @Index(columnList = "country"), @Index(columnList = "category"), @Index(columnList = "source,externalId", unique = true)
 })
 public class Recommendation extends AbstractEntity {
 
-	// Serialisation version --------------------------------------------------
-
 	private static final long	serialVersionUID	= 1L;
 
-	// Attributes -------------------------------------------------------------
-
+	@Mandatory
+	@ValidString(min = 1, max = 50)
+	@Automapped
+	private String				source;      // "opentripmap"
+	@Mandatory
+	@ValidString(min = 1, max = 100)
+	@Automapped
+	private String				externalId;  // id externo
+	@Mandatory
+	@ValidString(min = 1, max = 255)
+	@Automapped
+	private String				title;
 	@Optional
-	@ValidString(max = 50)
-	@Column
-	private String				name;
-
+	@ValidString(min = 0, max = 50)
+	@Automapped
+	private String				category;    // restaurant/activity/…
 	@Optional
-	@ValidString(max = 50)
+	@ValidString(min = 0, max = 100)
 	@Automapped
 	private String				city;
-
 	@Optional
+	@ValidString(min = 0, max = 100)
 	@Automapped
-	private BusinessStatus		businessStatus;
-
+	private String				country;
 	@Optional
-	@ValidString(max = 50)
+	@ValidString(min = 0, max = 255)
 	@Automapped
-	private String				formattedAddress;
-
+	private String				shortDescription;
 	@Optional
-	@ValidNumber(min = 0., max = 5.)
+	@ValidString(min = 0, max = 255)
+	@Automapped
+	private String				url;
+	@Optional
+	@ValidString(min = 0, max = 255)
+	@Automapped
+	private String				imageUrl;
+	@Optional
 	@Automapped
 	private Double				rating;
-
-	@Optional
-	@ValidNumber(min = 0, max = 999999)
-	@Automapped
-	private Integer				userRatingsTotal;
-
 	@Optional
 	@Automapped
-	private Boolean				openNow;
-
-	@Optional
-	@ValidUrl
-	@Column(length = 1000)
-	private String				photoReference;
-
-	// Derived attributes -----------------------------------------------------
-
-	// Relationships ----------------------------------------------------------
-
-	// Ancillary methods ------------------------------------------------------
-
-
-	@SuppressWarnings("resource")
-	public static Recommendation of(final RecommendationPOJO r, final String city) {
-		Recommendation recommendation = new Recommendation();
-		recommendation.setCity(city);
-		recommendation.setName(r.getName() != null ? r.getName() : "N/A");
-		recommendation.setBusinessStatus(r.getBusinessStatus() != null ? r.getBusinessStatus() : BusinessStatus.CLOSED_TEMPORARILY);
-		recommendation.setFormattedAddress(r.getFormattedAddress() != null ? r.getFormattedAddress() : "N/A");
-		recommendation.setRating(r.getRating() != null ? r.getRating() : 0.);
-		recommendation.setUserRatingsTotal(r.getUserRatingsTotal() != null ? r.getUserRatingsTotal() : 0);
-		if (r.getOpeningHours() != null && r.getOpeningHours().getOpenNow() != null)
-			recommendation.setOpenNow(r.getOpeningHours().getOpenNow());
-		else
-			recommendation.setOpenNow(false);
-		String noUbication = "https://www.shutterstock.com/image-vector/unavailable-photo-iconmissingimage-vector-illustration-260nw-1835554645.jpg";
-		if (r.getPhotos() != null && r.getPhotos().get(0) != null && r.getPhotos().get(0).getPhotoReference() != null) {
-			String apiKey = "AIzaSyCntaK3qwLvyueF-6yya9n8yW-ykmUpeQI";
-			String photoReference = r.getPhotos().get(0).getPhotoReference();
-			String ubication = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photoReference + "&key=" + apiKey;
-			recommendation.setPhotoReference(ubication);
-		} else
-			recommendation.setPhotoReference(noUbication);
-		return recommendation;
-	}
-
+	private Integer				priceLevel; // 0..4 si aplica
+	@Mandatory
+	@ValidMoment(past = true)
+	@Automapped
+	private Date				lastUpdate;
 }

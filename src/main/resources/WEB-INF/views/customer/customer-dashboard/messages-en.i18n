@@ -15,5 +15,7 @@ customer.customer-dashboard.label.min=Minimum
 customer.customer-dashboard.label.max=Maximum
 customer.customer-dashboard.label.stddev=Standard deviation
 customer.customer-dashboard.label.samples=Samples (bookings)
-
+travel-class.ECONOMY=ECONOMY
+travel-class.BUSINESS=BUSINESS
+travel-class.FIRST=FIRST
 customer.customer-dashboard.hint.currency-note=Note: amounts use the booking currency.

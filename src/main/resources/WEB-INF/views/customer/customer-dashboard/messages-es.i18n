@@ -15,5 +15,7 @@ customer.customer-dashboard.label.min=Mínimo
 customer.customer-dashboard.label.max=Máximo
 customer.customer-dashboard.label.stddev=Desviación típica
 customer.customer-dashboard.label.samples=Muestras (reservas)
-
+travel-class.ECONOMY=ECONOMY
+travel-class.BUSINESS=BUSINESS
+travel-class.FIRST=FIRST
 customer.customer-dashboard.hint.currency-note=Nota: el importe se muestra en la divisa de las reservas.

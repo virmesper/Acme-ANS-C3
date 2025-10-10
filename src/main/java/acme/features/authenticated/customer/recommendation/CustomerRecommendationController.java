@@ -1,3 +1,4 @@
+// CUSTOMER
 
 package acme.features.authenticated.customer.recommendation;
 
@@ -13,24 +14,12 @@ import acme.realms.Customer;
 @GuiController
 public class CustomerRecommendationController extends AbstractGuiController<Customer, Recommendation> {
 
-	// Internal state ---------------------------------------------------------
-
 	@Autowired
-	private CustomerRecommendationListService			listService;
-
-	@Autowired
-	private CustomerRecommendationListRelatedService	listRelatedService;
-
-	@Autowired
-	private CustomerRecommendationShowService			showService;
-
-	// Constructors -----------------------------------------------------------
+	private CustomerRecommendationListRelatedService listRelatedService;
 
 
 	@PostConstruct
 	protected void initialise() {
-		super.addBasicCommand("list", this.listService);
 		super.addCustomCommand("list-related", "list", this.listRelatedService);
-		super.addBasicCommand("show", this.showService);
 	}
 }

@@ -37,21 +37,18 @@ public class CustomerDashboardShowService extends AbstractGuiService<Customer, C
 
 		final Date now = new Date();
 		final Calendar cal = Calendar.getInstance();
-
 		cal.setTime(now);
 		cal.add(Calendar.YEAR, -1);
 		final Date oneYearAgo = cal.getTime();
-
 		cal.setTime(now);
 		cal.add(Calendar.YEAR, -5);
 		final Date fiveYearsAgo = cal.getTime();
 
 		final CustomerDashboard vm = new CustomerDashboard();
 
-		// 1) Last five destinations (usando @Transient getDestinationCity())
+		// 1) Últimos 5 destinos
 		final List<Booking> ordered = new ArrayList<>(this.repository.findBookingsOrderedByPurchaseDesc(customerId));
 		final List<Booking> top5 = ordered.size() > 5 ? ordered.subList(0, 5) : ordered;
-
 		final List<String> lastFiveDestinations = top5.stream().map(b -> b.getFlightId() != null ? b.getFlightId().getDestinationCity() : "").collect(Collectors.toList());
 		vm.setLastFiveDestinations(lastFiveDestinations);
 
@@ -59,10 +56,16 @@ public class CustomerDashboardShowService extends AbstractGuiService<Customer, C
 		final Double spent = this.repository.sumMoneySpentSince(customerId, oneYearAgo);
 		vm.setMoneySpentLastYear(spent != null ? spent : 0.0);
 
-		// 3) Nº de bookings por travel class
+		// 3) Nº de bookings por travel class (MOSTRAR NOMBRE/I18N EN VEZ DE 0/1)
 		final Map<String, Long> byClass = new LinkedHashMap<>();
-		for (Object[] row : this.repository.countBookingsByTravelClass(customerId))
-			byClass.put((String) row[0], (Long) row[1]);
+		for (Object[] row : this.repository.countBookingsByTravelClass(customerId)) {
+			final Enum<?> travelClassEnum = (Enum<?>) row[0];
+			final Long count = (Long) row[1];
+
+			final String label = travelClassEnum.name();
+
+			byClass.put(label, count);
+		}
 		vm.setBookingsByTravelClass(byClass);
 
 		// 4) Stats coste 5 años
