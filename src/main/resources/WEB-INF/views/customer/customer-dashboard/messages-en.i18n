@@ -1,13 +1,19 @@
-customer.customer-dashboard.form.title = Customer dashboard
+customer.customer-dashboard.form.title=Customer dashboard
 
-customer.customer-dashboard.form.label.lastFiveDestinations = Last five destinations:
-customer.customer-dashboard.form.label.moneySpentLastYear = Money spent last year:
-customer.customer-dashboard.form.label.numOfBookingsByTravelClass = Number of bookings by travel class:
-customer.customer-dashboard.form.label.avgCostOfBookingsLastFiveYears = Average of cost of bookings in the last five years:
-customer.customer-dashboard.form.label.minCostOfBookingsLastFiveYears = Minimum of cost of bookings in the last five years:
-customer.customer-dashboard.form.label.maxCostOfBookingsLastFiveYears = Maximum of cost of bookings in the last five years:
-customer.customer-dashboard.form.label.stdDeviationCostOfBookingsLastFiveYears = Standard deviation of cost of bookings in the last five years:
-customer.customer-dashboard.form.label.avgNumOfPassengersInBookings = Average of passengers in bookings:
-customer.customer-dashboard.form.label.minNumOfPassengersInBookings = Minimum of passengers in bookings:
-customer.customer-dashboard.form.label.maxNumOfPassengersInBookings = Maximum of passengers in bookings:
-customer.customer-dashboard.form.label.stdDeviationNumOfPassengersInBookings = Standard deviation of passengers in bookings:
+customer.customer-dashboard.section.last-destinations=Last five destinations
+customer.customer-dashboard.section.spent-last-year=Money spent in the last year
+customer.customer-dashboard.section.by-class=Bookings grouped by travel class
+customer.customer-dashboard.section.cost-5y=Cost of bookings (last five years)
+customer.customer-dashboard.section.pax-per-booking=Passengers per booking
+
+customer.customer-dashboard.label.no-data=No data
+customer.customer-dashboard.label.amount=Amount
+customer.customer-dashboard.label.travel-class=Travel class
+customer.customer-dashboard.label.count=Count
+customer.customer-dashboard.label.avg=Average
+customer.customer-dashboard.label.min=Minimum
+customer.customer-dashboard.label.max=Maximum
+customer.customer-dashboard.label.stddev=Standard deviation
+customer.customer-dashboard.label.samples=Samples (bookings)
+
+customer.customer-dashboard.hint.currency-note=Note: amounts use the booking currency.

@@ -17,7 +17,7 @@ customer.passenger.list.label.passportNumber =Passport
 customer.passenger.list.label.dateOfBirth = Date of birth
 customer.passenger.list.label.draftMode = Is published?
 customer.passenger.list.label.specialNeeds = Special needs
-
+customer.bookingRecord.button.add-existing = Add passenger
 
 
 customer.passenger.form.button.create = Create a passenger

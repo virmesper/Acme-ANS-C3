@@ -25,38 +25,62 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 	@Override
 	public void authorise() {
 		boolean authorised = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
+		final int activeCustomerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 
 		if (authorised && super.getRequest().hasData("bookingId"))
 			try {
 				int bookingId = super.getRequest().getData("bookingId", int.class);
 				Booking booking = this.customerBookingRecordRepository.findBookingById(bookingId);
-				authorised = booking != null && booking.getCustomer().getId() == super.getRequest().getPrincipal().getActiveRealm().getId();
-			} catch (final Throwable e) {
+				authorised = booking != null && booking.getCustomer().getId() == activeCustomerId; // <- sin draftMode aquí
+			} catch (Throwable e) {
 				authorised = false;
 			}
 
+		// Si viene "booking" desde el form (POST)
 		if (authorised && super.getRequest().hasData("booking"))
 			try {
 				int bookingIdFromForm = super.getRequest().getData("booking", int.class);
 				Booking bookingFromForm = this.customerBookingRecordRepository.findBookingById(bookingIdFromForm);
-				authorised = bookingFromForm != null && bookingFromForm.getCustomer().getId() == super.getRequest().getPrincipal().getActiveRealm().getId();
-			} catch (final Throwable e) {
+				authorised = bookingFromForm != null && bookingFromForm.getCustomer().getId() == activeCustomerId; // <- sin draftMode aquí
+			} catch (Throwable e) {
 				authorised = false;
 			}
 
+		// Si viene "passenger" desde el form (POST) — leer Passenger por id directo
 		if (authorised && super.getRequest().hasData("passenger"))
 			try {
 				int passengerId = super.getRequest().getData("passenger", int.class);
-				Passenger passenger = this.customerBookingRecordRepository.getPassengerFromBookingRecord(passengerId);
-				authorised = passenger != null && passenger.getCustomer().getId() == super.getRequest().getPrincipal().getActiveRealm().getId();
-			} catch (final Throwable e) {
+				Passenger passenger = this.customerBookingRecordRepository.findPassengerById(passengerId);
+				authorised = passenger != null && passenger.getCustomer().getId() == activeCustomerId;
+			} catch (Throwable e) {
 				authorised = false;
 			}
 
 		super.getResponse().setAuthorised(authorised);
+	}
 
-		if (!authorised)
-			throw new AssertionError("Access is not authorised");
+	@Override
+	public void validate(final BookingRecord bookingRecord) {
+		final int activeCustomerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+
+		Passenger passenger = bookingRecord.getPassenger();
+		Booking booking = bookingRecord.getBooking();
+
+		super.state(passenger != null, "passenger", "customer.bookingRecord.form.error.passenger-required");
+		super.state(booking != null, "booking", "customer.bookingRecord.form.error.booking-required");
+
+		if (passenger != null)
+			super.state(passenger.getCustomer().getId() == activeCustomerId, "passenger", "customer.bookingRecord.form.error.passenger-not-owned");
+
+		if (booking != null) {
+			super.state(booking.getCustomer().getId() == activeCustomerId, "booking", "customer.bookingRecord.form.error.booking-not-owned");
+			super.state(!booking.isDraftMode(), "booking", "customer.bookingRecord.form.error.booking-published");
+		}
+
+		if (passenger != null && booking != null) {
+			boolean exists = this.customerBookingRecordRepository.existsByBookingIdAndPassengerId(booking.getId(), passenger.getId());
+			super.state(!exists, "passenger", "customer.bookingRecord.form.error.alreadyCreated");
+		}
 	}
 
 	@Override
@@ -68,19 +92,6 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 	@Override
 	public void bind(final BookingRecord bookingRecord) {
 		super.bindObject(bookingRecord, "passenger", "booking");
-	}
-
-	@Override
-	public void validate(final BookingRecord bookingRecord) {
-		Passenger passenger = bookingRecord.getPassenger();
-		Booking booking = bookingRecord.getBooking();
-
-		BookingRecord bookingRecordCompare = null;
-		if (passenger != null && booking != null)
-			bookingRecordCompare = this.customerBookingRecordRepository.getBookingRecordByPassengerIdAndBookingId(passenger.getId(), booking.getId());
-
-		boolean status1 = bookingRecordCompare == null || bookingRecordCompare.getId() == bookingRecord.getId();
-		super.state(status1, "*", "customer.bookingRecord.form.error.alreadyCreated");
 	}
 
 	@Override

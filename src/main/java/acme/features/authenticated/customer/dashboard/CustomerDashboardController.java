@@ -13,12 +13,8 @@ import acme.realms.Customer;
 @GuiController
 public class CustomerDashboardController extends AbstractGuiController<Customer, CustomerDashboard> {
 
-	// Internal state ---------------------------------------------------------
-
 	@Autowired
 	private CustomerDashboardShowService showService;
-
-	// Constructors -----------------------------------------------------------
 
 
 	@PostConstruct

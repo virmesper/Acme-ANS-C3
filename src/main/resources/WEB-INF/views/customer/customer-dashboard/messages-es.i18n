@@ -1,13 +1,19 @@
-customer.customer-dashboard.form.title = Panel de indicadores para clientes
+customer.customer-dashboard.form.title=Panel de cliente
 
-customer.customer-dashboard.form.label.lastFiveDestinations = 5 últimos destinos:
-customer.customer-dashboard.form.label.moneySpentLastYear = Dinero gastado el último año:
-customer.customer-dashboard.form.label.numOfBookingsByTravelClass = Número de reservas por clase:
-customer.customer-dashboard.form.label.avgCostOfBookingsLastFiveYears = Coste medio de reservas en los últimos 5 años:
-customer.customer-dashboard.form.label.minCostOfBookingsLastFiveYears = Coste mínimo de reservas en los últimos 5 años:
-customer.customer-dashboard.form.label.maxCostOfBookingsLastFiveYears = Coste máximo de reservas en los últimos 5 años:
-customer.customer-dashboard.form.label.stdDeviationCostOfBookingsLastFiveYears = Desviación estándar del coste de reservas en los últimos 5 años:
-customer.customer-dashboard.form.label.avgNumOfPassengersInBookings = Media de pasajeros en reservas:
-customer.customer-dashboard.form.label.minNumOfPassengersInBookings = Mínimo de pasajeros en reservas:
-customer.customer-dashboard.form.label.maxNumOfPassengersInBookings = Máximo de pasajeros en reservas:
-customer.customer-dashboard.form.label.stdDeviationNumOfPassengersInBookings = Desviación estándar de pasajeros en reservas:
+customer.customer-dashboard.section.last-destinations=Últimos cinco destinos
+customer.customer-dashboard.section.spent-last-year=Gasto en el último año
+customer.customer-dashboard.section.by-class=Reservas por clase de viaje
+customer.customer-dashboard.section.cost-5y=Coste de las reservas (últimos 5 años)
+customer.customer-dashboard.section.pax-per-booking=Pasajeros por reserva
+
+customer.customer-dashboard.label.no-data=Sin datos
+customer.customer-dashboard.label.amount=Importe
+customer.customer-dashboard.label.travel-class=Clase
+customer.customer-dashboard.label.count=Número
+customer.customer-dashboard.label.avg=Media
+customer.customer-dashboard.label.min=Mínimo
+customer.customer-dashboard.label.max=Máximo
+customer.customer-dashboard.label.stddev=Desviación típica
+customer.customer-dashboard.label.samples=Muestras (reservas)
+
+customer.customer-dashboard.hint.currency-note=Nota: el importe se muestra en la divisa de las reservas.

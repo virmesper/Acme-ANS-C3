@@ -55,3 +55,9 @@ acme.validation.maintenance-record.inspection-due-date.message = The next inspec
 acme.validation.maintenance-record.future-inspection-due-date.message = The next inspection must be set in the future
 
 acme.validation.task.maintenance-record-linked.message = In order to delete a task it must not have any maintenance records linked
+customer.bookingRecord.form.error.passenger-required=Debe seleccionar un pasajero.
+customer.bookingRecord.form.error.booking-required=No se ha podido determinar la reserva.
+customer.bookingRecord.form.error.passenger-not-owned=El pasajero no pertenece a su cuenta.
+customer.bookingRecord.form.error.booking-not-owned=La reserva no pertenece a su cuenta.
+customer.bookingRecord.form.error.booking-published=No puede añadir pasajeros a una reserva ya publicada.
+customer.bookingRecord.form.error.alreadyCreated=Este pasajero ya está en la reserva.
