@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.components.views.SelectChoices;
 import acme.client.services.AbstractGuiService;
@@ -13,13 +14,16 @@ import acme.client.services.GuiService;
 import acme.entities.student2.Booking;
 import acme.entities.student2.BookingRecord;
 import acme.entities.student2.Passenger;
+import acme.features.authenticated.customer.booking.CustomerBookingRepository;
 import acme.realms.Customer;
 
 @GuiService
 public class CustomerBookingRecordCreateService extends AbstractGuiService<Customer, BookingRecord> {
 
 	@Autowired
-	private CustomerBookingRecordRepository customerBookingRecordRepository;
+	private CustomerBookingRecordRepository	customerBookingRecordRepository;
+	@Autowired
+	private CustomerBookingRepository		bookingRepository;
 
 
 	@Override
@@ -94,9 +98,31 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		super.bindObject(bookingRecord, "passenger", "booking");
 	}
 
+	private void recalcAndUpdateBookingPrice(final int bookingId) {
+		final Booking booking = this.bookingRepository.findBookingById(bookingId);
+		if (booking == null)
+			return;
+
+		final long pax = this.customerBookingRecordRepository.countPassengersInBooking(bookingId);
+
+		// Coste por asiento desde el propio Flight de la booking
+		final Money seatCost = booking.getFlightId().getCost();
+
+		final Money total = new Money();
+		total.setCurrency(seatCost.getCurrency());
+		total.setAmount(seatCost.getAmount() * pax);
+
+		booking.setPrice(total);
+		this.bookingRepository.save(booking);
+	}
+
 	@Override
 	public void perform(final BookingRecord bookingRecord) {
 		this.customerBookingRecordRepository.save(bookingRecord);
+
+		// Recalcular el precio total de la reserva
+		final int bookingId = bookingRecord.getBooking().getId();
+		this.recalcAndUpdateBookingPrice(bookingId);
 	}
 
 	@Override
