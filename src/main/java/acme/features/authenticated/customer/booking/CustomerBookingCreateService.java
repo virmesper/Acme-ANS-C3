@@ -41,7 +41,46 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void authorise() {
+		// 1) solo comprobamos rol
 		boolean authorised = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
+
+		// 2) Anti-F12 únicamente en POST y solo si los selects traen valor real
+		if (authorised && "POST".equalsIgnoreCase(super.getRequest().getMethod())) {
+
+			// Lectura segura como String (no fallará si no existe o viene vacío)
+			String rawFlightId = null;
+			String rawTravel = null;
+			try {
+				rawFlightId = super.getRequest().getData(CustomerBookingCreateService.FLIGHT_ID_FIELD, String.class);
+			} catch (Throwable ignored) {
+			}
+			try {
+				rawTravel = super.getRequest().getData("travelClass", String.class);
+			} catch (Throwable ignored) {
+			}
+
+			// ─ flightId: si viene con valor distinto de "0"/vacío => debe ser numérico y publicado
+			if (rawFlightId != null && !rawFlightId.isBlank() && !"0".equals(rawFlightId.trim())) {
+				final String t = rawFlightId.trim();
+				if (!t.chars().allMatch(Character::isDigit))
+					authorised = false;                           // manipulado
+				else {
+					final int id = Integer.parseInt(t);
+					final Flight f = this.flightRepository.findFlightById(id);
+					authorised = f != null && !f.getDraftMode();  // debe existir y no estar en borrador
+				}
+			}
+
+			// ─ travelClass: si viene con valor distinto de "0"/vacío => debe ser un Enum válido
+			if (authorised && rawTravel != null && !rawTravel.isBlank() && !"0".equals(rawTravel.trim()))
+				try {
+					TravelClass.valueOf(rawTravel.trim());        // ok si es un valor del enum
+				} catch (Throwable ex) {
+					authorised = false;                           // manipulado
+				}
+		}
+
+		// Si los selects vienen a "0" o vacíos, no se bloquea: pasará a validate() y verás los mensajes por campo.
 		super.getResponse().setAuthorised(authorised);
 	}
 
