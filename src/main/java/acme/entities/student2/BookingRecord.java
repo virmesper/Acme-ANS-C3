@@ -2,6 +2,7 @@
 package acme.entities.student2;
 
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -15,10 +16,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(indexes = {
-/* los que quieras */ }, uniqueConstraints = @UniqueConstraint(columnNames = {
-	"booking_id", "passenger_id"
-}))
+@Table(name = "booking_record", indexes = {
+	@Index(name = "idx_bookingrecord_booking", columnList = "booking_id"), @Index(name = "idx_bookingrecord_passenger", columnList = "passenger_id")
+}, uniqueConstraints = {
+	@UniqueConstraint(name = "uq_booking_passenger", columnNames = {
+		"booking_id", "passenger_id"
+	})
+})
 public class BookingRecord extends AbstractEntity {
 	// Serialisation version --------------------------------------------
 

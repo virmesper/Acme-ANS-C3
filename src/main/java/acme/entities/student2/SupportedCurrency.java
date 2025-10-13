@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,9 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(name = "supported_currency", indexes = {
+	@Index(name = "idx_supported_currency_name", columnList = "currencyName", unique = true), @Index(name = "idx_supported_currency_default", columnList = "isDefaultCurrency")
+})
 public class SupportedCurrency extends AbstractEntity {
 
 	// Serialisation version --------------------------------------------------

@@ -19,8 +19,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(indexes = {
-	@Index(columnList = "city"), @Index(columnList = "country"), @Index(columnList = "category"), @Index(columnList = "source,externalId", unique = true)
+@Table(name = "recommendation", indexes = {
+	@Index(name = "idx_reco_city", columnList = "city"), @Index(name = "idx_reco_country", columnList = "country"), @Index(name = "idx_reco_category", columnList = "category"), @Index(name = "idx_reco_rating", columnList = "rating")
 })
 public class Recommendation extends AbstractEntity {
 
