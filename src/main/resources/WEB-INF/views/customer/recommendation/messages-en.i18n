@@ -1,25 +1,16 @@
-customer.recommendation.list-related.title=Recommendations for your destinations
-customer.recommendation.list.label.title=Title
-customer.recommendation.list.label.category=Category
-customer.recommendation.list.label.city=City
-customer.recommendation.list.label.country=Country
-customer.recommendation.list.label.rating=Rating
-customer.recommendation.list.label.url=Link
-customer.recommendation.list.title = 
-customer.recommendation.form.title=Recommendation details
-customer.recommendation.form.label.title=Title
-customer.recommendation.form.label.category=Category
-customer.recommendation.form.label.city=City
-customer.recommendation.form.label.country=Country
-customer.recommendation.form.label.rating=Rating
-customer.recommendation.form.label.price=Price level
-customer.recommendation.form.label.desc=Description
-customer.recommendation.form.label.url=Link
-customer.recommendation.form.label.image=Image (URL)
-customer.recommendation.form.label.updated=Last update
+customer.recommendation.form.title = Recommendation form
+customer.recommendation.list.title = Listing of recommendations
 
+customer.recommendation.form.label.name = Name of the recommendation:
+customer.recommendation.form.label.city = City:
+customer.recommendation.form.label.businessStatus = Business status:
+customer.recommendation.form.label.formattedAddress = Address:
+customer.recommendation.form.label.rating = Rating (0-5):
+customer.recommendation.form.label.userRatingsTotal = User ratings total:
+customer.recommendation.form.label.openNow = Open?
+customer.recommendation.form.label.photoReference = Photo reference:
 
-
-
-
-
+customer.recommendation.list.label.city = City
+customer.recommendation.list.label.name = Name
+customer.recommendation.list.label.rating = Rating
+customer.recommendation.list.label.openNow = Open?

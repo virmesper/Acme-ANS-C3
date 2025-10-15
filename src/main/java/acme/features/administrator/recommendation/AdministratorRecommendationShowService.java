@@ -1,16 +1,17 @@
 
-package acme.features.authenticated.customer.recommendation;
+package acme.features.administrator.recommendation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
+import acme.client.components.principals.Administrator;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
 import acme.entities.student2.Recommendation;
-import acme.realms.Customer;
+import acme.features.authenticated.customer.recommendation.CustomerRecommendationRepository;
 
 @GuiService
-public class CustomerRecommendationShowService extends AbstractGuiService<Customer, Recommendation> {
+public class AdministratorRecommendationShowService extends AbstractGuiService<Administrator, Recommendation> {
 
 	// Internal state ---------------------------------------------------------
 
@@ -22,15 +23,14 @@ public class CustomerRecommendationShowService extends AbstractGuiService<Custom
 
 	@Override
 	public void authorise() {
-		boolean status;
 		Recommendation rec;
 		int recId;
 
-		status = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
+		boolean status = super.getRequest().getPrincipal().hasRealmOfType(Administrator.class);
 
 		if (status && super.getRequest().hasData("id")) {
 			recId = super.getRequest().getData("id", int.class);
-			rec = this.repository.findRecommendationById(recId).orElse(null); // ✅ Manejo de Optional
+			rec = this.repository.findRecommendationById(recId).orElse(null);  // ✅ Manejo seguro del Optional
 			status = rec != null;
 		} else
 			status = false;
@@ -44,8 +44,7 @@ public class CustomerRecommendationShowService extends AbstractGuiService<Custom
 		int recommendationId;
 
 		recommendationId = super.getRequest().getData("id", int.class);
-		recommendation = this.repository.findRecommendationById(recommendationId).orElseThrow(); // ✅ Para evitar null y manejar error controlado
-
+		recommendation = this.repository.findRecommendationById(recommendationId).orElseThrow();  // ✅ Control explícito del error
 		super.getBuffer().addData(recommendation);
 	}
 

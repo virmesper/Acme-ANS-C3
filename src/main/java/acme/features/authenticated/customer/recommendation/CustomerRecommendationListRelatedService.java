@@ -1,26 +1,27 @@
 
 package acme.features.authenticated.customer.recommendation;
 
+import java.util.ArrayList; // Necesitas ArrayList para crear una lista mutable
 import java.util.Collection;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
-import acme.entities.student2.Booking;
 import acme.entities.student2.Recommendation;
 import acme.realms.Customer;
 
 @GuiService
 public class CustomerRecommendationListRelatedService extends AbstractGuiService<Customer, Recommendation> {
 
+	// Internal state ---------------------------------------------------------
+
 	@Autowired
 	private CustomerRecommendationRepository repository;
+
+	// AbstractGuiService interface -------------------------------------------
 
 
 	@Override
@@ -30,23 +31,33 @@ public class CustomerRecommendationListRelatedService extends AbstractGuiService
 
 	@Override
 	public void load() {
-		int customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		Collection<Recommendation> recommendations;
 
-		Collection<Booking> bookings = this.repository.findBookingsByCustomerId(customerId);
+		Integer customerId = super.getRequest().getPrincipal().getActiveRealm().getId();
+		List<String> cities = this.repository.findBookingsByCustomerId(customerId).stream().map(b -> b.getFlightId().getDestinationCity()).distinct().toList(); // Usa .toList() si estás en Java 16+, sino .collect(Collectors.toList())
 
-		Set<String> cities = bookings.stream().map(b -> b.getFlightId() != null ? b.getFlightId().getDestinationCity() : null).filter(s -> s != null && !s.isBlank()).map(String::toLowerCase).collect(Collectors.toCollection(LinkedHashSet::new));
+		recommendations = this.repository.findRecommendationsByCities(cities);
 
-		// si más adelante tienes país destino, añádelo aquí:
-		Set<String> countries = new LinkedHashSet<>();
+		if (recommendations == null)
+			recommendations = new ArrayList<>();
 
-		Collection<Recommendation> data = cities.isEmpty() && countries.isEmpty() ? List.of() : this.repository.findByCitiesOrCountries(cities, countries);
+		List<Dataset> datasetsForView = new ArrayList<>();
+		for (Recommendation r : recommendations) {
+			Dataset dataset = super.unbindObject(r, "city", "name", "rating", "photoReference");
+			dataset.put("openNow", r.getOpenNow() ? "✓" : "x");
+			datasetsForView.add(dataset);
+		}
 
-		super.getBuffer().addData(data);
+		super.getBuffer().addData("recommendationsList", datasetsForView); // O solo datasetsForView si 'addData' detecta el tipo
+
 	}
 
 	@Override
-	public void unbind(final Recommendation r) {
-		Dataset ds = super.unbindObject(r, "title", "category", "city", "country", "rating", "priceLevel", "url");
-		super.getResponse().addData(ds);
+	public void unbind(final Recommendation recommendation) {
+
+		Dataset dataset;
+		dataset = super.unbindObject(recommendation, "city", "name", "rating", "photoReference");
+		dataset.put("openNow", recommendation.getOpenNow() ? "✓" : "x");
+		super.getResponse().addData(dataset); // Esto añade un Dataset al Response, quizás para un solo objeto.
 	}
 }
