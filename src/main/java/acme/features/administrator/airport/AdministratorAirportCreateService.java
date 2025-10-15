@@ -46,8 +46,14 @@ public class AdministratorAirportCreateService extends AbstractGuiService<Admini
 
 	@Override
 	public void validate(final Airport airport) {
-		boolean confirmation = super.getRequest().getData(AdministratorAirportCreateService.CONFIRMATION, boolean.class);
-		super.state(confirmation, AdministratorAirportCreateService.CONFIRMATION, "acme.validation.confirmation.message");
+		boolean confirmation = super.getRequest().getData("confirmation", boolean.class);
+		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
+
+		// IATA único
+		if (!super.getBuffer().getErrors().hasErrors("iataCode") && airport.getIataCode() != null) {
+			final Airport existing = this.repository.findAirportByIataCode(airport.getIataCode());
+			super.state(existing == null, "iataCode", "administrator.airport.form.error.duplicate-iata");
+		}
 	}
 
 	@Override

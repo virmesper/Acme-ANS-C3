@@ -24,4 +24,7 @@ administrator.airport.list.button.create = Create a new airport
 administrator.airport.form.label.confirmation.create = Are you sure you want to create the above airport?
 administrator.airport.form.label.confirmation.update = Are you sure you want to update the above airport?
 administrator.airport.form.button.create = Create airport
+
 administrator.airport.form.button.update = Update airport
+
+administrator.airport.form.error.duplicate-iata = There is already an airport with this IATA code.

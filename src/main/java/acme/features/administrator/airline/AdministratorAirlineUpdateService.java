@@ -43,6 +43,31 @@ public class AdministratorAirlineUpdateService extends AbstractGuiService<Admini
 	@Override
 	public void bind(final Airline airline) {
 		super.bindObject(airline, "name", "iataCode", "website", "type", "foundationMoment", "email", "phoneNumber");
+
+		// airport desde el formulario
+		if (super.getRequest().hasData("airport", int.class)) {
+			int airportId = super.getRequest().getData("airport", int.class);
+			airline.setAirport(this.ar.findAirportById(airportId));
+		}
+	}
+
+	@Override
+	public void unbind(final Airline airline) {
+		var typeChoices = SelectChoices.from(AirlineType.class, airline.getType());
+
+		var airports = this.ar.findAllAirports();
+		var airportChoices = SelectChoices.from(airports, "name", airline.getAirport());
+
+		Dataset dataset = super.unbindObject(airline, "name", "iataCode", "website", "type", "foundationMoment", "email", "phoneNumber");
+
+		dataset.put("type", typeChoices.getSelected().getKey());
+		dataset.put("airlineTypes", typeChoices);
+
+		dataset.put("airport", airportChoices.getSelected().getKey());
+		dataset.put("airports", airportChoices);
+
+		dataset.put("confirmation", false);
+		super.getResponse().addData(dataset);
 	}
 
 	@Override
@@ -62,19 +87,6 @@ public class AdministratorAirlineUpdateService extends AbstractGuiService<Admini
 	@Override
 	public void perform(final Airline airline) {
 		this.ar.save(airline);
-	}
-
-	@Override
-	public void unbind(final Airline airline) {
-		SelectChoices choices;
-		Dataset dataset;
-
-		choices = SelectChoices.from(AirlineType.class, airline.getType());
-
-		dataset = super.unbindObject(airline, "name", "iataCode", "website", "foundationMoment", "email", "phoneNumber");
-		dataset.put("airlineTypes", choices);
-
-		super.getResponse().addData(dataset);
 	}
 
 }

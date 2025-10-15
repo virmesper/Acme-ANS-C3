@@ -39,14 +39,17 @@ public class AdministratorAirlineShowService extends AbstractGuiService<Administ
 
 	@Override
 	public void unbind(final Airline airline) {
-		SelectChoices choices;
-		Dataset dataset;
+		var typeChoices = SelectChoices.from(AirlineType.class, airline.getType());
+		var airports = this.ar.findAllAirports();
+		var airportChoices = SelectChoices.from(airports, "name", airline.getAirport());
 
-		choices = SelectChoices.from(AirlineType.class, airline.getType());
-
-		dataset = super.unbindObject(airline, "name", "iataCode", "website", "foundationMoment", "email", "phoneNumber");
-		dataset.put("airlineTypes", choices);
+		Dataset dataset = super.unbindObject(airline, "name", "iataCode", "website", "foundationMoment", "email", "phoneNumber");
+		dataset.put("type", typeChoices.getSelected().getKey());
+		dataset.put("airlineTypes", typeChoices);
+		dataset.put("airport", airportChoices.getSelected().getKey());
+		dataset.put("airports", airportChoices);
 
 		super.getResponse().addData(dataset);
 	}
+
 }

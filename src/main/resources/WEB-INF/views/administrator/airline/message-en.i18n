@@ -24,3 +24,8 @@ administrator.airline.list.label.phoneNumber = Contact number
 administrator.airline.list.button.create = Create new airline
 
 administrator.airline.create.not-unique-iata = This IATA Code already exists
+
+
+administrator.airline.form.label.airport = Airport:
+administrator.airline.form.error.airport-required = You must select an airport.
+administrator.airline.form.error.airport-not-found = Selected airport does not exist.

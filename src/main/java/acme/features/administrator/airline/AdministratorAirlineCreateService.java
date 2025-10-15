@@ -1,8 +1,6 @@
 
 package acme.features.administrator.airline;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.models.Dataset;
@@ -41,20 +39,30 @@ public class AdministratorAirlineCreateService extends AbstractGuiService<Admini
 	@Override
 	public void bind(final Airline airline) {
 		super.bindObject(airline, "name", "iataCode", "website", "type", "foundationMoment", "email", "phoneNumber");
+		if (super.getRequest().hasData("airport", int.class)) {
+			int airportId = super.getRequest().getData("airport", int.class);
+			airline.setAirport(this.ar.findAirportById(airportId));
+		}
 	}
 
 	@Override
 	public void validate(final Airline airline) {
-		List<Airline> airlines = this.ar.findAllAirlines();
-		List<String> airlineIds = airlines.stream().map(Airline::getIataCode).toList();
+		// IATA único (mejor directo)
+		if (!super.getBuffer().getErrors().hasErrors("iataCode") && airline.getIataCode() != null) {
+			var existing = this.ar.findAirlineByIataCode(airline.getIataCode());
+			super.state(existing == null, "iataCode", "administrator.airline.create.not-unique-iata");
+		}
 
-		if (airline.getIataCode() != null)
-			super.state(!airlineIds.contains(airline.getIataCode()), "iataCode", "administrator.airline.create.not-unique-iata");
+		// Airport obligatorio y válido
+		if (!super.getBuffer().getErrors().hasErrors("airport")) {
+			super.state(airline.getAirport() != null, "airport", "administrator.airline.form.error.airport-required");
+			if (airline.getAirport() != null)
+				super.state(this.ar.findAirportById(airline.getAirport().getId()) != null, "airport", "administrator.airline.form.error.airport-not-found");
+		}
 
-		boolean confirmation;
-		confirmation = super.getRequest().getData("confirmation", boolean.class);
+		// Confirmación
+		boolean confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "acme.validation.confirmation.message");
-
 	}
 
 	@Override
@@ -64,15 +72,21 @@ public class AdministratorAirlineCreateService extends AbstractGuiService<Admini
 
 	@Override
 	public void unbind(final Airline airline) {
-		SelectChoices choices;
-		Dataset dataset;
+		SelectChoices typeChoices = SelectChoices.from(AirlineType.class, airline.getType());
 
-		choices = SelectChoices.from(AirlineType.class, airline.getType());
+		var airports = this.ar.findAllAirports();
+		SelectChoices airportChoices = SelectChoices.from(airports, "name", airline.getAirport());
 
-		dataset = super.unbindObject(airline, "name", "iataCode", "website", "foundationMoment", "email", "phoneNumber");
-		dataset.put("airlineTypes", choices);
+		Dataset dataset = super.unbindObject(airline, "name", "iataCode", "website", "type", "foundationMoment", "email", "phoneNumber");
+
+		dataset.put("type", typeChoices.getSelected().getKey());
+		dataset.put("airlineTypes", typeChoices);
+
+		dataset.put("airport", airportChoices.getSelected().getKey());
+		dataset.put("airports", airportChoices);
+
+		dataset.put("confirmation", false);
 
 		super.getResponse().addData(dataset);
 	}
-
 }
