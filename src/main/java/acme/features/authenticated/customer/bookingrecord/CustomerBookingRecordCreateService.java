@@ -31,34 +31,74 @@ public class CustomerBookingRecordCreateService extends AbstractGuiService<Custo
 		boolean authorised = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
 		final int activeCustomerId = super.getRequest().getPrincipal().getActiveRealm().getId();
 
-		if (authorised && super.getRequest().hasData("bookingId"))
+		// 0) bookingId obligatorio en la query y debe ser válido/propietario/no draft
+		String rawBookingId = null;
+		Booking bookingFromQuery = null;
+		if (authorised) {
 			try {
-				int bookingId = super.getRequest().getData("bookingId", int.class);
-				Booking booking = this.customerBookingRecordRepository.findBookingById(bookingId);
-				authorised = booking != null && booking.getCustomer().getId() == activeCustomerId; // <- sin draftMode aquí
-			} catch (Throwable e) {
-				authorised = false;
+				rawBookingId = super.getRequest().getData("bookingId", String.class);
+			} catch (Throwable ignored) {
 			}
 
-		// Si viene "booking" desde el form (POST)
-		if (authorised && super.getRequest().hasData("booking"))
-			try {
-				int bookingIdFromForm = super.getRequest().getData("booking", int.class);
-				Booking bookingFromForm = this.customerBookingRecordRepository.findBookingById(bookingIdFromForm);
-				authorised = bookingFromForm != null && bookingFromForm.getCustomer().getId() == activeCustomerId; // <- sin draftMode aquí
-			} catch (Throwable e) {
+			if (rawBookingId == null || rawBookingId.isBlank() || !rawBookingId.trim().chars().allMatch(Character::isDigit))
 				authorised = false;
+			else {
+				final int bookingId = Integer.parseInt(rawBookingId.trim());
+				bookingFromQuery = this.customerBookingRecordRepository.findBookingById(bookingId);
+				authorised = bookingFromQuery != null && bookingFromQuery.getCustomer().getId() == activeCustomerId && !bookingFromQuery.isDraftMode();
+			}
+		}
+
+		// 1) Anti-F12 solo en POST
+		if (authorised && "POST".equalsIgnoreCase(super.getRequest().getMethod())) {
+
+			// 1.a) SELECT "booking": si viene con valor real, debe coincidir con el bookingId de la query
+			String rawBooking = null;
+			try {
+				rawBooking = super.getRequest().getData("booking", String.class);
+			} catch (Throwable ignored) {
 			}
 
-		// Si viene "passenger" desde el form (POST) — leer Passenger por id directo
-		if (authorised && super.getRequest().hasData("passenger"))
-			try {
-				int passengerId = super.getRequest().getData("passenger", int.class);
-				Passenger passenger = this.customerBookingRecordRepository.findPassengerById(passengerId);
-				authorised = passenger != null && passenger.getCustomer().getId() == activeCustomerId;
-			} catch (Throwable e) {
-				authorised = false;
+			if (rawBooking != null && !rawBooking.isBlank() && !"0".equals(rawBooking.trim())) {
+				final String t = rawBooking.trim();
+				if (!t.chars().allMatch(Character::isDigit))
+					authorised = false; // manipulado
+				else {
+					final int bookingIdFromForm = Integer.parseInt(t);
+					// Debe coincidir con la booking de la query
+					authorised = authorised && bookingFromQuery != null && bookingIdFromForm == bookingFromQuery.getId() && bookingFromQuery.getCustomer().getId() == activeCustomerId && !bookingFromQuery.isDraftMode();
+				}
 			}
+
+			// 1.b) SELECT "passenger": si viene con valor real, debe ser tuyo y estar disponible para esa booking
+			if (authorised) {
+				String rawPassenger = null;
+				try {
+					rawPassenger = super.getRequest().getData("passenger", String.class);
+				} catch (Throwable ignored) {
+				}
+
+				if (rawPassenger != null && !rawPassenger.isBlank() && !"0".equals(rawPassenger.trim())) {
+					final String t = rawPassenger.trim();
+					if (!t.chars().allMatch(Character::isDigit))
+						authorised = false; // manipulado
+					else {
+						final int passengerId = Integer.parseInt(t);
+
+						// Debe existir y ser del customer
+						final Passenger p = this.customerBookingRecordRepository.findPassengerById(passengerId);
+						authorised = p != null && p.getCustomer().getId() == activeCustomerId;
+
+						// Además, debe estar en la lista de "disponibles" para la booking de la query
+						if (authorised && bookingFromQuery != null) {
+							final Collection<Passenger> avail = this.customerBookingRecordRepository.getAvailablePassengersByCustomerAndBooking(activeCustomerId, bookingFromQuery.getId());
+							final boolean inList = avail.stream().anyMatch(x -> x.getId() == passengerId);
+							authorised = inList; // si no está disponible para esa booking => manipuló el value
+						}
+					}
+				}
+			}
+		}
 
 		super.getResponse().setAuthorised(authorised);
 	}
