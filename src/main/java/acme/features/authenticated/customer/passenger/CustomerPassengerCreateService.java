@@ -4,6 +4,7 @@ package acme.features.authenticated.customer.passenger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import acme.client.components.basis.AbstractRealm;
+import acme.client.components.datatypes.Money;
 import acme.client.components.models.Dataset;
 import acme.client.services.AbstractGuiService;
 import acme.client.services.GuiService;
@@ -75,6 +76,25 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 		// Validaciones adicionales si necesitas
 	}
 
+	private void recalcAndUpdateBookingPrice(final int bookingId) {
+		final Booking booking = this.bookingRepository.findBookingById(bookingId);
+		if (booking == null)
+			return;
+
+		// nº de pasajeros asociados a la reserva
+		final long pax = this.bookingRecordRepository.countPassengersInBooking(bookingId);
+
+		// coste por asiento del vuelo
+		final Money seatCost = booking.getFlightId().getCost();
+
+		final Money total = new Money();
+		total.setCurrency(seatCost.getCurrency());
+		total.setAmount(seatCost.getAmount() * pax);
+
+		booking.setPrice(total);
+		this.bookingRepository.save(booking);
+	}
+
 	@Override
 	public void perform(final Passenger passenger) {
 		// 1) Guardar Passenger
@@ -89,14 +109,16 @@ public class CustomerPassengerCreateService extends AbstractGuiService<Customer,
 					final BookingRecord record = new BookingRecord();
 					record.setBooking(booking);
 					record.setPassenger(passenger);
-					// Completa otros campos obligatorios de BookingRecord si los hubiera
 					this.bookingRecordRepository.save(record);
 
-					// Mantener bookingId al volver al listado
+					// >>> Recalcular precio total de la booking <<<
+					this.recalcAndUpdateBookingPrice(booking.getId());
+
 					super.getResponse().addGlobal(CustomerPassengerCreateService.BOOKING_ID, bookingId);
 				}
 			}
 		}
+
 	}
 
 	@Override

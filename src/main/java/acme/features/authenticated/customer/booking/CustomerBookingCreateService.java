@@ -41,7 +41,56 @@ public class CustomerBookingCreateService extends AbstractGuiService<Customer, B
 
 	@Override
 	public void authorise() {
-		boolean authorised = super.getRequest().getPrincipal().hasRealmOfType(Customer.class);
+		// 1) Requiere que el ROL ACTIVO sea Customer (no basta con tenerlo en la cuenta)
+		boolean authorised = false;
+		try {
+			authorised = super.getRequest().getPrincipal().getActiveRealm() instanceof Customer;
+			// Si tu framework tiene helper: authorised = super.getRequest().getPrincipal().isActiveRealmOfType(Customer.class);
+		} catch (Throwable ignored) {
+		}
+
+		if (!authorised) {
+			super.getResponse().setAuthorised(false);
+			return; // corta aquí para que el GET desde otro rol (p.ej. manager) devuelva 500 como esperan los hack tests
+		}
+
+		// 2) Anti-F12 únicamente en POST y solo si los selects traen valor real
+		if ("POST".equalsIgnoreCase(super.getRequest().getMethod())) {
+
+			// Lectura segura como String (no fallará si no existe o viene vacío)
+			String rawFlightId = null;
+			String rawTravel = null;
+			try {
+				rawFlightId = super.getRequest().getData(CustomerBookingCreateService.FLIGHT_ID_FIELD, String.class);
+			} catch (Throwable ignored) {
+			}
+			try {
+				rawTravel = super.getRequest().getData("travelClass", String.class);
+			} catch (Throwable ignored) {
+			}
+
+			// ─ flightId: si viene con valor distinto de "0"/vacío => debe ser numérico y publicado
+			if (rawFlightId != null && !rawFlightId.isBlank() && !"0".equals(rawFlightId.trim())) {
+				final String t = rawFlightId.trim();
+				if (!t.chars().allMatch(Character::isDigit))
+					authorised = false; // manipulado
+				else {
+					final int id = Integer.parseInt(t);
+					final Flight f = this.flightRepository.findFlightById(id);
+					authorised = f != null && !f.getDraftMode(); // debe existir y no estar en borrador
+				}
+			}
+
+			// ─ travelClass: si viene con valor distinto de "0"/vacío => debe ser un Enum válido
+			if (authorised && rawTravel != null && !rawTravel.isBlank() && !"0".equals(rawTravel.trim()))
+				try {
+					TravelClass.valueOf(rawTravel.trim()); // ok si es un valor del enum
+				} catch (Throwable ex) {
+					authorised = false; // manipulado
+				}
+		}
+
+		// Si los selects vienen a "0" o vacíos, no se bloquea: pasará a validate() y verás los mensajes por campo.
 		super.getResponse().setAuthorised(authorised);
 	}
 
